@@ -21,6 +21,12 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("projectstart")]
         private DateTime _projectStart;
 
+        [Column("projectend")]
+        private DateTime _projectEnd;
+
+        [Column("projectEstimatedTime")]
+        private bool _projectEstimatedTime;
+
 		[ReverseAssociation("PageId")]
 		private readonly EntityHolder<PageEntity> _page = new EntityHolder<PageEntity>();
 		private int _pageId;
@@ -100,6 +106,30 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<DateTime>(ref _projectStart, value);
+            }
+        }
+
+        public DateTime ProjectEnd
+        {
+            get
+            {
+                return _projectEnd;
+            }
+            set
+            {
+                Set<DateTime>(ref _projectEnd, value);
+            }
+        }
+
+        public bool ProjectEstimatedTime
+        {
+            get
+            {
+                return _projectEstimatedTime;
+            }
+            set
+            {
+                Set<bool>(ref _projectEstimatedTime, value);
             }
         }
 	}

@@ -7,8 +7,8 @@ namespace Roadkill.Core.Database
 {
 	public interface IPageRepository
 	{
-        PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart);
-		PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart);
+        PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime);
+        PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime);
 		/// <summary>
 		/// Returns a list of tags for all pages. Each item is a list of tags seperated by ,
 		/// e.g. { "tag1, tag2, tag3", "blah, blah2" } 

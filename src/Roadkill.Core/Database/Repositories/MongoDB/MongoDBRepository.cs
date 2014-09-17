@@ -368,7 +368,7 @@ namespace Roadkill.Core.Database.MongoDB
 			return page;
 		}
 
-        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart)
+        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime)
 		{
 			SaveOrUpdate<Page>(page);
 
@@ -381,13 +381,15 @@ namespace Roadkill.Core.Database.MongoDB
 				EditedOn = editedOn,
 				VersionNumber = 1,
                 ProjectStart = projectStart,
+                ProjectEnd = projectEnd,
+                ProjectEstimatedTime = projectEstimatedTime,
 			};
 
 			SaveOrUpdate<PageContent>(pageContent);
 			return pageContent;
 		}
 
-        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart)
+        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime)
 		{
 			page.ModifiedOn = editedOn;
 			page.ModifiedBy = editedBy;
@@ -402,6 +404,8 @@ namespace Roadkill.Core.Database.MongoDB
 				EditedOn = editedOn,
 				VersionNumber = version,
                 ProjectStart = projectStart,
+                ProjectEnd = projectEnd,
+                ProjectEstimatedTime = projectEstimatedTime,
 			};
 
 			SaveOrUpdate<PageContent>(pageContent);

@@ -2477,6 +2477,26 @@
               Looks up a localized string similar to Title.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd">
+            <summary>
+              Looks up a localized string similar to Add/edit page.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd_Label">
+            <summary>
+              Looks up a localized string similar to Title.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime">
+            <summary>
+              Looks up a localized string similar to Add/edit page.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime_Label">
+            <summary>
+              Looks up a localized string similar to Title.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Mvc.Attributes.CacheContentTypeAttribute">
             <summary>
             Over-rides the OutputCache so it doesn't force text/html
@@ -7873,6 +7893,20 @@
             The project start.
             </value>
         </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.PageContent.VersionNumber">
             <summary>
             Gets or sets the version number of the content, which starts at 0.
@@ -8143,6 +8177,20 @@
              </value>
             
         </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.Page.Tags">
             <summary>
             Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
@@ -8234,6 +8282,16 @@
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectStart">
+            <summary>
+            The date the page was last modified on.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectEnd">
+            <summary>
+            The date the page was last modified on.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectEstimatedTime">
             <summary>
             The date the page was last modified on.
             </summary>

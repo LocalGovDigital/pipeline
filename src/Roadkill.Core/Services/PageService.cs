@@ -68,12 +68,14 @@ namespace Roadkill.Core.Services
 				page.ModifiedOn = DateTime.UtcNow;
 				page.ModifiedBy = AppendIpForDemoSite(currentUser);
                 page.ProjectStart = model.ProjectStart;
+                page.ProjectEnd = model.ProjectEnd;
+                page.ProjectEstimatedTime = model.ProjectEstimatedTime;
 
 				// Double check, incase the HTML form was faked.
 				if (_context.IsAdmin)
 					page.IsLocked = model.IsLocked;
 
-                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart);
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart,model.ProjectEnd,model.ProjectEstimatedTime);
 
 				_listCache.RemoveAll();
 				_pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -455,6 +457,8 @@ namespace Roadkill.Core.Services
 				page.ModifiedOn = DateTime.UtcNow;
 				page.ModifiedBy = AppendIpForDemoSite(currentUser);
                 page.ProjectStart = model.ProjectStart;
+                page.ProjectEnd = model.ProjectEnd;
+                page.ProjectEstimatedTime = model.ProjectEstimatedTime;
 
 				// A second check to ensure a fake IsLocked POST doesn't work.
 				if (_context.IsAdmin)
@@ -474,7 +478,7 @@ namespace Roadkill.Core.Services
 				_listCache.RemoveAll();
 
 				int newVersion = _historyService.MaxVersion(model.Id) + 1;
-                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart); 
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime); 
 
 				// Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
 				if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())

@@ -90,6 +90,16 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public DateTime ProjectStart { get; set; }
 
+        /// <summary>
+        /// The date the page was last modified on.
+        /// </summary>
+        public DateTime ProjectEnd { get; set; }
+
+        /// <summary>
+        /// The date the page was last modified on.
+        /// </summary>
+        public bool ProjectEstimatedTime { get; set; }
+
 		/// <summary>
 		/// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
 		/// </summary>
@@ -216,6 +226,8 @@ namespace Roadkill.Core.Mvc.ViewModels
 			ModifiedOn = page.ModifiedOn;
 			RawTags = page.Tags;
             ProjectStart = page.ProjectStart;
+            ProjectEnd = page.ProjectEnd;
+            ProjectEstimatedTime = page.ProjectEstimatedTime;
 
 			CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
 			ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
@@ -245,6 +257,8 @@ namespace Roadkill.Core.Mvc.ViewModels
 			Content = pageContent.Text;
 			VersionNumber = pageContent.VersionNumber;
             ProjectStart = pageContent.Page.ProjectStart;
+            ProjectEnd = pageContent.ProjectEnd;
+            ProjectEstimatedTime = pageContent.ProjectEstimatedTime;
 
 			PageHtml pageHtml = converter.ToHtml(pageContent.Text);
 			ContentAsHtml = pageHtml.Html;

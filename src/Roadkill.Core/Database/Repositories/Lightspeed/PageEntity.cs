@@ -24,6 +24,12 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("projectstart")]
         private DateTime _projectstart;
 
+        [Column("projectend")]
+        private DateTime _projectEnd;
+
+        [Column("projectEstimatedTime")]
+        private bool _projectEstimatedTime;
+
 		[Column("tags")]
 		private string _tags;
 
@@ -131,6 +137,30 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<DateTime>(ref _projectstart, value);
+            }
+        }
+
+        public DateTime ProjectEnd
+        {
+            get
+            {
+                return _projectEnd;
+            }
+            set
+            {
+                Set<DateTime>(ref _projectEnd, value);
+            }
+        }
+
+        public bool ProjectEstimatedTime
+        {
+            get
+            {
+                return _projectEstimatedTime;
+            }
+            set
+            {
+                Set<bool>(ref _projectEstimatedTime, value);
             }
         }
 	}

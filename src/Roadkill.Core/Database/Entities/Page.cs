@@ -75,6 +75,21 @@ namespace Roadkill.Core.Database
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime ProjectStart { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date the project is due to end.
+        /// </summary>
+        /// <value>
+        /// The project end.
+        /// </value>
+        ///
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ProjectEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the start and end dates are estimated.
+        /// </summary>
+        public bool ProjectEstimatedTime { get; set; }
+
 		/// <summary>
 		/// Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
 		/// </summary>

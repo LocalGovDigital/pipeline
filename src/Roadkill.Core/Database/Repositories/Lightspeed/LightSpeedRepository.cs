@@ -252,7 +252,7 @@ namespace Roadkill.Core.Database.LightSpeed
 		#endregion
 
 		#region IPageRepository
-        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart)
+        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime)
 		{
 			PageEntity pageEntity = new PageEntity();
 			ToEntity.FromPage(page, pageEntity);
@@ -269,6 +269,8 @@ namespace Roadkill.Core.Database.LightSpeed
 				EditedOn = editedOn,
 				VersionNumber = 1,
                 ProjectStart = projectStart,
+                ProjectEnd = projectEnd,
+                ProjectEstimatedTime = projectEstimatedTime,
 			};
 
 			UnitOfWork.Add(pageContentEntity);
@@ -279,7 +281,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			return pageContent;
 		}
 
-        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart)
+        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime)
 		{
 			if (version < 1)
 				version = 1;
@@ -297,6 +299,8 @@ namespace Roadkill.Core.Database.LightSpeed
 					EditedOn = editedOn,
 					VersionNumber = version,
                     ProjectStart = projectStart,
+                    ProjectEnd = projectEnd,
+                    ProjectEstimatedTime = projectEstimatedTime,
 				};
 
 				UnitOfWork.Add(pageContentEntity);
