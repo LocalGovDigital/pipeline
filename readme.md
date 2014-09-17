@@ -1,5 +1,8 @@
-# Roadkill Developer Readme
+# Pipeline Developer Readme
 
+Pipeline is a project to allow civic coding teams to share plans for their work in order to collaborate. It's a prototype project from [LocalGov Digital](http://www.localgovdigital.info/)
+
+It's heavily based on [Roadkill](http://www.roadkillwiki.net/) and the installation instructions are the same, as below.
 
 ### Pre-requisites
 
