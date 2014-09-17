@@ -262,8 +262,9 @@ namespace Roadkill.Core.Import
 							string text = reader["Content"].ToString();
 							text = CleanContent(text);
 							int versionNumber = (int.Parse(reader["Revision"].ToString())) + 1;
+                            DateTime projectStart = (DateTime)reader["ProjectStart"];
 
-							Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber);
+							Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart);
 							hasContent = true;
 						}
 					}
@@ -271,7 +272,7 @@ namespace Roadkill.Core.Import
 					// For broken content, make sure the page has something
 					if (!hasContent)
 					{
-						Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow);
+                        Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow, DateTime.UtcNow);
 					}
 				}
 			}

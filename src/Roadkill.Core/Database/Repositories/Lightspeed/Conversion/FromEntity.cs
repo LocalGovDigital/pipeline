@@ -26,6 +26,8 @@ namespace Roadkill.Core.Database.LightSpeed
 			page.ModifiedOn = entity.ModifiedOn;
 			page.Tags = entity.Tags;
 			page.Title = entity.Title;
+            page.ProjectStart = entity.ProjectStart;
+
 
 			return page;
 		}
@@ -42,6 +44,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			pageContent.Text = entity.Text;
 			pageContent.VersionNumber = entity.VersionNumber;
 			pageContent.Page = ToPage(entity.Page);
+            pageContent.ProjectStart = entity.ProjectStart;
 
 			return pageContent;
 		}

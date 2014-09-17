@@ -296,6 +296,9 @@
     <Reference Include="Npgsql">
       <HintPath>..\..\lib\LightSpeed\Providers\Npgsql.dll</HintPath>
     </Reference>
+    <Reference Include="Portable.Licensing">
+      <HintPath>..\..\packages\Portable.Licensing.1.1.0\lib\portable-net40+sl4+wp7+win8\Portable.Licensing.dll</HintPath>
+    </Reference>
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <HintPath>..\..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
@@ -383,6 +386,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="T4MVCExtensions">
+      <HintPath>..\..\packages\T4MVCExtensions.3.6.5\lib\net40\T4MVCExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="TwitterBootstrapMVC5">
+      <HintPath>..\..\packages\TwitterBootstrapMVC5.3.8.0\lib\net40\TwitterBootstrapMVC5.dll</HintPath>
+    </Reference>
     <Reference Include="WebActivator">
       <HintPath>..\..\packages\WebActivator.1.0.0.0\lib\WebActivator.dll</HintPath>
     </Reference>
@@ -608,6 +617,7 @@
     <Compile Include="Plugins\Text\BuiltIn\ToC\TocParser.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -653,14 +663,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localization\InstallStrings.ru.resx" />
     <EmbeddedResource Include="Localization\InstallStrings.sv.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.cs.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.de.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.es.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.hi.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.it.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.nl.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.pl.resx" />
-    <EmbeddedResource Include="Localization\SiteStrings.pt.resx" />
+    <EmbeddedResource Include="Localization\SiteStrings.cs.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.hi.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.it.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.nl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.pl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\SiteStrings.pt.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization\SiteStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SiteStrings.Designer.cs</LastGenOutput>

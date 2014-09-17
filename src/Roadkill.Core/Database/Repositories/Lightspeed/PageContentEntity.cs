@@ -18,6 +18,9 @@ namespace Roadkill.Core.Database.LightSpeed
 		[Column("versionnumber")]
 		private int _versionNumber;
 
+        [Column("projectstart")]
+        private DateTime _projectStart;
+
 		[ReverseAssociation("PageId")]
 		private readonly EntityHolder<PageEntity> _page = new EntityHolder<PageEntity>();
 		private int _pageId;
@@ -87,5 +90,17 @@ namespace Roadkill.Core.Database.LightSpeed
 				Set<int>(ref _versionNumber, value);
 			}
 		}
+
+        public DateTime ProjectStart
+        {
+            get
+            {
+                return _projectStart;
+            }
+            set
+            {
+                Set<DateTime>(ref _projectStart, value);
+            }
+        }
 	}
 }

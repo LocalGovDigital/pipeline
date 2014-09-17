@@ -154,7 +154,8 @@ namespace Roadkill.Core.Services
 				string text = versionContent.Text;
 				string editedBy = currentUser;
 				DateTime editedOn = DateTime.UtcNow;
-				Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber);
+                DateTime projectStart = versionContent.ProjectStart;
+                Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber, projectStart);
 
 				// Clear the cache
 				_pageViewModelCache.Remove(page.Id);

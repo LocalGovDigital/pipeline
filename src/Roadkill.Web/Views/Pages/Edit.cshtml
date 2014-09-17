@@ -2,7 +2,7 @@
 @{
 	ViewBag.Title = SiteStrings.EditPage_Title;
 }
-
+<script type="text/javascript" src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
 	$(document).ready(function ()
 	{
@@ -32,6 +32,13 @@
 			<div class="form-inline">
 				@(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
 			</div>
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    Project Start
+                    @(Html.BootstrapTextBoxFor<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_ProjectStart_Label, false, 1))
+                </div>
+            </div>
 
 
 			@if (RoadkillContext.IsAdmin)

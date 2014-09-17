@@ -63,5 +63,10 @@ namespace Roadkill.Core.Extensions
 			else
 				return new { @class = "form-control" + additionalCssClass, rel = "popover", data_content = help, tabIndex = tabIndex };
 		}
+
+        public static MvcHtmlString BootstrapDatePicker<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string help, bool autoCompleteOff = false, int tabIndex = 0)
+        {
+            return htmlHelper.TextBoxFor(expression, GetHtmlAttributes(help, autoCompleteOff, tabIndex));
+        }
 	}
 }

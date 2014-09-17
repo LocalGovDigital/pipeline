@@ -21,6 +21,9 @@ namespace Roadkill.Core.Database.LightSpeed
 		[Column("modifiedon")]
 		private DateTime _modifiedOn;
 
+        [Column("projectstart")]
+        private DateTime _projectstart;
+
 		[Column("tags")]
 		private string _tags;
 
@@ -118,5 +121,17 @@ namespace Roadkill.Core.Database.LightSpeed
 				Set<bool>(ref _isLocked, value);
 			}
 		}
+
+        public DateTime ProjectStart
+        {
+            get
+            {
+                return _projectstart;
+            }
+            set
+            {
+                Set<DateTime>(ref _projectstart, value);
+            }
+        }
 	}
 }

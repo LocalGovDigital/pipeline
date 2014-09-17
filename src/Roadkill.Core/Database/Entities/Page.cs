@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Roadkill.Core.Database
 {
@@ -63,6 +64,16 @@ namespace Roadkill.Core.Database
 		/// The modified on.
 		/// </value>
 		public DateTime ModifiedOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date the project is due to start.
+        /// </summary>
+        /// <value>
+        /// The project start.
+        /// </value>
+        ///
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ProjectStart { get; set; }
 
 		/// <summary>
 		/// Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).

@@ -2642,5 +2642,30 @@ namespace Roadkill.Core.Localization {
                 return ResourceManager.GetString("Version_Title", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add/edit page.
+        /// </summary>
+        public static string EditPage_ProjectStart
+        {
+            get
+            {
+                return ResourceManager.GetString("EditPage_ProjectStart", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string EditPage_ProjectStart_Label
+        {
+            get
+            {
+                return ResourceManager.GetString("EditPage_ProjectStart_Label", resourceCulture);
+            }
+        }
+
+
+
     }
 }

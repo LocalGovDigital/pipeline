@@ -35,6 +35,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			entity.IsLocked = page.IsLocked;
 			entity.ModifiedOn = page.ModifiedOn;
 			entity.ModifiedBy = page.ModifiedBy;
+            entity.ProjectStart = page.ProjectStart;
 			entity.Tags = page.Tags;
 			entity.Title = page.Title;
 		}

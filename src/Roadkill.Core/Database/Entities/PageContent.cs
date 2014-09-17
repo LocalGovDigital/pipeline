@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Roadkill.Core.Database
 {
@@ -46,6 +47,15 @@ namespace Roadkill.Core.Database
 		/// The edited on.
 		/// </value>
 		public DateTime EditedOn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date the project is due to start.
+        /// </summary>
+        /// <value>
+        /// The project start.
+        /// </value>
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ProjectStart { get; set; }
 
 		/// <summary>
 		/// Gets or sets the version number of the content, which starts at 0.

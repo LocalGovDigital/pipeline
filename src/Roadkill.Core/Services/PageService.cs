@@ -67,12 +67,13 @@ namespace Roadkill.Core.Services
 				page.CreatedOn = DateTime.UtcNow;
 				page.ModifiedOn = DateTime.UtcNow;
 				page.ModifiedBy = AppendIpForDemoSite(currentUser);
+                page.ProjectStart = model.ProjectStart;
 
 				// Double check, incase the HTML form was faked.
 				if (_context.IsAdmin)
 					page.IsLocked = model.IsLocked;
 
-				PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow);
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart);
 
 				_listCache.RemoveAll();
 				_pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -453,6 +454,7 @@ namespace Roadkill.Core.Services
 				page.Tags = model.CommaDelimitedTags();
 				page.ModifiedOn = DateTime.UtcNow;
 				page.ModifiedBy = AppendIpForDemoSite(currentUser);
+                page.ProjectStart = model.ProjectStart;
 
 				// A second check to ensure a fake IsLocked POST doesn't work.
 				if (_context.IsAdmin)
@@ -472,7 +474,7 @@ namespace Roadkill.Core.Services
 				_listCache.RemoveAll();
 
 				int newVersion = _historyService.MaxVersion(model.Id) + 1;
-				PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion); 
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart); 
 
 				// Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
 				if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())
