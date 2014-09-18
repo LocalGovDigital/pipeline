@@ -115,7 +115,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No pages found..
+        ///   Looks up a localized string similar to No projects found..
         /// </summary>
         public static string AllPages_NoPages {
             get {
@@ -124,7 +124,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Pages.
+        ///   Looks up a localized string similar to All Projects.
         /// </summary>
         public static string AllPages_Title {
             get {
@@ -322,7 +322,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page can only be edited by administrators..
+        ///   Looks up a localized string similar to This project can only be edited by administrators..
         /// </summary>
         public static string EditPage_AdminOnly {
             get {
@@ -331,7 +331,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to save the page:.
+        ///   Looks up a localized string similar to Unable to save the project:.
         /// </summary>
         public static string EditPage_Error {
             get {
@@ -385,7 +385,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add/edit page.
+        ///   Looks up a localized string similar to Add/edit project.
         /// </summary>
         public static string EditPage_Title {
             get {
@@ -709,7 +709,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page history.
+        ///   Looks up a localized string similar to Project history.
         /// </summary>
         public static string History_Title {
             get {
@@ -772,7 +772,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All pages.
+        ///   Looks up a localized string similar to All projects.
         /// </summary>
         public static string Navigation_AllPages {
             get {
@@ -835,7 +835,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main Page.
+        ///   Looks up a localized string similar to Main Project.
         /// </summary>
         public static string Navigation_MainPage {
             get {
@@ -844,7 +844,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New page.
+        ///   Looks up a localized string similar to New project.
         /// </summary>
         public static string Navigation_NewPage {
             get {
@@ -880,7 +880,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To set a main page, create a page and assign the tag &apos;homepage&apos; to it..
+        ///   Looks up a localized string similar to To set a main project, create a page and assign the tag &apos;homepage&apos; to it..
         /// </summary>
         public static string NoMainPage_Label {
             get {
@@ -889,7 +889,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have no mainpage set.
+        ///   Looks up a localized string similar to You have no main project set.
         /// </summary>
         public static string NoMainPage_Title {
             get {
@@ -943,7 +943,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All pages for tag {0}.
+        ///   Looks up a localized string similar to All projects for tag {0}.
         /// </summary>
         public static string Pages_ForTag {
             get {
@@ -952,7 +952,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No pages for {0}.
+        ///   Looks up a localized string similar to No projects for {0}.
         /// </summary>
         public static string Pages_ForTag_NoPages {
             get {
@@ -961,7 +961,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All pages created by {0}.
+        ///   Looks up a localized string similar to All projects created by {0}.
         /// </summary>
         public static string Pages_ForUser {
             get {
@@ -970,7 +970,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} hasn&apos;t created any pages yet..
+        ///   Looks up a localized string similar to {0} hasn&apos;t created any projects yet..
         /// </summary>
         public static string Pages_ForUser_NoPages {
             get {
@@ -1159,7 +1159,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your search &apos;{0}&apos; did not match any pages.
+        ///   Looks up a localized string similar to Your search &apos;{0}&apos; did not match any projects.
         /// </summary>
         public static string Search_NoResults {
             get {
@@ -1249,7 +1249,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This page was last modified.
+        ///   Looks up a localized string similar to This project was last modified.
         /// </summary>
         public static string Shared_LastModified {
             get {
@@ -1465,7 +1465,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Page cache.
+        ///   Looks up a localized string similar to Project cache.
         /// </summary>
         public static string SiteSettings_Cache_Page_Cache {
             get {
@@ -2642,76 +2642,5 @@ namespace Roadkill.Core.Localization {
                 return ResourceManager.GetString("Version_Title", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Add/edit page.
-        /// </summary>
-        public static string EditPage_ProjectStart
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectStart", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string EditPage_ProjectStart_Label
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectStart_Label", resourceCulture);
-            }
-        }
-
-
-        /// <summary>
-        ///   Looks up a localized string similar to Add/edit page.
-        /// </summary>
-        public static string EditPage_ProjectEnd
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectEnd", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string EditPage_ProjectEnd_Label
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectEnd_Label", resourceCulture);
-            }
-        }
-
-
-        /// <summary>
-        ///   Looks up a localized string similar to Add/edit page.
-        /// </summary>
-        public static string EditPage_ProjectEstimatedTime
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectEstimatedTime", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string EditPage_ProjectEstimatedTime_Label
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectEstimatedTime_Label", resourceCulture);
-            }
-        }
-
-
-
     }
 }

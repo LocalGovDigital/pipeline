@@ -1064,12 +1064,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_NoPages">
             <summary>
-              Looks up a localized string similar to No pages found..
+              Looks up a localized string similar to No projects found..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_Title">
             <summary>
-              Looks up a localized string similar to All Pages.
+              Looks up a localized string similar to All Projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_TitleColumnHeading">
@@ -1179,12 +1179,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_AdminOnly">
             <summary>
-              Looks up a localized string similar to This page can only be edited by administrators..
+              Looks up a localized string similar to This project can only be edited by administrators..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Error">
             <summary>
-              Looks up a localized string similar to Unable to save the page:.
+              Looks up a localized string similar to Unable to save the project:.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Image_Title">
@@ -1214,7 +1214,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Title">
             <summary>
-              Looks up a localized string similar to Add/edit page.
+              Looks up a localized string similar to Add/edit project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Title_Label">
@@ -1394,7 +1394,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.History_Title">
             <summary>
-              Looks up a localized string similar to Page history.
+              Looks up a localized string similar to Project history.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.History_Version">
@@ -1429,7 +1429,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_AllPages">
             <summary>
-              Looks up a localized string similar to All pages.
+              Looks up a localized string similar to All projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Categories">
@@ -1464,12 +1464,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_MainPage">
             <summary>
-              Looks up a localized string similar to Main Page.
+              Looks up a localized string similar to Main Project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_NewPage">
             <summary>
-              Looks up a localized string similar to New page.
+              Looks up a localized string similar to New project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Register">
@@ -1489,12 +1489,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.NoMainPage_Label">
             <summary>
-              Looks up a localized string similar to To set a main page, create a page and assign the tag &apos;homepage&apos; to it..
+              Looks up a localized string similar to To set a main project, create a page and assign the tag &apos;homepage&apos; to it..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.NoMainPage_Title">
             <summary>
-              Looks up a localized string similar to You have no mainpage set.
+              Looks up a localized string similar to You have no main project set.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Page_Info_CreatedBy">
@@ -1524,22 +1524,22 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForTag">
             <summary>
-              Looks up a localized string similar to All pages for tag {0}.
+              Looks up a localized string similar to All projects for tag {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForTag_NoPages">
             <summary>
-              Looks up a localized string similar to No pages for {0}.
+              Looks up a localized string similar to No projects for {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForUser">
             <summary>
-              Looks up a localized string similar to All pages created by {0}.
+              Looks up a localized string similar to All projects created by {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForUser_NoPages">
             <summary>
-              Looks up a localized string similar to {0} hasn&apos;t created any pages yet..
+              Looks up a localized string similar to {0} hasn&apos;t created any projects yet..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Profile_Details_Updated_Successfully">
@@ -1644,7 +1644,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Search_NoResults">
             <summary>
-              Looks up a localized string similar to Your search &apos;{0}&apos; did not match any pages.
+              Looks up a localized string similar to Your search &apos;{0}&apos; did not match any projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Search_PlaceHolder">
@@ -1694,7 +1694,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_LastModified">
             <summary>
-              Looks up a localized string similar to This page was last modified.
+              Looks up a localized string similar to This project was last modified.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_Lastname_Label">
@@ -1814,7 +1814,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.SiteSettings_Cache_Page_Cache">
             <summary>
-              Looks up a localized string similar to Page cache.
+              Looks up a localized string similar to Project cache.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.SiteSettings_Cache_Site_Cache">
@@ -2465,36 +2465,6 @@
         <member name="P:Roadkill.Core.Localization.SiteStrings.Version_Title">
             <summary>
               Looks up a localized string similar to Version {0}.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart">
-            <summary>
-              Looks up a localized string similar to Add/edit page.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart_Label">
-            <summary>
-              Looks up a localized string similar to Title.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd">
-            <summary>
-              Looks up a localized string similar to Add/edit page.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd_Label">
-            <summary>
-              Looks up a localized string similar to Title.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime">
-            <summary>
-              Looks up a localized string similar to Add/edit page.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime_Label">
-            <summary>
-              Looks up a localized string similar to Title.
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.Attributes.CacheContentTypeAttribute">
