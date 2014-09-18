@@ -16,14 +16,14 @@
 
 <h1 class="pagetitle">@Model.Title</h1>
 <div class="row">
-    <div class="col-xs-3">Start: @MvcHtmlString.Create(Model.ProjectStart.ToShortDateString())</div>
-    <div class="col-xs-3">Finish: @MvcHtmlString.Create(Model.ProjectEnd.ToShortDateString())</div>
+    <div class="col-xs-3"><b>Start:</b> @MvcHtmlString.Create(Model.ProjectStart.ToShortDateString())</div>
+    <div class="col-xs-3"><b>Finish:</b> @MvcHtmlString.Create(Model.ProjectEnd.ToShortDateString())</div>
     @if (Model.ProjectEstimatedTime == false)
     {  <div class="col-xs-6">These dates are estimated</div>}
 </div>
 <div class="row">
-    <div class="col-xs-3">Status: @MvcHtmlString.Create(Model.ProjectLanguage)</div>
-    <div class="col-xs-3">Language: @MvcHtmlString.Create(Model.ProjectStatus)</div>
+    <div class="col-xs-3"><b>Status:</b> @MvcHtmlString.Create(Model.ProjectLanguage)</div>
+    <div class="col-xs-3"><b>Language</b>: @MvcHtmlString.Create(Model.ProjectStatus)</div>
 </div>
 <div class="row">
     <div class="col-xs-12">

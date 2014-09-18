@@ -122,6 +122,12 @@ namespace Roadkill.Core.Services
 					document.Add(new Field("createdby", model.CreatedBy, Field.Store.YES, Field.Index.NOT_ANALYZED));
 					document.Add(new Field("createdon", model.CreatedOn.ToShortDateString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 					document.Add(new Field("contentlength", model.Content.Length.ToString(), Field.Store.YES, Field.Index.NO));
+                    document.Add(new Field("projectstart", model.ProjectStart.ToShortDateString(), Field.Store.YES, Field.Index.NO));
+                    document.Add(new Field("projectend", model.ProjectEnd.ToShortDateString(), Field.Store.YES, Field.Index.NO));
+                    document.Add(new Field("projectestimatedtime", model.ProjectEstimatedTime.ToString(), Field.Store.YES, Field.Index.NO));
+                    document.Add(new Field("projectlanguage", model.ProjectLanguage, Field.Store.YES, Field.Index.NO));
+                    document.Add(new Field("projectstatus", model.ProjectStatus, Field.Store.YES, Field.Index.NO));
+
 
 					writer.AddDocument(document);
 					writer.Optimize();
@@ -199,6 +205,11 @@ namespace Roadkill.Core.Services
 						document.Add(new Field("createdby", pageModel.CreatedBy, Field.Store.YES, Field.Index.NOT_ANALYZED));
 						document.Add(new Field("createdon", pageModel.CreatedOn.ToShortDateString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 						document.Add(new Field("contentlength", pageModel.Content.Length.ToString(), Field.Store.YES, Field.Index.NO));
+                        document.Add(new Field("projectstart", pageModel.ProjectStart.ToShortDateString(), Field.Store.YES, Field.Index.NO));
+                        document.Add(new Field("projectend", pageModel.ProjectEnd.ToShortDateString(), Field.Store.YES, Field.Index.NO));
+                        document.Add(new Field("projectestimatedtime", pageModel.ProjectEstimatedTime.ToString(), Field.Store.YES, Field.Index.NO));
+                        document.Add(new Field("projectlanguage", pageModel.ProjectLanguage, Field.Store.YES, Field.Index.NO));
+                        document.Add(new Field("projectstatus", pageModel.ProjectStatus, Field.Store.YES, Field.Index.NO));
 
 						writer.AddDocument(document);
 					}

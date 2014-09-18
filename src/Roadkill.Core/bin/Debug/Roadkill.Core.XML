@@ -6817,6 +6817,39 @@
             The lucene.net score for the search result.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectStart">
+             <summary>
+             Gets or sets the date the project is due to start.
+             </summary>
+             <value>
+             The project start.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.DirectoryViewModel">
             <summary>
             Provides directory information for a folder in the attachments folder.

@@ -82,6 +82,42 @@ namespace Roadkill.Core.Mvc.ViewModels
 		/// </summary>
 		public float Score { get; internal set; }
 
+        /// <summary>
+        /// Gets or sets the date the project is due to start.
+        /// </summary>
+        /// <value>
+        /// The project start.
+        /// </value>
+        ///
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ProjectStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date the project is due to end.
+        /// </summary>
+        /// <value>
+        /// The project end.
+        /// </value>
+        ///
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        public DateTime ProjectEnd { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the start and end dates are estimated.
+        /// </summary>
+        public bool ProjectEstimatedTime { get; set; }
+
+        /// <summary>
+        /// The status of the project
+        /// </summary>
+        public string ProjectStatus { get; set; }
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public string ProjectLanguage { get; set; }
+
+
 		public SearchResultViewModel()
 		{
 		}
@@ -103,12 +139,26 @@ namespace Roadkill.Core.Mvc.ViewModels
 			CreatedBy = document.GetField("createdby").StringValue;		
 			ContentLength = int.Parse(document.GetField("contentlength").StringValue);
 			Score = scoreDoc.Score;
+            ProjectStatus = document.GetField("projectstatus").StringValue;
+            ProjectLanguage = document.GetField("projectlanguage").StringValue;
 
-			DateTime createdOn = DateTime.UtcNow;
-			if (!DateTime.TryParse(document.GetField("createdon").StringValue, out createdOn))
-				createdOn = DateTime.UtcNow;
+            DateTime createdOn = DateTime.UtcNow;
+            if (!DateTime.TryParse(document.GetField("createdon").StringValue, out createdOn))
+                createdOn = DateTime.UtcNow;
 
-			CreatedOn = createdOn;
+            CreatedOn = createdOn;
+
+            DateTime projectStart = DateTime.UtcNow;
+            if (!DateTime.TryParse(document.GetField("projectstart").StringValue, out projectStart))
+                projectStart = DateTime.UtcNow;
+
+            ProjectStart = projectStart;
+
+            DateTime projectEnd = DateTime.UtcNow;
+            if (!DateTime.TryParse(document.GetField("projectend").StringValue, out projectEnd))
+                projectEnd = DateTime.UtcNow;
+
+			ProjectEnd = projectEnd;
 		}
 
 		private void EnsureFieldsExist(Document document)
@@ -120,7 +170,12 @@ namespace Roadkill.Core.Mvc.ViewModels
 			EnsureFieldExists(fields, "tags");
 			EnsureFieldExists(fields, "createdby");
 			EnsureFieldExists(fields, "contentlength");
-			EnsureFieldExists(fields, "createdon");
+            EnsureFieldExists(fields, "createdon");
+            EnsureFieldExists(fields, "projectstart");
+            EnsureFieldExists(fields, "projectend");
+            EnsureFieldExists(fields, "projectestimatedtime");
+            EnsureFieldExists(fields, "projectstatus");
+            EnsureFieldExists(fields, "projectlanguage");
 		}
 
 		private void EnsureFieldExists(IList<IFieldable> fields, string fieldname)
