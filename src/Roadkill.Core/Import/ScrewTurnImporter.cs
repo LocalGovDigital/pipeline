@@ -265,8 +265,10 @@ namespace Roadkill.Core.Import
                             DateTime projectStart = (DateTime)reader["ProjectStart"];
                             DateTime projectEnd = (DateTime)reader["ProjectEnd"];
                             bool projectEstimatedTime = (bool)reader["ProjectEnd"];
+                            string projectLanguage = (string)reader["ProjectLanguage"];
+                            string projectStatus = (string)reader["ProjectStatus"];
 
-                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime);
+                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectLanguage, projectStatus);
 							hasContent = true;
 						}
 					}
@@ -274,7 +276,7 @@ namespace Roadkill.Core.Import
 					// For broken content, make sure the page has something
 					if (!hasContent)
 					{
-                        Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow, DateTime.UtcNow, DateTime.UtcNow,false);
+                        Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow, DateTime.UtcNow, DateTime.UtcNow,false, "unknown", "unknown");
 					}
 				}
 			}

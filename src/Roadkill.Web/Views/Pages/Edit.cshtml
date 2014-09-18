@@ -51,7 +51,16 @@
                 </h6>
             </div>
 
-
+            <div class="form-group">
+                <div class="col-sm-6">
+                    Project Status
+                    @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                </div>
+                <div class="col-sm-6">
+                    Project Language
+                    @Html.BootstrapDropDownListFor(p => p.ProjectLanguage, Model.LanguageTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                </div>
+            </div>
 
 
 			@if (RoadkillContext.IsAdmin)

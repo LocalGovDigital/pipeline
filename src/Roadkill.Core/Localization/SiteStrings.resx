@@ -1005,4 +1005,19 @@
   <data name="SiteSettings_Cache_Not_Enabled" xml:space="preserve">
     <value>The object cache is not currently enabled.</value>
   </data>
+  <data name="EditPage_ProjectEnd_Label" xml:space="preserve">
+    <value>ProjectEnd</value>
+  </data>
+  <data name="EditPage_ProjectEstimatedTime_Label" xml:space="preserve">
+    <value>ProjectEstimatedTime</value>
+  </data>
+  <data name="EditPage_ProjectStart_Label" xml:space="preserve">
+    <value>ProjectStart</value>
+  </data>
+  <data name="EditPage_ProjectLanguage_Label" xml:space="preserve">
+    <value>ProjectLanguage</value>
+  </data>
+  <data name="EditPage_ProjectStatus_Label" xml:space="preserve">
+    <value>ProjectStatus</value>
+  </data>
 </root>

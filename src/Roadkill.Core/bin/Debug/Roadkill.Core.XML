@@ -1207,6 +1207,31 @@
               Looks up a localized string similar to Preview.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd_Label">
+            <summary>
+              Looks up a localized string similar to ProjectEnd.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime_Label">
+            <summary>
+              Looks up a localized string similar to ProjectEstimatedTime.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStatus_Label">
+            <summary>
+              Looks up a localized string similar to EditPage_ProjectStatus_Label.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectLanguage_Label">
+            <summary>
+              Looks up a localized string similar to ProjectLanguage.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart_Label">
+            <summary>
+              Looks up a localized string similar to ProjectStart.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Tags_Label">
             <summary>
               Looks up a localized string similar to Tags.
@@ -7877,6 +7902,16 @@
             Gets or sets whether the start and end dates are estimated.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.PageContent.VersionNumber">
             <summary>
             Gets or sets the version number of the content, which starts at 0.
@@ -8161,6 +8196,16 @@
             Gets or sets whether the start and end dates are estimated.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.Page.Tags">
             <summary>
             Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
@@ -8266,6 +8311,16 @@
             The date the page was last modified on.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ModifiedOnWithOffset">
             <summary>
             Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -8335,6 +8390,18 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.AllTags">
             <summary>
             Retrieves all tags for all pages in the system. This is empty unless filled by the controller.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectStatusTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.LanguageTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.RoadkillApplication">

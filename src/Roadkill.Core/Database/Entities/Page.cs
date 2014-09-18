@@ -90,6 +90,16 @@ namespace Roadkill.Core.Database
         /// </summary>
         public bool ProjectEstimatedTime { get; set; }
 
+        /// <summary>
+        /// The status of the project
+        /// </summary>
+        public string ProjectStatus { get; set; }
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public string ProjectLanguage { get; set; }
+
 		/// <summary>
 		/// Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
 		/// </summary>

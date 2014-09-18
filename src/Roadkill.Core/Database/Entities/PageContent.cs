@@ -72,6 +72,16 @@ namespace Roadkill.Core.Database
         /// </summary>
         public bool ProjectEstimatedTime { get; set; }
 
+        /// <summary>
+        /// The status of the project
+        /// </summary>
+        public string ProjectStatus { get; set; }
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public string ProjectLanguage { get; set; }
+
 		/// <summary>
 		/// Gets or sets the version number of the content, which starts at 0.
 		/// </summary>

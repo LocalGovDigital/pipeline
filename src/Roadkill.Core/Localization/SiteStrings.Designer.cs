@@ -376,6 +376,55 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ProjectEnd.
+        /// </summary>
+        public static string EditPage_ProjectEnd_Label {
+            get {
+                return ResourceManager.GetString("EditPage_ProjectEnd_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ProjectEstimatedTime.
+        /// </summary>
+        public static string EditPage_ProjectEstimatedTime_Label {
+            get {
+                return ResourceManager.GetString("EditPage_ProjectEstimatedTime_Label", resourceCulture);
+            }
+        }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to EditPage_ProjectStatus_Label.
+        /// </summary>
+        public static string EditPage_ProjectStatus_Label
+        {
+            get
+            {
+                return ResourceManager.GetString("EditPage_ProjectStatus_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ProjectLanguage.
+        /// </summary>
+        public static string EditPage_ProjectLanguage_Label {
+            get {
+                return ResourceManager.GetString("EditPage_ProjectLanguage_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ProjectStart.
+        /// </summary>
+        public static string EditPage_ProjectStart_Label {
+            get {
+                return ResourceManager.GetString("EditPage_ProjectStart_Label", resourceCulture);
+            }
+        }
+        
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string EditPage_Tags_Label {

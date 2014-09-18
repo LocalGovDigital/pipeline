@@ -9,6 +9,11 @@ using Roadkill.Core.Text;
 using Roadkill.Core.Converters;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
+using Roadkill.Core.Configuration;
+using System.IO;
+using System.Web;
+using System.Web.Mvc;
+
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
@@ -64,6 +69,8 @@ namespace Roadkill.Core.Mvc.ViewModels
 		/// </summary>
 		public DateTime CreatedOn { get; set; }
 
+
+
 		/// <summary>
 		/// Returns true if no Id exists for the page.
 		/// </summary>
@@ -99,6 +106,16 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// The date the page was last modified on.
         /// </summary>
         public bool ProjectEstimatedTime { get; set; }
+
+        /// <summary>
+        /// The status of the project
+        /// </summary>
+        public string ProjectStatus { get; set; }
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public string ProjectLanguage { get; set; }
 
 		/// <summary>
 		/// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -228,6 +245,8 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStart = page.ProjectStart;
             ProjectEnd = page.ProjectEnd;
             ProjectEstimatedTime = page.ProjectEstimatedTime;
+            ProjectStatus = page.ProjectStatus;
+            ProjectLanguage = page.ProjectLanguage;
 
 			CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
 			ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
@@ -259,6 +278,8 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStart = pageContent.Page.ProjectStart;
             ProjectEnd = pageContent.ProjectEnd;
             ProjectEstimatedTime = pageContent.ProjectEstimatedTime;
+            ProjectStatus = pageContent.ProjectStatus;
+            ProjectLanguage = pageContent.ProjectLanguage;
 
 			PageHtml pageHtml = converter.ToHtml(pageContent.Text);
 			ContentAsHtml = pageHtml.Html;
@@ -382,5 +403,65 @@ namespace Roadkill.Core.Mvc.ViewModels
 
 			return title;
 		}
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public List<SelectListItem> ProjectStatusTypesAsSelectList
+        {
+            get
+            {
+                string[] strStatuses = new string[] { "Concept", "Discovery", "Alpha", "Beta", "Live", "Decommissioned" };                
+                              
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach(string status in strStatuses)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = status;
+                    item.Value = status;
+
+                    if (Title == status)
+                    { item.Selected = true; }
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+        }
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public List<SelectListItem> LanguageTypesAsSelectList
+        {
+            get
+            {
+                string[] strLanguages = new string[] { "Non-dependant", "C#", "Java", "JavaScript", "PHP", "Ruby", "Other" };
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (string language in strLanguages)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = language;
+                    item.Value = language;
+
+                    if (Title == language)
+                    { item.Selected = true; }
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+        }
 	}
 }

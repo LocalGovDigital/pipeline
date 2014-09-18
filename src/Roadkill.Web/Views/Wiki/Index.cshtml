@@ -1,47 +1,59 @@
 ﻿@model PageViewModel
-@{ 
-	ViewBag.Title = Model.Title;
+@{
+    ViewBag.Title = Model.Title;
 }
 
 @section PageToolbar
-{  
-	@* This is rendered by an action (and not a partial/extension method) for future donut caching *@
-	@Html.Action("PageToolBar", "Wiki", new { id = Model.Id })
+{
+    @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
+    @Html.Action("PageToolBar", "Wiki", new { id = Model.Id })
 }
 
 @section ViewHistoryLink
 {
-	<div id="viewhistory">@Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)</div>
+    <div id="viewhistory">@Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)</div>
 }
 
 <h1 class="pagetitle">@Model.Title</h1>
-
-<div id="pagecontent">
-@MvcHtmlString.Create(Model.ContentAsHtml)
+<div class="row">
+    <div class="col-xs-3">Start: @MvcHtmlString.Create(Model.ProjectStart.ToShortDateString())</div>
+    <div class="col-xs-3">Finish: @MvcHtmlString.Create(Model.ProjectEnd.ToShortDateString())</div>
+    @if (Model.ProjectEstimatedTime == false)
+    {  <div class="col-xs-6">These dates are estimated</div>}
+</div>
+<div class="row">
+    <div class="col-xs-3">Status: @MvcHtmlString.Create(Model.ProjectLanguage)</div>
+    <div class="col-xs-3">Language: @MvcHtmlString.Create(Model.ProjectStatus)</div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div id="pagecontent">
+            @MvcHtmlString.Create(Model.ContentAsHtml)
+        </div>
+    </div>
 </div>
 
-@section PageDetailsFooter
+        @section PageDetailsFooter
 {
-@SiteStrings.Shared_LastModified <span id="lastmodified-on" title="@Model.ModifiedOnWithOffset">@Model.ModifiedOnWithOffset</span>.
-}
+            @SiteStrings.Shared_LastModified <span id="lastmodified-on" title="@Model.ModifiedOnWithOffset">@Model.ModifiedOnWithOffset</span>.
+        }
 
-@section PluginHead
+        @section PluginHead
 {
-	<!-- Plugins -->
-	@Html.Raw(Model.PluginHeadHtml)<!-- End plugins head -->
-}
+            <!-- Plugins -->
+            @Html.Raw(Model.PluginHeadHtml)<!-- End plugins head -->
+        }
+        @section PluginPreContainer
+{
+            @MvcHtmlString.Create(Model.PluginPreContainer)
+        }
 
-@section PluginPreContainer
+        @section PluginPostContainer
 {
-	@MvcHtmlString.Create(Model.PluginPreContainer)
-}
+            @MvcHtmlString.Create(Model.PluginPostContainer)
+        }
 
-@section PluginPostContainer
+        @section PluginFooter
 {
-	@MvcHtmlString.Create(Model.PluginPostContainer)
-}
-
-@section PluginFooter
-{
-	@MvcHtmlString.Create(Model.PluginFooterHtml)
-}
+            @MvcHtmlString.Create(Model.PluginFooterHtml)
+        }
