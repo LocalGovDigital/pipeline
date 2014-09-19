@@ -77,7 +77,7 @@ namespace Roadkill.Core.Services
 				if (_context.IsAdmin)
 					page.IsLocked = model.IsLocked;
 
-                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectLanguage, model.ProjectStatus);
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage);
 
 				_listCache.RemoveAll();
 				_pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -482,7 +482,7 @@ namespace Roadkill.Core.Services
 				_listCache.RemoveAll();
 
 				int newVersion = _historyService.MaxVersion(model.Id) + 1;
-                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectLanguage, model.ProjectStatus); 
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage); 
 
 				// Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
 				if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())

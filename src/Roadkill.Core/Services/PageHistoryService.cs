@@ -160,7 +160,7 @@ namespace Roadkill.Core.Services
                 string projectLanguage = versionContent.ProjectLanguage;
                 string projectStatus = versionContent.ProjectStatus;
 
-                Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectLanguage, projectStatus);
+                Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage);
 
 				// Clear the cache
 				_pageViewModelCache.Remove(page.Id);

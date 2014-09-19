@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Linq.Expressions;
@@ -56,6 +57,11 @@ namespace Roadkill.Core.Extensions
 			return htmlHelper.ValidationSummary(message, new { @class = "alert alert-block alert-danger fade in", data_dismiss = "alert" });
 		}
 
+        public static MvcHtmlString BootstrapDatePicker<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string help, bool autoCompleteOff = false, int tabIndex = 0)
+        {
+            return htmlHelper.TextBoxFor(expression, GetHtmlAttributes(help, autoCompleteOff, tabIndex, " datepicker"));
+        }
+
 		private static object GetHtmlAttributes(string help, bool autoCompleteOff, int tabIndex, string additionalCssClass = "")
 		{
 			if (autoCompleteOff)
@@ -64,9 +70,8 @@ namespace Roadkill.Core.Extensions
 				return new { @class = "form-control" + additionalCssClass, rel = "popover", data_content = help, tabIndex = tabIndex };
 		}
 
-        public static MvcHtmlString BootstrapDatePicker<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string help, bool autoCompleteOff = false, int tabIndex = 0)
-        {
-            return htmlHelper.TextBox("Date", String.Format("{0:d}", expression, new { @class = "datefield", type = "date" }));
+
+        
         }
 	}
-}
+

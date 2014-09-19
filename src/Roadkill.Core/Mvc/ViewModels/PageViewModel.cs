@@ -411,8 +411,8 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public List<SelectListItem> ProjectStatusTypesAsSelectList
         {
-            get
-            {
+          
+           get{
                 string[] strStatuses = new string[] { "Concept", "Discovery", "Alpha", "Beta", "Live", "Decommissioned" };                
                               
                 List<SelectListItem> items = new List<SelectListItem>();
@@ -424,14 +424,17 @@ namespace Roadkill.Core.Mvc.ViewModels
                     item.Text = status;
                     item.Value = status;
 
-                    if (Title == status)
-                    { item.Selected = true; }
+
+                    if (ProjectStatus == status.ToString())
+                    { item.Selected = true;
+                    }
 
                     items.Add(item);
                 }
 
                 return items;
-            }
+           }
+           
         }
 
 
@@ -454,7 +457,7 @@ namespace Roadkill.Core.Mvc.ViewModels
                     item.Text = language;
                     item.Value = language;
 
-                    if (Title == language)
+                    if (language == ProjectLanguage)
                     { item.Selected = true; }
 
                     items.Add(item);

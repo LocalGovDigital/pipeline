@@ -34,6 +34,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0px;
     margin: 0px;
     font-size:large;
+    background-image:url(../../Assets/Images/pipeline.jpg);
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
 }
 
 #footer-wrapper {
@@ -49,10 +53,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Page and pen toolbar */
 #toolbar {
-    position: absolute;
-    top: 85px;
-    left: 5px;
+
+    top: 100px;
+    right: 40px;
     z-index: 99;
+    float:right;
+    position:relative;
 }
 
 #pagecontent

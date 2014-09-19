@@ -268,7 +268,7 @@ namespace Roadkill.Core.Import
                             string projectLanguage = (string)reader["ProjectLanguage"];
                             string projectStatus = (string)reader["ProjectStatus"];
 
-                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectLanguage, projectStatus);
+                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage);
 							hasContent = true;
 						}
 					}

@@ -36,11 +36,11 @@
             <div class="form-group">
                 <div class="col-sm-6">
                     Project Start
-                    @(Html.BootstrapTextBoxFor<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_ProjectStart_Label, false, 1))
+                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false, 1))
                 </div>
                 <div class="col-sm-6">
                     Project End
-                    @(Html.BootstrapTextBoxFor<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_ProjectEnd_Label, false, 1))
+                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false, 1))
                 </div>
             </div>
 
@@ -108,4 +108,15 @@
 		</div>
 	</div>
 </div>
+<script>
+    $('#ProjectStart').datepicker({
+    format: 'dd/mm/yyyy',
+    startDate: '-3d'
+    })
 
+    $('#ProjectEnd').datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    })
+
+</script>
