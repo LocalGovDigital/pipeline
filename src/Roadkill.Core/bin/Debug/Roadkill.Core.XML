@@ -98,6 +98,42 @@
             from the DateTime returned. If the string isn't a valid date, DateTime.Min is returned.
             </summary>
         </member>
+        <member name="T:Roadkill.Core.Database.Organisation">
+            <summary>
+            A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Database.IDataStoreEntity">
+            <summary>
+            Defines a class that should be stored in the database or other kind of data store.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.IDataStoreEntity.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.Id">
+            <summary>
+            Gets or sets the page's unique ID.
+            </summary>
+            <value>
+            The id.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.OrgName">
+            <summary>
+            Gets or sets the title.
+            </summary>
+            <value>
+            The title.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Email.IEmailClient">
             <summary>
             
@@ -664,6 +700,32 @@
             Attempts to copy the correct SQL binaries to the bin folder for the architecture the app pool is running under.
             </summary>
         </member>
+        <member name="T:Roadkill.Core.Mvc.ViewModels.OrgViewModel">
+            <summary>
+            Provides a data summary class for creating and saving user details.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.OrgViewModel.#ctor">
+            <summary>
+            Constructor used by none-controllers
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.OrgViewModel.#ctor(Roadkill.Core.Database.Organisation)">
+            <summary>
+            Takes all properties on <see cref="N:Org"/> and fills them on in the OrgViewModel
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.OrgViewModel.Id">
+            <summary>
+            The user's id
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.OrgViewModel.OrgsAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Security.FormsAuthenticationWrapper">
             <summary>
             Used to wrap FormsAuthentication methods, where Mono does not implement the methods or 
@@ -1217,11 +1279,6 @@
               Looks up a localized string similar to ProjectEstimatedTime.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStatus_Label">
-            <summary>
-              Looks up a localized string similar to EditPage_ProjectStatus_Label.
-            </summary>
-        </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectLanguage_Label">
             <summary>
               Looks up a localized string similar to ProjectLanguage.
@@ -1230,6 +1287,11 @@
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart_Label">
             <summary>
               Looks up a localized string similar to ProjectStart.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStatus_Label">
+            <summary>
+              Looks up a localized string similar to ProjectStatus.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Tags_Label">
@@ -1735,6 +1797,11 @@
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_NotLoggedIn">
             <summary>
               Looks up a localized string similar to Not logged in.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_OrgID_Label">
+            <summary>
+              Looks up a localized string similar to Organisation.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_Password_Label">
@@ -3715,16 +3782,6 @@
             </summary>
             <param name="title"></param>
             <returns></returns>
-        </member>
-        <member name="T:Roadkill.Core.Database.IDataStoreEntity">
-            <summary>
-            Defines a class that should be stored in the database or other kind of data store.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Database.IDataStoreEntity.ObjectId">
-            <summary>
-            The unique id for this object - for use with document stores that require a unique id for storage.
-            </summary>
         </member>
         <member name="T:Roadkill.Core.Database.LightSpeed.ToEntity">
             <summary>
@@ -6422,6 +6479,14 @@
             The lastname.
             </value>
         </member>
+        <member name="P:Roadkill.Core.Database.User.OrgID">
+            <summary>
+            Gets or sets the organsation ID of the user.
+            </summary>
+            <value>
+            The OrgID.
+            </value>
+        </member>
         <member name="P:Roadkill.Core.Database.User.Password">
             <summary>
             Gets the hashed password for the user. 
@@ -6572,6 +6637,11 @@
             The last name of the user.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgID">
+            <summary>
+            The ID of user's organisation.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.ExistingUsername">
             <summary>
             The current (or if being changed, previous) username.
@@ -6628,6 +6698,18 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.PasswordUpdateSuccessful">
             <summary>
             True when the password was updated during postback.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgsAsNewSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgsAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.HistoryException">

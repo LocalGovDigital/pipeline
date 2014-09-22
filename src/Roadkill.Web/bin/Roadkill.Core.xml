@@ -98,6 +98,42 @@
             from the DateTime returned. If the string isn't a valid date, DateTime.Min is returned.
             </summary>
         </member>
+        <member name="T:Roadkill.Core.Database.Organisation">
+            <summary>
+            A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Database.IDataStoreEntity">
+            <summary>
+            Defines a class that should be stored in the database or other kind of data store.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.IDataStoreEntity.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.Id">
+            <summary>
+            Gets or sets the page's unique ID.
+            </summary>
+            <value>
+            The id.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.OrgName">
+            <summary>
+            Gets or sets the title.
+            </summary>
+            <value>
+            The title.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Email.IEmailClient">
             <summary>
             
@@ -664,6 +700,32 @@
             Attempts to copy the correct SQL binaries to the bin folder for the architecture the app pool is running under.
             </summary>
         </member>
+        <member name="T:Roadkill.Core.Mvc.ViewModels.OrgViewModel">
+            <summary>
+            Provides a data summary class for creating and saving user details.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.OrgViewModel.#ctor">
+            <summary>
+            Constructor used by none-controllers
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.OrgViewModel.#ctor(Roadkill.Core.Database.Organisation)">
+            <summary>
+            Takes all properties on <see cref="N:Org"/> and fills them on in the OrgViewModel
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.OrgViewModel.Id">
+            <summary>
+            The user's id
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.OrgViewModel.OrgsAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Security.FormsAuthenticationWrapper">
             <summary>
             Used to wrap FormsAuthentication methods, where Mono does not implement the methods or 
@@ -1064,12 +1126,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_NoPages">
             <summary>
-              Looks up a localized string similar to No pages found..
+              Looks up a localized string similar to No projects found..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_Title">
             <summary>
-              Looks up a localized string similar to All Pages.
+              Looks up a localized string similar to All Projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.AllPages_TitleColumnHeading">
@@ -1179,12 +1241,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_AdminOnly">
             <summary>
-              Looks up a localized string similar to This page can only be edited by administrators..
+              Looks up a localized string similar to This project can only be edited by administrators..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Error">
             <summary>
-              Looks up a localized string similar to Unable to save the page:.
+              Looks up a localized string similar to Unable to save the project:.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Image_Title">
@@ -1207,6 +1269,31 @@
               Looks up a localized string similar to Preview.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEnd_Label">
+            <summary>
+              Looks up a localized string similar to ProjectEnd.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectEstimatedTime_Label">
+            <summary>
+              Looks up a localized string similar to ProjectEstimatedTime.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectLanguage_Label">
+            <summary>
+              Looks up a localized string similar to ProjectLanguage.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart_Label">
+            <summary>
+              Looks up a localized string similar to ProjectStart.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStatus_Label">
+            <summary>
+              Looks up a localized string similar to ProjectStatus.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Tags_Label">
             <summary>
               Looks up a localized string similar to Tags.
@@ -1214,7 +1301,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Title">
             <summary>
-              Looks up a localized string similar to Add/edit page.
+              Looks up a localized string similar to Add/edit project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_Title_Label">
@@ -1394,7 +1481,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.History_Title">
             <summary>
-              Looks up a localized string similar to Page history.
+              Looks up a localized string similar to Project history.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.History_Version">
@@ -1429,7 +1516,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_AllPages">
             <summary>
-              Looks up a localized string similar to All pages.
+              Looks up a localized string similar to All projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Categories">
@@ -1464,12 +1551,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_MainPage">
             <summary>
-              Looks up a localized string similar to Main Page.
+              Looks up a localized string similar to Main Project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_NewPage">
             <summary>
-              Looks up a localized string similar to New page.
+              Looks up a localized string similar to New project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Register">
@@ -1489,12 +1576,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.NoMainPage_Label">
             <summary>
-              Looks up a localized string similar to To set a main page, create a page and assign the tag &apos;homepage&apos; to it..
+              Looks up a localized string similar to To set a main project, create a page and assign the tag &apos;homepage&apos; to it..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.NoMainPage_Title">
             <summary>
-              Looks up a localized string similar to You have no mainpage set.
+              Looks up a localized string similar to You have no main project set.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Page_Info_CreatedBy">
@@ -1524,22 +1611,22 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForTag">
             <summary>
-              Looks up a localized string similar to All pages for tag {0}.
+              Looks up a localized string similar to All projects for tag {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForTag_NoPages">
             <summary>
-              Looks up a localized string similar to No pages for {0}.
+              Looks up a localized string similar to No projects for {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForUser">
             <summary>
-              Looks up a localized string similar to All pages created by {0}.
+              Looks up a localized string similar to All projects created by {0}.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Pages_ForUser_NoPages">
             <summary>
-              Looks up a localized string similar to {0} hasn&apos;t created any pages yet..
+              Looks up a localized string similar to {0} hasn&apos;t created any projects yet..
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Profile_Details_Updated_Successfully">
@@ -1644,7 +1731,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Search_NoResults">
             <summary>
-              Looks up a localized string similar to Your search &apos;{0}&apos; did not match any pages.
+              Looks up a localized string similar to Your search &apos;{0}&apos; did not match any projects.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Search_PlaceHolder">
@@ -1694,7 +1781,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_LastModified">
             <summary>
-              Looks up a localized string similar to This page was last modified.
+              Looks up a localized string similar to This project was last modified.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_Lastname_Label">
@@ -1710,6 +1797,11 @@
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_NotLoggedIn">
             <summary>
               Looks up a localized string similar to Not logged in.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_OrgID_Label">
+            <summary>
+              Looks up a localized string similar to Organisation.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_Password_Label">
@@ -1814,7 +1906,7 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.SiteSettings_Cache_Page_Cache">
             <summary>
-              Looks up a localized string similar to Page cache.
+              Looks up a localized string similar to Project cache.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.SiteSettings_Cache_Site_Cache">
@@ -2465,16 +2557,6 @@
         <member name="P:Roadkill.Core.Localization.SiteStrings.Version_Title">
             <summary>
               Looks up a localized string similar to Version {0}.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart">
-            <summary>
-              Looks up a localized string similar to Add/edit page.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.EditPage_ProjectStart_Label">
-            <summary>
-              Looks up a localized string similar to Title.
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.Attributes.CacheContentTypeAttribute">
@@ -3700,16 +3782,6 @@
             </summary>
             <param name="title"></param>
             <returns></returns>
-        </member>
-        <member name="T:Roadkill.Core.Database.IDataStoreEntity">
-            <summary>
-            Defines a class that should be stored in the database or other kind of data store.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Database.IDataStoreEntity.ObjectId">
-            <summary>
-            The unique id for this object - for use with document stores that require a unique id for storage.
-            </summary>
         </member>
         <member name="T:Roadkill.Core.Database.LightSpeed.ToEntity">
             <summary>
@@ -6407,6 +6479,14 @@
             The lastname.
             </value>
         </member>
+        <member name="P:Roadkill.Core.Database.User.OrgID">
+            <summary>
+            Gets or sets the organsation ID of the user.
+            </summary>
+            <value>
+            The OrgID.
+            </value>
+        </member>
         <member name="P:Roadkill.Core.Database.User.Password">
             <summary>
             Gets the hashed password for the user. 
@@ -6557,6 +6637,11 @@
             The last name of the user.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgID">
+            <summary>
+            The ID of user's organisation.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.ExistingUsername">
             <summary>
             The current (or if being changed, previous) username.
@@ -6613,6 +6698,12 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.PasswordUpdateSuccessful">
             <summary>
             True when the password was updated during postback.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgsAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.HistoryException">
@@ -6800,6 +6891,39 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.Score">
             <summary>
             The lucene.net score for the search result.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectStart">
+             <summary>
+             Gets or sets the date the project is due to start.
+             </summary>
+             <value>
+             The project start.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.ProjectLanguage">
+            <summary>
+            The main language of the project
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.DirectoryViewModel">
@@ -7873,6 +7997,30 @@
             The project start.
             </value>
         </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.PageContent.VersionNumber">
             <summary>
             Gets or sets the version number of the content, which starts at 0.
@@ -8143,6 +8291,30 @@
              </value>
             
         </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectEnd">
+             <summary>
+             Gets or sets the date the project is due to end.
+             </summary>
+             <value>
+             The project end.
+             </value>
+            
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectEstimatedTime">
+            <summary>
+            Gets or sets whether the start and end dates are estimated.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.Page.Tags">
             <summary>
             Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
@@ -8238,6 +8410,26 @@
             The date the page was last modified on.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectEnd">
+            <summary>
+            The date the page was last modified on.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectEstimatedTime">
+            <summary>
+            The date the page was last modified on.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectStatus">
+            <summary>
+            The status of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectLanguage">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ModifiedOnWithOffset">
             <summary>
             Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -8307,6 +8499,18 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.AllTags">
             <summary>
             Retrieves all tags for all pages in the system. This is empty unless filled by the controller.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ProjectStatusTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.LanguageTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.RoadkillApplication">

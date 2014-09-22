@@ -4,6 +4,26 @@ using Roadkill.Core.Localization;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Security;
 using Roadkill.Core.Database;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
+using Roadkill.Core.Localization;
+using Roadkill.Core.Text;
+using Roadkill.Core.Converters;
+using Roadkill.Core.Database.LightSpeed;
+using Roadkill.Core.Mvc.Controllers.Api;
+using System.Xml.Serialization;
+using System.Text.RegularExpressions;
+using Roadkill.Core.Configuration;
+using System.IO;
+using System.Web;
+using System.Web.Mvc;
+using System.Configuration;
+using System.Net.Http;
+using Roadkill.Core.Mvc.ViewModels;
+using System.Web.Configuration;
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
@@ -38,6 +58,11 @@ namespace Roadkill.Core.Mvc.ViewModels
 		/// The last name of the user.
 		/// </summary>
 		public string Lastname { get; set; }
+
+        /// <summary>
+        /// The ID of user's organisation.
+        /// </summary>
+        public int OrgID { get; set; }
 
 		/// <summary>
 		/// The current (or if being changed, previous) username.
@@ -111,11 +136,16 @@ namespace Roadkill.Core.Mvc.ViewModels
 		/// </summary>
 		public bool PasswordUpdateSuccessful { get; set; }
 
+
+
 		/// <summary>
 		/// Constructor used by none-controllers
 		/// </summary>
 		public UserViewModel()
 		{
+
+         
+
 		}
 
 		/// <summary>
@@ -134,6 +164,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 			NewUsername = user.Username;
 			Firstname = user.Firstname;
 			Lastname = user.Lastname;
+            OrgID = user.OrgID;
 			PasswordResetKey = user.PasswordResetKey;
 		}
 
@@ -292,5 +323,98 @@ namespace Roadkill.Core.Mvc.ViewModels
 		{
 			return other.ExistingEmail.Equals(ExistingEmail);
 		}
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public static List<SelectListItem> OrgsAsNewSelectList
+        {
+            get
+            {
+
+                ApplicationSettings appSettings = new ApplicationSettings();
+                appSettings.DataStoreType = DataStoreType.Sqlite;
+                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
+                appSettings.LoggingTypes = "none";
+                appSettings.UseBrowserCache = false;
+
+                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+
+                IEnumerable<Organisation> OrgList;
+                OrgList = repository.FindAllOrgs();
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
+
+                foreach (Organisation org in OrgList)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = org.OrgName.ToString();
+                    item.Value = org.Id.ToString();
+
+                    items.Add(item);
+                }
+
+                items.Sort((x, y) => string.Compare(x.Text, y.Text));
+
+                return items;
+            }
+
+        }
+
+
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public List<SelectListItem> OrgsAsSelectList
+        {
+            get
+            {
+
+                ApplicationSettings appSettings = new ApplicationSettings();
+                appSettings.DataStoreType = DataStoreType.Sqlite;
+                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
+                appSettings.LoggingTypes = "none";
+                appSettings.UseBrowserCache = false;
+
+                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+
+                IEnumerable<Organisation> OrgList;
+                OrgList = repository.FindAllOrgs();
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
+
+                foreach (Organisation org in OrgList)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = org.OrgName.ToString();
+                    item.Value = org.Id.ToString();
+
+                    if (org.Id == OrgID)
+                    { item.Selected = true; }
+
+                    items.Add(item);
+                }
+
+                items.Sort((x, y) => string.Compare(x.Text, y.Text));
+
+                return items;
+            }
+
+        }
+
+
+
+
 	}
 }

@@ -59,16 +59,25 @@ namespace Roadkill.Core.Extensions
 
         public static MvcHtmlString BootstrapDatePicker<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string help, bool autoCompleteOff = false, int tabIndex = 0)
         {
+
             return htmlHelper.TextBoxFor(expression, GetHtmlAttributes(help, autoCompleteOff, tabIndex, " datepicker"));
         }
 
 		private static object GetHtmlAttributes(string help, bool autoCompleteOff, int tabIndex, string additionalCssClass = "")
 		{
-			if (autoCompleteOff)
+
+           string strDataDate = "data-date-format";
+            
+            if (autoCompleteOff)
 				return new { @class = "form-control" + additionalCssClass, rel = "popover", data_content = help, tabIndex = tabIndex, autocomplete = "off" };
 			else
-				return new { @class = "form-control" + additionalCssClass, rel = "popover", data_content = help, tabIndex = tabIndex };
+                return new { @class = "form-control" + additionalCssClass, rel = "popover", data_content = help, tabIndex = tabIndex, strDataDate = "dd-mm-yyyy" };
+
 		}
+
+
+ 
+
 
 
         

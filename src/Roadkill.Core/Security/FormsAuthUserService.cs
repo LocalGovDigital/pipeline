@@ -426,6 +426,7 @@ namespace Roadkill.Core.Security
 				user.Email = model.NewEmail;
 				user.Firstname = model.Firstname;
 				user.Lastname = model.Lastname;
+                user.OrgID = model.OrgID;
 				user.SetPassword(model.Password);
 				user.IsEditor = true;
 				user.IsAdmin = false;
@@ -523,6 +524,7 @@ namespace Roadkill.Core.Security
 				// Update the profile details
 				user.Firstname = model.Firstname;
 				user.Lastname = model.Lastname;
+                user.OrgID = model.OrgID;
 				Repository.SaveOrUpdateUser(user);
 
 				// Save the email

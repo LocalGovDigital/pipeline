@@ -73,6 +73,14 @@ namespace Roadkill.Core.Database
 		/// </value>
 		public string Lastname { get; set; }
 
+        /// <summary>
+        /// Gets or sets the organsation ID of the user.
+        /// </summary>
+        /// <value>
+        /// The OrgID.
+        /// </value>
+        public int OrgID { get; set; }
+
 		/// <summary>
 		/// Gets the hashed password for the user. 
 		/// </summary>

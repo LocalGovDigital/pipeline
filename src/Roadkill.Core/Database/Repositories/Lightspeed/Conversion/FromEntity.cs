@@ -70,6 +70,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			user.ActivationKey = entity.ActivationKey;
 			user.Email = entity.Email;
 			user.Firstname = entity.Firstname;
+            user.OrgID = entity.OrgID;
 			user.IsActivated = entity.IsActivated;
 			user.IsAdmin = entity.IsAdmin;
 			user.IsEditor = entity.IsEditor;
@@ -81,6 +82,19 @@ namespace Roadkill.Core.Database.LightSpeed
 
 			return user;
 		}
+
+
+        public static Organisation ToOrg(OrgEntity entity)
+        {
+            if (entity == null)
+                return null;
+
+            Organisation org = new Organisation();
+            org.Id = entity.Id;
+            org.OrgName = entity.OrgName;
+
+            return org;
+        }
 
 		public static IEnumerable<PageContent> ToPageContentList(IEnumerable<PageContentEntity> entities)
 		{
@@ -117,5 +131,17 @@ namespace Roadkill.Core.Database.LightSpeed
 
 			return list;
 		}
+
+        public static IEnumerable<Organisation> ToOrgList(List<OrgEntity> entities)
+        {
+            List<Organisation> list = new List<Organisation>();
+            foreach (OrgEntity entity in entities)
+            {
+                Organisation org = ToOrg(entity);
+                list.Add(org);
+            }
+
+            return list;
+        }
 	}
 }

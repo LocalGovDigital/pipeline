@@ -33,6 +33,14 @@
 						</div>
 					</div>
 
+                    <!-- OrgID -->
+                    <div class="form-group">
+                        <label for="OrgID" class="col-sm-3 control-label">@SiteStrings.Shared_OrgID_Label</label><div class="col-sm-9">   
+                          @(Html.BootstrapDropDownListFor<UserViewModel, int>(t => t.OrgID, UserViewModel.OrgsAsNewSelectList, ""))
+
+                        </div>
+                    </div>
+
 					<!-- Email -->
 					<div class="form-group">
 						<label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Email_Label</label>

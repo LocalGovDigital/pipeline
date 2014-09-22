@@ -44,6 +44,14 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
+        internal IQueryable<OrgEntity> Orgs
+        {
+            get
+            {
+                return UnitOfWork.Query<OrgEntity>();
+            }
+        }
+
         public virtual LightSpeedContext Context
         {
             get
@@ -577,6 +585,23 @@ namespace Roadkill.Core.Database.LightSpeed
             }
 
             return user;
+        }
+
+        #endregion
+
+
+        #region IUserRepository
+
+        public Organisation GetOrgByID(int id)
+        {
+            OrgEntity entity = Orgs.FirstOrDefault(x => x.Id == id);
+            return FromEntity.ToOrg(entity);
+        }
+
+        public IEnumerable<Organisation> FindAllOrgs()
+        {
+            List<OrgEntity> entities = Orgs.ToList();
+            return FromEntity.ToOrgList(entities);
         }
 
         #endregion

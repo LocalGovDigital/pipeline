@@ -65,11 +65,13 @@ namespace Roadkill.Core.Import
 								if (!string.IsNullOrEmpty(username) && !string.Equals(username, "admin", StringComparison.OrdinalIgnoreCase))
 								{
 									string email = reader["Email"].ToString();
+                                    int OrgID = (int)reader["OrgID"];
 
 									User user = new User();
 									user.Id = Guid.NewGuid();
 									user.IsEditor = true;
 									user.IsAdmin = false;
+                                    user.OrgID = OrgID;
 									user.Email = email;
 									user.Username = username;
 									user.IsActivated = false;

@@ -19,6 +19,9 @@ namespace Roadkill.Core.Database.LightSpeed
 		[Column("lastname")]
 		private string _lastname;
 
+        [Column("orgid")]
+        private int _orgid;
+
 		[Column("password")]
 		private string _password;
 
@@ -87,6 +90,18 @@ namespace Roadkill.Core.Database.LightSpeed
 				Set<string>(ref _lastname, value);
 			}
 		}
+
+        public int OrgID
+        {
+            get
+            {
+                return _orgid;
+            }
+            set
+            {
+                Set<int>(ref _orgid, value);
+            }
+        }
 
 		internal string Password
 		{

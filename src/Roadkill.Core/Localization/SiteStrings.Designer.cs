@@ -392,18 +392,6 @@ namespace Roadkill.Core.Localization {
                 return ResourceManager.GetString("EditPage_ProjectEstimatedTime_Label", resourceCulture);
             }
         }
-
-
-        /// <summary>
-        ///   Looks up a localized string similar to EditPage_ProjectStatus_Label.
-        /// </summary>
-        public static string EditPage_ProjectStatus_Label
-        {
-            get
-            {
-                return ResourceManager.GetString("EditPage_ProjectStatus_Label", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to ProjectLanguage.
@@ -423,6 +411,14 @@ namespace Roadkill.Core.Localization {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to ProjectStatus.
+        /// </summary>
+        public static string EditPage_ProjectStatus_Label {
+            get {
+                return ResourceManager.GetString("EditPage_ProjectStatus_Label", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Tags.
@@ -1330,6 +1326,15 @@ namespace Roadkill.Core.Localization {
         public static string Shared_NotLoggedIn {
             get {
                 return ResourceManager.GetString("Shared_NotLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organisation.
+        /// </summary>
+        public static string Shared_OrgID_Label {
+            get {
+                return ResourceManager.GetString("Shared_OrgID_Label", resourceCulture);
             }
         }
         
