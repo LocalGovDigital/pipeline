@@ -64,9 +64,68 @@ namespace Roadkill.Core.Mvc.Controllers
 		/// <summary>
 		/// Searches the lucene index using the search string provided.
 		/// </summary>
-		public ActionResult Search(string q)
+        public ActionResult Search(string q, string language, string status, string startdatestart, string startdateend, string enddatestart, string enddateend)
 		{
 			ViewData["search"] = q;
+
+            q = "title:" + q + " OR content:" + q;
+
+            if (language != null && language != "" && language != "all")
+            {
+                q += " AND projectlanguage:" + language;
+
+            }
+
+            if (status != null && status != "" && status != "all")
+            {
+                q += " AND projectstatus:" + status;
+
+            }
+
+            string strDefaultFromDate = "20140101";
+            string strDefaultToDate = "20340101";
+
+            if ((startdatestart != null && startdatestart != "") || (startdateend != null && startdateend != ""))
+            {
+                string strUseFromDate = strDefaultFromDate;
+                string strUseEndDate = strDefaultToDate;
+
+                if (startdatestart != null && startdatestart != "")
+                {
+                    strUseFromDate = startdatestart.Replace("/", "");
+
+                }
+
+                if (startdateend != null && startdateend != "")
+                {
+                    strUseEndDate = startdateend.Replace("/", "");
+
+                }
+
+                q += " AND projectstart:[" + strUseFromDate + " TO " + strUseEndDate + "]";
+
+            }
+
+            if ((enddatestart != null && enddatestart != "") || (enddateend != null && enddateend != ""))
+            {
+                string strUseFromDate = strDefaultFromDate;
+                string strUseEndDate = strDefaultToDate;
+
+                if (enddatestart != null && enddatestart != "")
+                {
+                    strUseFromDate = enddatestart.Replace("/", "");
+
+                }
+
+                if (enddateend != null && enddateend != "")
+                {
+                    strUseEndDate = enddateend.Replace("/", "");
+
+                }
+
+                q += " AND projectend:[" + strUseFromDate + " TO " + strUseEndDate + "]";
+
+            }
 
 			List<SearchResultViewModel> results = _searchService.Search(q).ToList();
 			return View(results);
@@ -111,5 +170,73 @@ namespace Roadkill.Core.Mvc.Controllers
 		{
 			return Content(PageService.GetMenu(Context));
 		}
-	}
+
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public static List<SelectListItem> ProjectStatusTypesAsSelectList
+        {
+
+            get
+            {
+                string[] strStatuses = new string[] { "All", "Concept", "Discovery", "Alpha", "Beta", "Live", "Decommissioned" };
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (string status in strStatuses)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = status;
+                    item.Value = status.ToLower();
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+
+        }
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public static List<SelectListItem> LanguageTypesAsSelectList
+        {
+            get
+            {
+                string[] strLanguages = new string[] { "All", "Non-dependant", "C#", "Java", "JavaScript", "PHP", "Ruby", "Other" };
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (string language in strLanguages)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = language;
+                    item.Value = language.ToLower();
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+        }
+
+        public static object DatePickerAttributes
+        {
+            get{             
+               
+              
+               return new { @class = "form-control datepicker" };
+
+            }
+            
+          
+        }
+    }
 }

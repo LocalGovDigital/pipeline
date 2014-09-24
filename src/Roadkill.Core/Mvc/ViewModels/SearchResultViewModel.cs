@@ -149,16 +149,22 @@ namespace Roadkill.Core.Mvc.ViewModels
             CreatedOn = createdOn;
 
             DateTime projectStart = DateTime.UtcNow;
-            if (!DateTime.TryParse(document.GetField("projectstart").StringValue, out projectStart))
+            string strProjectStart = document.GetField("projectstart").StringValue;
+            strProjectStart = strProjectStart.Substring(6, 2) + "/" + strProjectStart.Substring(4, 2) + "/" + strProjectStart.Substring(0, 4) + " 00:00:00";
+            if (!DateTime.TryParse(strProjectStart, out projectStart))
                 projectStart = DateTime.UtcNow;
 
             ProjectStart = projectStart;
 
+ 
             DateTime projectEnd = DateTime.UtcNow;
-            if (!DateTime.TryParse(document.GetField("projectend").StringValue, out projectEnd))
+            string strProjectEnd = document.GetField("projectend").StringValue;
+            strProjectEnd = strProjectEnd.Substring(6, 2) + "/" + strProjectEnd.Substring(4, 2) + "/" + strProjectEnd.Substring(0, 4) + " 00:00:00";
+            if (!DateTime.TryParse(strProjectEnd, out projectEnd))
                 projectEnd = DateTime.UtcNow;
 
 			ProjectEnd = projectEnd;
+
 		}
 
 		private void EnsureFieldsExist(Document document)
