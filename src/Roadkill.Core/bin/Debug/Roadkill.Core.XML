@@ -1551,12 +1551,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_MainPage">
             <summary>
-              Looks up a localized string similar to Main Project.
+              Looks up a localized string similar to Home.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_NewPage">
             <summary>
-              Looks up a localized string similar to New project.
+              Looks up a localized string similar to Add a project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Register">

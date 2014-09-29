@@ -880,7 +880,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main Project.
+        ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Navigation_MainPage {
             get {
@@ -889,7 +889,7 @@ namespace Roadkill.Core.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New project.
+        ///   Looks up a localized string similar to Add a project.
         /// </summary>
         public static string Navigation_NewPage {
             get {

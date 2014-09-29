@@ -127,7 +127,7 @@
     <value>Register</value>
   </data>
   <data name="Navigation_MainPage" xml:space="preserve">
-    <value>Main Project</value>
+    <value>Home</value>
   </data>
   <data name="Navigation_Categories" xml:space="preserve">
     <value>Categories</value>
@@ -136,7 +136,7 @@
     <value>All projects</value>
   </data>
   <data name="Navigation_NewPage" xml:space="preserve">
-    <value>New project</value>
+    <value>Add a project</value>
   </data>
   <data name="Navigation_SiteSettings" xml:space="preserve">
     <value>Site settings</value>

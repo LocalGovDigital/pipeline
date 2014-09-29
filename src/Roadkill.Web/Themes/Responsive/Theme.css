@@ -70,7 +70,17 @@ h1, h2, h3, h4, h5, h6 {
 {
     margin:20px 0 20px 0;
 }
+.facetedsearchoption
+{
 
+    margin-bottom:20px;
+}
+.searchresult-summary
+{
+    margin-top:10px;
+    margin-bottom:10px;
+
+}
 /* Responsive header */
 @media screen and (min-width:720px) {
     /* Show the bar at the top for larger screens*/
