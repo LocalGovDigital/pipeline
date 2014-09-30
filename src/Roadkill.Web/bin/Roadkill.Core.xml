@@ -1551,12 +1551,12 @@
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_MainPage">
             <summary>
-              Looks up a localized string similar to Main Project.
+              Looks up a localized string similar to Home.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_NewPage">
             <summary>
-              Looks up a localized string similar to New project.
+              Looks up a localized string similar to Add a project.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Localization.SiteStrings.Navigation_Register">
@@ -6700,6 +6700,12 @@
             True when the password was updated during postback.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgsAsNewSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgsAsSelectList">
             <summary>
             Gets an IEnumerable{SelectListItem} of project statuses, as a default
@@ -7804,7 +7810,7 @@
             then a dummy PageViewModel is put in its place.
             </summary>
         </member>
-        <member name="M:Roadkill.Core.Mvc.Controllers.HomeController.Search(System.String)">
+        <member name="M:Roadkill.Core.Mvc.Controllers.HomeController.Search(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Searches the lucene index using the search string provided.
             </summary>
@@ -7830,6 +7836,18 @@
             Legacy action - use NavMenu().
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.Controllers.HomeController.ProjectStatusTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.Controllers.HomeController.LanguageTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.Controllers.PagesController">
             <summary>

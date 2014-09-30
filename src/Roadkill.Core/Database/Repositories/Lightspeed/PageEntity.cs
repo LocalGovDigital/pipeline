@@ -36,6 +36,9 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("projectStatus")]
         private string _projectStatus;
 
+        [Column("orgID")]
+        private int _orgID;
+
 		[Column("tags")]
 		private string _tags;
 
@@ -192,6 +195,18 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<string>(ref _projectStatus, value);
+            }
+        }
+
+        public int OrgID
+        {
+            get
+            {
+                return _orgID;
+            }
+            set
+            {
+                Set<int>(ref _orgID, value);
             }
         }
 	}

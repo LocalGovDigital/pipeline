@@ -13,6 +13,16 @@ using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Text;
+using Roadkill.Core.Database;
+using System.Text;
+using Roadkill.Core.Database.LightSpeed;
+using Roadkill.Core.Mvc.Controllers.Api;
+using System.Xml.Serialization;
+using System.Text.RegularExpressions;
+using System.IO;
+using System.Configuration;
+using System.Net.Http;
+using System.Web.Configuration;
 
 namespace Roadkill.Core.Mvc.Controllers
 {
@@ -225,6 +235,50 @@ namespace Roadkill.Core.Mvc.Controllers
 
                 return items;
             }
+        }
+
+
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public static List<SelectListItem> OrgsAsNewSelectList
+        {
+            get
+            {
+
+                ApplicationSettings appSettings = new ApplicationSettings();
+                appSettings.DataStoreType = DataStoreType.Sqlite;
+                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
+                appSettings.LoggingTypes = "none";
+                appSettings.UseBrowserCache = false;
+
+                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+
+                IEnumerable<Organisation> OrgList;
+                OrgList = repository.FindAllOrgs();
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
+
+                foreach (Organisation org in OrgList)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = org.OrgName.ToString();
+                    item.Value = org.Id.ToString();
+
+                    items.Add(item);
+                }
+
+                items.Sort((x, y) => string.Compare(x.Text, y.Text));
+
+                return items;
+            }
+
         }
 
         public static object DatePickerAttributes

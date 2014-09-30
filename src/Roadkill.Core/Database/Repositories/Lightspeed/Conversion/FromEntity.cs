@@ -31,6 +31,7 @@ namespace Roadkill.Core.Database.LightSpeed
             page.ProjectEstimatedTime = entity.ProjectEstimatedTime;
             page.ProjectStatus = entity.ProjectStatus;
             page.ProjectLanguage = entity.ProjectLanguage;
+            page.OrgID = entity.OrgID;
 
 
 			return page;
@@ -53,6 +54,7 @@ namespace Roadkill.Core.Database.LightSpeed
             pageContent.ProjectEstimatedTime = entity.ProjectEstimatedTime;
             pageContent.ProjectStatus = entity.ProjectStatus;
             pageContent.ProjectLanguage = entity.ProjectLanguage;
+            pageContent.OrgID = entity.OrgID;
 
 			return pageContent;
 		}

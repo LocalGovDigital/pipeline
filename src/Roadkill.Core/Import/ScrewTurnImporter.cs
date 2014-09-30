@@ -269,8 +269,9 @@ namespace Roadkill.Core.Import
                             bool projectEstimatedTime = (bool)reader["ProjectEnd"];
                             string projectLanguage = (string)reader["ProjectLanguage"];
                             string projectStatus = (string)reader["ProjectStatus"];
+                            int orgID = (int.Parse(reader["OrgID"].ToString()));
 
-                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage);
+                            Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage, orgID);
 							hasContent = true;
 						}
 					}
@@ -278,7 +279,7 @@ namespace Roadkill.Core.Import
 					// For broken content, make sure the page has something
 					if (!hasContent)
 					{
-                        Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow, DateTime.UtcNow, DateTime.UtcNow,false, "unknown", "unknown");
+                        Repository.AddNewPage(page, "", "unknown", DateTime.UtcNow, DateTime.UtcNow, DateTime.UtcNow,false, "unknown", "unknown",1);
 					}
 				}
 			}
