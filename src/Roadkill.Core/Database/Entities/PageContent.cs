@@ -82,6 +82,11 @@ namespace Roadkill.Core.Database
         /// </summary>
         public string ProjectLanguage { get; set; }
 
+        /// <summary>
+        /// The organisation ID
+        /// </summary>
+        public int OrgID { get; set; }
+
 		/// <summary>
 		/// Gets or sets the version number of the content, which starts at 0.
 		/// </summary>

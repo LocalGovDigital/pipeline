@@ -72,12 +72,13 @@ namespace Roadkill.Core.Services
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
                 page.ProjectStatus = model.ProjectStatus;
+                page.OrgID = model.OrgID;
 
 				// Double check, incase the HTML form was faked.
 				if (_context.IsAdmin)
 					page.IsLocked = model.IsLocked;
 
-                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage);
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.OrgID);
 
 				_listCache.RemoveAll();
 				_pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -463,6 +464,7 @@ namespace Roadkill.Core.Services
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
                 page.ProjectStatus = model.ProjectStatus;
+                page.OrgID = model.OrgID;
 
 				// A second check to ensure a fake IsLocked POST doesn't work.
 				if (_context.IsAdmin)
@@ -482,7 +484,7 @@ namespace Roadkill.Core.Services
 				_listCache.RemoveAll();
 
 				int newVersion = _historyService.MaxVersion(model.Id) + 1;
-                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage); 
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.OrgID); 
 
 				// Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
 				if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())
