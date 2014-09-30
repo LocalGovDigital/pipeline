@@ -13,12 +13,6 @@ using Roadkill.Core.Configuration;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using Roadkill.Core.Database.LightSpeed;
-using Roadkill.Core.Mvc.Controllers.Api;
-using System.Configuration;
-using System.Net.Http;
-using Roadkill.Core.Mvc.ViewModels;
-using System.Web.Configuration;
 
 
 namespace Roadkill.Core.Mvc.ViewModels
@@ -122,11 +116,6 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// The main language of the project
         /// </summary>
         public string ProjectLanguage { get; set; }
-
-        /// <summary>
-        /// The main language of the project
-        /// </summary>
-        public int OrgID { get; set; }
 
 		/// <summary>
 		/// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -258,7 +247,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEstimatedTime = page.ProjectEstimatedTime;
             ProjectStatus = page.ProjectStatus;
             ProjectLanguage = page.ProjectLanguage;
-            OrgID = page.OrgID;
 
 			CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
 			ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
@@ -292,7 +280,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEstimatedTime = pageContent.ProjectEstimatedTime;
             ProjectStatus = pageContent.ProjectStatus;
             ProjectLanguage = pageContent.ProjectLanguage;
-            OrgID = pageContent.OrgID;
 
 			PageHtml pageHtml = converter.ToHtml(pageContent.Text);
 			ContentAsHtml = pageHtml.Html;
@@ -478,48 +465,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 
                 return items;
             }
-        }
-
-
-        /// <summary>
-        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
-        /// SelectList doesn't add option value attributes.
-        /// </summary>
-        public List<SelectListItem> OrgsAsNewSelectList
-        {
-            get
-            {
-
-                ApplicationSettings appSettings = new ApplicationSettings();
-                appSettings.DataStoreType = DataStoreType.Sqlite;
-                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-                appSettings.LoggingTypes = "none";
-                appSettings.UseBrowserCache = false;
-
-                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-
-                IEnumerable<Organisation> OrgList;
-                OrgList = repository.FindAllOrgs();
-
-                List<SelectListItem> items = new List<SelectListItem>();
-
-                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
-
-                foreach (Organisation org in OrgList)
-                {
-
-                    SelectListItem item = new SelectListItem();
-                    item.Text = org.OrgName.ToString();
-                    item.Value = org.Id.ToString();
-
-                    items.Add(item);
-                }
-
-                items.Sort((x, y) => string.Compare(x.Text, y.Text));
-
-                return items;
-            }
-
         }
 	}
 }

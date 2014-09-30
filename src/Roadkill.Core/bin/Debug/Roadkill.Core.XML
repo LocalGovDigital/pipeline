@@ -6932,11 +6932,6 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.OrgID">
-            <summary>
-            The organisation of the project
-            </summary>
-        </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.DirectoryViewModel">
             <summary>
             Provides directory information for a folder in the attachments folder.
@@ -7854,12 +7849,6 @@
             SelectList doesn't add option value attributes.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.Controllers.HomeController.OrgsAsNewSelectList">
-            <summary>
-            Gets an IEnumerable{SelectListItem} of project statuses, as a default
-            SelectList doesn't add option value attributes.
-            </summary>
-        </member>
         <member name="T:Roadkill.Core.Mvc.Controllers.PagesController">
             <summary>
             Provides all page related functionality, including editing and viewing pages.
@@ -8048,11 +8037,6 @@
         <member name="P:Roadkill.Core.Database.PageContent.ProjectLanguage">
             <summary>
             The main language of the project
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Database.PageContent.OrgID">
-            <summary>
-            The organisation ID
             </summary>
         </member>
         <member name="P:Roadkill.Core.Database.PageContent.VersionNumber">
@@ -8349,11 +8333,6 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.Page.OrgID">
-            <summary>
-            The organisation ID
-            </summary>
-        </member>
         <member name="P:Roadkill.Core.Database.Page.Tags">
             <summary>
             Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
@@ -8469,11 +8448,6 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgID">
-            <summary>
-            The main language of the project
-            </summary>
-        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ModifiedOnWithOffset">
             <summary>
             Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -8552,12 +8526,6 @@
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.LanguageTypesAsSelectList">
-            <summary>
-            Gets an IEnumerable{SelectListItem} of project statuses, as a default
-            SelectList doesn't add option value attributes.
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgsAsNewSelectList">
             <summary>
             Gets an IEnumerable{SelectListItem} of project statuses, as a default
             SelectList doesn't add option value attributes.

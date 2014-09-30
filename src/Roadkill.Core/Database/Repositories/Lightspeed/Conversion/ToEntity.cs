@@ -41,7 +41,6 @@ namespace Roadkill.Core.Database.LightSpeed
             entity.ProjectEstimatedTime = page.ProjectEstimatedTime;
             entity.ProjectStatus = page.ProjectStatus;
             entity.ProjectLanguage = page.ProjectLanguage;
-            entity.OrgID = page.OrgID;
 			entity.Tags = page.Tags;
 			entity.Title = page.Title;
 		}

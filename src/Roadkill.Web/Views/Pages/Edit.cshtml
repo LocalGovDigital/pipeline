@@ -62,13 +62,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-sm-12">
-                    Organisation
-                    @Html.BootstrapDropDownListFor(p => p.OrgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                </div>
-               </div>
-
 
 			@if (RoadkillContext.IsAdmin)
 			{
@@ -116,14 +109,14 @@
 	</div>
 </div>
 <script>
-    $('.datepicker').datepicker({
+    $('#ProjectStart').datepicker({
     format: 'dd/mm/yyyy',
-    startDate: '-3d',
-    onSelect: this.close
+    startDate: '-3d'
     })
 
-    $('.datepicker').on('change', function () {
-        $('.datepicker').hide();
-    });
+    $('#ProjectEnd').datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    })
 
 </script>

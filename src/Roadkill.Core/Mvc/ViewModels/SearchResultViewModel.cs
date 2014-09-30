@@ -117,11 +117,6 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public string ProjectLanguage { get; set; }
 
-        /// <summary>
-        /// The organisation of the project
-        /// </summary>
-        public int OrgID { get; set; }
-
 
 		public SearchResultViewModel()
 		{
@@ -146,7 +141,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 			Score = scoreDoc.Score;
             ProjectStatus = document.GetField("projectstatus").StringValue;
             ProjectLanguage = document.GetField("projectlanguage").StringValue;
-            OrgID = int.Parse(document.GetField("orgid").StringValue);
 
             DateTime createdOn = DateTime.UtcNow;
             if (!DateTime.TryParse(document.GetField("createdon").StringValue, out createdOn))
@@ -188,7 +182,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             EnsureFieldExists(fields, "projectestimatedtime");
             EnsureFieldExists(fields, "projectstatus");
             EnsureFieldExists(fields, "projectlanguage");
-            EnsureFieldExists(fields, "orgid");
 		}
 
 		private void EnsureFieldExists(IList<IFieldable> fields, string fieldname)
