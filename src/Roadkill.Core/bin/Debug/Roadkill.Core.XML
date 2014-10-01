@@ -8563,6 +8563,11 @@
             SelectList doesn't add option value attributes.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgContactDetails">
+            <summary>
+            Returns org details based on ID
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.RoadkillApplication">
             <summary>
             The entry point (Global.asax) for the Roadkill application.

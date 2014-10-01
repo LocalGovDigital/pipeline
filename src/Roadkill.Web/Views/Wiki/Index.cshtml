@@ -31,8 +31,7 @@
             @MvcHtmlString.Create(Model.ContentAsHtml)
         </div>
     </div>
-</div>
-
+</div><b>Project Owner: @MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</b>
         @section PageDetailsFooter
 {
             @SiteStrings.Shared_LastModified <span id="lastmodified-on" title="@Model.ModifiedOnWithOffset">@Model.ModifiedOnWithOffset</span>.

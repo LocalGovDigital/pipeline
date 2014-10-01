@@ -521,5 +521,30 @@ namespace Roadkill.Core.Mvc.ViewModels
             }
 
         }
+
+
+        /// <summary>
+        /// Returns org details based on ID
+        /// </summary>
+        public Organisation OrgContactDetails
+        {
+            get
+            {
+
+                ApplicationSettings appSettings = new ApplicationSettings();
+                appSettings.DataStoreType = DataStoreType.Sqlite;
+                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
+                appSettings.LoggingTypes = "none";
+                appSettings.UseBrowserCache = false;
+
+                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+
+                Organisation Org = new Organisation();
+                Org = repository.GetOrgByID(OrgID);
+
+                return Org;
+            }
+
+        }
 	}
 }
