@@ -123,10 +123,34 @@
         </member>
         <member name="P:Roadkill.Core.Database.Organisation.OrgName">
             <summary>
-            Gets or sets the title.
+            Gets or sets the org name.
             </summary>
             <value>
             The title.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.email">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+            <value>
+            The email address of the organisation.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.url">
+            <summary>
+            Gets or sets the url.
+            </summary>
+            <value>
+            The url for the team.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.twitter">
+            <summary>
+            Gets or sets the twitter account.
+            </summary>
+            <value>
+            The twitter account.
             </value>
         </member>
         <member name="P:Roadkill.Core.Database.Organisation.ObjectId">

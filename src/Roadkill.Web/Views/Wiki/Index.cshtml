@@ -13,7 +13,7 @@
 {
     <div id="viewhistory">@Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)</div>
 }
-
+We're developing functionality for you to be able to Like or Join a project, to create a <a href="http://localgovdigital.info/localgov-digital-makers/outputs/makers-project-teams/">Makers Project Team</a>.<br/>At the moment we’ll display the contact details of the project owner below, so you can get in touch with them.
 <h1 class="pagetitle">@Model.Title</h1>
 <div class="row">
     <div class="col-xs-3"><b>Start:</b> @MvcHtmlString.Create(Model.ProjectStart.ToShortDateString())</div>
@@ -31,7 +31,14 @@
             @MvcHtmlString.Create(Model.ContentAsHtml)
         </div>
     </div>
-</div><b>Project Owner: @MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</b>
+</div><b>Project Owner:</b> @MvcHtmlString.Create(Model.OrgContactDetails.OrgName)
+@if (Model.OrgContactDetails.email != null && Model.OrgContactDetails.email != "")
+{<br/><b>Email:</b> <a href="mailto:@MvcHtmlString.Create(Model.OrgContactDetails.email)">@MvcHtmlString.Create(Model.OrgContactDetails.email)</a>}
+@if (Model.OrgContactDetails.twitter != null && Model.OrgContactDetails.twitter != "")
+{<br/><b>Twitter:</b> <a href="http://www.twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a>}
+@if ((Model.OrgContactDetails.email == null || Model.OrgContactDetails.email == "") && (Model.OrgContactDetails.twitter == null || Model.OrgContactDetails.twitter == ""))
+{<br />@MvcHtmlString.Create("We don't have contact details for this organisation")}
+
         @section PageDetailsFooter
 {
             @SiteStrings.Shared_LastModified <span id="lastmodified-on" title="@Model.ModifiedOnWithOffset">@Model.ModifiedOnWithOffset</span>.

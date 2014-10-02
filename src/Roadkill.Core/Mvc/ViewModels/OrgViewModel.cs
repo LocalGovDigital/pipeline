@@ -35,6 +35,12 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public string OrgName { get; set; }
 
+        public string email { get; set; }
+
+        public string url { get; set; }
+
+        public string twitter { get; set; }
+
         /// <summary>
         /// Constructor used by none-controllers
         /// </summary>
@@ -52,6 +58,9 @@ namespace Roadkill.Core.Mvc.ViewModels
 
             Id = org.Id;
             OrgName = org.OrgName;
+            email = org.email;
+            url = org.url;
+            twitter = org.twitter;
         }
 
         /// <summary>

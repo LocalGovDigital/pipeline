@@ -94,6 +94,9 @@ namespace Roadkill.Core.Database.LightSpeed
             Organisation org = new Organisation();
             org.Id = entity.Id;
             org.OrgName = entity.OrgName;
+            org.email = entity.email;
+            org.url = entity.url;
+            org.twitter = entity.twitter;
 
             return org;
         }

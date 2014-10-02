@@ -23,12 +23,36 @@ namespace Roadkill.Core.Database
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the title.
+        /// Gets or sets the org name.
         /// </summary>
         /// <value>
         /// The title.
         /// </value>
-        public string OrgName { get; set; }        
+        public string OrgName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the email address.
+        /// </summary>
+        /// <value>
+        /// The email address of the organisation.
+        /// </value>
+        public string email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url.
+        /// </summary>
+        /// <value>
+        /// The url for the team.
+        /// </value>
+        public string url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the twitter account.
+        /// </summary>
+        /// <value>
+        /// The twitter account.
+        /// </value>
+        public string twitter { get; set; } 
 
         /// <summary>
         /// The unique id for this object - for use with document stores that require a unique id for storage.
