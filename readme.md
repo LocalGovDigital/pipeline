@@ -4,6 +4,8 @@ Pipeline is a project to allow civic coding teams to share plans for their work 
 
 It's heavily based on [Roadkill](http://www.roadkillwiki.net/) and the installation instructions are the same, as below.
 
+If you're doing a local install **please use SQLite for your database** as Pipeline only supports this at the moment.
+
 ### Pre-requisites
 
 To setup Roadkill on a developer machine, you will need:
