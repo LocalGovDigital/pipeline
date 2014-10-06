@@ -128,6 +128,12 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public int OrgID { get; set; }
 
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public List<Relationship> Relationships { get; set; }
+
 		/// <summary>
 		/// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
 		/// </summary>
@@ -259,10 +265,12 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStatus = page.ProjectStatus;
             ProjectLanguage = page.ProjectLanguage;
             OrgID = page.OrgID;
+            Relationships = GetRelationships;
 
 			CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
 			ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
 			AllTags = new List<TagViewModel>();
+
 		}
 
 		public PageViewModel(PageContent pageContent, MarkupConverter converter)
@@ -503,8 +511,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 
                 List<SelectListItem> items = new List<SelectListItem>();
 
-                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
-
                 foreach (Organisation org in OrgList)
                 {
 
@@ -543,6 +549,40 @@ namespace Roadkill.Core.Mvc.ViewModels
                 Org = repository.GetOrgByID(OrgID);
 
                 return Org;
+            }
+
+        }
+
+
+
+        /// <summary>
+        /// Returns org details based on ID
+        /// </summary>
+        public List<Relationship> GetRelationships
+        {
+            get
+            {
+
+                ApplicationSettings appSettings = new ApplicationSettings();
+                appSettings.DataStoreType = DataStoreType.Sqlite;
+                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
+                appSettings.LoggingTypes = "none";
+                appSettings.UseBrowserCache = false;
+
+                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+
+                List<Relationship> items = new List<Relationship>();
+                items = repository.FindPageRelationships(Id);
+
+                foreach (Relationship rel in items)
+                {
+
+                    Relationship item = new Relationship();
+                    item.relText = rel.relText;
+                    items.Add(item);
+                }
+
+                return items;
             }
 
         }

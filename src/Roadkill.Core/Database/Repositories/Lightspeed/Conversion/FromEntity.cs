@@ -101,6 +101,38 @@ namespace Roadkill.Core.Database.LightSpeed
             return org;
         }
 
+
+        public static Relationship ToRel(RelEntity entity)
+        {
+            if (entity == null)
+                return null;
+
+            Relationship rel = new Relationship();
+            rel.Id = entity.Id;
+            rel.orgId = entity.orgId;
+            rel.userId = entity.userId;
+            rel.pageId = entity.pageId;
+            rel.relTypeId = entity.relTypeId;
+            rel.relText = entity.relText;
+            rel.relDateTime = entity.relDateTime;
+
+            return rel;
+        }
+
+
+        public static RelationshipType ToRelType(RelTypeEntity entity)
+        {
+            if (entity == null)
+                return null;
+
+            RelationshipType reltype = new RelationshipType();
+            reltype.Id = entity.Id;
+            reltype.relTypeText = entity.relTypeText;
+
+            return reltype;
+        }
+
+
 		public static IEnumerable<PageContent> ToPageContentList(IEnumerable<PageContentEntity> entities)
 		{
 			List<PageContent> list = new List<PageContent>();
@@ -144,6 +176,18 @@ namespace Roadkill.Core.Database.LightSpeed
             {
                 Organisation org = ToOrg(entity);
                 list.Add(org);
+            }
+
+            return list;
+        }
+
+        public static List<Relationship> ToRelList(List<RelEntity> entities)
+        {
+            List<Relationship> list = new List<Relationship>();
+            foreach (RelEntity entity in entities)
+            {
+                Relationship pageContent = ToRel(entity);
+                list.Add(pageContent);
             }
 
             return list;

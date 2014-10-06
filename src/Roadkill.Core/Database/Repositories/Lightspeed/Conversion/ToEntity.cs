@@ -53,5 +53,15 @@ namespace Roadkill.Core.Database.LightSpeed
 			entity.Text = pageContent.Text;
 			entity.VersionNumber = pageContent.VersionNumber;
 		}
+
+        public static void FromRelationship(Relationship rel, RelEntity entity)
+        {
+            entity.userId = rel.userId;
+            entity.orgId = rel.orgId;
+            entity.pageId = rel.pageId;
+            entity.relText = rel.relText;
+            entity.relTypeId = rel.relTypeId;
+
+        }
 	}
 }

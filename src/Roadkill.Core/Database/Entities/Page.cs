@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+
 
 namespace Roadkill.Core.Database
 {
@@ -114,6 +116,11 @@ namespace Roadkill.Core.Database
 		/// Gets or sets whether the page is locked for admin-only editing.
 		/// </summary>
 		public bool IsLocked { get; set; }
+
+        /// <summary>
+        /// The relationships of the project
+        /// </summary>
+        public List<Relationship> Relationships { get; set; }
 
 		/// <summary>
 		/// The unique id for this object - for use with document stores that require a unique id for storage.

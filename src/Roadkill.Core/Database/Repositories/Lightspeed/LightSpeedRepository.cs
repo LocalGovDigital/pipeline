@@ -52,6 +52,22 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
+        internal IQueryable<RelEntity> Rels
+        {
+            get
+            {
+                return UnitOfWork.Query<RelEntity>();
+            }
+        }
+
+        internal IQueryable<RelTypeEntity> RelTypes
+        {
+            get
+            {
+                return UnitOfWork.Query<RelTypeEntity>();
+            }
+        }
+
         public virtual LightSpeedContext Context
         {
             get
@@ -479,6 +495,13 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
+
+        public List<Relationship> FindPageRelationships(int pageID)
+        {
+            List<RelEntity> entities = Rels.Where(p => p.pageId == pageID).ToList();
+            return FromEntity.ToRelList(entities);
+        }
+
         #endregion
 
         #region IUserRepository
@@ -592,7 +615,7 @@ namespace Roadkill.Core.Database.LightSpeed
         #endregion
 
 
-        #region IUserRepository
+        #region IOrgRepository
 
         public Organisation GetOrgByID(int id)
         {
@@ -604,6 +627,17 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             List<OrgEntity> entities = Orgs.ToList();
             return FromEntity.ToOrgList(entities);
+        }
+
+        #endregion
+
+
+        #region IRelRepository
+
+        public RelationshipType GetRelTypeByID(int id)
+        {
+            RelTypeEntity entity = RelTypes.FirstOrDefault(x => x.Id == id);
+            return FromEntity.ToRelType(entity);
         }
 
         #endregion

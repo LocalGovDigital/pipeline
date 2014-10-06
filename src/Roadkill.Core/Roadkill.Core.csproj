@@ -404,9 +404,13 @@
     <Compile Include="Attachments\AttachmentPathUtil.cs" />
     <Compile Include="Attachments\IResponseWrapper.cs" />
     <Compile Include="Attachments\ResponseWrapper.cs" />
+    <Compile Include="Database\Entities\RelType.cs" />
+    <Compile Include="Database\Entities\Rel.cs" />
     <Compile Include="Database\Entities\Org.cs" />
     <Compile Include="Database\Repositories\ISettingsRepository.cs" />
     <Compile Include="Database\Repositories\IOrgRepository.cs" />
+    <Compile Include="Database\Repositories\LightSpeed\RelTypeEntity.cs" />
+    <Compile Include="Database\Repositories\LightSpeed\RelEntity.cs" />
     <Compile Include="Database\Repositories\LightSpeed\OrgEntity .cs" />
     <Compile Include="Email\EmailClient.cs" />
     <Compile Include="Email\IEmailClient.cs" />
@@ -426,6 +430,7 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Mvc\Attributes\IAuthorizationAttribute.cs" />
     <Compile Include="Mvc\Controllers\ConfigurationTesterController.cs" />
+    <Compile Include="Mvc\ViewModels\RelViewModel.cs" />
     <Compile Include="Mvc\ViewModels\OrgViewModel.cs" />
     <Compile Include="Security\AuthorizationProvider.cs" />
     <Compile Include="Security\IAuthorizationProvider.cs" />
