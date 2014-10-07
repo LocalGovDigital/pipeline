@@ -502,6 +502,9 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToRelList(entities);
         }
 
+
+
+
         #endregion
 
         #region IUserRepository
@@ -638,6 +641,93 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             RelTypeEntity entity = RelTypes.FirstOrDefault(x => x.Id == id);
             return FromEntity.ToRelType(entity);
+        }
+
+        public Relationship AddNewRel(Relationship rel, int reltypeid, string username, int orgID, int pageID, string reltext)
+        {
+
+            RelEntity relEntity = new RelEntity();
+            ToEntity.FromRelationship(rel, relEntity);
+            relEntity.username = username;
+            relEntity.orgId = orgID;
+            relEntity.pageId = 3;
+            relEntity.relDateTime = DateTime.Now;
+            UnitOfWork.Add(relEntity);
+            UnitOfWork.SaveChanges();
+
+            Relationship newrel = FromEntity.ToRel(relEntity);
+            return newrel;
+        }
+
+
+        public Relationship SaveOrUpdateRel(Relationship rel)
+        {
+            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.Id);
+            if (entity == null)
+            {
+
+                entity = new RelEntity();
+                ToEntity.FromRelationship(rel, entity);
+                UnitOfWork.Add(entity);
+                UnitOfWork.SaveChanges();
+                rel = FromEntity.ToRel(entity);
+            }
+            else
+            {
+                ToEntity.FromRelationship(rel, entity);
+                UnitOfWork.SaveChanges();
+                rel = FromEntity.ToRel(entity);
+            }
+
+            return rel;
+        }
+
+        public Relationship GetRelById(int id)
+        {
+            RelEntity entity = Rels.FirstOrDefault(p => p.Id == id);
+            return FromEntity.ToRel(entity);
+        }
+
+        public IEnumerable<Relationship> AllRels()
+        {
+            List<RelEntity> entities = Rels.ToList();
+            return FromEntity.ToRelList(entities);
+        }
+
+        public void DeleteRel(Relationship rel)
+        {
+            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.Id);
+            UnitOfWork.Remove(entity);
+            UnitOfWork.SaveChanges();
+        }
+
+        public IEnumerable<Relationship> FindRelsCreatedBy(string username)
+        {
+            List<RelEntity> entities = Rels.Where(p => p.username == username).ToList();
+            return FromEntity.ToRelList(entities);
+        }
+
+        public IEnumerable<RelationshipType> FindAllRelTypes()
+        {
+            List<RelTypeEntity> entities = RelTypes.ToList();
+            return FromEntity.ToRelTypeList(entities);
+        }
+
+        public bool RelToUserToPage(int pageID, int orgID)
+        {
+            bool _RelToUserToPage = false;
+
+            RelEntity entity = Rels.FirstOrDefault(p => p.orgId == orgID);
+            if (entity != null)
+            {
+                if (entity.pageId == pageID)
+                {
+                    _RelToUserToPage = true;
+                }
+
+            }
+
+            return _RelToUserToPage;
         }
 
         #endregion

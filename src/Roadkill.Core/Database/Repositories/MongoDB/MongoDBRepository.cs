@@ -44,6 +44,14 @@ namespace Roadkill.Core.Database.MongoDB
 			}
 		}
 
+        public IQueryable<Relationship> Relationships
+        {
+            get
+            {
+                return Queryable<Relationship>();
+            }
+        }
+
 		public MongoDBRepository(ApplicationSettings settings)
 		{
 			_settings = settings;
@@ -429,6 +437,49 @@ namespace Roadkill.Core.Database.MongoDB
 		{
 			SaveOrUpdate<PageContent>(content);
 		}
+
+        
 		#endregion
-	}
+
+
+        #region relationships
+
+
+        public Relationship SaveOrUpdateRel(Relationship rel)
+        {
+            SaveOrUpdate<Relationship>(rel);
+            return rel;
+        }
+
+
+        public Relationship GetRelById(int id)
+        {
+            return Relationships.FirstOrDefault(p => p.Id == id);
+        }
+
+
+        public void DeleteRel(Relationship rel)
+        {
+            Delete<Relationship>(rel);
+        }
+
+        public IEnumerable<Relationship> AllRels()
+        {
+            return Relationships.ToList();
+        }
+
+        public Relationship AddNewRel(Relationship rel, int reltypeid, string username, int orgID, int pageID, string reltext)
+        {
+            SaveOrUpdate<Relationship>(rel);
+            return rel;
+        }
+
+        public IEnumerable<Relationship> FindRelsCreatedBy(string username)
+        {
+            return Relationships.Where(p => p.username == username);
+        }
+
+        #endregion
+
+    }
 }

@@ -98,7 +98,7 @@
             from the DateTime returned. If the string isn't a valid date, DateTime.Min is returned.
             </summary>
         </member>
-        <member name="T:Roadkill.Core.Database.Organisation">
+        <member name="T:Roadkill.Core.Database.RelationshipType">
             <summary>
             A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
             </summary>
@@ -113,6 +113,98 @@
             The unique id for this object - for use with document stores that require a unique id for storage.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Database.RelationshipType.Id">
+            <summary>
+            Gets or sets the relationships's unique ID.
+            </summary>
+            <value>
+            The id.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.RelationshipType.relTypeText">
+            <summary>
+            Gets or sets the user id.
+            </summary>
+            <value>
+            The user.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.RelationshipType.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Database.Relationship">
+            <summary>
+            A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.Id">
+            <summary>
+            Gets or sets the relationships's unique ID.
+            </summary>
+            <value>
+            The id.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.userId">
+            <summary>
+            Gets or sets the user id.
+            </summary>
+            <value>
+            The user.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.orgId">
+            <summary>
+            Gets or sets the org id.
+            </summary>
+            <value>
+            The organisation.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.pageId">
+            <summary>
+            Gets or sets the page id.
+            </summary>
+            <value>
+            The project.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.relTypeId">
+            <summary>
+            Gets or sets the relationship id.
+            </summary>
+            <value>
+            The email address of the organisation.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.relText">
+            <summary>
+            Gets or sets the relationship text.
+            </summary>
+            <value>
+            The url for the team.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.relDateTime">
+            <summary>
+            Gets or sets the relationship datetime.
+            </summary>
+            <value>
+            The date the relationship was added.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Relationship.ObjectId">
+            <summary>
+            The unique id for this object - for use with document stores that require a unique id for storage.
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Database.Organisation">
+            <summary>
+            A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.Organisation.Id">
             <summary>
             Gets or sets the page's unique ID.
@@ -123,10 +215,34 @@
         </member>
         <member name="P:Roadkill.Core.Database.Organisation.OrgName">
             <summary>
-            Gets or sets the title.
+            Gets or sets the org name.
             </summary>
             <value>
             The title.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.email">
+            <summary>
+            Gets or sets the email address.
+            </summary>
+            <value>
+            The email address of the organisation.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.url">
+            <summary>
+            Gets or sets the url.
+            </summary>
+            <value>
+            The url for the team.
+            </value>
+        </member>
+        <member name="P:Roadkill.Core.Database.Organisation.twitter">
+            <summary>
+            Gets or sets the twitter account.
+            </summary>
+            <value>
+            The twitter account.
             </value>
         </member>
         <member name="P:Roadkill.Core.Database.Organisation.ObjectId">
@@ -698,6 +814,36 @@
         <member name="M:Roadkill.Core.Mvc.Controllers.ConfigurationTesterController.CopySqlite">
             <summary>
             Attempts to copy the correct SQL binaries to the bin folder for the architecture the app pool is running under.
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Mvc.ViewModels.RelViewModel">
+            <summary>
+            Provides a data summary class for creating and saving user details.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.#ctor">
+            <summary>
+            Constructor used by none-controllers
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.#ctor(Roadkill.Core.Database.Relationship)">
+            <summary>
+            Takes all properties on <see cref="N:Org"/> and fills them on in the RelViewModel
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetOrg(System.Int32)">
+            <summary>
+            Returns the organisation name
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetRelType(System.Int32)">
+            <summary>
+            Returns the organisation name
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.Id">
+            <summary>
+            The user's id
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.OrgViewModel">
@@ -6932,6 +7078,11 @@
             The main language of the project
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.OrgID">
+            <summary>
+            The organisation of the project
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.DirectoryViewModel">
             <summary>
             Provides directory information for a folder in the attachments folder.
@@ -7849,12 +8000,24 @@
             SelectList doesn't add option value attributes.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.Controllers.HomeController.OrgsAsNewSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Mvc.Controllers.PagesController">
             <summary>
             Provides all page related functionality, including editing and viewing pages.
             </summary>
         </member>
         <member name="M:Roadkill.Core.Mvc.Controllers.PagesController.AllPages">
+            <summary>
+            Displays a list of all page titles and ids in Roadkill.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> as the model.</returns>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.PagesController.Like(System.Int32)">
             <summary>
             Displays a list of all page titles and ids in Roadkill.
             </summary>
@@ -8037,6 +8200,11 @@
         <member name="P:Roadkill.Core.Database.PageContent.ProjectLanguage">
             <summary>
             The main language of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.PageContent.OrgID">
+            <summary>
+            The organisation ID
             </summary>
         </member>
         <member name="P:Roadkill.Core.Database.PageContent.VersionNumber">
@@ -8333,6 +8501,11 @@
             The main language of the project
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Database.Page.OrgID">
+            <summary>
+            The organisation ID
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.Page.Tags">
             <summary>
             Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).
@@ -8341,6 +8514,11 @@
         <member name="P:Roadkill.Core.Database.Page.IsLocked">
             <summary>
             Gets or sets whether the page is locked for admin-only editing.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Database.Page.Relationships">
+            <summary>
+            The relationships of the project
             </summary>
         </member>
         <member name="P:Roadkill.Core.Database.Page.ObjectId">
@@ -8448,6 +8626,16 @@
             The main language of the project
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgID">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Relationships">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.ModifiedOnWithOffset">
             <summary>
             Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -8529,6 +8717,22 @@
             <summary>
             Gets an IEnumerable{SelectListItem} of project statuses, as a default
             SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgsAsNewSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgContactDetails">
+            <summary>
+            Returns org details based on ID
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.GetRelationships">
+            <summary>
+            Returns org details based on ID
             </summary>
         </member>
         <member name="T:Roadkill.Core.RoadkillApplication">

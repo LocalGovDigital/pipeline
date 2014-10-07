@@ -5,9 +5,20 @@
 <div id="toolbar" class="btn-toolbar">
 	<div class="btn-group">
 	@if (RoadkillContext.IsLoggedIn)
-	{
-		if (Model.IsLocked && !RoadkillContext.IsAdmin)
-		{
+    {
+    
+        
+     if (Model.RelToUserToPage == false)
+     { 
+        <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("New", "Rel", new { id = Model.Id, pageID = Model.Id, username = RoadkillContext.CurrentUsername})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star"></span></a>
+     }
+     else
+     {
+        <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Id, pageID = Model.Id, username = RoadkillContext.CurrentUsername})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star"></span></a>
+     }
+
+        if (Model.IsLocked && !RoadkillContext.IsAdmin)
+        {
 			<a id="pageedit-button" class="btn btn-default btn-sm disabled" href="#" title="@SiteStrings.Shared_EditLink - this page can only be edited by administrators."><span class="glyphicon glyphicon-pencil"></span></a>
         }
         else
@@ -16,6 +27,7 @@
         }
     }
         <a id="pageinfo-button" class="btn btn-default btn-sm" href="javascript:;" title="Page information"><span class="glyphicon glyphicon-book"></span></a>
+        
 	</div>
 </div>
 

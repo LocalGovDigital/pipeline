@@ -147,7 +147,7 @@
             The id.
             </value>
         </member>
-        <member name="P:Roadkill.Core.Database.Relationship.userId">
+        <member name="P:Roadkill.Core.Database.Relationship.username">
             <summary>
             Gets or sets the user id.
             </summary>
@@ -249,6 +249,13 @@
             <summary>
             The unique id for this object - for use with document stores that require a unique id for storage.
             </summary>
+        </member>
+        <member name="M:Roadkill.Core.Database.IRelRepository.AllRels">
+            <summary>
+            Returns a list of tags for all pages. Each item is a list of tags seperated by ,
+            e.g. { "tag1, tag2, tag3", "blah, blah2" } 
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Roadkill.Core.Email.IEmailClient">
             <summary>
@@ -816,9 +823,82 @@
             Attempts to copy the correct SQL binaries to the bin folder for the architecture the app pool is running under.
             </summary>
         </member>
+        <member name="T:Roadkill.Core.Mvc.Controllers.RelController">
+            <summary>
+            Provides all page related functionality, including editing and viewing pages.
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Mvc.Controllers.ControllerBase">
+            <summary>
+            A base controller for all Roadkill controller classes which require services 
+            (via an IServiceContainer) or authentication.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.ControllerBase.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
+            <summary>
+            Called before the action method is invoked. This overides the default behaviour by 
+            populating RoadkillContext.Current.CurrentUser with the current logged in user after
+            each action method.
+            </summary>
+            <param name="filterContext">Information about the current request and action.</param>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.AllPages">
+            <summary>
+            Displays a list of all page titles and ids in Roadkill.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> as the model.</returns>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.ByUser(System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Displays all pages for a particular user.
+            </summary>
+            <param name="id">The username</param>
+            <param name="encoded">Whether the username paramter is Base64 encoded.</param>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> as the model.</returns>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.Delete(System.Int32)">
+            <summary>
+            Deletes a wiki page.
+            </summary>
+            <param name="id">The id of the page to delete.</param>
+            <returns>Redirects to AllPages action.</returns>
+            <remarks>This action requires admin rights.</remarks>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.Edit(System.Int32)">
+            <summary>
+            Displays the edit View for the page provided in the id.
+            </summary>
+            <param name="id">The ID of the page to edit.</param>
+            <returns>An filled <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> as the model. If the page id cannot be found, the action
+            redirects to the New page.</returns>
+            <remarks>This action requires editor rights.</remarks>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.Edit(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Saves all POST'd data for a page edit to the database.
+            </summary>
+            <param name="model">A filled <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> containing the new data.</param>
+            <returns>Redirects to /Wiki/{id} using the passed in <see cref="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Id"/>.</returns>
+            <remarks>This action requires editor rights.</remarks>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.New(System.String)">
+            <summary>
+            Displays the Edit view in new page mode.
+            </summary>
+            <returns>An empty <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> as the model.</returns>
+            <remarks>This action requires editor rights.</remarks>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.Controllers.RelController.New(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Saves a new page using the provided <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> object to the database.
+            </summary>
+            <param name="model">The page details to save.</param>
+            <returns>Redirects to /Wiki/{id} using the newly created page's ID.</returns>
+            <remarks>This action requires editor rights.</remarks>
+        </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.RelViewModel">
             <summary>
-            Provides a data summary class for creating and saving user details.
+            Provides a data summary class for creating and saving relationship details.
             </summary>
         </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.#ctor">
@@ -828,7 +908,7 @@
         </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.#ctor(Roadkill.Core.Database.Relationship)">
             <summary>
-            Takes all properties on <see cref="N:Org"/> and fills them on in the RelViewModel
+            Takes all properties on <see cref="!:Rel"/> and fills them on in the RelViewModel
             </summary>
         </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetOrg(System.Int32)">
@@ -839,6 +919,12 @@
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetRelType(System.Int32)">
             <summary>
             Returns the organisation name
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.RelTypesAsNewSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.Id">
@@ -3069,20 +3155,6 @@
             </summary>
             <remarks>All actions in this controller require admin rights.</remarks>
         </member>
-        <member name="T:Roadkill.Core.Mvc.Controllers.ControllerBase">
-            <summary>
-            A base controller for all Roadkill controller classes which require services 
-            (via an IServiceContainer) or authentication.
-            </summary>
-        </member>
-        <member name="M:Roadkill.Core.Mvc.Controllers.ControllerBase.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)">
-            <summary>
-            Called before the action method is invoked. This overides the default behaviour by 
-            populating RoadkillContext.Current.CurrentUser with the current logged in user after
-            each action method.
-            </summary>
-            <param name="filterContext">Information about the current request and action.</param>
-        </member>
         <member name="M:Roadkill.Core.Mvc.Controllers.CacheController.Index">
             <summary>
             Displays all items in the cache
@@ -3995,6 +4067,54 @@
             <param name="destinationPath">The relative path of the folder to store the file.</param>
             <param name="files"></param>
             <returns></returns>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.AddRel(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Adds the page to the database.
+            </summary>
+            <param name="model">The summary details for the page.</param>
+            <returns>A <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> for the newly added page.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while saving.</exception>
+            <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.AllRels(System.Boolean)">
+            <summary>
+            Retrieves a list of all pages in the system.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the pages.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while retrieving the list.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.AllRelsCreatedBy(System.String)">
+            <summary>
+            Gets alls the pages created by a user.
+            </summary>
+            <param name="userName">Name of the user.</param>
+            <returns>All pages created by the provided user, or an empty list if none are found.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while saving.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.DeleteRel(System.Int32)">
+            <summary>
+            Deletes a page from the database.
+            </summary>
+            <param name="pageId">The id of the page to remove.</param>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while deleting the page.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.GetRelById(System.Int32,System.Boolean)">
+            <summary>
+            Retrieves the page by its id.
+            </summary>
+            <param name="id">The id of the page</param>
+            <param name="loadContent">True if the page's content should also be loaded, which will also run all text plugins.</param>
+            <returns>A <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> for the page.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while getting the page.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.IRelService.UpdateRel(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Updates the provided page.
+            </summary>
+            <param name="model">The page model.</param>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while updating.</exception>
+            <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
         </member>
         <member name="M:Roadkill.Core.Services.IPageService.AddPage(Roadkill.Core.Mvc.ViewModels.PageViewModel)">
             <summary>
@@ -5361,6 +5481,79 @@
             If the app is running from the root then this will just be "/".</param>
             <returns>A full operating system file path.</returns>
         </member>
+        <member name="T:Roadkill.Core.Services.RelService">
+            <summary>
+            Provides a set of tasks for wiki page management.
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Services.ServiceBase">
+            <summary>
+            Provides all inheriting services classes with application settings and repository access.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.AddRel(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Adds the page to the database.
+            </summary>
+            <param name="model">The summary details for the page.</param>
+            <returns>A <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> for the newly added page.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while saving.</exception>
+            <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.AllRels(System.Boolean)">
+            <summary>
+            Retrieves a list of all pages in the system.
+            </summary>
+            <returns>An <see cref="T:System.Collections.Generic.IEnumerable`1"/> of the pages.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while retrieving the list.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.AllRelsCreatedBy(System.String)">
+            <summary>
+            Gets alls the pages created by a user.
+            </summary>
+            <param name="userName">Name of the user.</param>
+            <returns>All pages created by the provided user, or an empty list if none are found.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while retrieving the list.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.DeleteRel(System.Int32)">
+            <summary>
+            Deletes a page from the database.
+            </summary>
+            <param name="pageId">The id of the page to remove.</param>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while deleting the page.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.FindByTag(System.String)">
+            <summary>
+            Finds all pages with the given tag.
+            </summary>
+            <param name="tag">The tag to search for.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of pages tagged with the provided tag.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while getting the list.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.FindByTitle(System.String)">
+            <summary>
+            Finds a page by its title
+            </summary>
+            <param name="title">The page title</param>
+            <returns>A <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> for the page.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while getting the page.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.GetRelById(System.Int32,System.Boolean)">
+            <summary>
+            Retrieves the page by its id.
+            </summary>
+            <param name="id">The id of the page</param>
+            <returns>A <see cref="T:Roadkill.Core.Mvc.ViewModels.PageViewModel"/> for the page.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while getting the page.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.RelService.UpdateRel(Roadkill.Core.Mvc.ViewModels.RelViewModel)">
+            <summary>
+            Updates the provided relationship.
+            </summary>
+            <param name="model">The summary.</param>
+            <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while updating.</exception>
+            <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
+        </member>
         <member name="M:Roadkill.Core.Converters.MarkupLinkUpdater.ContainsPageLink(System.String,System.String)">
             <summary>
             Whether the text provided contains any links to the page title.
@@ -5998,11 +6191,6 @@
         <member name="T:Roadkill.Core.Security.UserServiceBase">
             <summary>
             The base class for user management tasks.
-            </summary>
-        </member>
-        <member name="T:Roadkill.Core.Services.ServiceBase">
-            <summary>
-            Provides all inheriting services classes with application settings and repository access.
             </summary>
         </member>
         <member name="M:Roadkill.Core.Security.UserServiceBase.ActivateUser(System.String)">
@@ -8722,6 +8910,11 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgContactDetails">
             <summary>
             Returns org details based on ID
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelToUserToPage">
+            <summary>
+            Returns if this user has already added a relationship to this page
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.GetRelationships">

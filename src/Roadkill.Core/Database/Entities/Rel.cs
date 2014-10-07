@@ -28,7 +28,7 @@ namespace Roadkill.Core.Database
         /// <value>
         /// The user.
         /// </value>
-        public int userId { get; set; }
+        public string username { get; set; }
 
         /// <summary>
         /// Gets or sets the org id.

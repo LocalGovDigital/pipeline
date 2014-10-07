@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Roadkill.Web")]
 [assembly: AssemblyDescription("The MVC site for Roadkill Wiki")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("C.Small")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Roadkill.Web")]
-[assembly: AssemblyCopyright("Copyright © C.Small 2013")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

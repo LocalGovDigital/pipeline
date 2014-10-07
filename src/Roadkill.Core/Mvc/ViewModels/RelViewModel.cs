@@ -19,11 +19,15 @@ using System.Configuration;
 using System.Net.Http;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
+using System.Web.Mvc.Html;
+using System.Linq.Expressions;
+
+
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
     /// <summary>
-    /// Provides a data summary class for creating and saving user details.
+    /// Provides a data summary class for creating and saving relationship details.
     /// </summary>
     public class RelViewModel
     {
@@ -33,17 +37,19 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public int Id { get; set; }
 
-        public string user { get; set; }
+        public string userName { get; set; }
 
-        public string org { get; set; }
+        public int orgID { get; set; }
 
-        public int page { get; set; }
+        public int pageID { get; set; }
 
-        public string reltype { get; set; }
+        public int relTypeID { get; set; }
 
         public string reltext { get; set; }
 
         public DateTime reldatetime { get; set; }
+
+
 
         /// <summary>
         /// Constructor used by none-controllers
@@ -53,17 +59,18 @@ namespace Roadkill.Core.Mvc.ViewModels
         }
 
         /// <summary>
-        /// Takes all properties on <see cref="Org"/> and fills them on in the RelViewModel
+        /// Takes all properties on <see cref="Rel"/> and fills them on in the RelViewModel
         /// </summary>
         public RelViewModel(Relationship rel)
         {
-            if (org == null)
+            if (Id == null)
                 throw new ArgumentNullException("rel");
 
             Id = rel.Id;
-            org = GetOrg(rel.orgId);
-            page = rel.pageId;
-            reltype = GetRelType(rel.relTypeId);
+            userName = rel.username;
+            orgID = rel.orgId;
+            pageID = rel.pageId;
+            relTypeID = rel.relTypeId;
             reltext = rel.relText;
             reldatetime = rel.relDateTime;
         }
@@ -100,8 +107,42 @@ namespace Roadkill.Core.Mvc.ViewModels
         }
 
 
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public static List<SelectListItem> RelTypesAsNewSelectList()
+        {
+         
 
-        private ApplicationSettings GetAppSettings()
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+
+                IEnumerable<RelationshipType> RelList;
+                RelList = repository.FindAllRelTypes();
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (RelationshipType reltype in RelList)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = reltype.relTypeText.ToString();
+                    item.Value = reltype.Id.ToString();
+
+                    items.Add(item);
+                }
+
+                items.Sort((x, y) => string.Compare(x.Text, y.Text));
+
+                return items;
+          
+
+        }
+
+
+ 
+ 
+        private static ApplicationSettings GetAppSettings()
         {
 
             ApplicationSettings appSettings = new ApplicationSettings();

@@ -1,17 +1,18 @@
 ﻿using System;
 using Mindscape.LightSpeed;
 
+
 namespace Roadkill.Core.Database.LightSpeed
 {
-	[Table("pipeline_relationship")]
-	[Cached(ExpiryMinutes = 1)]
-	public class RelEntity : Entity<int>
-	{
-		[Column("id")]
-		private int _id;
+    [Table("pipeline_relationship", IdentityMethod = IdentityMethod.IdentityColumn)]
+    [Cached(ExpiryMinutes = 1)]
+    public class RelEntity : Entity<int>
+    {
+        [Column("id")]
+        private int _id;
 
-		[Column("userid")]
-		private int _userid;
+        [Column("username")]
+        private string _username;
 
         [Column("orgid")]
         private int _orgid;
@@ -26,10 +27,9 @@ namespace Roadkill.Core.Database.LightSpeed
         private string _reltext;
 
         [Column("reldatetime")]
-        private DateTime _reldatetime;
+        private DateTime _reldatetime; 
 
-		
-		public int Id
+        public int Id
         {
             get
             {
@@ -41,15 +41,15 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
-        public int userId
+        public string username
         {
             get
             {
-                return _userid;
+                return _username;
             }
             set
             {
-                Set<int>(ref _userid, value);
+                Set<string>(ref _username, value);
             }
         }
 
@@ -113,5 +113,8 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
-	}
+
+
+
+    }
 }

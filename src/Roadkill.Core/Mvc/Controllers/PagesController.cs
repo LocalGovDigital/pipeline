@@ -48,6 +48,7 @@ namespace Roadkill.Core.Mvc.Controllers
 			return View(_pageService.AllPages());
 		}
 
+
 		/// <summary>
 		/// Displays all tags (categories if you prefer that term) in Roadkill.
 		/// </summary>

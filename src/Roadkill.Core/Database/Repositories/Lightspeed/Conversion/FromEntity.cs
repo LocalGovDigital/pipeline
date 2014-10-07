@@ -110,7 +110,7 @@ namespace Roadkill.Core.Database.LightSpeed
             Relationship rel = new Relationship();
             rel.Id = entity.Id;
             rel.orgId = entity.orgId;
-            rel.userId = entity.userId;
+            rel.username = entity.username;
             rel.pageId = entity.pageId;
             rel.relTypeId = entity.relTypeId;
             rel.relText = entity.relText;
@@ -187,6 +187,18 @@ namespace Roadkill.Core.Database.LightSpeed
             foreach (RelEntity entity in entities)
             {
                 Relationship pageContent = ToRel(entity);
+                list.Add(pageContent);
+            }
+
+            return list;
+        }
+
+        public static List<RelationshipType> ToRelTypeList(List<RelTypeEntity> entities)
+        {
+            List<RelationshipType> list = new List<RelationshipType>();
+            foreach (RelTypeEntity entity in entities)
+            {
+                RelationshipType pageContent = ToRelType(entity);
                 list.Add(pageContent);
             }
 

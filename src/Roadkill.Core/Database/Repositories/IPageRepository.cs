@@ -42,5 +42,5 @@ namespace Roadkill.Core.Database
 		IEnumerable<PageContent> GetPageContentByEditedBy(string username);
 		Page SaveOrUpdatePage(Page page);
 		void UpdatePageContent(PageContent content); // no new version
-	}
+ 	}
 }
