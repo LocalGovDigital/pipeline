@@ -8813,6 +8813,11 @@
             The main language of the project
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelNewEdit">
+            <summary>
+            The main language of the project
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Relationships">
             <summary>
             The main language of the project

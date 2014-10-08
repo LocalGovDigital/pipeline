@@ -22,7 +22,7 @@ namespace Roadkill.Core.Mvc.Controllers
 	[OptionalAuthorization]
 	public class RelController : ControllerBase
 	{
-		private SettingsService _settingsService;
+        private SettingsService _settingsService;
 		private IRelService _relService;
 
 		public RelController(ApplicationSettings settings, UserServiceBase userManager,
@@ -128,8 +128,8 @@ namespace Roadkill.Core.Mvc.Controllers
 		/// <returns>An empty <see cref="PageViewModel"/> as the model.</returns>
 		/// <remarks>This action requires editor rights.</remarks>
 		[EditorRequired]
-        public ActionResult New(string pageID)
-		{
+        public ActionResult New(string pageID)		{
+                      
             RelViewModel model = new RelViewModel();
             model.pageID = Convert.ToInt32(pageID);
 

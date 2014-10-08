@@ -21,6 +21,7 @@ namespace Roadkill.Core.Services
     /// </summary>
     public class RelService : ServiceBase, IRelService
     {
+        
         private SearchService _searchService;
         private MarkupConverter _markupConverter;
         private PageHistoryService _historyService;
@@ -65,7 +66,7 @@ namespace Roadkill.Core.Services
                 rel.relTypeId = model.relTypeID;
                 rel.relText = model.reltext;
 
-                Relationship newrel = Repository.AddNewRel(rel, rel.relTypeId, rel.username, rel.orgId, rel.pageId, rel.relText);
+                Relationship newrel = Repository.AddNewRel(rel, rel.relTypeId, currentUser, rel.orgId, rel.pageId, rel.relText);
 
                 return model;
             }

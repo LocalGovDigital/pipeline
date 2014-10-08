@@ -23,6 +23,8 @@ using System.Web.Configuration;
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
+    
+    
     /// <summary>
     /// Provides summary data for a page.
     /// </summary>
@@ -38,7 +40,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         private string _rawTags;
         private string _content;
 
-        /// <summary>
+         /// <summary>
         /// The page's unique id.
         /// </summary>
         public int Id { get; set; }
@@ -127,6 +129,11 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// The main language of the project
         /// </summary>
         public int OrgID { get; set; }
+
+        /// <summary>
+        /// The main language of the project
+        /// </summary>
+        public bool RelNewEdit { get; set; }
 
 
         /// <summary>
@@ -243,6 +250,9 @@ namespace Roadkill.Core.Mvc.ViewModels
             PluginPreContainer = "";
             PluginPostContainer = "";
             AllTags = new List<TagViewModel>();
+
+            ProjectEnd = DateTime.Now;
+            ProjectStart = DateTime.Now;
         }
 
         public PageViewModel(Page page)
@@ -266,6 +276,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectLanguage = page.ProjectLanguage;
             OrgID = page.OrgID;
             Relationships = GetRelationships;
+            RelNewEdit = RelToUserToPage;
 
             CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
             ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
@@ -551,22 +562,11 @@ namespace Roadkill.Core.Mvc.ViewModels
         {
             get
             {
+               
 
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-
-
-              //repository.
-       
-
-                //User _user = repository.GetUserByUsername( );
-                
-                
-                
-                ///bool _RelToUserToPage = repository.RelToUserToPage(Id,;
-
-                bool _RelToUserToPage = false;
-
-
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());        
+                           
+                bool _RelToUserToPage = repository.RelToUserToPage(Id);
 
                 return _RelToUserToPage;
             }

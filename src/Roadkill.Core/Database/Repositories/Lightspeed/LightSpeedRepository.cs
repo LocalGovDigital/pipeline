@@ -650,7 +650,7 @@ namespace Roadkill.Core.Database.LightSpeed
             ToEntity.FromRelationship(rel, relEntity);
             relEntity.username = username;
             relEntity.orgId = orgID;
-            relEntity.pageId = 3;
+            relEntity.pageId = pageID;
             relEntity.relDateTime = DateTime.Now;
             UnitOfWork.Add(relEntity);
             UnitOfWork.SaveChanges();
@@ -713,11 +713,13 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToRelTypeList(entities);
         }
 
-        public bool RelToUserToPage(int pageID, int orgID)
+        public bool RelToUserToPage(int pageID)
         {
             bool _RelToUserToPage = false;
 
-            RelEntity entity = Rels.FirstOrDefault(p => p.orgId == orgID);
+            RelEntity entity = Rels.FirstOrDefault(p => p.username == pageID.ToString());
+            _RelToUserToPage = true;
+
             if (entity != null)
             {
                 if (entity.pageId == pageID)
