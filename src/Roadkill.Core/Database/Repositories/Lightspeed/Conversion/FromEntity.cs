@@ -108,7 +108,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 return null;
 
             Relationship rel = new Relationship();
-            rel.Id = entity.Id;
+            rel.id = entity.Id;
             rel.orgId = entity.orgId;
             rel.username = entity.username;
             rel.pageId = entity.pageId;

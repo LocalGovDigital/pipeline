@@ -6,16 +6,16 @@
 	<div class="btn-group">
 	@if (RoadkillContext.IsLoggedIn)
     {
-    
-        
-     if (Model.RelToUserToPage == false)
-     { 
-        <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("New", "Rel", new { id = Model.Id, pageID = Model.Id, username = RoadkillContext.CurrentUsername})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star"></span></a>
-     }
-     else
-     {
-        <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Id, pageID = Model.Id, username = RoadkillContext.CurrentUsername})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star"></span></a>
-     }
+
+
+        if (Model.Rel.id == 0)
+        {
+            <a id="pageedit-button" class="btn btn-primary btn-sm" href="@Url.Action("New", "Rel", new { id = 0, pageID = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star-empty"></span></a>
+        }
+        else
+        {
+            <a id="pageedit-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star"></span></a>
+        }
 
         if (Model.IsLocked && !RoadkillContext.IsAdmin)
         {

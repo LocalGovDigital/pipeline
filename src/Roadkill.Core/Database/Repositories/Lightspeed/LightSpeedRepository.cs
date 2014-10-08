@@ -648,6 +648,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             RelEntity relEntity = new RelEntity();
             ToEntity.FromRelationship(rel, relEntity);
+            relEntity.Id = 0;
             relEntity.username = username;
             relEntity.orgId = orgID;
             relEntity.pageId = pageID;
@@ -662,7 +663,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
         public Relationship SaveOrUpdateRel(Relationship rel)
         {
-            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.Id);
+            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.id);
             if (entity == null)
             {
 
@@ -684,7 +685,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
         public Relationship GetRelById(int id)
         {
-            RelEntity entity = Rels.FirstOrDefault(p => p.Id == id);
+            RelEntity entity = Rels.FirstOrDefault(p => p.id == id);
             return FromEntity.ToRel(entity);
         }
 
@@ -696,7 +697,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
         public void DeleteRel(Relationship rel)
         {
-            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.Id);
+            RelEntity entity = UnitOfWork.FindById<RelEntity>(rel.id);
             UnitOfWork.Remove(entity);
             UnitOfWork.SaveChanges();
         }
@@ -713,23 +714,26 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToRelTypeList(entities);
         }
 
-        public bool RelToUserToPage(int pageID)
+        public Relationship RelToUserToPage(int pageID, string username)
         {
-            bool _RelToUserToPage = false;
+            Relationship _RelToUserToPage = new Relationship();
 
-            RelEntity entity = Rels.FirstOrDefault(p => p.username == pageID.ToString());
-            _RelToUserToPage = true;
+            RelEntity entity = Rels.FirstOrDefault(r => r.username == username && r.pageId == pageID);
 
-            if (entity != null)
+            if (entity != null && entity.pageId != 0)            
             {
-                if (entity.pageId == pageID)
-                {
-                    _RelToUserToPage = true;
-                }
+                _RelToUserToPage = FromEntity.ToRel(entity);                   
 
             }
 
             return _RelToUserToPage;
+        }
+
+        public Organisation GetOrgByUser(string username)
+        {
+            UserEntity userentity = Users.FirstOrDefault(p => p.Username == username);
+            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.OrgID);            
+            return FromEntity.ToOrg(orgentity);
         }
 
         #endregion

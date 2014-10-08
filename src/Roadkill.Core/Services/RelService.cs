@@ -60,8 +60,9 @@ namespace Roadkill.Core.Services
                 string currentUser = _context.CurrentUsername;
 
                 Relationship rel = new Relationship();
+                rel.id = model.id;
                 rel.username = currentUser;
-                rel.orgId = model.orgID;
+                rel.orgId = Repository.GetOrgByUser(currentUser).Id;
                 rel.pageId = model.pageID;
                 rel.relTypeId = model.relTypeID;
                 rel.relText = model.reltext;
@@ -72,7 +73,7 @@ namespace Roadkill.Core.Services
             }
             catch (DatabaseException e)
             {
-                throw new DatabaseException(e, "An error occurred while adding relationship '{0}' to the database", model.Id);
+                throw new DatabaseException(e, "An error occurred while adding relationship '{0}' to the database", model.id);
             }
         }
 
@@ -88,9 +89,9 @@ namespace Roadkill.Core.Services
                 string cacheKey = "";
                 IEnumerable<RelViewModel> relModels;
 
-                IEnumerable<Relationship> rels = Repository.AllRels().OrderBy(p => p.Id);
+                IEnumerable<Relationship> rels = Repository.AllRels().OrderBy(p => p.id);
                 relModels = from rel in rels
-                            select new RelViewModel() { Id = rel.Id, };
+                            select new RelViewModel() { id = rel.id, };
 
                 return relModels;
             }
@@ -117,7 +118,7 @@ namespace Roadkill.Core.Services
                 {
                     IEnumerable<Relationship> rels = Repository.FindRelsCreatedBy(userName);
                     models = from rel in rels
-                             select new RelViewModel(Repository.GetRelById(rel.Id));
+                             select new RelViewModel(Repository.GetRelById(rel.id));
                 }
 
                 return models;
@@ -135,18 +136,18 @@ namespace Roadkill.Core.Services
         /// </summary>
         /// <param name="pageId">The id of the page to remove.</param>
         /// <exception cref="DatabaseException">An databaseerror occurred while deleting the page.</exception>
-        public void DeleteRel(int relId)
+        public void DeleteRel(int id)
         {
             try
             {
                 // Avoid grabbing all the pagecontents coming back each time a page is requested, it has no inverse relationship.
-                Relationship rel = Repository.GetRelById(relId);
+                Relationship rel = Repository.GetRelById(id);
                 Repository.DeleteRel(rel);
 
             }
             catch (DatabaseException ex)
             {
-                throw new DatabaseException(ex, "An error occurred while deleting the relationship id {0} from the database", relId);
+                throw new DatabaseException(ex, "An error occurred while deleting the relationship id {0} from the database", id);
             }
         }
 
@@ -244,7 +245,8 @@ namespace Roadkill.Core.Services
             {
                 string currentUser = _context.CurrentUsername;
 
-                Relationship rel = Repository.GetRelById(model.Id);
+                Relationship rel = Repository.GetRelById(model.id);
+                rel.id = model.id;
                 rel.username = currentUser;
                 rel.orgId = model.orgID;
                 rel.pageId = model.pageID;
@@ -257,7 +259,7 @@ namespace Roadkill.Core.Services
             }
             catch (DatabaseException ex)
             {
-                throw new DatabaseException(ex, "An error occurred updating the relationship with id '{0}' in the database", model.Id);
+                throw new DatabaseException(ex, "An error occurred updating the relationship with id '{0}' in the database", model.id);
             }
         }        
 

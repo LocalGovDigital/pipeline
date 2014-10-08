@@ -19,6 +19,9 @@ using System.Configuration;
 using System.Net.Http;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
+using Roadkill.Core.Services;
+using StructureMap;
+using StructureMap.Attributes;
 
 
 namespace Roadkill.Core.Mvc.ViewModels
@@ -31,6 +34,10 @@ namespace Roadkill.Core.Mvc.ViewModels
     [CustomValidation(typeof(PageViewModel), "VerifyRawTags")]
     public class PageViewModel
     {
+
+
+
+        
         private static string[] _tagBlackList = 
 		{
 			"#", ";", "/", "?", ":", "@", "&", "=", "{", "}", "|", "\\", "^", "[", "]", "`"		
@@ -39,6 +46,8 @@ namespace Roadkill.Core.Mvc.ViewModels
         private List<string> _tags;
         private string _rawTags;
         private string _content;
+        private IUserContext RoadkillContext;
+        private ApplicationSettings ApplicationSettings;
 
          /// <summary>
         /// The page's unique id.
@@ -131,9 +140,20 @@ namespace Roadkill.Core.Mvc.ViewModels
         public int OrgID { get; set; }
 
         /// <summary>
-        /// The main language of the project
+        /// Does the user have a relationsip with this page
         /// </summary>
-        public bool RelNewEdit { get; set; }
+        public int id { get; set; }
+
+        /// <summary>
+        /// Does the user have a relationsip with this page
+        /// </summary>
+        public Relationship Rel { get; set; }
+
+
+        /// <summary>
+        /// Does the user have a relationsip with this page
+        /// </summary>
+        public List<Relationship> RelList { get; set; }
 
 
         /// <summary>
@@ -275,8 +295,10 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStatus = page.ProjectStatus;
             ProjectLanguage = page.ProjectLanguage;
             OrgID = page.OrgID;
-            Relationships = GetRelationships;
-            RelNewEdit = RelToUserToPage;
+            //Relationships = GetRelationships;
+            Rel = RelToUserToPage(Id);
+
+            Relationships = GetRelationships();
 
             CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
             ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
@@ -295,6 +317,8 @@ namespace Roadkill.Core.Mvc.ViewModels
             if (converter == null)
                 throw new ArgumentNullException("converter");
 
+            RoadkillContext = ObjectFactory.GetInstance<IUserContext>();
+
             Id = pageContent.Page.Id;
             Title = pageContent.Page.Title;
             PreviousTitle = pageContent.Page.Title;
@@ -312,6 +336,10 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStatus = pageContent.ProjectStatus;
             ProjectLanguage = pageContent.ProjectLanguage;
             OrgID = pageContent.OrgID;
+
+            Rel = RelToUserToPage(Id);
+
+            Relationships = GetRelationships();
 
             PageHtml pageHtml = converter.ToHtml(pageContent.Text);
             ContentAsHtml = pageHtml.Html;
@@ -544,7 +572,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             get
             {
 
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());               
 
                 Organisation Org = new Organisation();
                 Org = repository.GetOrgByID(OrgID);
@@ -558,46 +586,23 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// Returns if this user has already added a relationship to this page
         /// </summary>
-        public bool RelToUserToPage
+        public Relationship RelToUserToPage(int pageID)
         {
-            get
-            {
-               
+            
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
 
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());        
-                           
-                bool _RelToUserToPage = repository.RelToUserToPage(Id);
+                RoadkillContext = ObjectFactory.GetInstance<IUserContext>();
 
-                return _RelToUserToPage;
-            }
+                return repository.RelToUserToPage(pageID, RoadkillContext.CurrentUsername);
+  
 
         }
 
 
-
-        /// <summary>
-        /// Returns org details based on ID
-        /// </summary>
-        public List<Relationship> GetRelationships
+        public List<Relationship> GetRelationships()
         {
-            get
-            {
-
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-
-                List<Relationship> items = new List<Relationship>();
-                items = repository.FindPageRelationships(Id);
-
-                foreach (Relationship rel in items)
-                {
-
-                    Relationship item = new Relationship();
-                    item.relText = rel.relText;
-                    items.Add(item);
-                }
-
-                return items;
-            }
+             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+             return repository.FindPageRelationships(Id);
 
         }
 
@@ -605,13 +610,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         private static ApplicationSettings GetAppSettings()
         {
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
-
+            ApplicationSettings appSettings = ObjectFactory.GetInstance<ApplicationSettings>();
             return appSettings;
 
         }
