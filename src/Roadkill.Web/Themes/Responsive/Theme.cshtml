@@ -3,7 +3,6 @@
 <html lang="en">
 <head>
 	<title>@ViewBag.Title</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@Html.Partial("HeadContent")
 	@RenderSection("PluginHead", false)
 </head>
@@ -49,7 +48,7 @@
                 @RenderBody()
             </div>
         </div>
-
+        @RenderSection("RelatedRelationships", false)
         @RenderSection("PluginPostContainer", false)
     </div>
 
