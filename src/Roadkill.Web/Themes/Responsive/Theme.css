@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5, h6 {
 #content-wrapper {
     min-height: 83%;
     padding: 0px;
+    padding-bottom:20px;
     margin: 0px;
     font-size:large;
     background-image:url(../../Assets/Images/pipeline.jpg);
@@ -83,12 +84,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* Relationships */
 #relationships{
+    
+    padding-top:20px;
     padding-bottom:20px;
+    background-color:#EEEEEE;
 }
 .relationship
 {
     margin-left:20px;
     margin-bottom:10px;
+}
+.relationship-text, .relationship-icon
+{
+    color:#5cb85c;
+}
+.relationship-icon
+{
+    margin-right:10px;
+    font-size:larger;
+    float:left;
+
 }
 
 /* Responsive header */
