@@ -81,6 +81,16 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom:10px;
 
 }
+/* Relationships */
+#relationships{
+    padding-bottom:20px;
+}
+.relationship
+{
+    margin-left:20px;
+    margin-bottom:10px;
+}
+
 /* Responsive header */
 @media screen and (min-width:720px) {
     /* Show the bar at the top for larger screens*/
