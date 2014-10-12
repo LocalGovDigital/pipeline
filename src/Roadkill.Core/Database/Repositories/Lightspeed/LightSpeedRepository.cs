@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,6 +12,7 @@ using Roadkill.Core.Configuration;
 using Roadkill.Core.Database.Schema;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Mvc.ViewModels;
 using StructureMap;
 using PluginSettings = Roadkill.Core.Plugins.Settings;
 
@@ -297,7 +299,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 ProjectEstimatedTime = projectEstimatedTime,
                 ProjectStatus = projectStatus,
                 ProjectLanguage = projectLanguage,
-                OrgID = orgID,
+                orgID = orgID,
             };
 
             UnitOfWork.Add(pageContentEntity);
@@ -330,7 +332,7 @@ namespace Roadkill.Core.Database.LightSpeed
                     ProjectEstimatedTime = projectEstimatedTime,
                     ProjectStatus = projectStatus,
                     ProjectLanguage = projectLanguage,
-                    OrgID = orgID,
+                    orgID = orgID,
                 };
 
                 UnitOfWork.Add(pageContentEntity);
@@ -650,7 +652,10 @@ namespace Roadkill.Core.Database.LightSpeed
             ToEntity.FromRelationship(rel, relEntity);
             relEntity.Id = 0;
             relEntity.username = username;
-            relEntity.orgId = orgID;
+
+            User _user = GetUserByUsername(username);
+            relEntity.orgID = _user.orgID;     
+      
             relEntity.pageId = pageID;
             relEntity.relDateTime = DateTime.Now;
             UnitOfWork.Add(relEntity);
@@ -675,6 +680,8 @@ namespace Roadkill.Core.Database.LightSpeed
             }
             else
             {
+                rel.orgID = GetUserByUsername(rel.username).orgID;
+                
                 ToEntity.FromRelationship(rel, entity);
                 UnitOfWork.SaveChanges();
                 rel = FromEntity.ToRel(entity);
@@ -687,6 +694,12 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             RelEntity entity = Rels.FirstOrDefault(p => p.id == id);
             return FromEntity.ToRel(entity);
+        }
+
+        public IEnumerable<Relationship> GetRelByPage(int pageid)
+        {
+            List<RelEntity> entities = Rels.Where(p => p.pageId == pageid).ToList();
+            return FromEntity.ToRelList(entities);
         }
 
         public IEnumerable<Relationship> AllRels()
@@ -732,7 +745,7 @@ namespace Roadkill.Core.Database.LightSpeed
         public Organisation GetOrgByUser(string username)
         {
             UserEntity userentity = Users.FirstOrDefault(p => p.Username == username);
-            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.OrgID);            
+            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);            
             return FromEntity.ToOrg(orgentity);
         }
 

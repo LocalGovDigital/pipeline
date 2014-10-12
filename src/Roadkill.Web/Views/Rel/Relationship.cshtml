@@ -20,22 +20,24 @@ else
             <div class="col-sm-8">                
 
                 <div id="profile" class="lightborder rounded10 col-sm-12">
-
+                   This page allows you to show interest in a particular project. At present this will just be shown below the project but future functionality will inform the project owner of your interest.
                     <form class="form-horizontal" role="form" method="post">
  
                         <!-- OrgID -->
-                        <div class="form-group">
-                            <label for="OrgID" class="col-sm-3 control-label"></label><div class="col-sm-9">
+                        <div class="form-group"><br />
+                            <label for="OrgID" class="col-sm-3 control-label">Interest</label><div class="col-sm-9">
                             <select id="reltypeid" name="reltypeid">
                                 <option value="1">Like</option>
                                 <option value="2">Join</option>
                             </select>                       
-
+                            <br/>Like: You think this is a good idea
+                            <br/>Join: You'd like to join in this project
                             </div>
                         </div>
 
                         <!-- Email -->
                         <div class="form-group">
+                            <br />
                             <label for="NewEmail" class="col-sm-3 control-label">Comments</label>
                             <div class="col-sm-9">
                                 @(Html.TextAreaFor<RelViewModel, string>(t => t.reltext, new { @class = "form-control" }))

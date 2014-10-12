@@ -58,7 +58,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// The ID of user's organisation.
         /// </summary>
-        public int OrgID { get; set; }
+        public int orgID { get; set; }
 
 		/// <summary>
 		/// The current (or if being changed, previous) username.
@@ -160,7 +160,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 			NewUsername = user.Username;
 			Firstname = user.Firstname;
 			Lastname = user.Lastname;
-            OrgID = user.OrgID;
+            orgID = user.orgID;
 			PasswordResetKey = user.PasswordResetKey;
 		}
 
@@ -394,7 +394,7 @@ namespace Roadkill.Core.Mvc.ViewModels
                     item.Text = org.OrgName.ToString();
                     item.Value = org.Id.ToString();
 
-                    if (org.Id == OrgID)
+                    if (org.Id == orgID)
                     { item.Selected = true; }
 
                     items.Add(item);

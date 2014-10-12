@@ -18,7 +18,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			entity.ActivationKey = user.ActivationKey;
 			entity.Email = user.Email;
 			entity.Firstname = user.Firstname;
-            entity.OrgID = user.OrgID;
+            entity.orgID = user.orgID;
 			entity.IsActivated = user.IsActivated;
 			entity.IsAdmin = user.IsAdmin;
 			entity.IsEditor = user.IsEditor;
@@ -41,7 +41,7 @@ namespace Roadkill.Core.Database.LightSpeed
             entity.ProjectEstimatedTime = page.ProjectEstimatedTime;
             entity.ProjectStatus = page.ProjectStatus;
             entity.ProjectLanguage = page.ProjectLanguage;
-            entity.OrgID = page.OrgID;
+            entity.orgID = page.orgID;
 			entity.Tags = page.Tags;
 			entity.Title = page.Title;
 		}
@@ -58,7 +58,7 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             entity.id = rel.id;
             entity.username = rel.username;
-            entity.orgId = rel.orgId;
+            entity.orgID = rel.orgID;
             entity.pageId = rel.pageId;
             entity.relText = rel.relText;
             entity.relTypeId = rel.relTypeId;

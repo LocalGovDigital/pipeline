@@ -198,7 +198,7 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
-        public int OrgID
+        public int orgID
         {
             get
             {

@@ -11,6 +11,7 @@ using MongoDB.Driver.Linq;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Mvc.ViewModels;
 using StructureMap.Attributes;
 using PluginSettings = Roadkill.Core.Plugins.Settings;
 
@@ -376,7 +377,7 @@ namespace Roadkill.Core.Database.MongoDB
 			return page;
 		}
 
-        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string ProjectStatus, string ProjectLanguage, int OrgID)
+        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string ProjectStatus, string ProjectLanguage, int orgID)
 		{
 			SaveOrUpdate<Page>(page);
 
@@ -393,14 +394,14 @@ namespace Roadkill.Core.Database.MongoDB
                 ProjectEstimatedTime = projectEstimatedTime,
                 ProjectStatus = ProjectStatus,
                 ProjectLanguage = ProjectLanguage,
-                OrgID = OrgID,
+                orgID = orgID,
 			};
 
 			SaveOrUpdate<PageContent>(pageContent);
 			return pageContent;
 		}
 
-        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string ProjectStatus, string ProjectLanguage, int OrgID)
+        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string ProjectStatus, string ProjectLanguage, int orgID)
 		{
 			page.ModifiedOn = editedOn;
 			page.ModifiedBy = editedBy;
@@ -419,7 +420,7 @@ namespace Roadkill.Core.Database.MongoDB
                 ProjectEstimatedTime = projectEstimatedTime,
                 ProjectStatus = ProjectStatus,
                 ProjectLanguage = ProjectLanguage,
-                OrgID = OrgID,
+                orgID = orgID,
 			};
 
 			SaveOrUpdate<PageContent>(pageContent);
@@ -466,6 +467,11 @@ namespace Roadkill.Core.Database.MongoDB
         public IEnumerable<Relationship> AllRels()
         {
             return Relationships.ToList();
+        }
+
+        public IEnumerable<Relationship> GetRelByPage(int pageid)
+        {
+            return GetRelByPage(pageid);
         }
 
         public Relationship AddNewRel(Relationship rel, int reltypeid, string username, int orgID, int pageID, string reltext)

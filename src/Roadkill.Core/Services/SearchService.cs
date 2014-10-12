@@ -137,7 +137,7 @@ namespace Roadkill.Core.Services
                     document.Add(new Field("projectestimatedtime", model.ProjectEstimatedTime.ToString(), Field.Store.YES, Field.Index.NO));
                     document.Add(new Field("projectlanguage", model.ProjectLanguage, Field.Store.YES, Field.Index.ANALYZED));
                     document.Add(new Field("projectstatus", model.ProjectStatus, Field.Store.YES, Field.Index.ANALYZED));
-                    document.Add(new Field("orgid", model.OrgID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                    document.Add(new Field("orgID", model.orgID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
 
 					writer.AddDocument(document);
@@ -221,7 +221,7 @@ namespace Roadkill.Core.Services
                         document.Add(new Field("projectestimatedtime", pageModel.ProjectEstimatedTime.ToString(), Field.Store.YES, Field.Index.NO));
                         document.Add(new Field("projectlanguage", pageModel.ProjectLanguage, Field.Store.YES, Field.Index.ANALYZED));
                         document.Add(new Field("projectstatus", pageModel.ProjectStatus, Field.Store.YES, Field.Index.ANALYZED));
-                        document.Add(new Field("orgid", pageModel.OrgID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+                        document.Add(new Field("orgID", pageModel.orgID.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
 						writer.AddDocument(document);
 					}

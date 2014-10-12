@@ -65,13 +65,13 @@ namespace Roadkill.Core.Import
 								if (!string.IsNullOrEmpty(username) && !string.Equals(username, "admin", StringComparison.OrdinalIgnoreCase))
 								{
 									string email = reader["Email"].ToString();
-                                    int OrgID = (int)reader["OrgID"];
+                                    int orgID = (int)reader["orgID"];
 
 									User user = new User();
 									user.Id = Guid.NewGuid();
 									user.IsEditor = true;
 									user.IsAdmin = false;
-                                    user.OrgID = OrgID;
+                                    user.orgID = orgID;
 									user.Email = email;
 									user.Username = username;
 									user.IsActivated = false;
@@ -269,7 +269,7 @@ namespace Roadkill.Core.Import
                             bool projectEstimatedTime = (bool)reader["ProjectEnd"];
                             string projectLanguage = (string)reader["ProjectLanguage"];
                             string projectStatus = (string)reader["ProjectStatus"];
-                            int orgID = (int.Parse(reader["OrgID"].ToString()));
+                            int orgID = (int.Parse(reader["orgID"].ToString()));
 
                             Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage, orgID);
 							hasContent = true;

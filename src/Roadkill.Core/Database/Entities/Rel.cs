@@ -36,7 +36,7 @@ namespace Roadkill.Core.Database
         /// <value>
         /// The organisation.
         /// </value>
-        public int orgId { get; set; }
+        public int orgID { get; set; }
 
         /// <summary>
         /// Gets or sets the page id.

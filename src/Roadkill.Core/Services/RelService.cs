@@ -62,12 +62,12 @@ namespace Roadkill.Core.Services
                 Relationship rel = new Relationship();
                 rel.id = model.id;
                 rel.username = currentUser;
-                rel.orgId = Repository.GetOrgByUser(currentUser).Id;
+                rel.orgID = Repository.GetOrgByUser(currentUser).Id;
                 rel.pageId = model.pageID;
                 rel.relTypeId = model.relTypeID;
                 rel.relText = model.reltext;
 
-                Relationship newrel = Repository.AddNewRel(rel, rel.relTypeId, currentUser, rel.orgId, rel.pageId, rel.relText);
+                Relationship newrel = Repository.AddNewRel(rel, rel.relTypeId, currentUser, rel.orgID, rel.pageId, rel.relText);
 
                 return model;
             }
@@ -248,7 +248,7 @@ namespace Roadkill.Core.Services
                 Relationship rel = Repository.GetRelById(model.id);
                 rel.id = model.id;
                 rel.username = currentUser;
-                rel.orgId = model.orgID;
+                rel.orgID = model.orgID;
                 rel.pageId = model.pageID;
                 rel.relTypeId = model.relTypeID;
                 rel.relText = model.reltext;

@@ -72,13 +72,13 @@ namespace Roadkill.Core.Services
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
                 page.ProjectStatus = model.ProjectStatus;
-                page.OrgID = model.OrgID;
+                page.orgID = model.orgID;
 
                 // Double check, incase the HTML form was faked.
                 if (_context.IsAdmin)
                     page.IsLocked = model.IsLocked;
 
-                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.OrgID);
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.orgID);
 
                 _listCache.RemoveAll();
                 _pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -388,6 +388,7 @@ namespace Roadkill.Core.Services
             }
         }
 
+
         /// <summary>
         /// Retrieves the page by its id.
         /// </summary>
@@ -442,6 +443,41 @@ namespace Roadkill.Core.Services
             }
         }
 
+
+        /// <summary>
+        /// Finds all relationships related to the page.
+        /// </summary>
+        /// <param name="id">The pageid to search for.</param>
+        /// <returns>A <see cref="IEnumerable{PageViewModel}"/> of pages tagged with the provided tag.</returns>
+        /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
+        public IEnumerable<RelViewModel> GetRelByPage(int pageid)
+        {
+            try
+            {
+
+                IEnumerable<Relationship> relsList = Repository.GetRelByPage(pageid).ToList();
+                List<RelViewModel> rels = new List<RelViewModel>();
+
+                foreach (Relationship rel in relsList)
+                {
+
+
+                    RelViewModel relModel = new RelViewModel(rel);
+                    int index = rels.IndexOf(relModel);
+
+                    rels.Add(relModel);
+   
+                }
+
+                return rels;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred finding the tag '{0}' in the database", pageid);
+            }
+        }
+
+
         /// <summary>
         /// Updates the provided page.
         /// </summary>
@@ -464,7 +500,7 @@ namespace Roadkill.Core.Services
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
                 page.ProjectStatus = model.ProjectStatus;
-                page.OrgID = model.OrgID;
+                page.orgID = model.orgID;
 
                 // A second check to ensure a fake IsLocked POST doesn't work.
                 if (_context.IsAdmin)
@@ -484,7 +520,7 @@ namespace Roadkill.Core.Services
                 _listCache.RemoveAll();
 
                 int newVersion = _historyService.MaxVersion(model.Id) + 1;
-                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.OrgID);
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.orgID);
 
                 // Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
                 if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())

@@ -137,7 +137,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// The main language of the project
         /// </summary>
-        public int OrgID { get; set; }
+        public int orgID { get; set; }
 
         /// <summary>
         /// Does the user have a relationsip with this page
@@ -294,7 +294,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEstimatedTime = page.ProjectEstimatedTime;
             ProjectStatus = page.ProjectStatus;
             ProjectLanguage = page.ProjectLanguage;
-            OrgID = page.OrgID;
+            orgID = page.orgID;
             //Relationships = GetRelationships;
             Rel = RelToUserToPage(Id);
 
@@ -335,7 +335,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEstimatedTime = pageContent.ProjectEstimatedTime;
             ProjectStatus = pageContent.ProjectStatus;
             ProjectLanguage = pageContent.ProjectLanguage;
-            OrgID = pageContent.OrgID;
+            orgID = pageContent.orgID;
 
             Rel = RelToUserToPage(Id);
 
@@ -575,7 +575,7 @@ namespace Roadkill.Core.Mvc.ViewModels
                 LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());               
 
                 Organisation Org = new Organisation();
-                Org = repository.GetOrgByID(OrgID);
+                Org = repository.GetOrgByID(orgID);
 
                 return Org;
             }

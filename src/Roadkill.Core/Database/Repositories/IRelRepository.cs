@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Roadkill.Core.Converters;
+using Roadkill.Core.Mvc.ViewModels;
 
 namespace Roadkill.Core.Database
 {
@@ -14,6 +15,7 @@ namespace Roadkill.Core.Database
 		/// </summary>
 		/// <returns></returns>
         IEnumerable<Relationship> AllRels();
+        IEnumerable<Relationship> GetRelByPage(int pageid);
         void DeleteRel(Relationship rel);
         Relationship GetRelById(int id);
         Relationship SaveOrUpdateRel(Relationship rel);

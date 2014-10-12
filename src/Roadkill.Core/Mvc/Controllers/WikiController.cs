@@ -2,11 +2,23 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Linq;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Services;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Security;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using Mindscape.LightSpeed;
+using Mindscape.LightSpeed.Caching;
+using Mindscape.LightSpeed.Linq;
+using Mindscape.LightSpeed.Logging;
+using Mindscape.LightSpeed.Querying;
+using Roadkill.Core.Database.Schema;
+using Roadkill.Core.Logging;
+using Roadkill.Core.Plugins;
 
 namespace Roadkill.Core.Mvc.Controllers
 {
@@ -59,6 +71,20 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			return PartialView(model);
 		}
+
+
+        public ActionResult RelatedRelationships(int id)
+        {
+            if (id == null || id < 1)
+                return Content("");
+
+            IEnumerable<RelViewModel> model = PageService.GetRelByPage(id);
+
+            if (model == null)
+                return Content(string.Format("The page with id '{0}' could not be found", id));
+
+            return PartialView(model);
+        }
 
 		/// <summary>
 		/// 404 not found page - configured in the web.config

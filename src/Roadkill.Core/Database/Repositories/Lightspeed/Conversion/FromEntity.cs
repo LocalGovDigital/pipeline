@@ -31,7 +31,7 @@ namespace Roadkill.Core.Database.LightSpeed
             page.ProjectEstimatedTime = entity.ProjectEstimatedTime;
             page.ProjectStatus = entity.ProjectStatus;
             page.ProjectLanguage = entity.ProjectLanguage;
-            page.OrgID = entity.OrgID;
+            page.orgID = entity.orgID;
 
 
 			return page;
@@ -54,7 +54,7 @@ namespace Roadkill.Core.Database.LightSpeed
             pageContent.ProjectEstimatedTime = entity.ProjectEstimatedTime;
             pageContent.ProjectStatus = entity.ProjectStatus;
             pageContent.ProjectLanguage = entity.ProjectLanguage;
-            pageContent.OrgID = entity.OrgID;
+            pageContent.orgID = entity.orgID;
 
 			return pageContent;
 		}
@@ -72,7 +72,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			user.ActivationKey = entity.ActivationKey;
 			user.Email = entity.Email;
 			user.Firstname = entity.Firstname;
-            user.OrgID = entity.OrgID;
+            user.orgID = entity.orgID;
 			user.IsActivated = entity.IsActivated;
 			user.IsAdmin = entity.IsAdmin;
 			user.IsEditor = entity.IsEditor;
@@ -109,7 +109,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             Relationship rel = new Relationship();
             rel.id = entity.Id;
-            rel.orgId = entity.orgId;
+            rel.orgID = entity.orgID;
             rel.username = entity.username;
             rel.pageId = entity.pageId;
             rel.relTypeId = entity.relTypeId;

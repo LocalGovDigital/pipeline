@@ -8,7 +8,7 @@ namespace Roadkill.Core.Database.LightSpeed
 	public class OrgEntity : Entity<int>
 	{
 		[Column("id")]
-		private int _orgid;
+		private int _orgID;
 
 		[Column("OrgName")]
 		private string _orgname;
@@ -27,11 +27,11 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             get
             {
-                return _orgid;
+                return _orgID;
             }
             set
             {
-                Set<int>(ref _orgid, value);
+                Set<int>(ref _orgID, value);
             }
         }
 

@@ -1332,9 +1332,9 @@ namespace Roadkill.Core.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Organisation.
         /// </summary>
-        public static string Shared_OrgID_Label {
+        public static string Shared_orgID_Label {
             get {
-                return ResourceManager.GetString("Shared_OrgID_Label", resourceCulture);
+                return ResourceManager.GetString("Shared_orgID_Label", resourceCulture);
             }
         }
         

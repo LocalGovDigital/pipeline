@@ -105,7 +105,7 @@ namespace Roadkill.Core.Database
         /// <summary>
         /// The organisation ID
         /// </summary>
-        public int OrgID { get; set; }
+        public int orgID { get; set; }
 
 		/// <summary>
 		/// Gets or sets the tags for the page, in the format "tag1,tag2,tag3" (no spaces between tags).

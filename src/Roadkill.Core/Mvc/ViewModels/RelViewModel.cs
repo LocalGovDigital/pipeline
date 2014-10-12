@@ -49,6 +49,12 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public DateTime reldatetime { get; set; }
 
+        public string reltypetext { get; set; }
+
+        public string orgtext { get; set; }
+
+        public string usertext { get; set; }
+
 
 
         /// <summary>
@@ -68,11 +74,14 @@ namespace Roadkill.Core.Mvc.ViewModels
 
             id = rel.id;
             userName = rel.username;
-            orgID = rel.orgId;
+            orgID = rel.orgID;
             pageID = rel.pageId;
             relTypeID = rel.relTypeId;
             reltext = rel.relText;
             reldatetime = rel.relDateTime;
+            reltypetext = GetRelType(relTypeID);
+            orgtext = GetOrg(rel.orgID);
+            usertext = GetUser(rel.username);
         }
 
         /// <summary>
@@ -81,12 +90,40 @@ namespace Roadkill.Core.Mvc.ViewModels
         public string GetOrg(int orgID)
         {
 
-            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            string _orgname = "unknown";
+            try
+            {
 
-            Organisation _org;
-            _org = repository.GetOrgByID(orgID);
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+                Organisation _org;
+                _org = repository.GetOrgByID(orgID);
+                _orgname = _org.OrgName;
+            }
+            catch { }
 
-            return _org.OrgName;
+            return _orgname;
+
+        }
+
+
+        /// <summary>
+        /// Returns the organisation name
+        /// </summary>
+        public string GetUser(string username)
+        {
+
+            string _usernames = "unknown";
+            try
+            {
+
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+                User _user;
+                _user = repository.GetUserByUsername(username);
+                _usernames = _user.Firstname + " " + _user.Lastname;
+            }
+            catch { }
+
+            return _usernames;
 
         }
 
@@ -105,41 +142,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             return _reltype.relTypeText;
 
         }
-
-
-        /// <summary>
-        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
-        /// SelectList doesn't add option value attributes.
-        /// </summary>
-        public static List<SelectListItem> RelTypesAsNewSelectList()
-        {
-         
-
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-
-                IEnumerable<RelationshipType> RelList;
-                RelList = repository.FindAllRelTypes();
-
-                List<SelectListItem> items = new List<SelectListItem>();
-
-                foreach (RelationshipType reltype in RelList)
-                {
-
-                    SelectListItem item = new SelectListItem();
-                    item.Text = reltype.relTypeText.ToString();
-                    item.Value = reltype.Id.ToString();
-
-                    items.Add(item);
-                }
-
-                items.Sort((x, y) => string.Compare(x.Text, y.Text));
-
-                return items;
-          
-
-        }
-
-
  
  
         private static ApplicationSettings GetAppSettings()

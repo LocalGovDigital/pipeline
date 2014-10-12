@@ -198,16 +198,6 @@ C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\Recaptcha.pdb
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\Microsoft.Data.OData.xml
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\Microsoft.Data.Edm.xml
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\System.Spatial.xml
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\cs\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\de\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\es\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\hi\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\it\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\nl\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\pl\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\pt\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\ru\Roadkill.Core.resources.dll
-C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\sv\Roadkill.Core.resources.dll
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\de\Microsoft.Data.OData.resources.dll
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\es\Microsoft.Data.OData.resources.dll
 C:\Users\prumens\Documents\GitHub\pipeline\src\Roadkill.Web\bin\fr\Microsoft.Data.OData.resources.dll
