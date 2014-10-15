@@ -271,6 +271,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             PluginPostContainer = "";
             AllTags = new List<TagViewModel>();
 
+            Id = 44;
             ProjectEnd = DateTime.Now;
             ProjectStart = DateTime.Now;
         }
@@ -295,7 +296,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStatus = page.ProjectStatus;
             ProjectLanguage = page.ProjectLanguage;
             orgID = page.orgID;
-            //Relationships = GetRelationships;
             Rel = RelToUserToPage(Id);
 
             Relationships = GetRelationships();

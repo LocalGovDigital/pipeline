@@ -385,8 +385,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 
                 List<SelectListItem> items = new List<SelectListItem>();
 
-                int[] strLanguages = new int[] { 1, 2, 3, 4, 5 };
-
                 foreach (Organisation org in OrgList)
                 {
 
