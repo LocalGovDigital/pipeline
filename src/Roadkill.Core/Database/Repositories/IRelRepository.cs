@@ -20,6 +20,5 @@ namespace Roadkill.Core.Database
         Relationship GetRelById(int id);
         Relationship SaveOrUpdateRel(Relationship rel);
         IEnumerable<Relationship> FindRelsCreatedBy(string username);
-        Organisation GetOrgByUser(string username);
  	}
 }

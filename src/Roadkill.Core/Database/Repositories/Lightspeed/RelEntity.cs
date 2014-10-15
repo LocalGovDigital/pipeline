@@ -29,7 +29,7 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("reldatetime")]
         private DateTime _reldatetime; 
 
-        public int id
+        public int Id
         {
             get
             {

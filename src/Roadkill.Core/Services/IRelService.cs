@@ -37,7 +37,7 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		/// <param name="pageId">The id of the page to remove.</param>
 		/// <exception cref="DatabaseException">An database error occurred while deleting the page.</exception>
-		void DeleteRel(int id);
+		void DeleteRel(int relId);
 
 
 		/// <summary>

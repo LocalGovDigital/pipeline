@@ -455,7 +455,7 @@ namespace Roadkill.Core.Database.MongoDB
 
         public Relationship GetRelById(int id)
         {
-            return Relationships.FirstOrDefault(p => p.id == id);
+            return Relationships.FirstOrDefault(p => p.Id == id);
         }
 
 
@@ -483,11 +483,6 @@ namespace Roadkill.Core.Database.MongoDB
         public IEnumerable<Relationship> FindRelsCreatedBy(string username)
         {
             return Relationships.Where(p => p.username == username);
-        }
-
-        public Organisation GetOrgByUser(string username)
-        {
-            return GetOrgByUser(username);
         }
 
         #endregion

@@ -118,7 +118,7 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			_relService.UpdateRel(model);
 
-			return RedirectToAction("Index", "Wiki", new { id = model.pageID });
+			return RedirectToAction("Index", "Wiki", new { id = model.Id });
 		}
 
 
@@ -152,7 +152,7 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			model = _relService.AddRel(model);
 
-            return RedirectToAction("Index", "Wiki", new { id = model.pageID });
+			return RedirectToAction("Index", "Wiki", new { id = model.Id });
 		}
 
 

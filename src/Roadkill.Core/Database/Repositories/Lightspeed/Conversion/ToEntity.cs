@@ -56,7 +56,6 @@ namespace Roadkill.Core.Database.LightSpeed
 
         public static void FromRelationship(Relationship rel, RelEntity entity)
         {
-            entity.id = rel.id;
             entity.username = rel.username;
             entity.orgID = rel.orgID;
             entity.pageId = rel.pageId;

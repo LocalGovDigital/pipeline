@@ -35,7 +35,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// The user's id
         /// </summary>
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public string userName { get; set; }
 
@@ -69,10 +69,10 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public RelViewModel(Relationship rel)
         {
-            if (id == null)
+            if (Id == null)
                 throw new ArgumentNullException("rel");
 
-            id = rel.id;
+            Id = rel.Id;
             userName = rel.username;
             orgID = rel.orgID;
             pageID = rel.pageId;
