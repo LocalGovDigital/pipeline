@@ -12,7 +12,7 @@ var Roadkill;
 
                     if (level == 0)
                         $("ul.navigator li").remove();
-                    else
+else
                         $("ul.navigator li:gt(" + (level - 1) + ")").remove();
                 };
 
@@ -47,4 +47,3 @@ var Roadkill;
     })(Roadkill.Web || (Roadkill.Web = {}));
     var Web = Roadkill.Web;
 })(Roadkill || (Roadkill = {}));
-//# sourceMappingURL=breadcrumbtrail.js.map

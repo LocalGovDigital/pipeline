@@ -6,7 +6,23 @@
             function EditPage(tags) {
                 this._timeout = null;
                 this._tagBlackList = [
-                    "#", ",", ";", "/", "?", ":", "@", "&", "=", "{", "}", "|", "\\", "^", "[", "]", "`"
+                    "#",
+                    ",",
+                    ";",
+                    "/",
+                    "?",
+                    ":",
+                    "@",
+                    "&",
+                    "=",
+                    "{",
+                    "}",
+                    "|",
+                    "\\",
+                    "^",
+                    "[",
+                    "]",
+                    "`"
                 ];
                 // Setup tagmanager
                 this.initializeTagManager(tags);
@@ -68,7 +84,7 @@
                         if (_this.isValidTag(tag)) {
                             if ($("#IsLocked").length == 0)
                                 $(".wysiwyg-bold").focus();
-                            else
+else
                                 $("#IsLocked").focus();
                         }
                         return false;
@@ -163,10 +179,10 @@
                 $("#preview-wrapper").height(formHeight);
             };
 
-            /**
+            EditPage.updatePreviewPane = /**
             Grabs a preview from the server for the wiki markup, and displays it in the preview pane.
             */
-            EditPage.updatePreviewPane = function () {
+            function () {
                 $("#previewLoading").show();
                 var text = $("#Content").val();
 
@@ -197,4 +213,3 @@
     })(Roadkill.Web || (Roadkill.Web = {}));
     var Web = Roadkill.Web;
 })(Roadkill || (Roadkill = {}));
-//# sourceMappingURL=editpage.js.map

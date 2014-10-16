@@ -54,11 +54,11 @@ var Roadkill;
                 });
             };
 
-            /**
+            Setup.bindConfirmDelete = /**
             Sets all links with the .confirm class so they have to click confirm to
             delete or the link is cancelled.
             */
-            Setup.bindConfirmDelete = function () {
+            function () {
                 $("a.confirm").click(function () {
                     var button;
                     var value;
@@ -97,4 +97,3 @@ var Roadkill;
     })(Roadkill.Web || (Roadkill.Web = {}));
     var Web = Roadkill.Web;
 })(Roadkill || (Roadkill = {}));
-//# sourceMappingURL=setup.js.map
