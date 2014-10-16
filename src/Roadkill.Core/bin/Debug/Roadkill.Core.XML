@@ -139,7 +139,7 @@
             A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.Relationship.Id">
+        <member name="P:Roadkill.Core.Database.Relationship.id">
             <summary>
             Gets or sets the relationships's unique ID.
             </summary>
@@ -926,7 +926,7 @@
             Returns the organisation name
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.Id">
+        <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.id">
             <summary>
             The user's id
             </summary>
@@ -8748,6 +8748,11 @@
             Removes all bad characters (ones which cannot be used in a URL for a page) from a page title.
             </summary>
         </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelToUserToPage(System.Int32)">
+            <summary>
+            Returns if this user has already added a relationship to this page
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Id">
             <summary>
             The page's unique id.
@@ -8820,9 +8825,19 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelNewEdit">
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.id">
             <summary>
-            The main language of the project
+            Does the user have a relationsip with this page
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Rel">
+            <summary>
+            Does the user have a relationsip with this page
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelList">
+            <summary>
+            Does the user have a relationsip with this page
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Relationships">
@@ -8920,16 +8935,6 @@
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgContactDetails">
-            <summary>
-            Returns org details based on ID
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.RelToUserToPage">
-            <summary>
-            Returns if this user has already added a relationship to this page
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.GetRelationships">
             <summary>
             Returns org details based on ID
             </summary>

@@ -20,7 +20,7 @@ namespace Roadkill.Core.Database
         /// <value>
         /// The id.
         /// </value>
-        public int Id { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// Gets or sets the user id.
