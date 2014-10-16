@@ -14,7 +14,7 @@ namespace Roadkill.Core.Database.LightSpeed
 		private string _relTypeTextid;
 
 		
-		public int Id
+		public int id
         {
             get
             {

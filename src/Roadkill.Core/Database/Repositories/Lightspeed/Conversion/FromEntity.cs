@@ -126,7 +126,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 return null;
 
             RelationshipType reltype = new RelationshipType();
-            reltype.Id = entity.Id;
+            reltype.id = entity.Id;
             reltype.relTypeText = entity.relTypeText;
 
             return reltype;

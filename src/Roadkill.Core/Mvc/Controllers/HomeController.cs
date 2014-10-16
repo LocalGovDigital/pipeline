@@ -92,7 +92,7 @@ namespace Roadkill.Core.Mvc.Controllers
 
             }
 
-            string strDefaultFromDate = "20140101";
+            string strDefaultFromDate = "20340101";
             string strDefaultToDate = "20340101";
 
             if ((startdatestart != null && startdatestart != "") || (startdateend != null && startdateend != ""))

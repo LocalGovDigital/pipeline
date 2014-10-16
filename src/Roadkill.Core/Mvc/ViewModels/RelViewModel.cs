@@ -21,6 +21,9 @@ using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
 using System.Web.Mvc.Html;
 using System.Linq.Expressions;
+using Roadkill.Core.Services;
+using StructureMap;
+using StructureMap.Attributes;
 
 
 
@@ -84,6 +87,40 @@ namespace Roadkill.Core.Mvc.ViewModels
             usertext = GetUser(rel.username);
         }
 
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public List<SelectListItem> RelTypesAsSelectList
+        {
+            get
+            {
+
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+
+                IEnumerable<RelationshipType> RelList;
+                RelList = repository.FindAllRelTypes();
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (RelationshipType rel in RelList)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = rel.relTypeText.ToString();
+                    item.Value = rel.id.ToString();
+
+                    if (rel.id == relTypeID)
+                    { item.Selected = true; }
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+        }
+
         /// <summary>
         /// Returns the organisation name
         /// </summary>
@@ -107,7 +144,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 
 
         /// <summary>
-        /// Returns the organisation name
+        /// Returns the user name
         /// </summary>
         public string GetUser(string username)
         {
@@ -142,18 +179,12 @@ namespace Roadkill.Core.Mvc.ViewModels
             return _reltype.relTypeText;
 
         }
- 
- 
+
+
         private static ApplicationSettings GetAppSettings()
         {
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
-
+            ApplicationSettings appSettings = ObjectFactory.GetInstance<ApplicationSettings>();
             return appSettings;
 
         }

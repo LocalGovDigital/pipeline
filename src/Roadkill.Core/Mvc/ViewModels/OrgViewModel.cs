@@ -19,6 +19,9 @@ using System.Configuration;
 using System.Net.Http;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
+using Roadkill.Core.Services;
+using StructureMap;
+using StructureMap.Attributes;
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
@@ -72,14 +75,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             get
             {
 
-                ApplicationSettings appSettings = new ApplicationSettings();
-                appSettings.DataStoreType = DataStoreType.Sqlite;
-                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-                appSettings.LoggingTypes = "none";
-                appSettings.UseBrowserCache = false;
-                //Log.ConfigureLogging(appSettings);
-
-                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
 
                 IEnumerable<Organisation> OrgList;
                 OrgList = repository.FindAllOrgs();
@@ -101,6 +97,15 @@ namespace Roadkill.Core.Mvc.ViewModels
 
                 return items;
             }
+        }
+
+
+        private static ApplicationSettings GetAppSettings()
+        {
+
+            ApplicationSettings appSettings = ObjectFactory.GetInstance<ApplicationSettings>();
+            return appSettings;
+
         }
 
 

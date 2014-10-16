@@ -650,7 +650,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             RelEntity relEntity = new RelEntity();
             ToEntity.FromRelationship(rel, relEntity);
-            relEntity.Id = 0;
+            relEntity.id = 0;
             relEntity.username = username;
 
             User _user = GetUserByUsername(username);

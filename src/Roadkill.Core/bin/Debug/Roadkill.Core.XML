@@ -113,7 +113,7 @@
             The unique id for this object - for use with document stores that require a unique id for storage.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.RelationshipType.Id">
+        <member name="P:Roadkill.Core.Database.RelationshipType.id">
             <summary>
             Gets or sets the relationships's unique ID.
             </summary>
@@ -918,7 +918,7 @@
         </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetUser(System.String)">
             <summary>
-            Returns the organisation name
+            Returns the user name
             </summary>
         </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetRelType(System.Int32)">
@@ -929,6 +929,12 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.id">
             <summary>
             The user's id
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.RelTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.OrgViewModel">

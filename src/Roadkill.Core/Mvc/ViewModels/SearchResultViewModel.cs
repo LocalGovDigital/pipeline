@@ -188,7 +188,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             EnsureFieldExists(fields, "projectestimatedtime");
             EnsureFieldExists(fields, "projectstatus");
             EnsureFieldExists(fields, "projectlanguage");
-            EnsureFieldExists(fields, "orgID");
+            //EnsureFieldExists(fields, "orgID");
 		}
 
 		private void EnsureFieldExists(IList<IFieldable> fields, string fieldname)
