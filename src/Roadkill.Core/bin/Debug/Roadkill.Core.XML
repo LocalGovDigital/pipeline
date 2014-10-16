@@ -8825,11 +8825,6 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.id">
-            <summary>
-            Does the user have a relationsip with this page
-            </summary>
-        </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Rel">
             <summary>
             Does the user have a relationsip with this page

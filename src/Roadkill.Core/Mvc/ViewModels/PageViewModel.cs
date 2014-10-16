@@ -142,11 +142,6 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// Does the user have a relationsip with this page
         /// </summary>
-        public int id { get; set; }
-
-        /// <summary>
-        /// Does the user have a relationsip with this page
-        /// </summary>
         public Relationship Rel { get; set; }
 
 
