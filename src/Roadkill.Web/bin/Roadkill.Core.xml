@@ -113,7 +113,7 @@
             The unique id for this object - for use with document stores that require a unique id for storage.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.RelationshipType.Id">
+        <member name="P:Roadkill.Core.Database.RelationshipType.id">
             <summary>
             Gets or sets the relationships's unique ID.
             </summary>
@@ -155,7 +155,7 @@
             The user.
             </value>
         </member>
-        <member name="P:Roadkill.Core.Database.Relationship.orgId">
+        <member name="P:Roadkill.Core.Database.Relationship.orgID">
             <summary>
             Gets or sets the org id.
             </summary>
@@ -202,7 +202,7 @@
         </member>
         <member name="T:Roadkill.Core.Database.Organisation">
             <summary>
-            A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+            An organisaton object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
             </summary>
         </member>
         <member name="P:Roadkill.Core.Database.Organisation.Id">
@@ -250,7 +250,7 @@
             The unique id for this object - for use with document stores that require a unique id for storage.
             </summary>
         </member>
-        <member name="M:Roadkill.Core.Database.IRelRepository.AllRels">
+        <member name="M:Roadkill.Core.Database.IRelRepository.FindAllRels">
             <summary>
             Returns a list of tags for all pages. Each item is a list of tags seperated by ,
             e.g. { "tag1, tag2, tag3", "blah, blah2" } 
@@ -896,6 +896,47 @@
             <returns>Redirects to /Wiki/{id} using the newly created page's ID.</returns>
             <remarks>This action requires editor rights.</remarks>
         </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.Activity.id">
+            <summary>
+            The user's id
+            </summary>
+        </member>
+        <member name="T:Roadkill.Core.Mvc.ViewModels.ActivityViewModel">
+            <summary>
+            Provides a data summary class for creating and saving relationship details.
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.#ctor">
+            <summary>
+            Constructor used by none-controllers
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.#ctor(Roadkill.Core.Mvc.ViewModels.Activity)">
+            <summary>
+            Constructor used by none-controllers
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.GetUser(System.String)">
+            <summary>
+            Returns the user name
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.GetRelType(System.Int32)">
+            <summary>
+            Returns the relationship type
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.id">
+            <summary>
+            The user's id
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.ActivityViewList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.RelViewModel">
             <summary>
             Provides a data summary class for creating and saving relationship details.
@@ -916,6 +957,11 @@
             Returns the organisation name
             </summary>
         </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetUser(System.String)">
+            <summary>
+            Returns the user name
+            </summary>
+        </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.RelViewModel.GetRelType(System.Int32)">
             <summary>
             Returns the organisation name
@@ -924,6 +970,12 @@
         <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.id">
             <summary>
             The user's id
+            </summary>
+        </member>
+        <member name="P:Roadkill.Core.Mvc.ViewModels.RelViewModel.RelTypesAsSelectList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.OrgViewModel">
@@ -2025,7 +2077,7 @@
               Looks up a localized string similar to Not logged in.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_OrgID_Label">
+        <member name="P:Roadkill.Core.Localization.SiteStrings.Shared_orgID_Label">
             <summary>
               Looks up a localized string similar to Organisation.
             </summary>
@@ -4014,6 +4066,12 @@
             </summary>
             <param name="content"></param>
         </member>
+        <member name="M:Roadkill.Core.Database.LightSpeed.LightSpeedRepository.ActivityViewList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
+        </member>
         <member name="T:Roadkill.Core.Database.LightSpeed.FromEntity">
             <summary>
             Maps Lightspeed entity classes to the Roadkill domain objects.
@@ -4071,7 +4129,7 @@
             <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while saving.</exception>
             <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
         </member>
-        <member name="M:Roadkill.Core.Services.IRelService.AllRels(System.Boolean)">
+        <member name="M:Roadkill.Core.Services.IRelService.FindAllRels(System.Boolean)">
             <summary>
             Retrieves a list of all pages in the system.
             </summary>
@@ -4240,6 +4298,12 @@
             <param name="dataStoreType"></param>
             <param name="connectionString"></param>
             <exception cref="T:MongoDB.Driver.MongoConnectionException">Can't connect to the MongoDB server (but it's a valid connection string)</exception>
+        </member>
+        <member name="M:Roadkill.Core.Database.MongoDB.MongoDBRepository.ActivityViewList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
         </member>
         <member name="T:Roadkill.Core.UpgradeException">
             <summary>
@@ -5494,7 +5558,7 @@
             <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while saving.</exception>
             <exception cref="T:Roadkill.Core.SearchException">An error occurred adding the page to the search index.</exception>
         </member>
-        <member name="M:Roadkill.Core.Services.RelService.AllRels(System.Boolean)">
+        <member name="M:Roadkill.Core.Services.RelService.FindAllRels(System.Boolean)">
             <summary>
             Retrieves a list of all pages in the system.
             </summary>
@@ -6807,12 +6871,12 @@
             The lastname.
             </value>
         </member>
-        <member name="P:Roadkill.Core.Database.User.OrgID">
+        <member name="P:Roadkill.Core.Database.User.orgID">
             <summary>
             Gets or sets the organsation ID of the user.
             </summary>
             <value>
-            The OrgID.
+            The orgID.
             </value>
         </member>
         <member name="P:Roadkill.Core.Database.User.Password">
@@ -6965,7 +7029,7 @@
             The last name of the user.
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.OrgID">
+        <member name="P:Roadkill.Core.Mvc.ViewModels.UserViewModel.orgID">
             <summary>
             The ID of user's organisation.
             </summary>
@@ -7260,7 +7324,7 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.OrgID">
+        <member name="P:Roadkill.Core.Mvc.ViewModels.SearchResultViewModel.orgID">
             <summary>
             The organisation of the project
             </summary>
@@ -8378,7 +8442,7 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.PageContent.OrgID">
+        <member name="P:Roadkill.Core.Database.PageContent.orgID">
             <summary>
             The organisation ID
             </summary>
@@ -8523,6 +8587,14 @@
             <exception cref="T:Roadkill.Core.DatabaseException">An databaseerror occurred while getting the page.</exception>
         </member>
         <member name="M:Roadkill.Core.Services.PageService.GetRelByPage(System.Int32)">
+            <summary>
+            Finds all relationships related to the page.
+            </summary>
+            <param name="id">The pageid to search for.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of pages tagged with the provided tag.</returns>
+            <exception cref="T:Roadkill.Core.DatabaseException">An database error occurred while getting the list.</exception>
+        </member>
+        <member name="M:Roadkill.Core.Services.PageService.GetActivity">
             <summary>
             Finds all relationships related to the page.
             </summary>
@@ -8685,7 +8757,7 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Database.Page.OrgID">
+        <member name="P:Roadkill.Core.Database.Page.orgID">
             <summary>
             The organisation ID
             </summary>
@@ -8815,14 +8887,9 @@
             The main language of the project
             </summary>
         </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.OrgID">
+        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.orgID">
             <summary>
             The main language of the project
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.id">
-            <summary>
-            Does the user have a relationsip with this page
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.PageViewModel.Rel">

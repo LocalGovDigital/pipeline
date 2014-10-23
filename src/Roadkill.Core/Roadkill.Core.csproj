@@ -410,6 +410,7 @@
     <Compile Include="Database\Repositories\IRelRepository.cs" />
     <Compile Include="Database\Repositories\ISettingsRepository.cs" />
     <Compile Include="Database\Repositories\IOrgRepository.cs" />
+    <Compile Include="Database\Repositories\LightSpeed\ActivityEntity.cs" />
     <Compile Include="Database\Repositories\LightSpeed\RelTypeEntity.cs" />
     <Compile Include="Database\Repositories\LightSpeed\RelEntity.cs" />
     <Compile Include="Database\Repositories\LightSpeed\OrgEntity .cs" />
@@ -432,6 +433,7 @@
     <Compile Include="Mvc\Attributes\IAuthorizationAttribute.cs" />
     <Compile Include="Mvc\Controllers\ConfigurationTesterController.cs" />
     <Compile Include="Mvc\Controllers\RelController.cs" />
+    <Compile Include="Mvc\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Mvc\ViewModels\RelViewModel.cs" />
     <Compile Include="Mvc\ViewModels\OrgViewModel.cs" />
     <Compile Include="Security\AuthorizationProvider.cs" />

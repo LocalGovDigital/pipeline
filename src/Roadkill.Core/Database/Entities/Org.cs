@@ -7,7 +7,7 @@ using Roadkill.Core.Security;
 namespace Roadkill.Core.Database
 {
 	/// <summary>
-	/// A user object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
+	/// An organisaton object for use with the data store, whatever that might be (e.g. an RDMS or MongoDB)
 	/// </summary>
 	public class Organisation : IDataStoreEntity
 	{

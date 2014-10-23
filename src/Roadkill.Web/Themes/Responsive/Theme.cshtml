@@ -50,10 +50,10 @@
 
             <div id="container" class="container">
                 <div id="content">
-
                     @RenderBody()
                 </div>
             </div>
+            @RenderSection("Activity", false)
             @RenderSection("RelatedRelationships", false)
             @RenderSection("PluginPostContainer", false)
         </div>

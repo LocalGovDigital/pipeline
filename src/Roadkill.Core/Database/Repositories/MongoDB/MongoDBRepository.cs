@@ -464,7 +464,7 @@ namespace Roadkill.Core.Database.MongoDB
             Delete<Relationship>(rel);
         }
 
-        public IEnumerable<Relationship> AllRels()
+        public IEnumerable<Relationship> FindAllRels()
         {
             return Relationships.ToList();
         }
@@ -488,6 +488,42 @@ namespace Roadkill.Core.Database.MongoDB
         public Organisation GetOrgByUser(string username)
         {
             return GetOrgByUser(username);
+        }
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public IEnumerable<Activity> ActivityViewList()
+        {
+
+
+            IEnumerable<Relationship> RelList;
+            RelList = FindAllRels();
+
+            List<Activity> items = new List<Activity>();
+
+            foreach (Relationship rel in RelList)
+            {
+
+                Activity item = new Activity();
+
+                User user = new User();
+                user = GetUserByUsername(rel.username);
+                item.userNames = user.Firstname + " " + user.Lastname;
+   
+                item.activityDateTime = rel.relDateTime;
+
+                //get the page the relationship is related to
+                Page page = new Page();
+                page = GetPageById(rel.pageId);
+                item.projectName = page.Title;
+
+                items.Add(item);
+            }
+
+            return items;
+
         }
 
         #endregion

@@ -478,6 +478,44 @@ namespace Roadkill.Core.Services
         }
 
 
+
+        /// <summary>
+        /// Finds all relationships related to the page.
+        /// </summary>
+        /// <param name="id">The pageid to search for.</param>
+        /// <returns>A <see cref="IEnumerable{PageViewModel}"/> of pages tagged with the provided tag.</returns>
+        /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
+        public IEnumerable<ActivityViewModel> GetActivity()
+        {
+
+            try
+            {
+
+                IEnumerable<Activity> relsList = Repository.ActivityViewList().ToList();
+                List<ActivityViewModel> rels = new List<ActivityViewModel>();
+
+                foreach (Activity act in relsList)
+                {
+
+
+                    ActivityViewModel relModel = new ActivityViewModel(act);
+                    int index = rels.IndexOf(relModel);
+
+                    rels.Add(relModel);
+   
+                }
+
+                return rels;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred finding activity");
+            }
+        }
+
+
+
+
         /// <summary>
         /// Updates the provided page.
         /// </summary>

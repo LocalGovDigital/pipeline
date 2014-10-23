@@ -49,6 +49,7 @@ var Roadkill;
                     request.done(successFunction);
 
                     request.fail(function (jqXHR, textStatus, errorThrown) {
+                        // Logged out since the call was made
                         if (errorThrown.message.indexOf("unexpected character") !== -1) {
                             window.location = window.location;
                         } else {
@@ -64,3 +65,4 @@ var Roadkill;
     })(Roadkill.Web || (Roadkill.Web = {}));
     var Web = Roadkill.Web;
 })(Roadkill || (Roadkill = {}));
+//# sourceMappingURL=ajaxrequest.js.map

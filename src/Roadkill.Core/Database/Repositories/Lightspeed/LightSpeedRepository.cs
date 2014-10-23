@@ -70,6 +70,14 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
+        internal IQueryable<ActivityEntity> Activites
+        {
+            get
+            {
+                return UnitOfWork.Query<ActivityEntity>();
+            }
+        }
+
         public virtual LightSpeedContext Context
         {
             get
@@ -702,7 +710,7 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToRelList(entities);
         }
 
-        public IEnumerable<Relationship> AllRels()
+        public IEnumerable<Relationship> FindAllRels()
         {
             List<RelEntity> entities = Rels.ToList();
             return FromEntity.ToRelList(entities);
@@ -748,6 +756,72 @@ namespace Roadkill.Core.Database.LightSpeed
             OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);            
             return FromEntity.ToOrg(orgentity);
         }
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public IEnumerable<Activity> ActivityViewList()
+        {
+
+    
+
+                IEnumerable<Relationship> RelList;
+                RelList = FindAllRels();
+
+                List<Activity> items = new List<Activity>();
+
+                try
+                {
+
+                    foreach (Relationship rel in RelList)
+                    {
+
+                        Activity item = new Activity();
+
+                        User user = new User();
+                        user = GetUserByUsername(rel.username);
+                        item.userNames = user.Firstname + " " + user.Lastname;
+
+                        RelationshipType reltype = new RelationshipType();
+                        reltype = GetRelTypeByID(rel.relTypeId);
+
+
+                        string activityPastTense = "";
+                        if (reltype.relTypeText == "Like")
+                        {
+                            activityPastTense = "liked";
+                        }
+                        if (reltype.relTypeText == "Join")
+                        {
+                            activityPastTense = "joined";
+                        }
+
+                        item.activityName = activityPastTense;
+
+                        item.activityDateTime = rel.relDateTime;
+
+                        //get the page the relationship is related to
+                        Page page = new Page();
+                        page = GetPageById(rel.pageId);
+                        item.projectName = page.Title;
+
+                        //get the orgainsation that owns the page
+                        Organisation org = new Organisation();
+                        org = GetOrgByID(page.orgID);
+                        item.orgName = org.OrgName;
+
+                        items.Add(item);
+                    }
+                }
+                catch { }
+
+                return items;
+        
+        }
+
+
+
 
         #endregion
 

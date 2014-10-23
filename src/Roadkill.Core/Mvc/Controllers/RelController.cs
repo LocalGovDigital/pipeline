@@ -41,7 +41,7 @@ namespace Roadkill.Core.Mvc.Controllers
 		[BrowserCache]
 		public ActionResult AllPages()
 		{
-			return View(_relService.AllRels());
+			return View(_relService.FindAllRels());
 		}
 
 
