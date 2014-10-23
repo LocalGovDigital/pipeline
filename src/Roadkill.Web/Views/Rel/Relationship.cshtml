@@ -25,11 +25,8 @@ else
  
                         <!-- OrgID -->
                         <div class="form-group"><br />
-                            <label for="OrgID" class="col-sm-3 control-label">Interest</label><div class="col-sm-9">
-                            <select id="reltypeid" name="reltypeid">
-                                <option value="1">Like</option>
-                                <option value="2">Join</option>
-                            </select>                       
+                            <label for="RelTypeID" class="col-sm-3 control-label">Interest</label><div class="col-sm-9">  
+                            @Html.BootstrapDropDownListFor(p => p.relTypeID, Model.RelTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)                 
                             <br/>Like: You think this is a good idea
                             <br/>Join: You'd like to join in this project
                             </div>

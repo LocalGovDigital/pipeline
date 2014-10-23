@@ -10,15 +10,15 @@
 
         if (Model.Rel.id == 0)
         {
-            <a id="pageedit-button" class="btn btn-primary btn-sm" href="@Url.Action("New", "Rel", new { id = 0, pageID = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star-empty"></span></a>
+            <a id="pageedit0-button" data-toggle="popover" data-placement="bottom" title="Get involved!" data-content="You can Like or Join a Project here." data-trigger="hover" class="btn btn-primary btn-sm" href="@Url.Action("New", "Rel", new { id = 0, pageID = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star-empty"></span></a>
         }
         else if (Model.Rel.relTypeId == 1)
         {
-            <a id="pageedit-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+            <a id="pageedit1-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-thumbs-up"></span></a>
         }
         else if (Model.Rel.relTypeId == 2)
         {
-            <a id="pageedit-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-plus-sign"></span></a>
+            <a id="pageedit2-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-plus-sign"></span></a>
         }
 
         if (Model.IsLocked && !RoadkillContext.IsAdmin)
@@ -34,6 +34,6 @@
         
 	</div>
 </div>
-
+<script>$('#pageedit0-button').popover('show')</script>
 @Html.DialogPartial("PageInformation", Model)
 }
