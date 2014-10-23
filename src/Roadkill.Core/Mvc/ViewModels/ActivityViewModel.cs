@@ -42,6 +42,8 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public string orgName { get; set; }
 
+        public int projectId { get; set; }
+
         public string projectName { get; set; }
 
         public string activityName { get; set; }
@@ -64,6 +66,8 @@ namespace Roadkill.Core.Mvc.ViewModels
         public string userNames { get; set; }
 
         public string orgName { get; set; }
+
+        public int projectId { get; set; }
 
         public string projectName { get; set; }
 
@@ -90,6 +94,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             id = act.id;
             userNames = act.userNames;
             orgName = act.orgName;
+            projectId = act.projectId;
             projectName = act.projectName;
             activityName = act.activityName;
             activityDateTime = act.activityDateTime;

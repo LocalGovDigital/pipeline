@@ -124,7 +124,11 @@ h1, h2, h3, h4, h5, h6 {
     float:left;
 
 }
+#activityheader
+{
 
+    margin: 0 0 20px 20px;
+}
 /* Responsive header */
 @media screen and (min-width:720px) {
     /* Show the bar at the top for larger screens*/

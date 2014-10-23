@@ -14,6 +14,8 @@ namespace Roadkill.Core.Database.LightSpeed
 
         private string _orgName;
 
+        private int _projectId;
+
         private string _projectName;
 
         private string _activityName;
@@ -53,6 +55,18 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<string>(ref _orgName, value);
+            }
+        }
+
+        public int projectId
+        {
+            get
+            {
+                return _projectId;
+            }
+            set
+            {
+                Set<int>(ref _projectId, value);
             }
         }
 

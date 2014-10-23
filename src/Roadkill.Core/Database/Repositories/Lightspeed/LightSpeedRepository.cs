@@ -765,56 +765,72 @@ namespace Roadkill.Core.Database.LightSpeed
         {
 
     
-
                 IEnumerable<Relationship> RelList;
                 RelList = FindAllRels();
+                RelList.OrderByDescending(x => x.relDateTime);
+                RelList.Take(10);
 
                 List<Activity> items = new List<Activity>();
 
-                try
-                {
+       
 
                     foreach (Relationship rel in RelList)
                     {
 
                         Activity item = new Activity();
 
-                        User user = new User();
-                        user = GetUserByUsername(rel.username);
-                        item.userNames = user.Firstname + " " + user.Lastname;
-
-                        RelationshipType reltype = new RelationshipType();
-                        reltype = GetRelTypeByID(rel.relTypeId);
-
-
-                        string activityPastTense = "";
-                        if (reltype.relTypeText == "Like")
+                        try
                         {
-                            activityPastTense = "liked";
+                            User user = new User();
+                            user = GetUserByUsername(rel.username);
+                            item.userNames = user.Firstname + " " + user.Lastname;
                         }
-                        if (reltype.relTypeText == "Join")
+                        catch { }
+
+                        try
                         {
-                            activityPastTense = "joined";
+                            RelationshipType reltype = new RelationshipType();
+                            reltype = GetRelTypeByID(rel.relTypeId);    
+
+                            string activityPastTense = "";
+                            if (reltype.relTypeText == "Like")
+                            {
+                                activityPastTense = "liked";
+                            }
+                            if (reltype.relTypeText == "Join")
+                            {
+                                activityPastTense = "joined";
+                            }
+
+                            item.activityName = activityPastTense;
                         }
+                        catch { }
 
-                        item.activityName = activityPastTense;
+                        try
+                        {
+                            item.activityDateTime = rel.relDateTime;
+                        }
+                        catch { }
 
-                        item.activityDateTime = rel.relDateTime;
+                        try
+                        {
 
-                        //get the page the relationship is related to
-                        Page page = new Page();
-                        page = GetPageById(rel.pageId);
-                        item.projectName = page.Title;
-
-                        //get the orgainsation that owns the page
-                        Organisation org = new Organisation();
-                        org = GetOrgByID(page.orgID);
-                        item.orgName = org.OrgName;
+                            //get the page the relationship is related to
+                            Page page = new Page();
+                            page = GetPageById(rel.pageId);
+                            item.projectName = page.Title;
+                            item.projectId = page.Id;
+      
+                            //get the orgainsation that owns the page
+                            Organisation org = new Organisation();
+                            org = GetOrgByID(page.orgID);
+                            item.orgName = org.OrgName;
+                        }
+                        catch { }
 
                         items.Add(item);
                     }
-                }
-                catch { }
+      
 
                 return items;
         
