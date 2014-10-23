@@ -15,10 +15,10 @@
                         @if (activityModel.activityName == "joined")
                         { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-sm-8">
                       @(activityModel.userNames)&nbsp;@(activityModel.activityName)&nbsp;<a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         @(activityModel.activityDateTime.ToShortTimeString())&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
                     </div>
                 </div>
