@@ -38,53 +38,61 @@
             </div>
         </div>
     }
-
-    <!-- Content -->
-    <div id="content-wrapper">
-        @RenderSection("PluginPreContainer", false)
-
-        <div id="container" class="container">
-            <div id="content">
-                @RenderBody()
+    <div id="container" class="container">
+        <div class="alpha-block">
+            <div class="alpha-header">
+                ALPHA</div>This is a prototype, <a href="https://localgovdigital.typeform.com/to/BUXokv">your feedback will help us improve this service</a>.
             </div>
-        </div>
-        @RenderSection("RelatedRelationships", false)
-        @RenderSection("PluginPostContainer", false)
     </div>
+        <!-- Content -->
+        <div id="content-wrapper">
+            @RenderSection("PluginPreContainer", false)
 
+            <div id="container" class="container">
+                <div id="content">
 
-    <!-- Footer -->
-    <div id="footer-wrapper">
-        <div id="footer-inner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-11">
-                        <h6>
-                            @RenderSection("PageDetailsFooter", false)
-                            @RenderSection("ViewHistoryLink", false)
-                        </h6>
-                    </div>
-                    <div id="top-link" class="col-md-1">
-                        <h6><a href="#">Top</a></h6>
-                    </div>
+                    @RenderBody()
                 </div>
+            </div>
+            @RenderSection("RelatedRelationships", false)
+            @RenderSection("PluginPostContainer", false)
+        </div>
 
-                @RenderSection("PluginFooter", false)
+
+        <!-- Footer -->
+        <div id="footer-wrapper">
+            <div id="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-11">
+                            <h6>
+                                @RenderSection("PageDetailsFooter", false)
+                                @RenderSection("ViewHistoryLink", false)
+                            </h6>
+                        </div>
+                        <div id="top-link" class="col-md-1">
+                            <h6><a href="#">Top</a></h6>
+                        </div>
+                    </div>
+
+                    @RenderSection("PluginFooter", false)
+                </div>
             </div>
         </div>
-    </div>
-    <div id="lgd-wrapper">
-        <div id="lgd-inner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="lgdfooter">
-                            <img src="http://localgovdigital.cloudapp.net/media/1005/lgd_logo.png" alt="localgovdigtial logo" class="img-responsive" /><br />
-                            A <a href="http://localgovdigital.info/localgov-digital-makers/" title="link to LocalGov Digital Makers">LocalGov Digital Makers</a> project
+        <div id="lgd-wrapper">
+            <div id="lgd-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="lgdfooter">
+                                <img src="http://localgovdigital.cloudapp.net/media/1005/lgd_logo.png" alt="localgovdigtial logo" class="img-responsive" /><br />
+                                A <a href="http://localgovdigital.info/localgov-digital-makers/" title="link to LocalGov Digital Makers">LocalGov Digital Makers</a> project
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div></div></div>
+            </div>
+        </div>
 
 
 </body>
