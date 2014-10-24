@@ -518,6 +518,12 @@ namespace Roadkill.Core.Database.LightSpeed
         #endregion
 
         #region IUserRepository
+        public IEnumerable<User> AllUsers()
+        {
+            List<UserEntity> entities = Users.ToList();
+            return FromEntity.ToUserList(entities);
+        }
+
         public void DeleteUser(User user)
         {
             UserEntity entity = UnitOfWork.FindById<UserEntity>(user.Id);
@@ -662,8 +668,8 @@ namespace Roadkill.Core.Database.LightSpeed
             relEntity.username = username;
 
             User _user = GetUserByUsername(username);
-            relEntity.orgID = _user.orgID;     
-      
+            relEntity.orgID = _user.orgID;
+
             relEntity.pageId = pageID;
             relEntity.relDateTime = DateTime.Now;
             UnitOfWork.Add(relEntity);
@@ -689,7 +695,7 @@ namespace Roadkill.Core.Database.LightSpeed
             else
             {
                 rel.orgID = GetUserByUsername(rel.username).orgID;
-                
+
                 ToEntity.FromRelationship(rel, entity);
                 UnitOfWork.SaveChanges();
                 rel = FromEntity.ToRel(entity);
@@ -741,9 +747,9 @@ namespace Roadkill.Core.Database.LightSpeed
 
             RelEntity entity = Rels.FirstOrDefault(r => r.username == username && r.pageId == pageID);
 
-            if (entity != null && entity.pageId != 0)            
+            if (entity != null && entity.pageId != 0)
             {
-                _RelToUserToPage = FromEntity.ToRel(entity);                   
+                _RelToUserToPage = FromEntity.ToRel(entity);
 
             }
 
@@ -753,7 +759,7 @@ namespace Roadkill.Core.Database.LightSpeed
         public Organisation GetOrgByUser(string username)
         {
             UserEntity userentity = Users.FirstOrDefault(p => p.Username == username);
-            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);            
+            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);
             return FromEntity.ToOrg(orgentity);
         }
 
@@ -764,76 +770,179 @@ namespace Roadkill.Core.Database.LightSpeed
         public IEnumerable<Activity> ActivityViewList()
         {
 
-    
-                IEnumerable<Relationship> RelList;
-                RelList = FindAllRels();
-                RelList.OrderByDescending(x => x.relDateTime);
-                RelList.Take(10);
 
-                List<Activity> items = new List<Activity>();
+            IEnumerable<Relationship> RelList;
+            RelList = FindAllRels();
+            RelList.OrderByDescending(x => x.relDateTime);
+            RelList = RelList.Take(10).ToList();
 
-       
+            List<Activity> items = new List<Activity>();
 
-                    foreach (Relationship rel in RelList)
+
+
+            foreach (Relationship rel in RelList)
+            {
+                bool fail = false;
+
+                Activity item = new Activity();
+
+                try
+                {
+                    User user = new User();
+                    user = GetUserByUsername(rel.username);
+                    item.userNames = user.Firstname + " " + user.Lastname;
+                }
+                catch { fail = true; }
+
+                try
+                {
+                    RelationshipType reltype = new RelationshipType();
+                    reltype = GetRelTypeByID(rel.relTypeId);
+
+                    string activityPastTense = "";
+                    if (reltype.relTypeText == "Like")
                     {
-
-                        Activity item = new Activity();
-
-                        try
-                        {
-                            User user = new User();
-                            user = GetUserByUsername(rel.username);
-                            item.userNames = user.Firstname + " " + user.Lastname;
-                        }
-                        catch { }
-
-                        try
-                        {
-                            RelationshipType reltype = new RelationshipType();
-                            reltype = GetRelTypeByID(rel.relTypeId);    
-
-                            string activityPastTense = "";
-                            if (reltype.relTypeText == "Like")
-                            {
-                                activityPastTense = "liked";
-                            }
-                            if (reltype.relTypeText == "Join")
-                            {
-                                activityPastTense = "joined";
-                            }
-
-                            item.activityName = activityPastTense;
-                        }
-                        catch { }
-
-                        try
-                        {
-                            item.activityDateTime = rel.relDateTime;
-                        }
-                        catch { }
-
-                        try
-                        {
-
-                            //get the page the relationship is related to
-                            Page page = new Page();
-                            page = GetPageById(rel.pageId);
-                            item.projectName = page.Title;
-                            item.projectId = page.Id;
-      
-                            //get the orgainsation that owns the page
-                            Organisation org = new Organisation();
-                            org = GetOrgByID(page.orgID);
-                            item.orgName = org.OrgName;
-                        }
-                        catch { }
-
-                        items.Add(item);
+                        activityPastTense = "liked";
                     }
-      
+                    if (reltype.relTypeText == "Join")
+                    {
+                        activityPastTense = "joined";
+                    }
 
-                return items;
-        
+                    item.activityName = activityPastTense;
+                }
+                catch { fail = true; }
+
+                try
+                {
+                    item.activityDateTime = rel.relDateTime;
+                }
+                catch { fail = true; }
+
+                try
+                {
+
+                    //get the page the relationship is related to
+                    Page page = new Page();
+                    page = GetPageById(rel.pageId);
+                    item.projectName = page.Title;
+                    item.projectId = page.Id;
+
+                    //get the orgainsation that owns the page
+                    Organisation org = new Organisation();
+                    org = GetOrgByID(page.orgID);
+                    item.orgName = org.OrgName;
+                }
+                catch { fail = true; }
+
+                if (fail == false)
+                {
+                    items.Add(item);
+                }
+            }
+
+
+
+            IEnumerable<Page> PageList;
+            PageList = AllPages();
+            PageList.OrderByDescending(x => x.ModifiedOn);
+            PageList = PageList.Take(10).ToList();
+
+
+            foreach (Page page in PageList)
+            {
+
+                Activity item = new Activity();
+
+                try
+                {
+                    User user = new User();
+                    user = GetUserByUsername(page.ModifiedBy);
+                    item.userNames = user.Firstname + " " + user.Lastname;
+                }
+                catch { }
+
+                try
+                {
+                    string activityPastTense = "";
+
+                    if (page.ModifiedOn == page.CreatedOn)
+                    {
+                        activityPastTense = "added";
+                    }
+                    else
+                    {
+                        activityPastTense = "edited";
+                    }
+
+                    item.activityName = activityPastTense;
+                }
+                catch { }
+
+                try
+                {
+                    item.activityDateTime = page.ModifiedOn;
+                }
+                catch { }
+
+                try
+                {
+
+                    item.projectName = page.Title;
+                    item.projectId = page.Id;
+
+                    //get the orgainsation that owns the page
+                    Organisation org = new Organisation();
+                    org = GetOrgByID(page.orgID);
+                    item.orgName = org.OrgName;
+                }
+                catch { }
+
+                items.Add(item);
+            }
+
+
+            IEnumerable<User> UserList;
+            UserList = AllUsers();
+            UserList.OrderByDescending(x => x.createdOn);
+            UserList = UserList.Take(10).ToList();
+
+
+            foreach (User user in UserList)
+            {
+
+                Activity item = new Activity();
+
+                item.userNames = user.Firstname + " " + user.Lastname;
+                item.activityName = "signup";
+                item.activityDateTime = user.createdOn;
+
+                item.projectName = "";
+                item.projectId = 0;
+
+                //get the orgainsation that owns the page
+                Organisation org = new Organisation();
+                org = GetOrgByID(user.orgID);
+
+                string orgname = org.OrgName;
+
+                if (orgname.Contains("_") != true)
+                {
+                    item.orgName = " from " + orgname;
+                }
+
+                items.Add(item);
+            }
+
+            DateTime filter = new DateTime(2014, 10, 1);
+
+            items.OrderByDescending(x => x.activityDateTime);
+            items = items.Where(x => x.activityDateTime.Date > filter).ToList();
+
+            items.Take(15);
+
+            return items;
+
         }
 
 

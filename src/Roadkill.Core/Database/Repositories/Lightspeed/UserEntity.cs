@@ -43,6 +43,9 @@ namespace Roadkill.Core.Database.LightSpeed
 		[Column("passwordresetkey")]
 		private string _passwordResetKey;
 
+        [Column("createdon")]
+        private DateTime _createdOn;
+
 		public string Username
 		{
 			get
@@ -186,6 +189,18 @@ namespace Roadkill.Core.Database.LightSpeed
 				Set<string>(ref _passwordResetKey, value);
 			}
 		}
+
+        public DateTime createdOn
+        {
+            get
+            {
+                return _createdOn;
+            }
+            set
+            {
+                Set<DateTime>(ref _createdOn, value);
+            }
+        }
 
 	}
 }

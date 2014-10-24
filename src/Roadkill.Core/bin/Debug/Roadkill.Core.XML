@@ -6907,6 +6907,11 @@
             This field is for page modifiedby/created by, and is a 'friendly' name. For windows auth the email field is used instead.
             </summary>
         </member>
+        <member name="P:Roadkill.Core.Database.User.createdOn">
+            <summary>
+            This field is to show when the user account was created
+            </summary>
+        </member>
         <member name="P:Roadkill.Core.Database.User.ObjectId">
             <summary>
             The unique id for this object, this is the same as the <see cref="P:Roadkill.Core.Database.User.Id"/> property.
