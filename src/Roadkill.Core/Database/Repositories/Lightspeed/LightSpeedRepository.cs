@@ -934,14 +934,10 @@ namespace Roadkill.Core.Database.LightSpeed
                 }
 
                 items.Add(item);
-            }
-
-            
+            } 
 
             items.OrderByDescending(x => x.activityDateTime);
-           // items = items.Where(x => x.activityDateTime.Date > filter).ToList();
-
-            items.Take(15);
+            items = items.Take(15).ToList();
 
             return items;
 
