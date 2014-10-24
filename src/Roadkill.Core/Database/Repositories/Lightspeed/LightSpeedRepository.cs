@@ -901,10 +901,12 @@ namespace Roadkill.Core.Database.LightSpeed
                 items.Add(item);
             }
 
+            DateTime filter = new DateTime(2014, 10, 1);
 
             IEnumerable<User> UserList;
             UserList = AllUsers();
             UserList.OrderByDescending(x => x.createdOn);
+            UserList = UserList.Where(x => x.createdOn.Date > filter).ToList();
             UserList = UserList.Take(10).ToList();
 
 
@@ -934,10 +936,10 @@ namespace Roadkill.Core.Database.LightSpeed
                 items.Add(item);
             }
 
-            DateTime filter = new DateTime(2014, 10, 1);
+            
 
             items.OrderByDescending(x => x.activityDateTime);
-            items = items.Where(x => x.activityDateTime.Date > filter).ToList();
+           // items = items.Where(x => x.activityDateTime.Date > filter).ToList();
 
             items.Take(15);
 

@@ -2,25 +2,58 @@
 
 @if (Model.Count() > 0)
 {
-  
+
     <div id="relationships" class="container">
         <h3 id="activityheader">Latest Activity</h3>
         @foreach (ActivityViewModel activityModel in Model)
         {
+
             <div class="relationship">
                 <div class="row">
-                    <div class="col-sm-1">
-                        @if (activityModel.activityName == "liked")
-                        { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
-                        @if (activityModel.activityName == "joined")
-                        { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
-                    </div>
-                    <div class="col-sm-8">
-                      @(activityModel.userNames)&nbsp;@(activityModel.activityName)&nbsp;<a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)
-                    </div>
-                    <div class="col-sm-3">
-                        @(activityModel.activityDateTime.ToShortTimeString())&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
-                    </div>
+                    @if (activityModel.activityName == "signup")
+                    {
+                        <div class="col-sm-1">
+                            <span class="relationship-icon glyphicon glyphicon-log-in"></span>
+                        </div>
+                        <div class="col-sm-8">
+                            Someone new @(activityModel.orgName)&nbsp;signed-up to Pipeline
+                        </div>
+                        <div class="col-sm-3">
+                            @(activityModel.activityDateTime.ToShortTimeString())&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
+                        </div>
+
+                    }
+                    else if (activityModel.activityName == "added" || activityModel.activityName == "edited")
+                    {
+                        <div class="col-sm-1">
+                            @if (activityModel.activityName == "added")
+                            { <span class="relationship-icon glyphicon glyphicon-floppy-disk"></span> }
+                            @if (activityModel.activityName == "edited")
+                            { <span class="relationship-icon glyphicon glyphicon-floppy-save"></span> }
+                        </div>
+                        <div class="col-sm-8">
+                           <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)&nbsp;was&nbsp;@(activityModel.activityName)
+                        </div>
+                        <div class="col-sm-3">
+                            @(activityModel.activityDateTime.ToShortTimeString())&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-1">
+                            @if (activityModel.activityName == "liked")
+                            { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
+                            @if (activityModel.activityName == "joined")
+                            { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
+                        </div>
+                        <div class="col-sm-8">
+                            @(activityModel.userNames)&nbsp;@(activityModel.activityName)&nbsp;<a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)
+                        </div>
+                        <div class="col-sm-3">
+                            @(activityModel.activityDateTime.ToShortTimeString())&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
+                        </div>
+
+                    }
                 </div>
             </div>
         }
