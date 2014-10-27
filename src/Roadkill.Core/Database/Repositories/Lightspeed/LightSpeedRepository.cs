@@ -778,8 +778,6 @@ namespace Roadkill.Core.Database.LightSpeed
 
             List<Activity> items = new List<Activity>();
 
-
-
             foreach (Relationship rel in RelList)
             {
                 bool fail = false;
@@ -845,7 +843,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             IEnumerable<Page> PageList;
             PageList = AllPages();
-            PageList.OrderByDescending(x => x.ModifiedOn);
+            PageList = PageList.OrderByDescending(x => x.ModifiedOn).ToList();
             PageList = PageList.Take(10).ToList();
 
 
