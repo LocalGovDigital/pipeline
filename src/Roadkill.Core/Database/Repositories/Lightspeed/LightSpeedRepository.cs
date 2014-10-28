@@ -368,6 +368,11 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToPageList(entities);
         }
 
+        public int AllPagesCount()
+        {
+            return AllPages().Count();
+        }
+
         public IEnumerable<PageContent> AllPageContents()
         {
             List<PageContentEntity> entities = PageContents.ToList();
@@ -522,6 +527,11 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             List<UserEntity> entities = Users.ToList();
             return FromEntity.ToUserList(entities);
+        }
+
+        public int AllOrgsCount()
+        {
+            return Users.GroupBy(rs => rs.orgID).Count();
         }
 
         public void DeleteUser(User user)
@@ -763,6 +773,47 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToOrg(orgentity);
         }
 
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public IEnumerable<Activity> WhatsHotList()
+        {
+            List<Activity> WhatsHotList = new List<Activity>();
+
+            DateTime filter = DateTime.Now.AddDays(-28);
+            
+            IEnumerable<Page> PageList;
+            PageList = AllPages();
+            PageList = PageList.Where(x => x.ModifiedOn.Date > filter).ToList();
+            PageList = PageList.OrderByDescending(x => x.ModifiedOn).ToList();
+
+            foreach (Page page in PageList)
+            {
+                IEnumerable<Relationship> RelList;
+                RelList = GetRelByPage(page.Id);
+
+                int RelCount = RelList.Count();
+
+                Activity activity = new Activity();
+                activity.id = RelCount;
+                activity.projectName = page.Title;
+                activity.projectId = page.Id;
+                activity.orgName = GetOrgByID(page.orgID).OrgName;
+
+                WhatsHotList.Add(activity);
+
+            }
+
+            WhatsHotList = WhatsHotList.OrderByDescending(x => x.id).ToList();
+            WhatsHotList = WhatsHotList.Take(3).ToList();
+            
+            return WhatsHotList;
+
+        }
+
+
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
         /// SelectList doesn't add option value attributes.
@@ -773,7 +824,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             IEnumerable<Relationship> RelList;
             RelList = FindAllRels();
-            RelList.OrderByDescending(x => x.relDateTime);
+            RelList = RelList.OrderByDescending(x => x.relDateTime);
             RelList = RelList.Take(10).ToList();
 
             List<Activity> items = new List<Activity>();

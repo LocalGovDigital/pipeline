@@ -102,88 +102,43 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         }
 
-
         /// <summary>
-        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
-        /// SelectList doesn't add option value attributes.
+        /// Gets the number of organisations signed up to Pipeline
         /// </summary>
-        public IEnumerable<Activity> ActivityViewList
-        {
-            get
-            {
-
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-
-                IEnumerable<Relationship> RelList;
-                RelList = repository.FindAllRels();
-
-                List<Activity> items = new List<Activity>();
-
-                foreach (Relationship rel in RelList)
-                {
-
-                    Activity item = new Activity();
-                    item.userNames = GetUser(rel.username);                    
-                    item.activityName = GetRelType(rel.relTypeId);
-                    item.activityDateTime = rel.relDateTime;
-
-                    //get the page the relationship is related to
-                    Page page = new Page();
-                    page = repository.GetPageById(rel.pageId);
-                    item.projectName = page.Title;
-
-                    //get the orgainsation that owns the page
-                    Organisation org = new Organisation();
-                    org = repository.GetOrgByID(page.orgID);
-                    item.orgName = org.OrgName;
-
-
-                    items.Add(item);
-                }
-
-                return items;
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// Returns the user name
-        /// </summary>
-        public string GetUser(string username)
-        {
-
-            string _usernames = "unknown";
-            try
-            {
-
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-                User _user;
-                _user = repository.GetUserByUsername(username);
-                _usernames = _user.Firstname + " " + _user.Lastname;
-            }
-            catch { }
-
-            return _usernames;
-
-        }
-
-
-        /// <summary>
-        /// Returns the relationship type
-        /// </summary>
-        public string GetRelType(int relTypeID)
+        public static int OrganisationCount()
         {
 
             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-
-            RelationshipType _reltype;
-            _reltype = repository.GetRelTypeByID(relTypeID);
-
-            return _reltype.relTypeText;
+            return repository.AllOrgsCount();
 
         }
+
+
+
+        /// <summary>
+        /// Gets the number of organisations signed up to Pipeline
+        /// </summary>
+        public static int PageCount()
+        {
+
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            return repository.AllPagesCount();
+
+        }
+
+
+        /// <summary>
+        /// Gets the number of organisations signed up to Pipeline
+        /// </summary>
+        public static IEnumerable<Activity> WhatsHotList()
+        {
+
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            return repository.WhatsHotList();
+
+        }
+
+
 
 
         private static ApplicationSettings GetAppSettings()
@@ -195,25 +150,27 @@ namespace Roadkill.Core.Mvc.ViewModels
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -916,25 +916,24 @@
             Constructor used by none-controllers
             </summary>
         </member>
-        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.GetUser(System.String)">
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.OrganisationCount">
             <summary>
-            Returns the user name
+            Gets the number of organisations signed up to Pipeline
             </summary>
         </member>
-        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.GetRelType(System.Int32)">
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.PageCount">
             <summary>
-            Returns the relationship type
+            Gets the number of organisations signed up to Pipeline
+            </summary>
+        </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.WhatsHotList">
+            <summary>
+            Gets the number of organisations signed up to Pipeline
             </summary>
         </member>
         <member name="P:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.id">
             <summary>
             The user's id
-            </summary>
-        </member>
-        <member name="P:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.ActivityViewList">
-            <summary>
-            Gets an IEnumerable{SelectListItem} of project statuses, as a default
-            SelectList doesn't add option value attributes.
             </summary>
         </member>
         <member name="T:Roadkill.Core.Mvc.ViewModels.RelViewModel">
@@ -4065,6 +4064,12 @@
             To add a new version of a page, use AddNewPageContentVersion
             </summary>
             <param name="content"></param>
+        </member>
+        <member name="M:Roadkill.Core.Database.LightSpeed.LightSpeedRepository.WhatsHotList">
+            <summary>
+            Gets an IEnumerable{SelectListItem} of project statuses, as a default
+            SelectList doesn't add option value attributes.
+            </summary>
         </member>
         <member name="M:Roadkill.Core.Database.LightSpeed.LightSpeedRepository.ActivityViewList">
             <summary>

@@ -4,51 +4,54 @@
 }
 <!--<h1 class="pagetitle">@Model.Title</h1>-->
 <h1>Welcome to Pipeline</h1>
-<div id="pagecontent" itemscope itemtype="http://schema.org/Article">
+<div id="homeintro" class="container">
     <div class="row">
         <div class="col-xs-12">
-
-            <meta itemprop="dateCreated" content="@Model.CreatedOn" />
-            <meta itemprop="creator" content="@Model.CreatedBy" />
-            <meta itemprop="dateModified" content="@Model.ModifiedOn" />
-            <meta itemprop="keywords" content="@Model.SpaceDelimitedTags()" />
-            <!--@MvcHtmlString.Create(Model.ContentAsHtml)-->
-            <p>Pipeline is a pilot project from <a href="http://www.localgovdigital.info/">LocalGov Digital</a> to help create <a href="http://www.localgovdigital.info/localgov-digital-makers/outputs/makers-project-teams/">Makers Project Teams</a>.</p>
-            <p>You can <a href="http://www.localgovdigital.org.uk/user/signup">sign up to be an alpha user here</a>.</p>
-            <p>If you'd like to know more you can <a href="http://pipeline.localgovdigital.info/wiki/3/pipeline">find out about Pipeline here</a>.</p>
+            <div id="homesearchbox">
+                <meta itemprop="dateCreated" content="@Model.CreatedOn" />
+                <meta itemprop="creator" content="@Model.CreatedBy" />
+                <meta itemprop="dateModified" content="@Model.ModifiedOn" />
+                <meta itemprop="keywords" content="@Model.SpaceDelimitedTags()" />
+            <p>Pipeline is a service from <a href="http://www.localgovdigital.info/localgov-digital-makers/">LocalGov Digital Makers</a> to aid innovation and collaboration between in local government digital teams</a>.</p>
+            <p>You can <a href="http://www.localgovdigital.org.uk/user/signup">sign up to be an alpha user here</a>. If you'd like to know more you can <a href="http://pipeline.localgovdigital.info/wiki/3/pipeline">find out about Pipeline here</a></p>
+            
         </div>
     </div>
-    <hr />
-    <div class="row">
-        <div class="col-xs-12">
-            <h3>Search for projects</h3>
-            <form method="get" action="/Home/Search">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control input-lg" placeholder="Enter text to search" name="q"><br />
-                        Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.
-
-                    </div>
-                    <div class="col-sm-6">
-                        <input type="submit" class="btn btn-primary btn-lg" value="Search" />
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
-    <hr />
+</div>
+<div id="homesearch" class="container">
     <div class="row">
         <div class="col-xs-12">
-            @section Activity
-{
-                @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
-                @Html.Action("Activity", "Home")
-            }
+            <div id="homesearchbox">
+                <h3>Search for projects</h3>
+                <form method="get" action="/Home/Search">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control input-lg" placeholder="Enter text to search" name="q"><br />
+                            Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.
 
-
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="submit" class="btn btn-primary btn-lg" value="Search" />
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-xs-12">
+        @section Activity
+{
+            @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
+            @Html.Action("Activity", "Home")
+        }
+
+
+    </div>
+</div>
+
 
 
 

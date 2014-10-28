@@ -39,7 +39,17 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
     margin-right:10px;
 }
+#relationships,#pipelineinfo,#homesearch,#homeintro {
+    
+    padding-top:20px;
+    padding-bottom:20px;
+    background-color:#EEEEEE;
+}
+#homeintro
+{
 
+    margin-bottom:30px;
+}
 /* The basic 3 row layout*/
 #header-wrapper {
     min-height: 7%;
@@ -70,7 +80,11 @@ h1, h2, h3, h4, h5, h6 {
     padding-left:30px;
     padding-top:20px;
 }
+#homesearchbox,#homeintrobox
+{
 
+    padding-left:30px;
+}
 /* Page and pen toolbar */
 #toolbar {
 
@@ -102,12 +116,7 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 /* Relationships */
-#relationships{
-    
-    padding-top:20px;
-    padding-bottom:20px;
-    background-color:#EEEEEE;
-}
+
 .relationship
 {
     margin-left:20px;
@@ -129,6 +138,42 @@ h1, h2, h3, h4, h5, h6 {
 
     margin: 0 0 20px 20px;
 }
+.activitytime{
+
+    width:50px;
+    display:block;
+    float:left;
+
+}
+#pipelineinfo
+{
+    margin-top:30px;
+    margin-bottom:30px;
+    padding-left:20px;
+    text-align:center;
+
+}
+.activitycounter
+{
+         padding-top:20px;
+
+}
+.activitycount
+{
+    font-size:80px;
+    font-weight:bold;
+
+}
+#whatshot{
+
+    text-align:left;
+}
+#whatshottitle
+{
+    margin-top:0;
+    padding-top:0;
+}
+
 /* Responsive header */
 @media screen and (min-width:720px) {
     /* Show the bar at the top for larger screens*/

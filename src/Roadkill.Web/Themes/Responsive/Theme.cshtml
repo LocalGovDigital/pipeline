@@ -45,18 +45,18 @@
             </div>
     </div>
         <!-- Content -->
-        <div id="content-wrapper">
-            @RenderSection("PluginPreContainer", false)
+    <div id="content-wrapper">
+        @RenderSection("PluginPreContainer", false)
 
-            <div id="container" class="container">
-                <div id="content">
-                    @RenderBody()
-                </div>
+        <div id="container" class="container">
+            <div id="content">
+                @RenderBody()
+                @RenderSection("Activity", false)
+                @RenderSection("RelatedRelationships", false)
+                @RenderSection("PluginPostContainer", false)
             </div>
-            @RenderSection("Activity", false)
-            @RenderSection("RelatedRelationships", false)
-            @RenderSection("PluginPostContainer", false)
         </div>
+    </div>
 
 
         <!-- Footer -->
