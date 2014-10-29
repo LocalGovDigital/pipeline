@@ -2,28 +2,29 @@
 
 <div id="pipelineinfo" class="container">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-md-2 col-sm-6 col-xs-6 col-vs-12">
             <div class="activitycounter">
-                <span class="activitycount">@(ActivityViewModel.OrganisationCount())</span><br/>
+                <span class="activitycount">@(ActivityViewModel.OrganisationCount())</span><br />
                 Organisations
             </div>
-        </div><div class="col-sm-3">
+        </div><div class="col-md-2 col-sm-6 col-xs-6 col-vs-12">
     <div class="activitycounter">
         <span class="activitycount">@(ActivityViewModel.PageCount())</span><br />
-        Projects
+        <a href="/pages/allpages">Projects</a>
     </div>
-</div><div class="col-sm-6"><div id="whatshot">
-                                <h3 id="whatshottitle">Top Projects</h3><div class="row">
-        @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
-        {
+</div><div class="col-md-8 col-sm-12">
+    <div id="whatshot">
+        <h3 id="whatshottitle">Top Projects</h3><div class="row">
+            @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
+            {
 
-            <div class="col-sm-12">
-                <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a>&nbsp;from&nbsp;@(hotpage.orgName)
-            </div>
+                <div class="col-sm-12">
+                    <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a>&nbsp;from&nbsp;@(hotpage.orgName)
+                </div>
 
-        }
+            }
+        </div>
     </div>
-</div>
 </div>
     </div>
 </div>
@@ -31,24 +32,42 @@
 @if (Model.Count() > 0)
 {
 
+    DateTime dtThisDay = new DateTime();
+    DateTime dtLastDay = new DateTime();
+
     <div id="relationships" class="container">
         <h3 id="activityheader">Latest Activity</h3>
         @foreach (ActivityViewModel activityModel in Model)
         {
 
-            <div class="relationship">
-                <div class="row">
-                    @if (activityModel.activityName == "signup")
+            dtThisDay = activityModel.activityDateTime;
+
+            if (dtThisDay.Day != dtLastDay.Day)
+            {
+                <div class="dateheader">                <div class="row">
+                                         <div class="col-xs-12">
+                                             @(activityModel.activityDateTime.ToLongDateString())
+                                         </div>
+
+                        </div>
+
+                    </div>
+
+                    }
+
+                    <div class="relationship">
+                        <div class="row">
+                            @if (activityModel.activityName == "signup")
                     {
-                        <div class="col-sm-1">
-                            <span class="relationship-icon glyphicon glyphicon-log-in"></span>
-                        </div>
-                        <div class="col-sm-8">
-                            Someone new @(activityModel.orgName)&nbsp;signed-up to Pipeline
-                        </div>
-                        <div class="col-sm-3">
-                            <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())</span>&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
-                        </div>
+                                <div class="col-sm-1">
+                                    <span class="relationship-icon glyphicon glyphicon-log-in"></span>
+                                </div>
+                                <div class="col-md-10 col-sm-11">
+                                    Someone new @(activityModel.orgName)&nbsp;signed-up to Pipeline
+                                </div>
+                                <div class="col-sm-1 hidden-sm hidden-xs">
+                                    <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())
+                                </div>
 
                     }
                     else if (activityModel.activityName == "added" || activityModel.activityName == "edited")
@@ -59,12 +78,12 @@
                             @if (activityModel.activityName == "edited")
                             { <span class="relationship-icon glyphicon glyphicon-floppy-save"></span> }
                         </div>
-                        <div class="col-sm-8">
-                            <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)&nbsp;was&nbsp;@(activityModel.activityName)
-                        </div>
-                        <div class="col-sm-3">
-                            <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())</span>&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
-                        </div>
+                                <div class="col-md-10  col-sm-11">
+                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)&nbsp;was&nbsp;@(activityModel.activityName)
+                                </div>
+                                <div class="col-sm-1 hidden-sm hidden-xs">
+                                    <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())
+                                </div>
                     }
                     else
                     {
@@ -74,18 +93,19 @@
                             @if (activityModel.activityName == "joined")
                             { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
                         </div>
-                        <div class="col-sm-8">
-                            @(activityModel.userNames)&nbsp;@(activityModel.activityName)&nbsp;<a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)
-                        </div>
-                        <div class="col-sm-3">
-                            <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())</span>&nbsp;on&nbsp;@(activityModel.activityDateTime.ToShortDateString())
-                        </div>
+                                <div class="col-md-10  col-sm-11">
+                                    @(activityModel.userNames)&nbsp;@(activityModel.activityName)&nbsp;<a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a>&nbsp;owned&nbsp;by&nbsp;@(activityModel.orgName)
+                                </div>
+                                <div class="col-sm-1 hidden-sm hidden-xs">
+                                    <span class="activitytime">@(activityModel.activityDateTime.ToShortTimeString())
+                                </div>
 
                     }
+                        </div>
+                    </div>
+            dtLastDay = dtThisDay;
+                    }
                 </div>
-            </div>
-        }
-    </div>
 
 }
 

@@ -534,6 +534,11 @@ namespace Roadkill.Core.Database.LightSpeed
             return Users.GroupBy(rs => rs.orgID).Count();
         }
 
+        public int AllUsersCount()
+        {
+            return Users.Count();
+        }
+
         public void DeleteUser(User user)
         {
             UserEntity entity = UnitOfWork.FindById<UserEntity>(user.Id);
@@ -797,6 +802,9 @@ namespace Roadkill.Core.Database.LightSpeed
                 int RelCount = RelList.Count();
 
                 Activity activity = new Activity();
+
+
+
                 activity.id = RelCount;
                 activity.projectName = page.Title;
                 activity.projectId = page.Id;

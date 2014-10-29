@@ -23,6 +23,8 @@ h1, h2, h3, h4, h5, h6 {
       font-family: Arial,sans-serif;
       color:#000000;
       font-size: 16px;
+      margin-top:20px;
+      margin-bottom:20px;
 
 }
 .alpha-header{
@@ -43,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
     
     padding-top:20px;
     padding-bottom:20px;
+    padding-right:30px;
     background-color:#EEEEEE;
 }
 #homeintro
@@ -57,17 +60,20 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0px;
     font-size: large;
 }
+#pipelinebackground
+{
+        background-image:url(../../Assets/Images/pipeline.jpg);
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
 
+}
 #content-wrapper {
     min-height: 83%;
     padding: 0px;
     padding-bottom:20px;
     margin: 0px;
     font-size:large;
-    background-image:url(../../Assets/Images/pipeline.jpg);
-    background-position:center;
-    background-repeat:no-repeat;
-    background-size:cover;
 }
 
 #footer-wrapper {
@@ -138,11 +144,16 @@ h1, h2, h3, h4, h5, h6 {
 
     margin: 0 0 20px 20px;
 }
+.dateheader
+{
+      margin: 25px 0 5px 20px;
+}
 .activitytime{
 
     width:50px;
     display:block;
     float:left;
+    text-align:right;
 
 }
 #pipelineinfo
@@ -173,30 +184,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-top:0;
     padding-top:0;
 }
-
-/* Responsive header */
-@media screen and (min-width:720px) {
-    /* Show the bar at the top for larger screens*/
-    #bootstrap-nav-menu {
-        float: left;
-    }
-
-    #search {
-        float: left;
-        margin-top: 10px;
-        padding-left: 150px;
-    }
-}
-
-@media screen and (max-width:720px) {
-    #search-mobile {
-        margin: 15px;
-        padding-left: 10px;
-    }
-
-    #toolbar {
-        display: none;
-    }
+#contactdetails
+{
+    margin-bottom:30px;
 }
 
 #header-wrapper {
@@ -209,7 +199,10 @@ h1, h2, h3, h4, h5, h6 {
         margin-bottom: 0px !important;
         min-height: 100%;
     }
-
+#left-menu-toggle
+{
+    padding-left:0;
+}
 /* Login bar*/
 #login-status {
     text-align: right;
@@ -222,7 +215,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* The main page container*/
 #container {
-    padding: 20px !important;
+    padding: 20px 0 20px 0 !important;
     font-size: 1em;
 }
 
@@ -255,3 +248,47 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9em !important;
     font-weight: normal;
 }
+/* Responsive header */
+@media screen and (min-width:720px) {
+    /* Show the bar at the top for larger screens*/
+    #bootstrap-nav-menu {
+        float: left;
+    }
+
+    #search {
+        float: left;
+        margin-top: 10px;
+        padding-left: 150px;
+    }
+}
+
+@media screen and (max-width:999px) {
+    #hometitle
+    {
+        margin-left:30px;
+    }    
+    #search-mobile {
+        margin: 15px 0 15px 0;
+        padding: 20px 10px 20px 10px;
+    }
+    .alpha-block
+    {
+        margin-top:0px;
+    }
+    #whatshot
+    {
+        margin-left:30px;
+    }
+    .activitycounter
+    {
+        margin-bottom:20px;
+    }
+}
+
+@media screen and (max-width:720px) {
+    #toolbar {
+        display: none;
+    }
+}
+
+

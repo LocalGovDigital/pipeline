@@ -926,6 +926,11 @@
             Gets the number of organisations signed up to Pipeline
             </summary>
         </member>
+        <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.UsersCount">
+            <summary>
+            Gets the number of organisations signed up to Pipeline
+            </summary>
+        </member>
         <member name="M:Roadkill.Core.Mvc.ViewModels.ActivityViewModel.WhatsHotList">
             <summary>
             Gets the number of organisations signed up to Pipeline

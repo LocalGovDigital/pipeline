@@ -130,6 +130,18 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// Gets the number of organisations signed up to Pipeline
         /// </summary>
+        public static int UsersCount()
+        {
+
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            return repository.AllUsersCount();
+
+        }
+
+
+        /// <summary>
+        /// Gets the number of organisations signed up to Pipeline
+        /// </summary>
         public static IEnumerable<Activity> WhatsHotList()
         {
 
