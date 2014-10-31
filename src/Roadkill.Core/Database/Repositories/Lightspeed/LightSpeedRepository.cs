@@ -648,7 +648,6 @@ namespace Roadkill.Core.Database.LightSpeed
 
         #endregion
 
-
         #region IOrgRepository
 
         public Organisation GetOrgByID(int id)
@@ -664,7 +663,6 @@ namespace Roadkill.Core.Database.LightSpeed
         }
 
         #endregion
-
 
         #region IRelRepository
 
@@ -964,7 +962,7 @@ namespace Roadkill.Core.Database.LightSpeed
             UserList = AllUsers();
             UserList.OrderByDescending(x => x.createdOn);
             UserList = UserList.Where(x => x.createdOn.Date > filter).ToList();
-            UserList = UserList.Take(10).ToList();
+            //UserList = UserList.Take(10).ToList();
 
 
             foreach (User user in UserList)
