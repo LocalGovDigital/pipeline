@@ -70,6 +70,14 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
+        internal IQueryable<ActivityEntity> Activites
+        {
+            get
+            {
+                return UnitOfWork.Query<ActivityEntity>();
+            }
+        }
+
         public virtual LightSpeedContext Context
         {
             get
@@ -360,6 +368,11 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToPageList(entities);
         }
 
+        public int AllPagesCount()
+        {
+            return AllPages().Count();
+        }
+
         public IEnumerable<PageContent> AllPageContents()
         {
             List<PageContentEntity> entities = PageContents.ToList();
@@ -510,6 +523,22 @@ namespace Roadkill.Core.Database.LightSpeed
         #endregion
 
         #region IUserRepository
+        public IEnumerable<User> AllUsers()
+        {
+            List<UserEntity> entities = Users.ToList();
+            return FromEntity.ToUserList(entities);
+        }
+
+        public int AllOrgsCount()
+        {
+            return Users.GroupBy(rs => rs.orgID).Count();
+        }
+
+        public int AllUsersCount()
+        {
+            return Users.Count();
+        }
+
         public void DeleteUser(User user)
         {
             UserEntity entity = UnitOfWork.FindById<UserEntity>(user.Id);
@@ -619,7 +648,6 @@ namespace Roadkill.Core.Database.LightSpeed
 
         #endregion
 
-
         #region IOrgRepository
 
         public Organisation GetOrgByID(int id)
@@ -635,7 +663,6 @@ namespace Roadkill.Core.Database.LightSpeed
         }
 
         #endregion
-
 
         #region IRelRepository
 
@@ -654,8 +681,8 @@ namespace Roadkill.Core.Database.LightSpeed
             relEntity.username = username;
 
             User _user = GetUserByUsername(username);
-            relEntity.orgID = _user.orgID;     
-      
+            relEntity.orgID = _user.orgID;
+
             relEntity.pageId = pageID;
             relEntity.relDateTime = DateTime.Now;
             UnitOfWork.Add(relEntity);
@@ -681,7 +708,7 @@ namespace Roadkill.Core.Database.LightSpeed
             else
             {
                 rel.orgID = GetUserByUsername(rel.username).orgID;
-                
+
                 ToEntity.FromRelationship(rel, entity);
                 UnitOfWork.SaveChanges();
                 rel = FromEntity.ToRel(entity);
@@ -702,7 +729,7 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToRelList(entities);
         }
 
-        public IEnumerable<Relationship> AllRels()
+        public IEnumerable<Relationship> FindAllRels()
         {
             List<RelEntity> entities = Rels.ToList();
             return FromEntity.ToRelList(entities);
@@ -733,9 +760,9 @@ namespace Roadkill.Core.Database.LightSpeed
 
             RelEntity entity = Rels.FirstOrDefault(r => r.username == username && r.pageId == pageID);
 
-            if (entity != null && entity.pageId != 0)            
+            if (entity != null && entity.pageId != 0)
             {
-                _RelToUserToPage = FromEntity.ToRel(entity);                   
+                _RelToUserToPage = FromEntity.ToRel(entity);
 
             }
 
@@ -745,9 +772,234 @@ namespace Roadkill.Core.Database.LightSpeed
         public Organisation GetOrgByUser(string username)
         {
             UserEntity userentity = Users.FirstOrDefault(p => p.Username == username);
-            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);            
+            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);
             return FromEntity.ToOrg(orgentity);
         }
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public IEnumerable<Activity> WhatsHotList()
+        {
+            List<Activity> WhatsHotList = new List<Activity>();
+
+            DateTime filter = DateTime.Now.AddDays(-28);
+            
+            IEnumerable<Page> PageList;
+            PageList = AllPages();
+            PageList = PageList.Where(x => x.ModifiedOn.Date > filter).ToList();
+            PageList = PageList.OrderByDescending(x => x.ModifiedOn).ToList();
+
+            foreach (Page page in PageList)
+            {
+                IEnumerable<Relationship> RelList;
+                RelList = GetRelByPage(page.Id);
+
+                int RelCount = RelList.Count();
+
+                Activity activity = new Activity();
+
+
+
+                activity.id = RelCount;
+                activity.projectName = page.Title;
+                activity.projectId = page.Id;
+                activity.orgName = GetOrgByID(page.orgID).OrgName;
+
+                WhatsHotList.Add(activity);
+
+            }
+
+            WhatsHotList = WhatsHotList.OrderByDescending(x => x.id).ToList();
+            WhatsHotList = WhatsHotList.Take(3).ToList();
+            
+            return WhatsHotList;
+
+        }
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public IEnumerable<Activity> ActivityViewList()
+        {
+
+
+            IEnumerable<Relationship> RelList;
+            RelList = FindAllRels();
+            RelList = RelList.OrderByDescending(x => x.relDateTime);
+            RelList = RelList.Take(10).ToList();
+
+            List<Activity> items = new List<Activity>();
+
+            foreach (Relationship rel in RelList)
+            {
+                bool fail = false;
+
+                Activity item = new Activity();
+
+                try
+                {
+                    User user = new User();
+                    user = GetUserByUsername(rel.username);
+                    item.userNames = user.Firstname + " " + user.Lastname;
+                }
+                catch { fail = true; }
+
+                try
+                {
+                    RelationshipType reltype = new RelationshipType();
+                    reltype = GetRelTypeByID(rel.relTypeId);
+
+                    string activityPastTense = "";
+                    if (reltype.relTypeText == "Like")
+                    {
+                        activityPastTense = "liked";
+                    }
+                    if (reltype.relTypeText == "Join")
+                    {
+                        activityPastTense = "joined";
+                    }
+
+                    item.activityName = activityPastTense;
+                }
+                catch { fail = true; }
+
+                try
+                {
+                    item.activityDateTime = rel.relDateTime;
+                }
+                catch { fail = true; }
+
+                try
+                {
+
+                    //get the page the relationship is related to
+                    Page page = new Page();
+                    page = GetPageById(rel.pageId);
+                    item.projectName = page.Title;
+                    item.projectId = page.Id;
+
+                    //get the orgainsation that owns the page
+                    Organisation org = new Organisation();
+                    org = GetOrgByID(page.orgID);
+                    item.orgName = org.OrgName;
+                }
+                catch { fail = true; }
+
+                if (fail == false)
+                {
+                    items.Add(item);
+                }
+            }
+
+
+
+            IEnumerable<Page> PageList;
+            PageList = AllPages();
+            PageList = PageList.OrderByDescending(x => x.ModifiedOn).ToList();
+            PageList = PageList.Take(10).ToList();
+
+
+            foreach (Page page in PageList)
+            {
+
+                Activity item = new Activity();
+
+                try
+                {
+                    User user = new User();
+                    user = GetUserByUsername(page.ModifiedBy);
+                    item.userNames = user.Firstname + " " + user.Lastname;
+                }
+                catch { }
+
+                try
+                {
+                    string activityPastTense = "";
+
+                    if (page.ModifiedOn == page.CreatedOn)
+                    {
+                        activityPastTense = "added";
+                    }
+                    else
+                    {
+                        activityPastTense = "edited";
+                    }
+
+                    item.activityName = activityPastTense;
+                }
+                catch { }
+
+                try
+                {
+                    item.activityDateTime = page.ModifiedOn;
+                }
+                catch { }
+
+                try
+                {
+
+                    item.projectName = page.Title;
+                    item.projectId = page.Id;
+
+                    //get the orgainsation that owns the page
+                    Organisation org = new Organisation();
+                    org = GetOrgByID(page.orgID);
+                    item.orgName = org.OrgName;
+                }
+                catch { }
+
+                items.Add(item);
+            }
+
+            DateTime filter = new DateTime(2014, 10, 1);
+
+            IEnumerable<User> UserList;
+            UserList = AllUsers();
+            UserList.OrderByDescending(x => x.createdOn);
+            UserList = UserList.Where(x => x.createdOn.Date > filter).ToList();
+            //UserList = UserList.Take(10).ToList();
+
+
+            foreach (User user in UserList)
+            {
+
+                Activity item = new Activity();
+
+                item.userNames = user.Firstname + " " + user.Lastname;
+                item.activityName = "signup";
+                item.activityDateTime = user.createdOn;
+
+                item.projectName = "";
+                item.projectId = 0;
+
+                //get the orgainsation that owns the page
+                Organisation org = new Organisation();
+                org = GetOrgByID(user.orgID);
+
+                string orgname = org.OrgName;
+
+                if (orgname.Contains("_") != true)
+                {
+                    item.orgName = " from " + orgname;
+                }
+
+                items.Add(item);
+            }
+
+            items = items.OrderByDescending(x => x.activityDateTime).ToList();
+            items = items.Take(15).ToList();
+
+            return items;
+
+        }
+
+
+
 
         #endregion
 

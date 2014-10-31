@@ -86,6 +86,18 @@ namespace Roadkill.Core.Mvc.Controllers
             return PartialView(model);
         }
 
+
+        public ActionResult Activity()
+        {
+            IEnumerable<ActivityViewModel> model = PageService.GetActivity();
+
+            if (model == null)
+                return Content(string.Format("No activity could not be found"));
+
+            return PartialView(model);
+        }
+
+
 		/// <summary>
 		/// 404 not found page - configured in the web.config
 		/// </summary>

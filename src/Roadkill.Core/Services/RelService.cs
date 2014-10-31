@@ -82,14 +82,14 @@ namespace Roadkill.Core.Services
         /// </summary>
         /// <returns>An <see cref="IEnumerable{PageViewModel}"/> of the pages.</returns>
         /// <exception cref="DatabaseException">An databaseerror occurred while retrieving the list.</exception>
-        public IEnumerable<RelViewModel> AllRels(bool loadPageContent = false)
+        public IEnumerable<RelViewModel> FindAllRels(bool loadPageContent = false)
         {
             try
             {
                 string cacheKey = "";
                 IEnumerable<RelViewModel> relModels;
 
-                IEnumerable<Relationship> rels = Repository.AllRels().OrderBy(p => p.id);
+                IEnumerable<Relationship> rels = Repository.FindAllRels().OrderBy(p => p.id);
                 relModels = from rel in rels
                             select new RelViewModel() { id = rel.id, };
 

@@ -14,7 +14,7 @@ namespace Roadkill.Core.Database
 		/// e.g. { "tag1, tag2, tag3", "blah, blah2" } 
 		/// </summary>
 		/// <returns></returns>
-        IEnumerable<Relationship> AllRels();
+        IEnumerable<Relationship> FindAllRels();
         IEnumerable<Relationship> GetRelByPage(int pageid);
         void DeleteRel(Relationship rel);
         Relationship GetRelById(int id);

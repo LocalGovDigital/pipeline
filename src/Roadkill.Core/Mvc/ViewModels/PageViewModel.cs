@@ -602,6 +602,34 @@ namespace Roadkill.Core.Mvc.ViewModels
         }
 
 
+        public List<Activity> Activity()
+        {
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+
+
+            IEnumerable<Activity> ActivityList;
+            ActivityList = repository.ActivityViewList();
+
+            List<Activity> items = new List<Activity>();
+
+            foreach (Activity act in ActivityList)
+            {
+
+                Activity item = new Activity();
+                item.id = act.id;
+                item.activityName = act.activityName;
+                item.orgName = act.orgName;
+                item.projectName = act.projectName;
+                item.userNames = act.userNames;                
+
+                items.Add(item);
+            }
+
+            return items;
+
+        }
+
+
         private static ApplicationSettings GetAppSettings()
         {
 

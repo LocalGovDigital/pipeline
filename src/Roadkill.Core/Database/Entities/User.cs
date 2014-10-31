@@ -109,6 +109,11 @@ namespace Roadkill.Core.Database
 		/// </summary>
 		public string Username { get; set; }
 
+        /// <summary>
+        /// This field is to show when the user account was created
+        /// </summary>
+        public DateTime createdOn { get; set; }
+
 		/// <summary>
 		/// The unique id for this object, this is the same as the <see cref="Id"/> property.
 		/// </summary>

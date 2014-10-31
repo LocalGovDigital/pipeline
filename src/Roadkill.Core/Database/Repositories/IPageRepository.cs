@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Roadkill.Core.Converters;
+using Roadkill.Core.Mvc.ViewModels;
 
 namespace Roadkill.Core.Database
 {
@@ -42,5 +43,6 @@ namespace Roadkill.Core.Database
 		IEnumerable<PageContent> GetPageContentByEditedBy(string username);
 		Page SaveOrUpdatePage(Page page);
 		void UpdatePageContent(PageContent content); // no new version
+        IEnumerable<Activity> ActivityViewList();
  	}
 }
