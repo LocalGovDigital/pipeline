@@ -1,6 +1,4 @@
-Roadkill.v12.suo
-src/Roadkill.Core/obj/Debug/Roadkill.Core.csproj.FileListAbsolute.txt
-src/Roadkill.Core/obj/Debug/Roadkill.Core.csproj.FileListAbsolute.txt
-src/Roadkill.Core/obj/Debug/Roadkill.Core.csprojResolveAssemblyReference.cache
-src/Roadkill.Core/obj/Debug/Roadkill.Core.csprojResolveAssemblyReference.cache
-src/Roadkill.Core/obj/Debug/Roadkill.Core.csproj.GenerateResource.Cache
+*.suo
+packages/
+obj/
+bin/

@@ -19,6 +19,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			entity.Email = user.Email;
 			entity.Firstname = user.Firstname;
             entity.orgID = user.orgID;
+            entity.EmailSubscriber = user.EmailSubscriber;
 			entity.IsActivated = user.IsActivated;
 			entity.IsAdmin = user.IsAdmin;
 			entity.IsEditor = user.IsEditor;

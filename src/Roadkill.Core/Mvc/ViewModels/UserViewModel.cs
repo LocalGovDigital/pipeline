@@ -63,6 +63,11 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public int orgID { get; set; }
 
+        /// <summary>
+        /// The users email subscription status.
+        /// </summary>
+        public bool EmailSubscriber { get; set; }
+
 		/// <summary>
 		/// The current (or if being changed, previous) username.
 		/// Use <see cref="NewUsername"/> for Signups.
@@ -164,6 +169,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 			Firstname = user.Firstname;
 			Lastname = user.Lastname;
             orgID = user.orgID;
+            EmailSubscriber = user.EmailSubscriber;
 			PasswordResetKey = user.PasswordResetKey;
 		}
 

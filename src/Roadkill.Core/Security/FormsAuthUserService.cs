@@ -427,6 +427,7 @@ namespace Roadkill.Core.Security
 				user.Firstname = model.Firstname;
 				user.Lastname = model.Lastname;
                 user.orgID = model.orgID;
+                user.EmailSubscriber = model.EmailSubscriber;
 				user.SetPassword(model.Password);
 				user.IsEditor = true;
 				user.IsAdmin = false;
@@ -525,6 +526,30 @@ namespace Roadkill.Core.Security
 				user.Firstname = model.Firstname;
 				user.Lastname = model.Lastname;
                 user.orgID = model.orgID;
+
+                if (user.EmailSubscriber != model.EmailSubscriber)
+                {
+                    var SiteSettings = StructureMap.ObjectFactory.GetInstance<SiteSettings>();
+
+                    var mc = new MailChimp.MailChimpManager(SiteSettings.MailChimpApiKey);
+
+                    if (model.EmailSubscriber)
+                    {
+                        // Subscribe user
+                        var MergeVars = new MailChimp.Lists.MergeVar();
+                        MergeVars.Add(new KeyValuePair<string,object>("FNAME", user.Firstname));
+                        MergeVars.Add(new KeyValuePair<string,object>("LNAME", user.Lastname));
+
+                        mc.Subscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, MergeVars, doubleOptIn: false, updateExisting: true);
+                    }
+                    else
+                    {
+                        // Unsubscribe user
+                        mc.Unsubscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, sendGoodbye: false, sendNotify: false);
+                    }
+                    user.EmailSubscriber = model.EmailSubscriber;
+                }
+
 				Repository.SaveOrUpdateUser(user);
 
 				// Save the email

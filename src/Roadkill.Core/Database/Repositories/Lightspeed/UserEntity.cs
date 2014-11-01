@@ -22,6 +22,9 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("orgID")]
         private int _orgID;
 
+        [Column("emailSubscriber")]
+        private bool _emailSubscriber;
+
 		[Column("password")]
 		private string _password;
 
@@ -103,6 +106,18 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<int>(ref _orgID, value);
+            }
+        }
+
+        public bool EmailSubscriber
+        {
+            get
+            {
+                return _emailSubscriber;
+            }
+            set
+            {
+                Set<bool>(ref _emailSubscriber, value);
             }
         }
 
