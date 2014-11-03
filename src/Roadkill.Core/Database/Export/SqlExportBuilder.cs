@@ -214,7 +214,7 @@ namespace Roadkill.Core.Database.Export
 			sql += string.Format("'{0}',", user.Email.ReplaceSingleQuotes());
 			sql += string.Format("'{0}',", user.Firstname.ReplaceSingleQuotes());
             sql += string.Format("'{0}',", user.orgID);
-            sql += string.Format("'{0}',", user.EmailSubscriber);
+            sql += string.Format("'{0}',", user.EmailSubscriber ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsEditor ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsAdmin ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsActivated ? "1" : "0");

@@ -13,77 +13,84 @@
 
 			<div id="profile" class="lightborder rounded10 col-sm-12">
 
-				<form class="form-horizontal" role="form" method="post">
-					@(Html.HiddenFor<UserViewModel, string>(h => h.ExistingEmail))
-					@(Html.HiddenFor<UserViewModel, string>(h => h.ExistingUsername))
+                <form class="form-horizontal" role="form" method="post">
+                    @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingEmail))
+                    @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingUsername))
 
-					<!-- Firstname -->
-					<div class="form-group">
-						<label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Firstname_Label</label>
-						<div class="col-sm-9">
-							@(Html.TextBoxFor<UserViewModel, string>(t => t.Firstname, new { @class = "form-control" }))
-						</div>
-					</div>
-
-					<!-- Lastname -->
-					<div class="form-group">
-						<label for="Lastname" class="col-sm-3 control-label">@SiteStrings.Shared_Lastname_Label</label>
-						<div class="col-sm-9">
-							@(Html.TextBoxFor<UserViewModel, string>(t => t.Lastname, new { @class = "form-control" }))
-						</div>
-					</div>
-
-                    <!-- OrgID -->
+                    <!-- Firstname -->
                     <div class="form-group">
-                        <label for="OrgID" class="col-sm-3 control-label">Organisation</label><div class="col-sm-9">   
-                          @(Html.BootstrapDropDownListFor<UserViewModel, int>(t => t.orgID, UserViewModel.OrgsAsNewSelectList, ""))
-                        <a href="mailto:pipeline@localgovdigital.info">Email us if you'd like your organisation added</a>.
+                        <label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Firstname_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.TextBoxFor<UserViewModel, string>(t => t.Firstname, new { @class = "form-control" }))
                         </div>
                     </div>
 
-					<!-- Email -->
-					<div class="form-group">
-						<label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Email_Label</label>
-						<div class="col-sm-9">
-							@(Html.TextBoxFor<UserViewModel, string>(t => t.NewEmail, new { @class = "form-control" }))
-						</div>
-					</div>
+                    <!-- Lastname -->
+                    <div class="form-group">
+                        <label for="Lastname" class="col-sm-3 control-label">@SiteStrings.Shared_Lastname_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.TextBoxFor<UserViewModel, string>(t => t.Lastname, new { @class = "form-control" }))
+                        </div>
+                    </div>
 
-					<!-- New username -->
-					<div class="form-group">
-						<label for="NewUsername" class="col-sm-3 control-label">@SiteStrings.Shared_Username_Label</label>
-						<div class="col-sm-9">
-							@(Html.TextBoxFor<UserViewModel, string>(t => t.NewUsername, new { @class = "form-control" }))
-						</div>
-					</div>
+                    <!-- OrgID -->
+                    <div class="form-group">
+                        <label for="OrgID" class="col-sm-3 control-label">Organisation</label><div class="col-sm-9">
+                            @(Html.BootstrapDropDownListFor<UserViewModel, int>(t => t.orgID, UserViewModel.OrgsAsNewSelectList, ""))
+                            <a href="mailto:pipeline@localgovdigital.info">Email us if you'd like your organisation added</a>.
+                        </div>
+                    </div>
 
-					<!-- Password -->
-					<div class="form-group">
-						<label for="Password" class="col-sm-3 control-label">@SiteStrings.Shared_Password_Label</label>
-						<div class="col-sm-9">
-							@(Html.PasswordFor<UserViewModel, string>(t => t.Password, new { @class = "form-control" }))
-						</div>
-					</div>
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Email_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.TextBoxFor<UserViewModel, string>(t => t.NewEmail, new { @class = "form-control" }))
+                        </div>
+                    </div>
 
-					<!-- Confirm password -->
-					<div class="form-group">
-						<label for="PasswordConfirmation" class="col-sm-3 control-label">@SiteStrings.Shared_PasswordConfirm_Label</label>
-						<div class="col-sm-9">
-							@(Html.PasswordFor<UserViewModel, string>(t => t.PasswordConfirmation, new { @class = "form-control" }))
-						</div>
-					</div>
+                    <!-- New username -->
+                    <div class="form-group">
+                        <label for="NewUsername" class="col-sm-3 control-label">@SiteStrings.Shared_Username_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.TextBoxFor<UserViewModel, string>(t => t.NewUsername, new { @class = "form-control" }))
+                        </div>
+                    </div>
 
-					@if (SiteSettings.IsRecaptchaEnabled)
-					{ 
-						@Html.Partial("Recaptcha", SiteSettings)
-					}
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="Password" class="col-sm-3 control-label">@SiteStrings.Shared_Password_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.PasswordFor<UserViewModel, string>(t => t.Password, new { @class = "form-control" }))
+                        </div>
+                    </div>
 
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-9">
-							<input type="submit" class="btn btn-primary right" value="@SiteStrings.Button_Signup" />
-						</div>
-					</div>
-				</form>
+                    <!-- Confirm password -->
+                    <div class="form-group">
+                        <label for="PasswordConfirmation" class="col-sm-3 control-label">@SiteStrings.Shared_PasswordConfirm_Label</label>
+                        <div class="col-sm-9">
+                            @(Html.PasswordFor<UserViewModel, string>(t => t.PasswordConfirmation, new { @class = "form-control" }))
+                        </div>
+                    </div>
+
+                    <!-- Email subscription -->
+                    <div class="form-group">
+                        <div class="col-sm-push-3 col-sm-9">
+                            <label>@(Html.BootstrapCheckBoxFor<UserViewModel>(t => t.EmailSubscriber, null)) Receive email updates?</label>
+                        </div>
+                    </div>
+
+                    @if (SiteSettings.IsRecaptchaEnabled)
+                    {
+                        @Html.Partial("Recaptcha", SiteSettings)
+                    }
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <input type="submit" class="btn btn-primary right" value="@SiteStrings.Button_Signup" />
+                        </div>
+                    </div>
+                </form>
 
 			</div>
 		</div>

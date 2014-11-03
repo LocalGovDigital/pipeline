@@ -55,9 +55,16 @@ else
 
                         <!-- OrgID -->
                         <div class="form-group">
-                            <label for="OrgId" class="col-sm-3 control-label">Organisation</label><div class="col-sm-9">
+                            <label for="OrgId" class="col-sm-3 control-label">Organisation</label>
+                            <div class="col-sm-9">
                                 @(Html.BootstrapDropDownListFor<UserViewModel, int>(t => t.orgID, Model.OrgsAsSelectList, ""))
+                            </div>
+                        </div>
 
+                        <!-- Email subscription -->
+                        <div class="form-group">
+                            <div class="col-sm-push-3 col-sm-9">
+                                <label>@(Html.BootstrapCheckBoxFor<UserViewModel>(t => t.EmailSubscriber, null)) Receive email updates?</label>
                             </div>
                         </div>
 
