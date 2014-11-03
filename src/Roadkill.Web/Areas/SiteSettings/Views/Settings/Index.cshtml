@@ -191,6 +191,13 @@
             <legend>MailChimp</legend>
 
             <div class="form-group col-lg-5 row">
+                <div class="checkbox">
+                    <label>
+                        @Html.BootstrapCheckBoxFor(s => s.EnableMailChimp, "")
+                        Enable MailChimp integration
+                    </label>
+                </div>
+
                 <label for="MailChimpApiKey">API key</label>
                 @Html.BootstrapLongTextBoxFor(s => s.MailChimpApiKey, "This can be found in the account section on the MailChimp site.")
 

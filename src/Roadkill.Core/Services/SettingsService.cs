@@ -94,7 +94,7 @@ namespace Roadkill.Core.Services
 				siteSettings.MenuMarkup = model.MenuMarkup;
 
                 // Pipeline
-
+                siteSettings.EnableMailChimp = model.EnableMailChimp;
                 siteSettings.MailChimpApiKey = model.MailChimpApiKey;
                 siteSettings.MailChimpListId = model.MailChimpListId;
 

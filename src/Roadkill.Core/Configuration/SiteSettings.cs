@@ -150,6 +150,11 @@ namespace Roadkill.Core.Configuration
         #region Pipeline
 
         /// <summary>
+        /// Enable MailChimp integration
+        /// </summary>
+        public bool EnableMailChimp { get; set; }
+
+        /// <summary>
         /// MailChimp API Key
         /// </summary>
         public string MailChimpApiKey { get; set; }
@@ -181,6 +186,7 @@ namespace Roadkill.Core.Configuration
 			PluginLastSaveDate = DateTime.UtcNow;
 
             // Pipeline
+            EnableMailChimp = false;
             MailChimpApiKey = "";
             MailChimpListId = "";
 		}
