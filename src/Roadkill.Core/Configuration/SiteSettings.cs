@@ -147,7 +147,26 @@ namespace Roadkill.Core.Configuration
 		public DateTime PluginLastSaveDate { get; set; }
 		#endregion
 
-		public SiteSettings()
+        #region Pipeline
+
+        /// <summary>
+        /// Enable MailChimp integration
+        /// </summary>
+        public bool EnableMailChimp { get; set; }
+
+        /// <summary>
+        /// MailChimp API Key
+        /// </summary>
+        public string MailChimpApiKey { get; set; }
+
+        /// <summary>
+        /// MailChimp list ID
+        /// </summary>
+        public string MailChimpListId { get; set; }
+
+        #endregion
+
+        public SiteSettings()
 		{
 			// v1.7
 			AllowedFileTypes = "jpg, png, gif";
@@ -165,6 +184,11 @@ namespace Roadkill.Core.Configuration
 			HeadContent = "";
 			MenuMarkup = GetDefaultMenuMarkup();
 			PluginLastSaveDate = DateTime.UtcNow;
+
+            // Pipeline
+            EnableMailChimp = false;
+            MailChimpApiKey = "";
+            MailChimpListId = "";
 		}
 
 		public string GetJson()

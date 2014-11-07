@@ -208,12 +208,13 @@ namespace Roadkill.Core.Database.Export
 			if (user == null)
 				return "";
 
-			string sql = "INSERT INTO roadkill_users (id, activationkey, email, firstname, orgID, iseditor, isadmin, isactivated, lastname, password, passwordresetkey, salt, username) VALUES (";
+			string sql = "INSERT INTO roadkill_users (id, activationkey, email, firstname, orgID, emailsubscriber, iseditor, isadmin, isactivated, lastname, password, passwordresetkey, salt, username) VALUES (";
 			sql += string.Format("'{0}',", user.Id);
 			sql += string.Format("'{0}',", user.ActivationKey);
 			sql += string.Format("'{0}',", user.Email.ReplaceSingleQuotes());
 			sql += string.Format("'{0}',", user.Firstname.ReplaceSingleQuotes());
             sql += string.Format("'{0}',", user.orgID);
+            sql += string.Format("'{0}',", user.EmailSubscriber ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsEditor ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsAdmin ? "1" : "0");
 			sql += string.Format("'{0}',", user.IsActivated ? "1" : "0");

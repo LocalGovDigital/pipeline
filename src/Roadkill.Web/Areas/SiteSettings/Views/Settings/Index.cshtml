@@ -185,6 +185,27 @@
 			</div>
 		</fieldset>
 
+
+        <!-- MailChimp -->
+        <fieldset>
+            <legend>MailChimp</legend>
+
+            <div class="form-group col-lg-5 row">
+                <div class="checkbox">
+                    <label>
+                        @Html.BootstrapCheckBoxFor(s => s.EnableMailChimp, "")
+                        Enable MailChimp integration
+                    </label>
+                </div>
+
+                <label for="MailChimpApiKey">API key</label>
+                @Html.BootstrapLongTextBoxFor(s => s.MailChimpApiKey, "This can be found in the account section on the MailChimp site.")
+
+                <label for="MailChimpListId">List ID</label>
+                @Html.BootstrapTextBoxFor(s => s.MailChimpListId, "This can be found on list's name and defaults settings page on the MailChimp site.")
+            </div>
+        </fieldset>
+
 		<input type="submit" class="btn btn-primary" value="@SiteStrings.Button_Save" />
 	</div>
 </form>

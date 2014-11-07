@@ -69,6 +69,11 @@ namespace Roadkill.Core.Mvc.ViewModels
 		public bool IsPublicSite { get; set; }
 		public bool IgnoreSearchIndexErrors { get; set; }
 
+        // Pipeline
+        public bool EnableMailChimp { get; set; }
+        public string MailChimpApiKey { get; set; }
+        public string MailChimpListId { get; set; }
+
 		/// <summary>
 		/// True when the model was updated during postback
 		/// </summary>
@@ -188,6 +193,9 @@ namespace Roadkill.Core.Mvc.ViewModels
 			OverwriteExistingFiles = siteSettings.OverwriteExistingFiles;
 			HeadContent = siteSettings.HeadContent;
 			MenuMarkup = siteSettings.MenuMarkup;
+            EnableMailChimp = siteSettings.EnableMailChimp;
+            MailChimpApiKey = siteSettings.MailChimpApiKey;
+            MailChimpListId = siteSettings.MailChimpListId;
 		}
 
 		public void FillFromApplicationSettings(ApplicationSettings applicationSettings)

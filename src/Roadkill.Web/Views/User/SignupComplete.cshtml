@@ -8,21 +8,9 @@
 <div class="container pull-left">
 	<div class="row">
 		<div class="col-sm-8">
-			<p>@string.Format(SiteStrings.Signup_Complete_Label, Model.NewEmail)</p>
-
-			@if (TempData["resend"] != null)
-			{
-				<div class="alert alert-info">
-					@SiteStrings.Signup_Complete_EmailResent
-				</div>
-			}
-
-			<p class="bigger bold">@SiteStrings.Signup_Complete_NoEmail</p>
-			@using (Html.BeginForm("ResendConfirmation", "User"))
-			{
-				@Html.Hidden("email", Model.NewEmail)
-				<input type="submit" class="btn btn-primary" value="@SiteStrings.Button_Signup_Complete_EmailResend" />
-			}
+			<p>Thanks for signing up for Pipeline.</p>
+            <p>You should now be able to <a href="http://www.localgovdigital.org.uk/user/login">log in with your username and password</a>.</p>
+            <p>To start adding details of your projects, select Add a project.</p>
 		</div>
 	</div>
 </div>

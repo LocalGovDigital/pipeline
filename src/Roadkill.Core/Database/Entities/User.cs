@@ -81,6 +81,14 @@ namespace Roadkill.Core.Database
         /// </value>
         public int orgID { get; set; }
 
+        /// <summary>
+        /// Gets or sets the whether the user is interested in email alerts
+        /// </summary>
+        /// <value>
+        /// Email subscription status.
+        /// </value>
+        public bool EmailSubscriber { get; set; }
+
 		/// <summary>
 		/// Gets the hashed password for the user. 
 		/// </summary>

@@ -93,6 +93,11 @@ namespace Roadkill.Core.Services
 				siteSettings.HeadContent = model.HeadContent;
 				siteSettings.MenuMarkup = model.MenuMarkup;
 
+                // Pipeline
+                siteSettings.EnableMailChimp = model.EnableMailChimp;
+                siteSettings.MailChimpApiKey = model.MailChimpApiKey;
+                siteSettings.MailChimpListId = model.MailChimpListId;
+
 				Repository.SaveSiteSettings(siteSettings);
 			}
 			catch (DatabaseException ex)
