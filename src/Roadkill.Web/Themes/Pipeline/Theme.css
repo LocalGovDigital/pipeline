@@ -35,3 +35,10 @@
     font-weight: 700;
     margin-bottom: -0.2em;
 }
+
+.label a { color: #fff; }
+
+.search-results > div
+{
+    margin-top: 2em;
+}

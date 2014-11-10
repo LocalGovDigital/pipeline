@@ -33,10 +33,10 @@
 		<tr>
 			<td style="width:30%;">@user.ExistingUsername</td>
 			<td class="stretch">@user.ExistingEmail</td>
-			<td class="edit">@Html.ActionLink(SiteStrings.Navigation_Edit, "EditUser", new { id = user.Id }, new { @class = "btn btn-primary btn-mini" })</td>
+			<td class="edit">@Html.ActionLink(SiteStrings.Navigation_Edit, "EditUser", new { id = user.Id }, new { @class = "btn btn-default btn-xs" })</td>
 		@if (Model[0].Count() > 0 && user.Id.ToString() != RoadkillContext.CurrentUser)
 		{
-			<td class="delete">@Html.ActionLink(SiteStrings.Navigation_Delete, "DeleteUser", new { id = user.ExistingEmail }, new { @class = "confirm btn btn-danger btn-mini" })</td>
+			<td class="delete">@Html.ActionLink(SiteStrings.Navigation_Delete, "DeleteUser", new { id = user.ExistingEmail }, new { @class = "confirm btn btn-danger btn-xs" })</td>
 		}
 		else
 		{

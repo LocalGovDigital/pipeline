@@ -14,7 +14,7 @@
         @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)
     }*@
 <div class="page-header">
-    <h1>@Model.Title</h1>
+    <h1>@Model.Title <span class="label label-stage label-@Model.ProjectStatus.ToLower()">@Model.ProjectStatus.ToUpper()</span></h1>
 </div>
 
 <div class="row">
@@ -25,11 +25,6 @@
                 { <text>Estimated </text> }Dates
         </label>
         <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(Model.ProjectEnd.ToLongDateString())</p>
-    </div>
-
-    <div class="form-group">
-        <label>Status</label>
-        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectStatus)</p>
     </div>
 
     <div class="form-group">
