@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<SearchResultViewModel>
-<script type="text/javascript" src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
+<script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
 @{
 	string title = string.Format(SiteStrings.Search_Results, ViewData["search"]);
-	if (Model.Count() == 0)
+    if (Model == null)
+    {
+        title = "Search";
+    }
+    else  if (Model.Count() == 0)
 	{
 		title = string.Format(SiteStrings.Search_NoResults, ViewData["search"]);
 	}
@@ -10,14 +14,9 @@
 	ViewBag.Title = title;
 }
 
-@if (Model.Count() == 0)
-{
+<div class="page-header">
     <h1>@title</h1>
-}
-else
-{
-    <h1>@title</h1>
-}
+</div>
 
 <div class="container pull-left">
 
@@ -25,7 +24,6 @@ else
     {
         <div class="row">
             <div class="col-xs-8">
-
                 <div class="row">
                     <div class="col-xs-10">
                         @Html.TextBox("q", null, new { placeholder = SiteStrings.Search_PlaceHolder, @class = "form-control" })
@@ -34,31 +32,33 @@ else
                         <input type="submit" class="btn btn-primary" value="@SiteStrings.Button_Search" />
                     </div>
                 </div>
-                        @foreach (SearchResultViewModel result in Model)
-                        {
-                            <div class="searchresult row">
-                                <div class="col-sm-12 padded">
-                                    <h3 class="searchresult-title">@Html.ActionLink(result.Title, "Index", "Wiki", new { id = result.Id, title = result.EncodedTitle }, null)</h3>
-                                    <div class="row">
-                                        <div class="col-xs-3"><b>Start:</b> @MvcHtmlString.Create(result.ProjectStart.ToShortDateString())</div>
-                                        <div class="col-xs-3"><b>Finish:</b> @MvcHtmlString.Create(result.ProjectEnd.ToShortDateString())</div>
-                                        @if (result.ProjectEstimatedTime == false)
-                                        {  <div class="col-xs-6">These dates are estimated</div>}
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3"><b>Status:</b> @MvcHtmlString.Create(result.ProjectStatus)</div>
-                                        <div class="col-xs-3"><b>Language</b>: @MvcHtmlString.Create(result.ProjectLanguage)</div>
-                                    </div>
-                                    <div class="searchresult-summary">@MvcHtmlString.Create(result.ContentSummary)...</div>
-                                    <div>
-                                        <div class="searchresult-date left">Created On: @result.CreatedOn.ToString("dd MMM yyyy")</div>
-                                        <div class="searchresult-tags right">@Html.Partial("TagBlocks", result.TagsAsList())</div>
-                                    </div>
+                @if (Model != null)
+                {
+                    foreach (SearchResultViewModel result in Model)
+                    {
+                        <div class="searchresult row">
+                            <div class="col-sm-12 padded">
+                                <h3 class="searchresult-title">@Html.ActionLink(result.Title, "Index", "Wiki", new { id = result.Id, title = result.EncodedTitle }, null)</h3>
+                                <div class="row">
+                                    <div class="col-xs-3"><b>Start:</b> @MvcHtmlString.Create(result.ProjectStart.ToShortDateString())</div>
+                                    <div class="col-xs-3"><b>Finish:</b> @MvcHtmlString.Create(result.ProjectEnd.ToShortDateString())</div>
+                                    @if (result.ProjectEstimatedTime == false)
+                                    {  <div class="col-xs-6">These dates are estimated</div>}
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3"><b>Status:</b> @MvcHtmlString.Create(result.ProjectStatus)</div>
+                                    <div class="col-xs-3"><b>Language</b>: @MvcHtmlString.Create(result.ProjectLanguage)</div>
+                                </div>
+                                <div class="searchresult-summary">@MvcHtmlString.Create(result.ContentSummary)...</div>
+                                <div>
+                                    <div class="searchresult-date left">Created On: @result.CreatedOn.ToString("dd MMM yyyy")</div>
+                                    <div class="searchresult-tags right">@Html.Partial("TagBlocks", result.TagsAsList())</div>
                                 </div>
                             </div>
-                        }
-
-                    </div>
+                        </div>
+                    }
+                }
+            </div>
 
 
             <div class="col-xs-4">
@@ -66,14 +66,14 @@ else
                     <div class="col-sm-6">
                         <div class="facetedsearchoption">
                         Language<br/>
-                        @Html.DropDownList("language", HomeController.LanguageTypesAsSelectList)
+                        @Html.DropDownList("language", HomeController.LanguageTypesAsSelectList, new { @class = "form-control" })
                         </div>
                         
                     </div>
                     <div class="col-sm-6">
                         <div class="facetedsearchoption">
                             Status<br />
-                            @Html.DropDownList("status", HomeController.ProjectStatusTypesAsSelectList)
+                            @Html.DropDownList("status", HomeController.ProjectStatusTypesAsSelectList, new { @class = "form-control" })
                         </div>
                         </div>
                     <div class="col-sm-6">
@@ -105,16 +105,18 @@ else
                 </div>
             </div>
                 </div>
-                }
-            </div>
+    }
+</div>
 <script>
-    $('.datepicker').datepicker({
-        format: 'yyyy/mm/dd',
-        startDate: '-3d'
+    jQuery(function ($) {
+        $('.datepicker').datepicker({
+            format: 'yyyy/mm/dd',
+            startDate: '-3d'
 
-    })
+        })
 
-    $('.datepicker').on('change', function () {
-        $('.dropdown-menu').hide();
+        $('.datepicker').on('change', function () {
+            $('.dropdown-menu').hide();
+        });
     });
 </script>

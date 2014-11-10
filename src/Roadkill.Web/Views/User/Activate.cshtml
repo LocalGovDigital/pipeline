@@ -2,23 +2,17 @@
 	ViewBag.Title = SiteStrings.Activate_Title;
 }
 
-<h1>@SiteStrings.Activate_Title</h1>
-
-<div class="container pull-left">
-	<div class="row">
-		<div class="col-sm-6">
-			@Html.BootstrapValidationSummary(SiteStrings.Activate_Error_Title)
-
-			@if (ViewData.ModelState.IsValid)
-			{
-				<div class="alert alert-info">
-					<p class="bigger bold">@SiteStrings.Activate_Success_Title</p>
-
-					<p>
-						@SiteStrings.Activate_Label @Html.ActionLink(SiteStrings.Activate_Link, "Login")
-					</p>
-				</div>
-			}
-		</div>
-	</div>
+<div class="page-header">
+    <h1>@SiteStrings.Activate_Title</h1>
 </div>
+
+@Html.BootstrapValidationSummary(SiteStrings.Activate_Error_Title)
+
+@if (ViewData.ModelState.IsValid)
+{
+	<div class="alert alert-info">
+		<p class="lead"><strong>@SiteStrings.Activate_Success_Title</strong></p>
+
+		<p>@SiteStrings.Activate_Label @Html.ActionLink(SiteStrings.Activate_Link, "Login")</p>
+	</div>
+}

@@ -1,7 +1,6 @@
 ﻿@model PageViewModel
 @{
     ViewBag.Title = Model.Title;
-    
 }
 
 @section PageToolbar
@@ -10,66 +9,95 @@
     @Html.Action("PageToolBar", "Wiki", new { id = Model.Id })
 }
 
-@section ViewHistoryLink
-{
-    <div id="viewhistory">@Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)</div>
-}
-<h1 class="pagetitle">@Model.Title</h1>
-<div class="row">
-    <div class="col-xs-3"><b>Start:</b> @MvcHtmlString.Create(Model.ProjectStart.ToShortDateString())</div>
-    <div class="col-xs-3"><b>Finish:</b> @MvcHtmlString.Create(Model.ProjectEnd.ToShortDateString())</div>
-    @if (Model.ProjectEstimatedTime == false)
-    {  <div class="col-xs-6">These dates are estimated</div>}
+@*@section ViewHistoryLink
+    {
+        @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)
+    }*@
+<div class="page-header">
+    <h1>@Model.Title</h1>
 </div>
+
 <div class="row">
-    <div class="col-xs-3"><b>Status:</b> @MvcHtmlString.Create(Model.ProjectStatus)</div>
-    <div class="col-xs-3"><b>Language</b>: @MvcHtmlString.Create(Model.ProjectLanguage)</div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div id="pagecontent">
-            @MvcHtmlString.Create(Model.ContentAsHtml)
-        </div>
+    <div class="col-sm-3 col-md-4">
+        <div class="form-group">
+            <label>
+                @if (!Model.ProjectEstimatedTime)
+                { <text>Estimated </text> }Dates
+        </label>
+        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(Model.ProjectEnd.ToLongDateString())</p>
+    </div>
+
+    <div class="form-group">
+        <label>Status</label>
+        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectStatus)</p>
+    </div>
+
+    <div class="form-group">
+        <label>Language</label>
+        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectLanguage)</p>
     </div>
 </div>
-<div id="contactdetails">
-    <b>Project Owner:</b> @MvcHtmlString.Create(Model.OrgContactDetails.OrgName)
-    @if (Model.OrgContactDetails.email != null && Model.OrgContactDetails.email != "")
-    {<br /><b>Email:</b> <a href="mailto:@MvcHtmlString.Create(Model.OrgContactDetails.email)">@MvcHtmlString.Create(Model.OrgContactDetails.email)</a>}
-    @if (Model.OrgContactDetails.twitter != null && Model.OrgContactDetails.twitter != "")
-    {<br /><b>Twitter:</b> <a href="http://www.twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a>}
-    @if ((Model.OrgContactDetails.email == null || Model.OrgContactDetails.email == "") && (Model.OrgContactDetails.twitter == null || Model.OrgContactDetails.twitter == ""))
-    {<br />@MvcHtmlString.Create("We don't have contact details for this organisation")}
-</div>                                                                              
+<div class="col-sm-3 col-sm-offset-1">
+    <h4>Project Owner</h4>
+    <p>@MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</p>
+    @if (!String.IsNullOrWhiteSpace(Model.OrgContactDetails.email))
+    {
+        <p><i class="glyphicon glyphicon-inbox"></i> <a href="mailto:@MvcHtmlString.Create(Model.OrgContactDetails.email)">@MvcHtmlString.Create(Model.OrgContactDetails.email)</a></p>
+    }
+    @if (!String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
+    {
+        <p><i class="glyphicon glyphicon-inbox"></i> <a href="https://twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a></p>
+    }
+    @if (String.IsNullOrWhiteSpace(Model.OrgContactDetails.email) && String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
+    {
+        <p>We don't have contact details for this organisation.</p>
+    }
+</div>
+<div class="col-md-3 col-sm-offset-1 col-sm-4">
+    <div class="form-group">
+        <label>Last Modified</label>
+        <p class="form-control-static">@Model.ModifiedOn.ToLongDateString() @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        @MvcHtmlString.Create(Model.ContentAsHtml)
+    </div>
+    <div class="col-md-3">
+        @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
+    </div>
+</div>
 
+@*@section RelatedRelationships
+    {
+        @* This is rendered by an action (and not a partial/extension method) for future donut caching * @
+        @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
+    }*@
 
-@section RelatedRelationships
+@*@section PageDetailsFooter
+    {
+        @SiteStrings.Shared_LastModified @Model.ModifiedOn.ToLongDateString().
+    }*@
+
+@section PluginHead
 {
-    @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
-    @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
+    <!-- Plugins -->
+    @Html.Raw(Model.PluginHeadHtml)
+    <!-- End plugins head -->
 }
 
-        @section PageDetailsFooter
+@section PluginPreContainer
 {
-            @SiteStrings.Shared_LastModified <span id="lastmodified-on" title="@Model.ModifiedOnWithOffset">@Model.ModifiedOnWithOffset</span>.
-        }
+    @MvcHtmlString.Create(Model.PluginPreContainer)
+}
 
-        @section PluginHead
+@section PluginPostContainer
 {
-            <!-- Plugins -->
-            @Html.Raw(Model.PluginHeadHtml)<!-- End plugins head -->
-        }
-        @section PluginPreContainer
-{
-            @MvcHtmlString.Create(Model.PluginPreContainer)
-        }
+    @MvcHtmlString.Create(Model.PluginPostContainer)
+}
 
-        @section PluginPostContainer
+@section PluginFooter
 {
-            @MvcHtmlString.Create(Model.PluginPostContainer)
-        }
-
-        @section PluginFooter
-{
-            @MvcHtmlString.Create(Model.PluginFooterHtml)
-        }
+    @MvcHtmlString.Create(Model.PluginFooterHtml)
+}

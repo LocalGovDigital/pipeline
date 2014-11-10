@@ -1,0 +1,134 @@
+﻿body {
+    font-family: Oxygen, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #454545;
+}
+
+p, li {
+    line-height: 2em;
+}
+
+.navbar-app {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+.navbar-default .navbar-brand {
+    font-weight: 700;
+    color: #212121;
+}
+
+.makers .navbar-head {
+  border-bottom: 10px solid #199ad2;
+}
+
+.navbar-head .nav > li > a:hover,
+.navbar-head .nav > li > a:focus,
+.navbar-head .nav > li.active > a
+{
+    color: #fff;
+}
+
+.navbar-head .nav > li > a.localgovdigital:hover,
+.navbar-head .nav > li > a.localgovdigital:focus,
+.localgovdigital .navbar-head .nav > li.active
+{
+    background: #6b7770;
+}
+
+.navbar-head .nav > li > a.localgovcamp:hover,
+.navbar-head .nav > li > a.localgovcamp:focus,
+.localgovcamp .navbar-head .nav > li.active
+{
+  background: #34ab49;
+}
+
+.navbar-head .nav > li > a.makers:hover,
+.navbar-head .nav > li > a.makers:focus,
+.makers .navbar-head .nav > li.active
+{
+  background: #1799d1;
+}
+
+.navbar-head .nav > li > a.ldbytes:hover,
+.navbar-head .nav > li > a.ldbytes:focus
+{
+  background: #d42128;
+}
+
+.navbar-head .nav > li > a.lgvoice:hover,
+.navbar-head .nav > li > a.lgvoice:focus
+{
+  background: #6b4a9e;
+}
+
+footer {
+  padding-top: 80px;
+  padding-bottom: 90px;
+  color: #555;
+  background: #f2f5f3;
+  margin-top: 50px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+.label-stage {
+    border-radius: 0;
+    letter-spacing: 1px; 
+    font-size: 19px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.label-alpha {
+    background-color: #d53880;
+}
+.label-beta
+{
+    background-color: #f47738;
+}
+.label-live
+{
+    background-color: #85994b;
+}
+.label-retirement
+{
+    background-color: #bfc1c3;
+}
+
+.form-group {
+    margin-bottom: 40px;
+}
+.form-group label {
+    margin-bottom: 10px;
+}
+.help-block.help-info {
+    color: #6f777b !important;
+    margin-top: -5px;
+    font-size: 0.95em;
+}
+.has-error {
+    margin-left: -1em;
+    margin-right: -1em;
+    padding: 1em;
+    background: #fef7f7;
+    border-left: 3px solid #df3034;
+}
+.has-error .control-label {
+    color: inherit;
+}
+.has-error .help-block {
+    color: #df3034;
+}
+.form-control {
+    height: 36px;
+    padding: 7px 12px;
+    font-size: 16px;
+    margin: 2px 0;
+}

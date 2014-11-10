@@ -187,7 +187,7 @@
     <value>Confirm</value>
   </data>
   <data name="Shared_NotLoggedIn" xml:space="preserve">
-    <value>Not logged in</value>
+    <value />
   </data>
   <data name="Shared_LoggedInAs" xml:space="preserve">
     <value>Logged in as</value>
@@ -199,25 +199,25 @@
     <value>Powered by Roadkill Wiki</value>
   </data>
   <data name="Shared_Firstname_Label" xml:space="preserve">
-    <value>First name:</value>
+    <value>First name</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="Shared_Lastname_Label" xml:space="preserve">
-    <value>Last name:</value>
+    <value>Last name</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="Shared_Username_Label" xml:space="preserve">
-    <value>Username:</value>
+    <value>Username</value>
     <comment>Fuzzy</comment>
   </data>
   <data name="Shared_Email_Label" xml:space="preserve">
-    <value>Email:</value>
+    <value>Email</value>
   </data>
   <data name="Shared_Password_Label" xml:space="preserve">
-    <value>Password:</value>
+    <value>Password</value>
   </data>
   <data name="Shared_PasswordConfirm_Label" xml:space="preserve">
-    <value>Password confirm:</value>
+    <value>Password confirm</value>
   </data>
   <data name="Shared_Error" xml:space="preserve">
     <value>An error occurred:</value>
@@ -259,10 +259,10 @@
     <value>The username/password is incorrect</value>
   </data>
   <data name="Signup_Title" xml:space="preserve">
-    <value>Register / Signup</value>
+    <value>Register</value>
   </data>
   <data name="Signup_Label" xml:space="preserve">
-    <value>Please enter you details below.</value>
+    <value>Please enter your details below to register for Pipeline.</value>
   </data>
   <data name="Button_Signup" xml:space="preserve">
     <value>Register new user</value>
@@ -309,7 +309,7 @@
     <value>There was a problem activating your account. It may have already been activated.</value>
   </data>
   <data name="ResetPassword_Title" xml:space="preserve">
-    <value>Reset your password.</value>
+    <value>Reset Your Password</value>
   </data>
   <data name="ResetPassword_Label" xml:space="preserve">
     <value>Enter your email below to reset your password. You will then receive an email with a link to reset your password.</value>

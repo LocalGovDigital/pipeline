@@ -3,9 +3,9 @@
     ViewBag.Title = SiteStrings.Profile_Title;
  }
 
-
-<h1>@SiteStrings.Profile_Title</h1>
- 
+<div class="page-header">
+    <h1>@SiteStrings.Profile_Title</h1>
+</div>
 
 @if (Model == null)
 {
@@ -13,43 +13,28 @@
 }
 else
 {
-    
-    <div class="container pull-left">
-        <div class="row">
-            <div class="col-sm-8">                
+<form role="form" method="post">
 
-                <div id="profile" class="lightborder rounded10 col-sm-12">
+    <!-- OrgID -->
+    <div class="form-group">
+        <label for="OrgID" class="control-label">@SiteStrings.Shared_OrgID_Label</label>
+        <div>
 
-                    <form class="form-horizontal" role="form" method="post">
- 
-                        <!-- OrgID -->
-                        <div class="form-group">
-                            <label for="OrgID" class="col-sm-3 control-label">@SiteStrings.Shared_OrgID_Label</label><div class="col-sm-9">
-                        
-
-      
-                            </div>
-                        </div>
-
-                        <!-- Email -->
-                        <div class="form-group">
-                            <label for="NewEmail" class="col-sm-3 control-label">@SiteStrings.Shared_Email_Label</label>
-                            <div class="col-sm-9">
-                                @(Html.TextBoxFor<RelViewModel, string>(t => t.reltext, new { @class = "form-control" }))
-                            </div>
-                        </div>
-  
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <input type="submit" class="btn btn-primary right" value="@SiteStrings.Button_Save" />
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
         </div>
     </div>
-}
 
-<br class="clear" />
+    <!-- Email -->
+    <div class="form-group">
+        <label for="NewEmail" class="control-label">@SiteStrings.Shared_Email_Label</label>
+        <div>
+            @(Html.TextBoxFor<RelViewModel, string>(t => t.reltext, new { @class = "form-control" }))
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Save</button>
+        </div>
+    </div>
+</form>
+}

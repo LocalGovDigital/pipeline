@@ -487,22 +487,16 @@ namespace Roadkill.Core.Services
         /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
         public IEnumerable<ActivityViewModel> GetActivity()
         {
-
             try
             {
-
                 IEnumerable<Activity> relsList = Repository.ActivityViewList().ToList();
                 List<ActivityViewModel> rels = new List<ActivityViewModel>();
 
                 foreach (Activity act in relsList)
                 {
-
-
                     ActivityViewModel relModel = new ActivityViewModel(act);
                     int index = rels.IndexOf(relModel);
-
                     rels.Add(relModel);
-   
                 }
 
                 return rels;
@@ -710,18 +704,18 @@ namespace Roadkill.Core.Services
             // TODO: turn this into a theme-based bit of template HTML
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine("<nav id=\"leftmenu\" class=\"navbar navbar-default\" role=\"navigation\">");
-            builder.Append(GetCollapsableMenuHtml());
+            //builder.AppendLine("<nav id=\"leftmenu\" class=\"navbar navbar-default\" role=\"navigation\">");
+            //builder.Append(GetCollapsableMenuHtml());
 
-            builder.AppendLine(@"<div id=""left-menu-toggle"" class=""collapse navbar-collapse"">");
+            //builder.AppendLine(@"<div id=""left-menu-toggle"" class=""collapse navbar-collapse"">");
 
             // Add bootstrap into the <ul>
             string menuHtml = parser.GetMenu();
             menuHtml = menuHtml.Replace("<ul>", "<ul class =\"nav navbar-nav\">");
             builder.AppendLine(menuHtml);
 
-            builder.AppendLine("</div>");
-            builder.AppendLine("</nav>");
+            //builder.AppendLine("</div>");
+            //builder.AppendLine("</nav>");
 
             return builder.ToString();
         }

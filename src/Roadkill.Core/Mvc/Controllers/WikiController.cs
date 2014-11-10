@@ -72,7 +72,6 @@ namespace Roadkill.Core.Mvc.Controllers
 			return PartialView(model);
 		}
 
-
         public ActionResult RelatedRelationships(int id)
         {
             if (id == null || id < 1)
@@ -86,7 +85,6 @@ namespace Roadkill.Core.Mvc.Controllers
             return PartialView(model);
         }
 
-
         public ActionResult Activity()
         {
             IEnumerable<ActivityViewModel> model = PageService.GetActivity();
@@ -96,7 +94,6 @@ namespace Roadkill.Core.Mvc.Controllers
 
             return PartialView(model);
         }
-
 
 		/// <summary>
 		/// 404 not found page - configured in the web.config

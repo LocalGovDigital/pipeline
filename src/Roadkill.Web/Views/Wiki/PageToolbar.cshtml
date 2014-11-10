@@ -6,8 +6,6 @@
 	<div class="btn-group">
 	@if (RoadkillContext.IsLoggedIn)
     {
-
-
         if (Model.Rel.id == 0)
         {
             <a id="pageedit0-button" data-toggle="popover" data-placement="bottom" title="Get involved!" data-content="You can Like or Join a Project here." data-trigger="hover" class="btn btn-primary btn-sm" href="@Url.Action("New", "Rel", new { id = 0, pageID = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star-empty"></span></a>
@@ -34,6 +32,6 @@
         
 	</div>
 </div>
-<script>$('#pageedit0-button').popover('show')</script>
+<script>jQuery('#pageedit0-button').popover('show')</script>
 @Html.DialogPartial("PageInformation", Model)
 }

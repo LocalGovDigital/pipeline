@@ -1,12 +1,11 @@
 ﻿@model RelViewModel
 @{
     ViewBag.Title = SiteStrings.Profile_Title;
-    Layout = "~/Themes/Responsive/Theme.cshtml";
 }
 
-
-<h1>Like or Join</h1>
- 
+<div class="page-header">
+    <h1>Like or Join</h1>
+</div>
 
 @if (Model == null)
 {
@@ -14,44 +13,30 @@
 }
 else
 {
-    
-    <div class="container pull-left">
-        <div class="row">
-            <div class="col-sm-8">                
+    <p>This page allows you to show interest in a particular project. At present this will just be shown below the project but future functionality will inform the project owner of your interest.</p>
+    <form role="form" method="post">
 
-                <div id="profile" class="lightborder rounded10 col-sm-12">
-                   This page allows you to show interest in a particular project. At present this will just be shown below the project but future functionality will inform the project owner of your interest.
-                    <form class="form-horizontal" role="form" method="post">
- 
-                        <!-- OrgID -->
-                        <div class="form-group"><br />
-                            <label for="RelTypeID" class="col-sm-3 control-label">Interest</label><div class="col-sm-9">  
-                            @Html.BootstrapDropDownListFor(p => p.relTypeID, Model.RelTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)                 
-                            <br/>Like: You think this is a good idea
-                            <br/>Join: You'd like to join in this project
-                            </div>
-                        </div>
-
-                        <!-- Email -->
-                        <div class="form-group">
-                            <br />
-                            <label for="NewEmail" class="col-sm-3 control-label">Comments</label>
-                            <div class="col-sm-9">
-                                @(Html.TextAreaFor<RelViewModel, string>(t => t.reltext, new { @class = "form-control" }))
-                            </div>
-                        </div>
-  
-                        <div class="form-group">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <input type="submit" class="btn btn-primary right" value="@SiteStrings.Button_Save" />
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
+        <div class="form-group">
+            <label for="RelTypeID" class="control-label">Interest</label>
+            <div>
+                @Html.BootstrapDropDownListFor(p => p.relTypeID, Model.RelTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                <span class="help-block"><strong>Like:</strong> You think this is a good idea<br>
+                    <strong>Join:</strong> You'd like to join in this project</span>
             </div>
         </div>
-    </div>
-}
 
-<br class="clear" />
+        <div class="form-group">
+            <label for="NewEmail" class="control-label">Comments</label>
+            <div>
+                @(Html.TextAreaFor<RelViewModel, string>(t => t.reltext, new { @class = "form-control" }))
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Save</button>
+                @Html.ActionLink("Back", "Index", "Wiki", new { Id = Model.pageID }, new { @class = "btn btn-link" })
+            </div>
+        </div>
+    </form>
+}

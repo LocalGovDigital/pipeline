@@ -21,8 +21,8 @@
 		<div style="padding:3px">
 			@Html.Partial("Navigator", false)
 		</div>
-		<script type="text/javascript">
-			$(function ()
+		<script>
+			jQuery(function ($)
 			{
 				Roadkill.Web.FileManager.Setup.configure();
 				$("body").on("fileselected", "table#files",

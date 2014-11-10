@@ -39,7 +39,7 @@ The formatting style of this CSS file is:
 .jqConfirm		{ font-weight:bold !important; }
 
 /* Reset the bootstrap container's padding*/
-.container { padding-left:0px !important; }
+/*.container { padding-left:0px !important; }*/
 
 /* Glyph for external links */
 a.external-link	{ background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=) center right no-repeat;padding-right:13px; }

@@ -2,20 +2,22 @@
 @{ 
 	ViewBag.Title = SiteStrings.AllTags_Title;
 }
-<h1>@SiteStrings.AllTags_Title</h1>
+<div class="page-header">
+    <h1>@SiteStrings.AllTags_Title</h1>
+</div>
 
 @if (Model.Count() > 0)
 {
-<ul id="tagcloud" class="rounded10">
-@foreach (TagViewModel tag in Model)
-{
-	<li class="@tag.ClassName">
-	@Html.ActionLink(tag.Name,"Tag",new { id = tag })
-	</li>
-}
-</ul>
+    <ul id="tagcloud" class="rounded10">
+        @foreach (TagViewModel tag in Model)
+        {
+            <li class="@tag.ClassName">
+                @Html.ActionLink(tag.Name, "Tag", new { id = tag })
+            </li>
+        }
+    </ul>
 }
 else
 {
-	<p>@SiteStrings.AllTags_NoResults</p>
+    <p>@SiteStrings.AllTags_NoResults</p>
 }

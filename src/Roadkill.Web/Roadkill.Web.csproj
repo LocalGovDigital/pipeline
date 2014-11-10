@@ -538,6 +538,9 @@
     <None Include="Properties\PublishProfiles\Mono.pubxml" />
     <Content Include="Assets\Scripts\shared\toastr.js" />
     <Content Include="Themes\BlackBar\Theme.print.css" />
+    <Content Include="Themes\Pipeline\lgd.css" />
+    <Content Include="Themes\Pipeline\Theme.css" />
+    <Content Include="Themes\Pipeline\Theme.print.css" />
     <Content Include="Themes\Responsive\Theme.css" />
     <Content Include="Themes\Responsive\Theme.print.css" />
     <Content Include="Themes\Mediawiki\border.png" />
@@ -616,6 +619,12 @@
     <Content Include="Views\Install\InstallerJsVars.cshtml" />
     <Content Include="Views\Shared\TagBlocks.cshtml" />
     <Content Include="Views\User\Recaptcha.cshtml" />
+    <Content Include="Themes\Pipeline\Theme.cshtml" />
+    <Content Include="Views\Home\Activity.cshtml" />
+    <Content Include="Views\Wiki\RelatedRelationships.cshtml" />
+    <Content Include="Views\Rel\Relationship.cshtml" />
+    <Content Include="Views\Pages\Relationship.cshtml" />
+    <Content Include="Views\Home\Summary.cshtml" />
     <None Include="Web.Mono.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
