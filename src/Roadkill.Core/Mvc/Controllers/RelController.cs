@@ -21,7 +21,7 @@ namespace Roadkill.Core.Mvc.Controllers
 	[HandleError]
 	[OptionalAuthorization]
 	public class RelController : ControllerBase
-	{
+    {
         private SettingsService _settingsService;
 		private IRelService _relService;
 
@@ -43,8 +43,6 @@ namespace Roadkill.Core.Mvc.Controllers
 		{
 			return View(_relService.FindAllRels());
 		}
-
-
 
 		/// <summary>
 		/// Displays all pages for a particular user.
@@ -133,7 +131,14 @@ namespace Roadkill.Core.Mvc.Controllers
             RelViewModel model = new RelViewModel();
             model.pageID = Convert.ToInt32(pageID);
 
-            return PartialView("Relationship", model);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("Relationship", model);
+            }
+            else
+            {
+                return View("Relationship", model);
+            }
 		}
 
 		/// <summary>
@@ -154,8 +159,5 @@ namespace Roadkill.Core.Mvc.Controllers
 
             return RedirectToAction("Index", "Wiki", new { id = model.pageID });
 		}
-
-
-
 	}
 }

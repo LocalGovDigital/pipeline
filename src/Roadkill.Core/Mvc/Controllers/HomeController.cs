@@ -76,61 +76,60 @@ namespace Roadkill.Core.Mvc.Controllers
 		/// </summary>
         public ActionResult Search(string q, string language, string status, string startdatestart, string startdateend, string enddatestart, string enddateend)
 		{
+            if (String.IsNullOrWhiteSpace(q))
+            {
+                return View();
+            }
+
 			ViewData["search"] = q;
 
             q = "title:" + q + " OR content:" + q;
 
-            if (language != null && language != "" && language != "all")
+            if (!String.IsNullOrWhiteSpace(language) && language != "all")
             {
                 q += " AND projectlanguage:" + language;
-
             }
 
-            if (status != null && status != "" && status != "all")
+            if (!String.IsNullOrWhiteSpace(status) && status != "all")
             {
                 q += " AND projectstatus:" + status;
-
             }
 
             string strDefaultFromDate = "20340101";
             string strDefaultToDate = "20340101";
 
-            if ((startdatestart != null && startdatestart != "") || (startdateend != null && startdateend != ""))
+            if (!String.IsNullOrWhiteSpace(startdatestart) || !String.IsNullOrWhiteSpace(startdateend))
             {
                 string strUseFromDate = strDefaultFromDate;
                 string strUseEndDate = strDefaultToDate;
 
-                if (startdatestart != null && startdatestart != "")
+                if (!String.IsNullOrWhiteSpace(startdatestart))
                 {
                     strUseFromDate = startdatestart.Replace("/", "");
-
                 }
 
-                if (startdateend != null && startdateend != "")
+                if (!String.IsNullOrWhiteSpace(startdateend))
                 {
                     strUseEndDate = startdateend.Replace("/", "");
-
                 }
 
                 q += " AND projectstart:[" + strUseFromDate + " TO " + strUseEndDate + "]";
 
             }
 
-            if ((enddatestart != null && enddatestart != "") || (enddateend != null && enddateend != ""))
+            if (!String.IsNullOrWhiteSpace(enddatestart) || !String.IsNullOrWhiteSpace(enddateend))
             {
                 string strUseFromDate = strDefaultFromDate;
                 string strUseEndDate = strDefaultToDate;
 
-                if (enddatestart != null && enddatestart != "")
+                if (!String.IsNullOrWhiteSpace(enddatestart))
                 {
                     strUseFromDate = enddatestart.Replace("/", "");
-
                 }
 
-                if (enddateend != null && enddateend != "")
+                if (!String.IsNullOrWhiteSpace(enddateend))
                 {
                     strUseEndDate = enddateend.Replace("/", "");
-
                 }
 
                 q += " AND projectend:[" + strUseFromDate + " TO " + strUseEndDate + "]";
@@ -180,8 +179,6 @@ namespace Roadkill.Core.Mvc.Controllers
 		{
 			return Content(PageService.GetMenu(Context));
 		}
-
-
 
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
@@ -237,9 +234,6 @@ namespace Roadkill.Core.Mvc.Controllers
             }
         }
 
-
-
-
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
         /// SelectList doesn't add option value attributes.
@@ -279,7 +273,7 @@ namespace Roadkill.Core.Mvc.Controllers
 
         }
 
-        public ActionResult Activity()
+        public ActionResult Activity(string View = null)
         {
             IEnumerable<ActivityViewModel> model = PageService.GetActivity();
             model = model.OrderByDescending(x => x.activityDateTime);
@@ -287,7 +281,7 @@ namespace Roadkill.Core.Mvc.Controllers
             if (model == null)
                 return Content(string.Format("The page could not be found"));
 
-            return PartialView(model);
+            return PartialView(View, model);
         }
 
         public static object DatePickerAttributes

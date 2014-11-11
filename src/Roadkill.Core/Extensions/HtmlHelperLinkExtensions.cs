@@ -96,15 +96,15 @@ namespace Roadkill.Core.Extensions
 
 			if (controller.Context.IsLoggedIn)
 			{
-				link = helper.ActionLink(SiteStrings.Navigation_Logout, "Logout", "User").ToString();
+				link = "<li>" + helper.ActionLink(SiteStrings.Navigation_Logout, "Logout", "User").ToString() + "</li>";
 			}
 			else
 			{
 				string redirectPath = helper.ViewContext.HttpContext.Request.Path;
-				link = helper.ActionLink(SiteStrings.Navigation_Login, "Login", "User", new { ReturnUrl = redirectPath }, null ).ToString();
+				link = "<li>" + helper.ActionLink(SiteStrings.Navigation_Login, "Login", "User", new { ReturnUrl = redirectPath }, null ).ToString() + "</li>";
 
 				if (controller.SettingsService.GetSiteSettings().AllowUserSignup)
-					link += "&nbsp;/&nbsp;" + helper.ActionLink(SiteStrings.Navigation_Register, "Signup", "User").ToString();
+					link += "<li>" + helper.ActionLink(SiteStrings.Navigation_Register, "Signup", "User").ToString() + "</li>";
 			}
 
 			return MvcHtmlString.Create(prefix + link + suffix);

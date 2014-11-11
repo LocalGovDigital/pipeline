@@ -1,15 +1,16 @@
-﻿<!-- Roadkill core header -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=9">
-    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:400,700,300">
-    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Assets/CSS/datepicker.css")">
-	<link rel="shortcut icon" href="@Url.Content("~/Assets/Images/favicon.png")" />
-	<link rel="search" href="@Url.Content("~/Assets/opensearch.xml")" type="application/opensearchdescription+xml" title="Roadkill Wiki" />
-	@Url.CssBundle()
-	@Url.BootstrapCSS()
-	@Url.JsBundle()
-	@Url.BootstrapJS()
-	<link href="@Url.Content(SiteSettings.ThemePath + "/Theme.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content(SiteSettings.ThemePath + "/Theme.print.css")" rel="stylesheet" type="text/css" media="print" />
-	@MvcHtmlString.Create(SiteSettings.HeadContent)
-	<!-- End Roadkill core header -->
+﻿<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oxygen:400,700,300">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="@Url.Content("~/assets/css/datepicker.css")">
+<link rel="shortcut icon" href="@Url.Content("~/assets/images/favicon.png")">
+<link rel="search" href="@Url.Content("~/Assets/opensearch.xml")" type="application/opensearchdescription+xml" title="Roadkill Wiki" />
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+@Url.CssBundle()
+@Url.JsBundle()
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link href="@Url.Content(SiteSettings.ThemePath + "/lgd.css")" rel="stylesheet">
+<link href="@Url.Content(SiteSettings.ThemePath + "/theme.css")" rel="stylesheet">
+<link href="@Url.Content(SiteSettings.ThemePath + "/theme.print.css")" rel="stylesheet" media="print">
+@MvcHtmlString.Create(SiteSettings.HeadContent)

@@ -207,6 +207,8 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			model.AllTags = _pageService.AllTags().ToList();
 
+            ViewBag.IsNew = true;
+
 			return View("Edit", model);
 		}
 
@@ -221,8 +223,11 @@ namespace Roadkill.Core.Mvc.Controllers
 		[ValidateInput(false)]
 		public ActionResult New(PageViewModel model)
 		{
-			if (!ModelState.IsValid)
-				return View("Edit", model);
+            if (!ModelState.IsValid)
+            {
+                ViewBag.IsNew = true;
+                return View("Edit", model);
+            }
 
 			model = _pageService.AddPage(model);
 

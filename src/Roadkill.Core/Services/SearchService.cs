@@ -52,9 +52,6 @@ namespace Roadkill.Core.Services
 		/// <exception cref="SearchException">An error occured searching the lucene.net index.</exception>
 		public virtual IEnumerable<SearchResultViewModel> Search(string searchText)
 		{
-			
-           
-            
             // This check is for the benefit of the CI builds
 			if (!Directory.Exists(IndexPath))
 				CreateIndex();
@@ -70,7 +67,6 @@ namespace Roadkill.Core.Services
 			Query query = null;
 			try
 			{
-
                 query = parser.Parse(searchText);
 			}
 			catch (Lucene.Net.QueryParsers.ParseException)
@@ -263,7 +259,5 @@ namespace Roadkill.Core.Services
 
 			return modelHtml;
 		}
-
-
 	}
 }

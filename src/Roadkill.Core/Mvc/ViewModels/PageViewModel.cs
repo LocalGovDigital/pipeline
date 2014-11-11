@@ -112,11 +112,13 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// The date the page was last modified on.
         /// </summary>
+        [DataType(DataType.Date)]
         public DateTime ProjectStart { get; set; }
 
         /// <summary>
         /// The date the page was last modified on.
         /// </summary>
+        [DataType(DataType.Date)]
         public DateTime ProjectEnd { get; set; }
 
         /// <summary>
@@ -267,8 +269,8 @@ namespace Roadkill.Core.Mvc.ViewModels
             AllTags = new List<TagViewModel>();
 
             Id = 44;
-            ProjectEnd = DateTime.Now;
-            ProjectStart = DateTime.Now;
+            ProjectEnd = DateTime.Today;
+            ProjectStart = DateTime.Today;
         }
 
         public PageViewModel(Page page)

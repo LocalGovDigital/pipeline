@@ -2,15 +2,10 @@
 @{
 	ViewBag.Title = SiteStrings.Signup_Complete_Title;
 }
-
-<h1>@SiteStrings.Signup_Complete_Title</h1>
-
-<div class="container pull-left">
-	<div class="row">
-		<div class="col-sm-8">
-			<p>Thanks for signing up for Pipeline.</p>
-            <p>You should now be able to <a href="http://www.localgovdigital.org.uk/user/login">log in with your username and password</a>.</p>
-            <p>To start adding details of your projects, select Add a project.</p>
-		</div>
-	</div>
+<div class="page-header">
+    <h1>@SiteStrings.Signup_Complete_Title</h1>
 </div>
+
+<p>Thanks for signing up for Pipeline.</p>
+<p>You should now be able to <a href="@Url.Action("Login")> in with your username and password</a>.</p>
+<p>To start adding details of your projects, select Add a project.</p>

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ActivityViewModel>
+
+<div class="stats">
+    <div>@(ActivityViewModel.OrganisationCount())</div>
+    Organisations
+</div>
+
+<div class="stats">
+    <div>@(ActivityViewModel.PageCount())</div>
+    <a href="/pages/allpages">Projects</a>
+</div>
+
+

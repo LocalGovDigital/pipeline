@@ -321,7 +321,9 @@
     <Content Include="Assets\Bootstrap\js\bootstrap.js" />
     <Content Include="Assets\Bootstrap\js\bootstrap.min.js" />
     <Content Include="Assets\Bootstrap\js\respond.js" />
+    <Content Include="Assets\Bootstrap\js\respond.min.js" />
     <Content Include="Assets\CSS\apihelp.css" />
+    <Content Include="Assets\CSS\datepicker.css" />
     <Content Include="Assets\CSS\htmldiff.css" />
     <Content Include="Assets\CSS\images\animated-overlay.gif" />
     <Content Include="Assets\CSS\images\blank.gif" />
@@ -368,10 +370,12 @@
     <Content Include="Assets\Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Assets\Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Assets\CSS\tagmanager.css" />
+    <Content Include="Assets\Images\pipeline.jpg" />
     <Content Include="Assets\Images\roadkill.png" />
     <Content Include="Assets\opensearch.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Assets\Scripts\roadkill\editpage\bootstrap-datepicker.js" />
     <Content Include="Assets\Scripts\shared\bootbox.js" />
     <Content Include="Assets\Scripts\readme.txt" />
     <Content Include="Assets\Scripts\jquery\additional-methods.js" />
@@ -387,9 +391,14 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\SiteSettings\Views\_ViewStart.cshtml" />
+    <Content Include="Assets\Scripts\roadkill\editpage\editpage.js.map" />
+    <Content Include="Assets\Scripts\roadkill\editpage\wysiwygeditor.js.map" />
+    <Content Include="Assets\Scripts\roadkill\dialogs.js.map" />
+    <Content Include="Assets\Scripts\roadkill\setup.js.map" />
     <None Include="Assets\Scripts\roadkill\typescript-ref\constants.ts" />
     <None Include="Assets\Scripts\roadkill\typescript-ref\references.ts" />
     <Content Include="Assets\Scripts\shared\head.js" />
+    <Content Include="licence.txt" />
     <Content Include="Plugins\ExternalLinksInNewWindow\externallinksinnewwindow.js" />
     <Content Include="Plugins\ClickableImages\clickableimages.js" />
     <Content Include="Plugins\ResizeImages\resizeimages.css" />
@@ -525,12 +534,14 @@
     <Content Include="Assets\CSS\toastr.css" />
     <Content Include="Plugins\Toc\toc.js" />
     <Content Include="Plugins\Toc\toc.css" />
+    <Content Include="readme.txt" />
     <Content Include="Roadkill.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Assets\web.config" />
     <Content Include="connectionStrings.config" />
     <Content Include="NLog.config" />
+    <Content Include="Assets\Scripts\roadkill\validation.js.map" />
     <None Include="packages.config" />
     <Content Include="Plugins\Web.config" />
     <Content Include="Plugins\_ViewStart.cshtml" />
@@ -538,6 +549,9 @@
     <None Include="Properties\PublishProfiles\Mono.pubxml" />
     <Content Include="Assets\Scripts\shared\toastr.js" />
     <Content Include="Themes\BlackBar\Theme.print.css" />
+    <Content Include="Themes\Pipeline\lgd.css" />
+    <Content Include="Themes\Pipeline\Theme.css" />
+    <Content Include="Themes\Pipeline\Theme.print.css" />
     <Content Include="Themes\Responsive\Theme.css" />
     <Content Include="Themes\Responsive\Theme.print.css" />
     <Content Include="Themes\Mediawiki\border.png" />
@@ -616,6 +630,12 @@
     <Content Include="Views\Install\InstallerJsVars.cshtml" />
     <Content Include="Views\Shared\TagBlocks.cshtml" />
     <Content Include="Views\User\Recaptcha.cshtml" />
+    <Content Include="Themes\Pipeline\Theme.cshtml" />
+    <Content Include="Views\Home\Activity.cshtml" />
+    <Content Include="Views\Wiki\RelatedRelationships.cshtml" />
+    <Content Include="Views\Rel\Relationship.cshtml" />
+    <Content Include="Views\Pages\Relationship.cshtml" />
+    <Content Include="Views\Home\Summary.cshtml" />
     <None Include="Web.Mono.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

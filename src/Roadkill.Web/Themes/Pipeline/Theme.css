@@ -1,0 +1,44 @@
+﻿/* Page and pen toolbar */
+#toolbar
+{
+    top: 100px;
+    right: 40px;
+    z-index: 99;
+    float:right;
+    position:relative;
+}
+
+/* Relationships */
+.relationship-text, .relationship-icon
+{
+    color: #5cb85c;
+}
+.relationship-icon
+{
+    margin-right: 10px;
+}
+.stats
+{
+    margin-top: -1em;
+    margin-bottom: 1.5em;
+    font-size: 20px;
+}
+
+.stats:last-child
+{
+    margin-bottom: 0;
+}
+
+.stats > div
+{
+    font-size: 80px;
+    font-weight: 700;
+    margin-bottom: -0.2em;
+}
+
+.label a { color: #fff; }
+
+.search-results > div
+{
+    margin-top: 2em;
+}
