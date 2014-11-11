@@ -41,7 +41,7 @@
     }
     @if (!String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
     {
-        <p><i class="glyphicon glyphicon-inbox"></i> <a href="https://twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a></p>
+        <p><i class="fa fa-twitter"></i> <a href="https://twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a></p>
     }
     @if (String.IsNullOrWhiteSpace(Model.OrgContactDetails.email) && String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
     {

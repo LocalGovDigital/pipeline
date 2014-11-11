@@ -38,19 +38,19 @@
 
 .label a { color: #fff; }
 
-.search-results > div
+.search-results > div,
+#settings-navigation
 {
     margin-top: 2em;
 }
-#hotlist{
+
+#hotlist {
     background:#199ad2;
     padding:10px;
     margin-top:30px;
     color:#EEEEEE;
 
 }
-#hotlist a{
-
+#hotlist a {
     color:#FFFFFF;
-
 }

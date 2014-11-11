@@ -45,46 +45,55 @@
 
             <div class="form-group">
                 <div class="col-sm-12">
-                    Title:&nbsp;@(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false, 1))
+                    <label for="title">Title</label>
+                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false, 1))
                 </div>
             </div>
 
-            <div class="form-inline">
-                @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="checkbox">
+                        @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-6">
-                    Project Start
+                    <label for="ProjectStart">Project Start</label>
                     @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false, 3))
                 </div>
                 <div class="col-sm-6">
-                    Project End
+                    <label for="ProjectEnd">Project End</label>
                     @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false, 4))
                 </div>
             </div>
 
-            <div class="form-inline">
-                <h6>
-                    @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.ProjectEstimatedTime, SiteStrings.EditPage_ProjectEstimatedTime_Label, 5))
-                    Are these dates fixed?
-                </h6>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <div class="checkbox">
+                        <label>
+                            @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.ProjectEstimatedTime, SiteStrings.EditPage_ProjectEstimatedTime_Label, 5))
+                            Are these dates fixed?
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-6">
-                    Project Status
+                    <label for="ProjectStatus">Project Status</label>
                     @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                 </div>
                 <div class="col-sm-6">
-                    Project Language
+                    <label for="ProjectLanguage">Project Language</label>
                     @Html.BootstrapDropDownListFor(p => p.ProjectLanguage, Model.LanguageTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-sm-12">
-                    Organisation
+                    <label for="orgID">Organisation</label>
                     @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                 </div>
             </div>
@@ -92,11 +101,15 @@
 
             @if (RoadkillContext.IsAdmin)
             {
-                <div class="form-inline">
-                    <h6>
-                        @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly, 3))
-                        @SiteStrings.EditPage_AdminOnly
-                    </h6>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly, 3))
+                                @SiteStrings.EditPage_AdminOnly
+                            </label>
+                        </div>
+                    </div>
                 </div>
             }
 
@@ -104,7 +117,7 @@
             @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control", tabindex = 5 }))
 
             <div id="editpage-button-container" class="form-group">
-                <div>
+                <div class="col-sm-12">
                     <button type="submit" class="btn btn-primary btn-lg saveButton" tabindex="6">@SiteStrings.Button_Save</button>
                     @if (Model.Id > 0)
                     {
