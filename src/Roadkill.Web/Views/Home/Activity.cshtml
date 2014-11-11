@@ -2,16 +2,17 @@
 
 @if (Model.Count() > 0)
 {
-
-    <h3 id="whatshottitle">Top Projects</h3>
-    <ul class="list-unstyled">
-        @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
-        {
-            <li>
-                <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a> from @(hotpage.orgName)
-            </li>
-        }
-    </ul>
+    <div id="hotlist">
+        <h3 id="whatshottitle">Top Projects</h3>
+        <ul class="list-unstyled">
+            @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
+            {
+                <li>
+                    <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a> from @(hotpage.orgName)
+                </li>
+            }
+        </ul>
+    </div>
 
     var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
 
