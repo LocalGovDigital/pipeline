@@ -136,3 +136,25 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 16px;
     margin: 2px 0;
 }
+@media screen and (min-width:768px) {
+.stats
+{
+    padding-bottom:40px;
+    text-align:center;
+}}
+@media screen and (max-width:999px) {
+.stats
+{
+    padding-top:40px;
+}}
+@media screen and (max-width:768px) {
+.makers
+{
+    padding:0;
+}
+.stats
+{
+    padding-top:40px;
+    text-align:center;
+}}
+

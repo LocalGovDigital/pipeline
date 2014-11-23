@@ -55,3 +55,9 @@
 #hotlist a {
     color:#FFFFFF;
 }
+@media screen and (max-width:999px) {
+#hotlist
+{
+    margin-top:30px;
+}
+}
