@@ -190,7 +190,9 @@ namespace Roadkill.Core.DI
 			scanner.AddAllTypesOf<IPageService>();
 			scanner.AddAllTypesOf<IActiveDirectoryProvider>();
 			scanner.AddAllTypesOf<UserServiceBase>();
-			scanner.AddAllTypesOf<IFileService>();
+            scanner.AddAllTypesOf<IFileService>();
+
+            scanner.AddAllTypesOf<ITwitterService>();
 
 			// Text parsers
 			scanner.AddAllTypesOf<MarkupConverter>();

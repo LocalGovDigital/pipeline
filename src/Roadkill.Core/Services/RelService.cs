@@ -30,10 +30,11 @@ namespace Roadkill.Core.Services
         private PageViewModelCache _pageViewModelCache;
         private SiteCache _siteCache;
         private IPluginFactory _pluginFactory;
+        private ITwitterService _twitterService;
 
         public RelService(ApplicationSettings settings, IRepository repository, SearchService searchService,
             PageHistoryService historyService, IUserContext context,
-            ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory)
+            ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory, ITwitterService twitterService)
             : base(settings, repository)
         {
             _searchService = searchService;
@@ -44,6 +45,7 @@ namespace Roadkill.Core.Services
             _pageViewModelCache = pageViewModelCache;
             _siteCache = sitecache;
             _pluginFactory = pluginFactory;
+            _twitterService = twitterService;
         }
 
         /// <summary>
@@ -68,6 +70,9 @@ namespace Roadkill.Core.Services
                 rel.relText = model.reltext;
 
                 Relationship newrel = Repository.AddNewRel(rel, rel.relTypeId, currentUser, rel.orgID, rel.pageId, rel.relText);
+
+                // Post to Twitter
+                _twitterService.TweetNewProjectActivity(model.PageTitle, model.PageUrl, model.reltext);
 
                 return model;
             }
@@ -128,8 +133,6 @@ namespace Roadkill.Core.Services
                 throw new DatabaseException(ex, "An error occurred while retrieving all relationships created by {0} from the database", userName);
             }
         }
-
-        
 
         /// <summary>
         /// Deletes a page from the database.
@@ -262,6 +265,5 @@ namespace Roadkill.Core.Services
                 throw new DatabaseException(ex, "An error occurred updating the relationship with id '{0}' in the database", model.id);
             }
         }        
-
     }
 }

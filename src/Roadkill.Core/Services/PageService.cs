@@ -30,10 +30,11 @@ namespace Roadkill.Core.Services
         private SiteCache _siteCache;
         private IPluginFactory _pluginFactory;
         private MarkupLinkUpdater _markupLinkUpdater;
+        private ITwitterService _twitterService;
 
         public PageService(ApplicationSettings settings, IRepository repository, SearchService searchService,
             PageHistoryService historyService, IUserContext context,
-            ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory)
+            ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory, ITwitterService twitterService)
             : base(settings, repository)
         {
             _searchService = searchService;
@@ -45,6 +46,7 @@ namespace Roadkill.Core.Services
             _siteCache = sitecache;
             _pluginFactory = pluginFactory;
             _markupLinkUpdater = new MarkupLinkUpdater(_markupConverter.Parser);
+            _twitterService = twitterService;
         }
 
         /// <summary>
@@ -93,6 +95,9 @@ namespace Roadkill.Core.Services
                 {
                     // TODO: log
                 }
+
+                // Post to Twitter
+                _twitterService.TweetNewProject(page.Title, model.PageUrl.Substring(0, model.PageUrl.Count() - 1) + page.Id.ToString());
 
                 return savedModel;
             }
@@ -443,7 +448,6 @@ namespace Roadkill.Core.Services
             }
         }
 
-
         /// <summary>
         /// Finds all relationships related to the page.
         /// </summary>
@@ -477,8 +481,6 @@ namespace Roadkill.Core.Services
             }
         }
 
-
-
         /// <summary>
         /// Finds all relationships related to the page.
         /// </summary>
@@ -506,9 +508,6 @@ namespace Roadkill.Core.Services
                 throw new DatabaseException(ex, "An error occurred finding activity");
             }
         }
-
-
-
 
         /// <summary>
         /// Updates the provided page.
@@ -563,6 +562,9 @@ namespace Roadkill.Core.Services
                 // Update the lucene index
                 PageViewModel updatedModel = new PageViewModel(Repository.GetLatestPageContent(page.Id), _markupConverter);
                 _searchService.Update(updatedModel);
+
+                // Post to Twitter
+                _twitterService.TweetProjectUpdated(page.Title, model.PageUrl);
             }
             catch (DatabaseException ex)
             {

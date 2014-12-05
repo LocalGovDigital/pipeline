@@ -164,6 +164,24 @@ namespace Roadkill.Core.Configuration
         /// </summary>
         public string MailChimpListId { get; set; }
 
+        public bool EnableTweetingOfNewProjects { get; set; }
+        public string NewProjectTweetTemplate { get; set; }
+        public bool EnableTweetingOfEditProjects { get; set; }
+        public string EditProjectTweetTemplate { get; set; }
+
+        /// <summary>
+        /// Tweet when a project is liked or joined?
+        /// </summary>
+        public bool EnableTweetingOfProjectActivity { get; set; }
+        public string NewProjectActivityTweetTemplate { get; set; }
+
+        public string TwitterConsumerKey { get; set; }
+        public string TwitterConsumerSecret { get; set; }
+        public string TwitterOAuthToken { get; set; }
+        public string TwitterOAuthTokenSecret { get; set; }
+
+        public string BitlyAccessToken { get; set; }
+
         #endregion
 
         public SiteSettings()
@@ -189,6 +207,14 @@ namespace Roadkill.Core.Configuration
             EnableMailChimp = false;
             MailChimpApiKey = "";
             MailChimpListId = "";
+
+            EnableTweetingOfEditProjects = false;
+            EnableTweetingOfNewProjects = false;
+            EnableTweetingOfProjectActivity = false;
+            TwitterConsumerKey = "";
+            TwitterConsumerSecret = "";
+            TwitterOAuthToken = "";
+            TwitterOAuthTokenSecret = "";
 		}
 
 		public string GetJson()

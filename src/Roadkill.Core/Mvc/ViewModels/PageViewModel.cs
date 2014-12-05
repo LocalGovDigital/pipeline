@@ -33,11 +33,7 @@ namespace Roadkill.Core.Mvc.ViewModels
     /// </summary>
     [CustomValidation(typeof(PageViewModel), "VerifyRawTags")]
     public class PageViewModel
-    {
-
-
-
-        
+    {        
         private static string[] _tagBlackList = 
 		{
 			"#", ";", "/", "?", ":", "@", "&", "=", "{", "}", "|", "\\", "^", "[", "]", "`"		
@@ -85,8 +81,6 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// The date the page was created.
         /// </summary>
         public DateTime CreatedOn { get; set; }
-
-
 
         /// <summary>
         /// Returns true if no Id exists for the page.
@@ -257,6 +251,9 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         [XmlIgnore]
         public List<TagViewModel> AllTags { get; set; }
+
+        [XmlIgnore]
+        public string PageUrl { get; set; }
 
         public PageViewModel()
         {

@@ -153,6 +153,8 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			_pageService.UpdatePage(model);
 
+            model.PageUrl = Url.Action("Index", "Wiki", new { Id = model.Id });
+
 			return RedirectToAction("Index", "Wiki", new { id = model.Id });
 		}
 
@@ -228,6 +230,8 @@ namespace Roadkill.Core.Mvc.Controllers
                 ViewBag.IsNew = true;
                 return View("Edit", model);
             }
+
+            model.PageUrl = Url.Action("Index", "Wiki", new { Id = 0 });
 
 			model = _pageService.AddPage(model);
 

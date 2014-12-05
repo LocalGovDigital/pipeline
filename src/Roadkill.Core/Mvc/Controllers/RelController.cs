@@ -157,6 +157,8 @@ namespace Roadkill.Core.Mvc.Controllers
 
 			model = _relService.AddRel(model);
 
+            model.PageUrl = Url.Action("Index", "Wiki", new { Id = model.pageID });
+
             return RedirectToAction("Index", "Wiki", new { id = model.pageID });
 		}
 	}

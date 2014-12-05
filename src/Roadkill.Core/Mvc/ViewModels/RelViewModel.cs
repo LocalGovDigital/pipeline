@@ -58,7 +58,9 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public string usertext { get; set; }
 
+        public string PageTitle { get; set; }
 
+        public string PageUrl { get; set; }
 
         /// <summary>
         /// Constructor used by none-controllers
