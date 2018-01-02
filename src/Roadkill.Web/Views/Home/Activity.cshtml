@@ -1,55 +1,70 @@
 ﻿@model IEnumerable<ActivityViewModel>
-
-@if (Model.Count() > 0)
-{
-    <div id="hotlist">
-        <h3 id="whatshottitle">Top Projects</h3>
-        <ul class="list-unstyled">
-            @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
-            {
-                <li>
-                    <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a> from @(hotpage.orgName)
-                </li>
-            }
-        </ul>
+<section>
+    <div class="row">
+        <h3>Search for projects</h3>
+        <p class="hidden-sm hidden-xs">Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.</p>
+        <form method="get" action="@Url.Action("Search", "Home")">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Enter text to search" name="q">
+                <span class="input-group-btn">
+                    <button type="submit" class="button">Search</button>
+                </span>
+            </div>
+        </form>
     </div>
-
-    var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
-
-    <h3>Latest Activity</h3>
-
-    foreach (var Date in Grouped)
-    {
-        <h4>@(Date.Key.ToLongDateString())</h4>
-        <ul class="list-group">
-            @foreach (ActivityViewModel activityModel in Date)
+    <div class="row">
+        @if (Model.Count() > 0)
         {
-            <li class="list-group-item">
-                @switch (activityModel.activityName)
-                {
-                    case "signup":
-                <text><span class="relationship-icon glyphicon glyphicon-log-in"></span>
-                    Someone new @(activityModel.orgName) signed-up to Pipeline</text>
-                        break;
-                    case "added":
-                    case "edited":
-                <text>@if (activityModel.activityName == "added")
-                    { <span class="relationship-icon glyphicon glyphicon-floppy-disk"></span> }
-                    else if (activityModel.activityName == "edited")
-                    { <span class="relationship-icon glyphicon glyphicon-floppy-save"></span> }
-                <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
-                    break;
-                    default:
-                <text>@if (activityModel.activityName == "liked")
-                    { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
-                    else if (activityModel.activityName == "joined")
-                    { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
-                @(activityModel.userNames) @(activityModel.activityName)
-                <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
-                    break;
-                }
-            </li>
+            @*<div id="hotlist">
+                    <h3 id="whatshottitle">Top Projects</h3>
+                    <ul class="list-unstyled">
+                        @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
+                        {
+                            <li>
+                                <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a> from @(hotpage.orgName)
+                            </li>
+                        }
+                    </ul>
+                </div>*@
+
+        var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
+
+        <h3>Latest Activity</h3>
+
+            foreach (var Date in Grouped)
+            {
+                <h4>@(Date.Key.ToLongDateString())</h4>
+                <ul class="list-group">
+                    @foreach (ActivityViewModel activityModel in Date)
+                    {
+                        <li class="list-group-item">
+                            @switch (activityModel.activityName)
+                        {
+                            case "signup":
+                                    @*<text><span class="relationship-icon glyphicon glyphicon-log-in"></span>
+                                        Someone new @(activityModel.orgName) signed-up to Pipeline</text>*@
+                                break;
+                            case "added":
+                            case "edited":
+                                <text>@if (activityModel.activityName == "added")
+                                { <span class="relationship-icon glyphicon glyphicon-floppy-disk"></span> }
+                                else if (activityModel.activityName == "edited")
+                                { <span class="relationship-icon glyphicon glyphicon-floppy-save"></span> }
+                                <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
+                                    break;
+                                default:
+                                    <text>@if (activityModel.activityName == "liked")
+                                { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
+                                else if (activityModel.activityName == "joined")
+                                { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
+                                    @(activityModel.userNames) @(activityModel.activityName)
+                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
+                                    break;
+                            }
+                        </li>
+                    }
+                </ul>
+            }
         }
-        </ul>
-    }
-}
+    </div>
+</section>

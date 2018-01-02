@@ -1,0 +1,167 @@
+﻿@inherits RoadkillLayoutPage
+<!DOCTYPE html>
+<html lang="en-GB" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@ViewBag.Title">
+    <meta property="og:site_name" content="LocalGov Digital">
+    <meta name="twitter:title" content="@ViewBag.Title">
+
+    <link rel='dns-prefetch' href='//code.jquery.com'>
+    <link rel='dns-prefetch' href='//cdnjs.cloudflare.com'>
+    <link rel='dns-prefetch' href='//cdn.jsdelivr.net'>
+    <link rel='stylesheet' id='foundation-css'  href='https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css' type='text/css'>
+    <link rel='stylesheet' id='fontawesome-css'  href='https://cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css' type='text/css'>
+    <link rel='stylesheet' id='styles-css'  href='https://localgov.digital/wp-content/themes/localgovdigital/style.css' type='text/css'>
+    <script type='text/javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+    <link rel="icon" href="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-150x150.png" sizes="32x32">
+    <link rel="icon" href="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-300x300.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-300x300.png">
+    <meta name="msapplication-TileImage" content="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-300x300.png">
+    @Url.CssBundle()
+    @Url.JsBundle()
+    @MvcHtmlString.Create(SiteSettings.HeadContent)
+    @RenderSection("PluginHead", false)
+</head>
+<body class="@(ViewBag.IsHome == null ? "" : "home")">
+    @RenderSection("PageToolbar", false)
+<a href="#content-start" class="screen-reader-text">skip to main content</a>
+
+<header id="header__page">
+    <div id="global__brand-nav">
+        <div class="top-links">
+            <section>
+                <div class="menu-top-menu-container">
+                    <ul id="menu-top-menu" class="menu">
+                        <li class="menu-twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-2967"><a href="https://twitter.com/LocalGovDigital">Twitter</a></li>
+                        <li class="menu-google-plus menu-item menu-item-type-custom menu-item-object-custom menu-item-2968"><a href="https://plus.google.com/communities/114124478761452023264">Google +</a></li>
+                        <li class="menu-slack menu-item menu-item-type-custom menu-item-object-custom menu-item-2989"><a href="https://localgovdigital.slack.com/">Slack</a></li>
+                    </ul>
+                </div>                
+            </section>
+        </div>
+        <div class="brand">
+            <a href="/"><img src="https://localgov.digital/wp-content/uploads/2017/01/lgd_logo-1-e1485652490381.png" alt="LocalGov Digital"></a>
+            <ul class="toggle-area" aria-hidden="true">
+                <li id="mobile-menu">
+                    <i class="fa fa-nav"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="main-nav">
+            <nav class="navbar" data-topbar role="navigation">
+                <section>
+                    @Html.Action("BootstrapNavMenu", "Home")
+                    @Html.Action("LoggedInAs", "User")
+                </section>
+            </nav>
+        </div>
+    </div>
+    <div id="global__brand-lines">
+        <ul>
+            <li class="brand-lines brand-red"></li>
+            <li class="brand-lines brand-green"></li>
+            <li class="brand-lines brand-blue"></div>
+        </ul>
+    </div>
+</header>
+@if (IsSectionDefined("Breadcrumb")) {
+<div id="global__breadcrumb" typeof="BreadcrumbList" vocab="http://schema.org/">
+    <div class="row">
+        <div class="small-12 column">
+            <ul aria-label="breadcrumb" role="navigation">
+                <li><a property="item" typeof="WebPage" title="Go to LocalGov Digital" href="https://localgov.digital" class="home">LocalGov Digital</a></li>
+                <li><a property="item" typeof="WebPage" title="Go to LocalGov Digital Pipeline" href="@Url.Content("~/")" class="home">Pipeline</a></li>
+                @RenderSection("Breadcrumb")
+            </ul>
+        </div>
+    </div>
+</div>
+}
+    @*<div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <span class="label label-stage label-alpha">ALPHA</span> This is a prototype, <a href="https://localgovdigital.typeform.com/to/BUXokv">your feedback will help us improve this service</a>.
+            </div>
+        </div>
+    </div>*@
+    <main>
+        @RenderSection("PluginPreContainer", false)
+        @RenderBody()
+        @RenderSection("Activity", false)
+        @RenderSection("RelatedRelationships", false)
+        @RenderSection("PluginPostContainer", false)
+    </main>
+
+    <footer id="global__footer_content">
+        <section id="footer__nav-links">
+            <div class="row">
+                <div class="medium-12 large-6 columns">
+                    <div class="menu-footer-nav-container">
+                        <ul id="menu-footer-nav" class="menu">
+                            <li class="menu-label menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children has-dropdown menu-item-3045">
+                                <a>LocalGov Digital</a>
+                                <ul class="sub-menu dropdown">
+                                    <li id="menu-item-4667" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4667"><a href="https://localgov.digital/about/constitution">Constitution</a></li>
+                                    <li id="menu-item-3508" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3508"><a href="https://localgov.digital/service-standard">Digital Service Standard</a></li>
+                                    <li id="menu-item-4669" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4669"><a href="https://localgov.digital/resources/pipeline">Pipeline</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children has-dropdown menu-item-3051">
+                                <a>Peer groups</a>
+                                <ul class="sub-menu dropdown">
+                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4662"><a href="#">About our peer groups</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-peer_group_details menu-item-4988"><a href="https://localgov.digital/peer-group/london">London</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-peer_group_details menu-item-4987"><a href="https://localgov.digital/peer-group/midlands">Midlands</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-peer_group_details menu-item-4986"><a href="https://localgov.digital/peer-group/south">South</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-peer_group_details menu-item-4985"><a href="https://localgov.digital/peer-group/south-west">South west</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-peer_group_details menu-item-4984"><a href="https://localgov.digital/peer-group/yorkshire-and-the-humber">Yorkshire and the Humber</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children has-dropdown menu-item-3049">
+                                <a>Events</a>
+                                <ul class="sub-menu dropdown">
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3513"><a href="https://localgov.digital/events/peer-group-events">Peer group events</a></li>
+                                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3514"><a href="https://localgov.digital/events/localgovcamp">LocalGovCamp</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children has-dropdown menu-item-3055">
+                                <a>What’s new</a>
+                                <ul class="sub-menu dropdown">
+                                    <li id="menu-item-3522" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3522"><a href="https://localgov.digital/news">News</a></li>
+                                    <li id="menu-item-4660" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4660"><a href="https://localgov.digital/voice">Voice</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="footer__terms-links">
+            <div class="row">
+                <div class="medium-12 large-6 large-push-6 columns">
+                    <div class="menu-terms-container">
+                        <ul id="menu-terms" class="menu">
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3069"><a href="https://localgov.digital/disclaimer">Disclaimer</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3070"><a href="https://localgov.digital/privacy-policy">Privacy policy</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3071"><a href="https://localgov.digital/terms-conditions">Terms &amp; conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="medium-12 large-6 large-pull-6 columns copyright">
+                    <p>&copy; Copyright LocalGov Digital</p>
+                </div>
+            </div>
+        </section>
+        @*@RenderSection("PageDetailsFooter", false)*@
+        @*@RenderSection("ViewHistoryLink", false)*@
+        @*@RenderSection("PluginFooter", false)*@
+    </footer>
+</body>
+</html>

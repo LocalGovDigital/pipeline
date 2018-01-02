@@ -1,11 +1,18 @@
 ﻿@model PageViewModel
-@{ 
-	ViewBag.Title = string.Format(SiteStrings.Version_Title, Model.VersionNumber);
+@{
+    ViewBag.Title = string.Format(SiteStrings.Version_Title, Model.VersionNumber);
 }
 
-@Html.ActionLink("< " +SiteStrings.Version_BackLink,"History",new { id = Model.Id })
-<h1>@Model.Title</h1>
+<section id="global__content">
+    <div class="row">
+        <div id="global__body_content" class="small-12 medium-8 columns body_content">
 
-<div id="diff-pagecontent">
- @MvcHtmlString.Create(Model.Content)
-</div>
+            @Html.ActionLink("< " + SiteStrings.Version_BackLink, "History", new { id = Model.Id })
+            <h1>@Model.Title</h1>
+
+            <div id="diff-pagecontent">
+                @MvcHtmlString.Create(Model.Content)
+            </div>
+        </div>
+    </div><!-- Foundation .row end -->
+</section>

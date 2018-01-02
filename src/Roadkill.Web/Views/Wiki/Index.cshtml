@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = Model.Title;
 }
+@section Breadcrumb {
+    <li>@Html.ActionLink("Projects", "AllPages", "Pages")</li>
+    <li>@ViewBag.Title</li>
+}
 
 @section PageToolbar
 {
@@ -13,56 +17,35 @@
     {
         @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, null)
     }*@
-<div class="page-header">
-    <h1>@Model.Title <span class="label label-stage label-@Model.ProjectStatus.ToLower()">@Model.ProjectStatus.ToUpper()</span></h1>
-</div>
+<section id="global__content">
+    <div class="row">
+        <div id="global__body_content" class="small-12 medium-8 columns body_content">
+            <h1>@Model.Title <span class="label label-stage label-@Model.ProjectStatus.ToLower()">@Model.ProjectStatus.ToUpper()</span></h1>
 
-<div class="row">
-    <div class="col-sm-3 col-md-4">
-        <div class="form-group">
-            <label>
-                @if (!Model.ProjectEstimatedTime)
-                { <text>Estimated </text> }Dates
-        </label>
-        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(Model.ProjectEnd.ToLongDateString())</p>
-    </div>
+            @MvcHtmlString.Create(Model.ContentAsHtml)
 
-    <div class="form-group">
-        <label>Language</label>
-        <p class="form-control-static">@MvcHtmlString.Create(Model.ProjectLanguage)</p>
-    </div>
-</div>
-<div class="col-sm-3 col-sm-offset-1">
-    <h4>Project Owner</h4>
-    <p>@MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</p>
-    @if (!String.IsNullOrWhiteSpace(Model.OrgContactDetails.email))
-    {
-        <p><i class="glyphicon glyphicon-inbox"></i> <a href="mailto:@MvcHtmlString.Create(Model.OrgContactDetails.email)">@MvcHtmlString.Create(Model.OrgContactDetails.email)</a></p>
-    }
-    @if (!String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
-    {
-        <p><i class="fa fa-twitter"></i> <a href="https://twitter.com/@MvcHtmlString.Create(Model.OrgContactDetails.twitter)">@MvcHtmlString.Create(Model.OrgContactDetails.twitter)</a></p>
-    }
-    @if (String.IsNullOrWhiteSpace(Model.OrgContactDetails.email) && String.IsNullOrWhiteSpace(Model.OrgContactDetails.twitter))
-    {
-        <p>We don't have contact details for this organisation.</p>
-    }
-</div>
-<div class="col-md-3 col-sm-offset-1 col-sm-4">
-    <div class="form-group">
-        <label>Last Modified</label>
-        <p class="form-control-static">@Model.ModifiedOn.ToLongDateString() @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
-    </div>
-</div>
-</div>
-<div class="row">
-    <div class="col-md-9">
-        @MvcHtmlString.Create(Model.ContentAsHtml)
-    </div>
-    <div class="col-md-3">
-        @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
-    </div>
-</div>
+            @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
+        </div>
+
+        <div id="global__sidebar" class="small-12 medium-4 columns">
+            <aside>
+                <div class="sidebar_content">
+                    <h4>Project owner</h4>
+                    <p>@MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</p>
+
+                    <h4>
+                        @if (!Model.ProjectEstimatedTime)
+                    { <text>Estimated </text> }Dates
+                    </h4>
+                    <p>@MvcHtmlString.Create(Model.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(Model.ProjectEnd.ToLongDateString())</p>
+
+                    <h4>Last modified</h4>
+                    <p>@Model.ModifiedOn.ToLongDateString() by @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+                </div>
+            </aside>
+        </div>
+    </div><!-- Foundation .row end -->
+</section>
 
 @*@section RelatedRelationships
     {
@@ -92,7 +75,7 @@
     @MvcHtmlString.Create(Model.PluginPostContainer)
 }
 
-@section PluginFooter
-{
-    @MvcHtmlString.Create(Model.PluginFooterHtml)
-}
+@*@section PluginFooter
+    {
+        @MvcHtmlString.Create(Model.PluginFooterHtml)
+    }*@

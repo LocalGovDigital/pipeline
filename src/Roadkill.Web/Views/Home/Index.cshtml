@@ -2,37 +2,18 @@
 @{
     ViewBag.Title = Model.Title;
 }
-<meta itemprop="dateCreated" content="@Model.CreatedOn" />
-<meta itemprop="creator" content="@Model.CreatedBy" />
-<meta itemprop="dateModified" content="@Model.ModifiedOn" />
-<meta itemprop="keywords" content="@Model.SpaceDelimitedTags()" />
-<div class="page-header">
-    <h1>Welcome to Pipeline</h1>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
-        <p class="lead">Pipeline is a service from <a href="http://www.localgovdigital.info/localgov-digital-makers/">LocalGov Digital Makers</a> to aid innovation and collaboration in local government digital</a>.</p>
-        <p class="lead">You can <a href="http://www.localgovdigital.org.uk/user/signup">sign up to be an alpha user here</a>. If you'd like to know more you can <a href="http://pipeline.localgovdigital.info/wiki/3/pipeline">find out about Pipeline here</a></p>
-
-        <h3>Search for projects</h3>
-        <p class="hidden-sm hidden-xs">Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.</p>
-        <form method="get" action="@Url.Action("Search", "Home")">
-            <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Enter text to search" name="q">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </span>
-            </div>
-        </form>
+<section id="home__intro">
+    <div class="row">
+        <div class="small-12 medium-8 column home-intro">
+            <h1>Welcome to Pipeline</h1>
+            <div class="formatted-intro">Pipeline is a service from <a href="https://localgov.digital/">LocalGov Digital</a> to aid innovation and collaboration in local government digital.</div>
+        </div>
+        <div class="small-12 medium-4 column popular-links">
+            @Html.Action("Activity", "Home", new { View = "Summary" })
+        </div>
     </div>
-    <div class="col-md-2 col-md-push-1">
-        @Html.Action("Activity", "Home", new { View = "Summary" })
-    </div>
-</div>
-
-
-
+</section>
 
 @section Activity
 {

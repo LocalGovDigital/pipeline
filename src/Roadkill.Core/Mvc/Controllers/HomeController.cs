@@ -276,7 +276,7 @@ namespace Roadkill.Core.Mvc.Controllers
         public ActionResult Activity(string View = null)
         {
             IEnumerable<ActivityViewModel> model = PageService.GetActivity();
-            model = model.OrderByDescending(x => x.activityDateTime);
+            model = model.Where(x => x.activityName != "signup").OrderByDescending(x => x.activityDateTime);
 
             if (model == null)
                 return Content(string.Format("The page could not be found"));

@@ -1,16 +1,27 @@
 @using System.Web.Http
+@using System.Web.Http.Controllers
 @using System.Web.Http.Description
-@using Roadkill.Core.Areas.HelpPage
-@using Roadkill.Core.Areas.HelpPage.Models
-@model IGrouping<string, ApiDescription>
+@using Roadkill.Web.Areas.HelpPage
+@using Roadkill.Web.Areas.HelpPage.Models
+@model IGrouping<HttpControllerDescriptor, ApiDescription>
 
-<h2 id="@Model.Key">@Model.Key</h2>
+@{
+    var controllerDocumentation = ViewBag.DocumentationProvider != null ? 
+        ViewBag.DocumentationProvider.GetDocumentation(Model.Key) : 
+        null;
+}
+
+<h2 id="@Model.Key.ControllerName">@Model.Key.ControllerName</h2>
+@if (!String.IsNullOrEmpty(controllerDocumentation))
+{
+    <p>@controllerDocumentation</p>
+}
 <table class="help-page-table">
     <thead>
         <tr><th>API</th><th>Description</th></tr>
     </thead>
     <tbody>
-    @foreach (var api in Model.OrderBy(x => x.HttpMethod.ToString()).ThenBy(x => x.Documentation))
+    @foreach (var api in Model)
     {
         <tr>
             <td class="api-name"><a href="@Url.Action("Api", "Help", new { apiId = api.GetFriendlyId() })">@api.HttpMethod.Method @api.RelativePath</a></td>

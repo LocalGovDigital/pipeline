@@ -2,60 +2,68 @@
 @{
 	ViewBag.Title = SiteStrings.AllPages_Title;
 }
+@section Breadcrumb {
+    <li>Projects</li>
+}
 @if (RoadkillContext.IsAdmin)
 {
-	<script type="text/javascript">
+	<script>
 		jQuery(function ($) {
 			Roadkill.Web.Setup.bindConfirmDelete();
 		});
 	</script>
 }
-<div class="page-header">
-    <h1>@SiteStrings.AllPages_Title</h1>
-</div>
 
-<p>These are all the projects that have been added to Pipeline.</p>
+<section id="global__content">
+    <div class="row">
+        <div id="global__body_content" class="small-12 medium-8 columns body_content">
+            <h1>@SiteStrings.AllPages_Title</h1>
 
-@if (Model.Count() > 0)
-{
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>@SiteStrings.AllPages_TitleColumnHeading</th>
-                    @if (RoadkillContext.IsLoggedIn)
-                    {
-                        <th></th>
-                        if (RoadkillContext.IsAdmin)
-                        {
-                            <th></th>
-                        }
-                    }
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (PageViewModel pageModel in Model)
+            <p>These are all the projects that have been added to Pipeline.</p>
+
+            @if (Model.Count() > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>@SiteStrings.AllPages_TitleColumnHeading</th>
+                                @if (RoadkillContext.IsLoggedIn)
+                                {
+                                    <th></th>
+                                    if (RoadkillContext.IsAdmin)
+                                    {
+                                        <th></th>
+                                    }
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (PageViewModel pageModel in Model)
                 {
-                    <tr>
-                        <td class="pagename stretch">@Html.ActionLink(pageModel.Title, "Index", "Wiki", new { id = pageModel.Id, title = pageModel.EncodedTitle }, null)</td>
-                        @if (RoadkillContext.IsLoggedIn)
-                        {
-                            if (!pageModel.IsLocked || (pageModel.IsLocked && RoadkillContext.IsAdmin))
-                            {
-                                <td>@Html.ActionLink(SiteStrings.Shared_EditLink, "Edit", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-default" })</td>
+                                <tr>
+                                    <td class="pagename stretch">@Html.ActionLink(pageModel.Title, "Index", "Wiki", new { id = pageModel.Id, title = pageModel.EncodedTitle }, null)</td>
+                                    @if (RoadkillContext.IsLoggedIn)
+                                    {
+                                        if (!pageModel.IsLocked || (pageModel.IsLocked && RoadkillContext.IsAdmin))
+                                        {
+                                            <td>@Html.ActionLink(SiteStrings.Shared_EditLink, "Edit", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-default" })</td>
+                                        }
+                                        if (RoadkillContext.IsAdmin)
+                                        {
+                                            <td>@Html.ActionLink(SiteStrings.Shared_DeleteLink, "Delete", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-danger confirm" })</td>
+                                        }
+                                    }
+                                </tr>
                             }
-                            if (RoadkillContext.IsAdmin)
-                            {
-                                <td>@Html.ActionLink(SiteStrings.Shared_DeleteLink, "Delete", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-danger confirm" })</td>
-                            }
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
-else
-{
-	<p>@SiteStrings.AllPages_NoPages</p>
-}
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>@SiteStrings.AllPages_NoPages</p>
+            }
+        </div>
+    </div><!-- Foundation .row end -->
+</section>

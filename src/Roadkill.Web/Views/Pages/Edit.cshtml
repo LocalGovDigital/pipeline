@@ -1,147 +1,139 @@
 ﻿@model PageViewModel
 @{
-    ViewBag.Title = "Edit Project";
-    
+    ViewBag.Title = "Edit project";
+
     bool? IsNew = (bool?)ViewBag.IsNew;
     if (IsNew.HasValue && IsNew.Value)
     {
-        ViewBag.Title = "Add New Project";
+        ViewBag.Title = "Add new project";
     }
-    
-	//ViewBag.Title = SiteStrings.EditPage_Title;
+
+    //ViewBag.Title = SiteStrings.EditPage_Title;
 }
-<script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
-<script>
-	jQuery(function ($)
-	{
-		var pageTags = [ @(Html.Raw(Model.JavascriptArrayForAllTags())) ];
-	    var editPage = new Roadkill.Web.EditPage(pageTags);
 
-	    $('.datepicker').datepicker({
-	        format: 'dd/mm/yyyy',
-	        startDate: '+1d'
-	    });
+<section id="global__content">
+    <div class="row">
+        <div id="global__body_content" class="medium-6 columns body_content">
+            <script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
+            <script>
+                jQuery(function ($) {
+                    var pageTags = [ @(Html.Raw(Model.JavascriptArrayForAllTags()))];
+                    var editPage = new Roadkill.Web.EditPage(pageTags);
 
-	    $('.datepicker').on('change', function () {
-	        $('.datepicker').hide();
-	    });
-	});
-</script>
+                    $('.datepicker').datepicker({
+                        format: 'dd/mm/yyyy',
+                        startDate: '+1d'
+                    });
 
-<div class="page-header">
-    <h1>@ViewBag.Title</h1>
-</div>
+                    $('.datepicker').on('change', function () {
+                        $('.datepicker').hide();
+                    });
+                });
+            </script>
 
-<p>New to Pipeline? <a href="http://www.localgovdigital.info/1274">There's help on adding a project here</a>.</p>
+            <h1>@ViewBag.Title</h1>
 
-<div id="editpage" class="row">
-	<div id="editpage-form-container" class="col-lg-6">
-		@Html.BootstrapValidationSummary(SiteStrings.EditPage_Error)
+            @Html.BootstrapValidationSummary(SiteStrings.EditPage_Error)
 
-        <form class="form-horizontal" role="form" method="post" id="editpage-form">
-            @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
-            @(Html.HiddenFor<PageViewModel, string>(p => p.PreviousTitle))
-            @(Html.HiddenFor<PageViewModel, string>(p => p.RawTags))
+            <form class="form-horizontal" role="form" method="post" id="editpage-form">
+                @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
+                @(Html.HiddenFor<PageViewModel, string>(p => p.PreviousTitle))
+                @(Html.HiddenFor<PageViewModel, string>(p => p.RawTags))
 
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <label for="title">Title</label>
-                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false, 1))
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <div class="checkbox">
-                        @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="title">Title</label>
+                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false, 1))
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-6">
-                    <label for="ProjectStart">Project Start</label>
-                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false, 3))
-                </div>
-                <div class="col-sm-6">
-                    <label for="ProjectEnd">Project End</label>
-                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false, 4))
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <div class="checkbox">
-                        <label>
-                            @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.ProjectEstimatedTime, SiteStrings.EditPage_ProjectEstimatedTime_Label, 5))
-                            Are these dates fixed?
-                        </label>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-6">
-                    <label for="ProjectStatus">Project Status</label>
-                    @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label for="ProjectStart">Project Start</label>
+                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false, 3))
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="ProjectEnd">Project End</label>
+                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false, 4))
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <label for="ProjectLanguage">Project Language</label>
-                    @Html.BootstrapDropDownListFor(p => p.ProjectLanguage, Model.LanguageTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <label for="orgID">Organisation</label>
-                    @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                </div>
-            </div>
-
-
-            @if (RoadkillContext.IsAdmin)
-            {
                 <div class="form-group">
                     <div class="col-sm-12">
                         <div class="checkbox">
                             <label>
-                                @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly, 3))
-                                @SiteStrings.EditPage_AdminOnly
+                                @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.ProjectEstimatedTime, SiteStrings.EditPage_ProjectEstimatedTime_Label, 5))
+                                Are these dates fixed?
                             </label>
                         </div>
                     </div>
                 </div>
-            }
 
-            @Html.Partial("WysiwgToolbar")
-            @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control", tabindex = 5 }))
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label for="ProjectStatus">Project Status</label>
+                        @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                    </div>
+                </div>
 
-            <div id="editpage-button-container" class="form-group">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary btn-lg saveButton" tabindex="6">@SiteStrings.Button_Save</button>
-                    @if (Model.Id > 0)
-                    {
-                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
-                    }
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="orgID">Organisation</label>
+                        @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                    </div>
+                </div>
+
+                @if (RoadkillContext.IsAdmin)
+    {
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="checkbox">
+                                <label>
+                                    @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly, 3))
+                                    @SiteStrings.EditPage_AdminOnly
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @Html.Partial("WysiwgToolbar")
+                @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control", tabindex = 5 }))
+
+                <div id="editpage-button-container" class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="button saveButton" tabindex="6">@SiteStrings.Button_Save</button>
+                        @if (Model.Id > 0)
+                        {
+                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
+                        }
+                    </div>
+                </div>
+                @Html.DialogPartial("ChooseImage")
+                @Html.DialogPartial("MarkupHelp")
+            </form>
+            </div>
+        </div>
+        <div class="medium-6 columns" id="previewpanel-container">
+            <div id="previewpanel-inner" class="panel panel-default">
+                <div id="preview-heading" class="panel-heading">@SiteStrings.EditPage_Preview</div>
+                <div class="panel-body" id="preview-wrapper">
+                    <div id="previewLoading" class="hide"><img src="@(Url.Content("~/Assets/Images/white-loading.gif"))" border="0" alt="loading" /></div>
+                    <div id="preview"><br class="clear" /></div>
                 </div>
             </div>
-            @Html.DialogPartial("ChooseImage")
-            @Html.DialogPartial("MarkupHelp")
-        </form>
+        </div>
     </div>
-
-	<!-- Preview panel -->
-	<div class="col-lg-6" id="previewpanel-container">
-		<div id="previewpanel-inner" class="panel panel-default">
-			<div id="preview-heading" class="panel-heading">@SiteStrings.EditPage_Preview</div>
-			<div class="panel-body" id="preview-wrapper">
-				<div id="previewLoading" class="hide"><img src="@(Url.Content("~/Assets/Images/white-loading.gif"))" border="0" alt="loading" /></div>
-				<div id="preview"><br class="clear" /></div>
-			</div>
-		</div>
-	</div>
-</div>
+</section>
