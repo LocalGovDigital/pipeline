@@ -57,9 +57,9 @@ namespace Roadkill.Core.Logging
 							UseTextFileLogging();
 							break;
 
-						case "logentries":
-							UseLogEntriesLogging();
-							break;
+						//case "logentries":
+						//	UseLogEntriesLogging();
+						//	break;
 
 						case "log2console":
 							UseLog2ConsoleLogging();
@@ -71,7 +71,7 @@ namespace Roadkill.Core.Logging
 
 						case "all":
 							UseTextFileLogging();
-							UseLogEntriesLogging();
+							//UseLogEntriesLogging();
 							UseLog2ConsoleLogging();
 							debugEnabled = true;
 							break;
@@ -141,19 +141,19 @@ namespace Roadkill.Core.Logging
 		/// Adds TextWriterTraceListener logging to the logging listeners. The text files are written to
 		/// the App_Data/Logs file as roadkill.txt and are not rolling logs.
 		/// </summary>
-		public static void UseLogEntriesLogging()
-		{
-			// See https://logentries.com/doc/dotnet/
-			LogentriesTarget target = new LogentriesTarget();
-			target.Key = ConfigurationManager.AppSettings["LOGENTRIES_ACCOUNT_KEY"];
-			target.Location = ConfigurationManager.AppSettings["LOGENTRIES_LOCATION"];
-			target.Token = ConfigurationManager.AppSettings["LOGENTRIES_TOKEN"];
-			target.HttpPut = false;
-			target.Ssl = false;
-			target.Debug = true;
+		//public static void UseLogEntriesLogging()
+		//{
+		//	// See https://logentries.com/doc/dotnet/
+		//	LogentriesTarget target = new LogentriesTarget();
+		//	target.Key = ConfigurationManager.AppSettings["LOGENTRIES_ACCOUNT_KEY"];
+		//	target.Location = ConfigurationManager.AppSettings["LOGENTRIES_LOCATION"];
+		//	target.Token = ConfigurationManager.AppSettings["LOGENTRIES_TOKEN"];
+		//	target.HttpPut = false;
+		//	target.Ssl = false;
+		//	target.Debug = true;
 
-			AddNLogTarget(target, "RoadkillLogEntries");
-		}
+		//	AddNLogTarget(target, "RoadkillLogEntries");
+		//}
 
 		/// <summary>
 		/// Creates an information log message.

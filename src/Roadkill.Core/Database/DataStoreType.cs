@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mindscape.LightSpeed;
-using Roadkill.Core.Database.MongoDB;
+//using Roadkill.Core.Database.MongoDB;
 using Roadkill.Core.Database.Schema;
 using Roadkill.Core.Logging;
 
@@ -12,7 +12,7 @@ namespace Roadkill.Core.Database
 	{
 		public static readonly DataStoreType MySQL = new DataStoreType("MySQL", "A MySQL database.", DataProvider.MySql5, new MySqlSchema());
 		public static readonly DataStoreType Postgres = new DataStoreType("Postgres", "A Postgres database.", DataProvider.PostgreSql9, new PostgresSchema());
-		public static readonly DataStoreType MongoDB = new DataStoreType("MongoDB", "A MongoDB server, using the official MongoDB driver.", typeof(MongoDBRepository).FullName);
+		//public static readonly DataStoreType MongoDB = new DataStoreType("MongoDB", "A MongoDB server, using the official MongoDB driver.", typeof(MongoDBRepository).FullName);
 
 		public static readonly DataStoreType Sqlite = new DataStoreType("Sqlite", "A Sqlite database.", DataProvider.SQLite3, new SqliteSchema());
 		public static readonly DataStoreType SqlServer2005 = new DataStoreType("SqlServer2005", "A SqlServer 2005 (or 2000) database.", DataProvider.SqlServer2005, new SqlServerSchema());
@@ -34,7 +34,7 @@ namespace Roadkill.Core.Database
 		{
 			AllTypes = new List<DataStoreType>()
 			{
-				MongoDB, 
+				//MongoDB, 
 				MySQL, 
 				Postgres, 
 				Sqlite, 
@@ -46,7 +46,7 @@ namespace Roadkill.Core.Database
 
 			AllMonoTypes = new List<DataStoreType>()
 			{
-				MongoDB, 
+				//MongoDB, 
 				MySQL, 
 				Postgres
 			};

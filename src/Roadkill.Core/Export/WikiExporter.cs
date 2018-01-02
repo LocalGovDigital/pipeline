@@ -70,7 +70,7 @@ namespace Roadkill.Core.Domain.Export
 				Directory.CreateDirectory(ExportFolder);
 
 			string zipFullPath = Path.Combine(ExportFolder, filename);
-			using (ZipFile zip = new ZipFile(zipFullPath))
+			using (var zip = new ZipFile(zipFullPath))
 			{
 				zip.AddDirectory(_applicationSettings.AttachmentsDirectoryPath, "Attachments");
 				zip.Save();
