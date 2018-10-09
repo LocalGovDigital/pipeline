@@ -19,6 +19,8 @@ using System.Configuration;
 using System.Net.Http;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
+using Roadkill.Core.Database.Repositories.LightSpeed;
+using Roadkill.Core.Hackney.Models;
 using Roadkill.Core.Services;
 using StructureMap;
 using StructureMap.Attributes;
@@ -26,22 +28,18 @@ using StructureMap.Attributes;
 
 namespace Roadkill.Core.Mvc.ViewModels
 {
-    
-    
+
+
     /// <summary>
     /// Provides summary data for a page.
     /// </summary>
     [CustomValidation(typeof(PageViewModel), "VerifyRawTags")]
-    public class PageViewModel
+    public class PageViewModel : Phase2PageModel
     {
-
-
-
-        
-        private static string[] _tagBlackList = 
-		{
-			"#", ";", "/", "?", ":", "@", "&", "=", "{", "}", "|", "\\", "^", "[", "]", "`"		
-		};
+        private static string[] _tagBlackList =
+        {
+            "#", ";", "/", "?", ":", "@", "&", "=", "{", "}", "|", "\\", "^", "[", "]", "`"
+        };
 
         private List<string> _tags;
         private string _rawTags;
@@ -49,7 +47,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         private IUserContext RoadkillContext;
         private ApplicationSettings ApplicationSettings;
 
-         /// <summary>
+        /// <summary>
         /// The page's unique id.
         /// </summary>
         public int Id { get; set; }
@@ -131,6 +129,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public string ProjectStatus { get; set; }
 
+
         /// <summary>
         /// The main language of the project
         /// </summary>
@@ -156,7 +155,8 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// <summary>
         /// The main language of the project
         /// </summary>
-        public List<Relationship> Relationships { get; set; }
+        public IList<Relationship> Relationships { get; set; }
+        public IList<Relationship> RelationshipsWithLoggedInUser  { get; set; }
 
         /// <summary>
         /// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -193,6 +193,10 @@ namespace Roadkill.Core.Mvc.ViewModels
                 ParseRawTags();
             }
         }
+        public string RawTagsWithCount { get; set; }
+
+
+
 
         /// <summary>
         /// The page title before any update.
@@ -268,9 +272,12 @@ namespace Roadkill.Core.Mvc.ViewModels
             PluginPostContainer = "";
             AllTags = new List<TagViewModel>();
 
-            Id = 44;
+            Id = 0;
             ProjectEnd = DateTime.Today;
             ProjectStart = DateTime.Today;
+
+           
+
         }
 
         public PageViewModel(Page page)
@@ -291,12 +298,14 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEnd = page.ProjectEnd;
             ProjectEstimatedTime = page.ProjectEstimatedTime;
             ProjectStatus = page.ProjectStatus;
+            ProjectAgileLifeCyclePhase = page.ProjectAgileLifeCyclePhase;
+            FundingBoundary = page.FundingBoundary;
             ProjectLanguage = page.ProjectLanguage;
             orgID = page.orgID;
             Rel = RelToUserToPage(Id);
 
             Relationships = GetRelationships();
-
+            RelationshipsWithLoggedInUser = GetRelationshipWithUser();
             CreatedOn = DateTime.SpecifyKind(CreatedOn, DateTimeKind.Utc);
             ModifiedOn = DateTime.SpecifyKind(ModifiedOn, DateTimeKind.Utc);
             AllTags = new List<TagViewModel>();
@@ -330,6 +339,14 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectStart = pageContent.Page.ProjectStart;
             ProjectEnd = pageContent.ProjectEnd;
             ProjectEstimatedTime = pageContent.ProjectEstimatedTime;
+
+            Owner = pageContent.Owner;
+            OwnerEmail = pageContent.OwnerEmail;
+            CollaborationLevel = pageContent.CollaborationLevel;
+            ProjectAgileLifeCyclePhase = pageContent.ProjectAgileLifeCyclePhase;
+            FundingBoundary = pageContent.FundingBoundary;
+            Department = pageContent.Department;
+
             ProjectStatus = pageContent.ProjectStatus;
             ProjectLanguage = pageContent.ProjectLanguage;
             orgID = pageContent.orgID;
@@ -337,7 +354,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             Rel = RelToUserToPage(Id);
 
             Relationships = GetRelationships();
-
+            RelationshipsWithLoggedInUser = GetRelationshipWithUser();
             PageHtml pageHtml = converter.ToHtml(pageContent.Text);
             ContentAsHtml = pageHtml.Html;
             IsCacheable = pageHtml.IsCacheable;
@@ -364,7 +381,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public string JavascriptArrayForAllTags()
         {
-            IEnumerable<string> allTags = AllTags.OrderBy(x => x.Name).Select(t => t.Name);
+            IEnumerable<string> allTags = AllTags.OrderBy(x => x.Name).Select(t => $"{t.Name} ({t.Count})");
             return "\"" + string.Join("\", \"", allTags) + "\"";
         }
 
@@ -461,6 +478,29 @@ namespace Roadkill.Core.Mvc.ViewModels
             return title;
         }
 
+        public List<SelectListItem> ProjectAgileLifeCyclePhasesAsSelectList
+        {
+
+            get
+            {
+                string[] strStatuses = new string[] { "All", "Discover", "Prototype", "Build", "Improve" };
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                foreach (string status in strStatuses)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = status;
+                    item.Value = status;
+
+                    items.Add(item);
+                }
+
+                return items;
+            }
+
+        }
 
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
@@ -526,6 +566,10 @@ namespace Roadkill.Core.Mvc.ViewModels
             }
         }
 
+        public List<SelectListItem> CollaborationLevelAsNewSelectList
+        {
+            get { return new List<SelectListItem>() { new SelectListItem() { Text = "Share Ideas", Value = "Share Ideas" }, new SelectListItem() { Text = "Open To Conversation", Value = "Open To Conversation" }, new SelectListItem() { Text = "Share Funding", Value = "Share Funding" } }; }
+        }
 
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
@@ -554,6 +598,40 @@ namespace Roadkill.Core.Mvc.ViewModels
                 }
 
                 items.Sort((x, y) => string.Compare(x.Text, y.Text));
+                var firstItem = items.First(x => x.Text == "None");
+                items.Remove(firstItem);
+                var sortedItems = new List<SelectListItem>() { firstItem };
+                sortedItems.AddRange(items);
+                return sortedItems;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
+        /// SelectList doesn't add option value attributes.
+        /// </summary>
+        public List<SelectListItem> FundingBoundariesAsNewSelectList
+        {
+            get
+            {
+
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+
+                IEnumerable<FundingBoundary> FundingBoundaries;
+                FundingBoundaries = repository.FundingBoundaries;
+
+                var items = new List<SelectListItem>();
+
+                foreach (var fb in FundingBoundaries)
+                {
+
+                    SelectListItem item = new SelectListItem();
+                    item.Text = fb.Text;
+                    item.Value = fb.Id;
+                    items.Add(item);
+                }
 
                 return items;
             }
@@ -569,7 +647,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             get
             {
 
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());               
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
 
                 Organisation Org = new Organisation();
                 Org = repository.GetOrgByID(orgID);
@@ -585,22 +663,25 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public Relationship RelToUserToPage(int pageID)
         {
-            
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
 
-                RoadkillContext = ObjectFactory.GetInstance<IUserContext>();
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
 
-                return repository.RelToUserToPage(pageID, RoadkillContext.CurrentUsername);
-  
+            RoadkillContext = ObjectFactory.GetInstance<IUserContext>();
+
+            return repository.RelToUserToPage(pageID, RoadkillContext.CurrentUsername);
+
 
         }
-
-
         public List<Relationship> GetRelationships()
         {
-             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-             return repository.FindPageRelationships(Id);
-
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            return repository.FindPageRelationships(Id);
+        }
+        public List<Relationship> GetRelationshipWithUser()
+        {
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            var rels = repository.FindPageRelationships(Id);
+            return rels.Where(x => x.username == ObjectFactory.GetInstance<IUserContext>().CurrentUsername).ToList();
         }
 
 
@@ -622,7 +703,7 @@ namespace Roadkill.Core.Mvc.ViewModels
                 item.activityName = act.activityName;
                 item.orgName = act.orgName;
                 item.projectName = act.projectName;
-                item.userNames = act.userNames;                
+                item.userNames = act.userNames;
 
                 items.Add(item);
             }
@@ -638,6 +719,28 @@ namespace Roadkill.Core.Mvc.ViewModels
             ApplicationSettings appSettings = ObjectFactory.GetInstance<ApplicationSettings>();
             return appSettings;
 
+        }
+
+
+        public IList<Tuple<string, int>> TagCloud { get; set; }
+
+
+        public IList<StatusUpdateViewModel> StatusUpdates
+        {
+            get
+            {
+                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+                return repository.GetStatusUpdates(Id);
+            }
+        }
+
+        public bool IsApprovedContributer(string username)
+        {
+
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            IEnumerable<Relationship> relsList = repository.GetRelByPageAndUsername(Id, username);
+            var isApproved = relsList.Any(x => x.relTypeId == 4 && x.approved);
+            return isApproved;
         }
     }
 }

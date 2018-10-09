@@ -1,124 +1,272 @@
-﻿@model IEnumerable<SearchResultViewModel>
-<script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
-@{
-    string title = string.Format(SiteStrings.Search_Results, ViewData["search"]);
-    if (Model == null)
-    {
-        title = "Search";
-    }
-    else if (Model.Count() == 0)
-    {
-        title = string.Format(SiteStrings.Search_NoResults, ViewData["search"]);
-    }
-
-    ViewBag.Title = title;
-}
-
-<div class="page-header">
-    <h1>@title</h1>
-</div>
-
-@using (Html.BeginForm("Search", "Home", FormMethod.Get))
-{
-    <div class="row">
-        <div class="col-xs-8">
-            <div class="row">
-                <div class="col-xs-10">
-                    @Html.TextBox("q", null, new { placeholder = SiteStrings.Search_PlaceHolder, @class = "form-control" })
-                </div>
-                <div class="col-xs-2">
-                    <input type="submit" class="btn btn-primary" value="@SiteStrings.Button_Search" />
-                </div>
-            </div>
-            @if (Model != null)
-            {
-                foreach (SearchResultViewModel result in Model)
-                {
-                    <div class="row search-results">
-                        <div class="col-xs-12 search-result">
-                            <h3>@Html.ActionLink(result.Title, "Index", "Wiki", new { id = result.Id, title = result.EncodedTitle }, null) <span class="label label-stage label-@result.ProjectStatus.ToLower()">@result.ProjectStatus.ToUpper()</span></h3>
-                            <p>
-                                <strong>
-                                    @if (!result.ProjectEstimatedTime)
-                                    { <text>Estimated </text> }Dates:
-                                </strong> @MvcHtmlString.Create(result.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(result.ProjectEnd.ToLongDateString())
-                            </p>
-                            @if (!String.IsNullOrWhiteSpace(result.ProjectLanguage))
-                            {
-                                <p><strong>Language</strong>: @MvcHtmlString.Create(result.ProjectLanguage)</p>
-                            }
-                            <p>@MvcHtmlString.Create(result.ContentSummary)...</p>
-                            <div class="row">
-                                <div class="col-sm-5 col-md-4 small">
-                                    <strong>Created On:</strong> @result.CreatedOn.ToString("dd MMM yyyy")
-                                </div>
-                                <div class="col-sm-offset-1 col-sm-6 col-md-7 text-right">
-                                    @Html.Partial("TagBlocks", result.TagsAsList())
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+﻿@model Roadkill.Core.Models.SearchResults<IList<Roadkill.Core.Models.ProjectSearchResult>>
+<script>
+  
+    $(document).ready(function () {
+        $("#Title").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#btnSearch").click();
             }
-        </div>
+        });
 
-        <div class="col-xs-4">
-            <div class="row">
-                <div class="col-sm-6">
-                    <label for="language">Language</label>
-                    <div>
-                        @Html.DropDownList("language", HomeController.LanguageTypesAsSelectList, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label for="status">Status</label>
-                    <div>
-                        @Html.DropDownList("status", HomeController.ProjectStatusTypesAsSelectList, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <h4>Project Starts</h4>
-                </div>
-                <div class="col-sm-6">
-                    <label for="startdatestart">From</label>
-                    <div>
-                        @(Html.TextBox("startdatestart", null, "dd-mm-yy", HomeController.DatePickerAttributes))
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label for="startdateend">to</label>
-                    <div>
-                        @(Html.TextBox("startdateend", null, "dd-mm-yy", HomeController.DatePickerAttributes))
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <h4>Project Ends</h4>
-                </div>
-                <div class="col-sm-6">
-                    <label for="startdatestart">From</label>
-                    <div>
-                        @(Html.TextBox("enddatestart", null, "dd-mm-yy", HomeController.DatePickerAttributes))
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label for="startdatestart">to</label>
-                    <div>
-                        @(Html.TextBox("enddateend", null, "dd-mm-yy", HomeController.DatePickerAttributes))
-                    </div>
-                </div>
-            </div>
+        $("#Organisation").typeahead({
+            items: 9999,
+            source: function (query, process) {
+                var results = [];
+                map = {};
+                return $.get('/api/page-search/search-ahead/org/' + query, function (data) {
+                    $.each(data, function (i, text) {
+                        map[text] = text;
+                        results.push(text);
+                    });
+                    process(results);
+                });
+            },
+            updater: function (item) {
+                var text = map[text];
+                $("#Organisation").text(text);
+                return item;
+            }
+        });
+
+        var vars = getUrlVars();
+        $("#Title").val(vars["title"]);
+        $("#Department").val(vars["department"]);
+        $("#Phase").val(vars["phase"]);
+        $("#AgileLifecycle").val(vars["agileLifecycle"]);
+    
+        if (vars["orderBy"] == null) {
+            setOrderBy("Title");
+        } else {
+            setOrderBy(vars["orderBy"]);
+        }
+
+
+        if (vars["collaborationLevel"] == null) {
+            setCollaborationLevel("All");
+        } else {
+            setCollaborationLevel(decodeURIComponent(vars["collaborationLevel"]));
+        }
+
+        if (vars["organisation"] == null) {
+            setOrganisation("");
+        } else {
+            setOrganisation(decodeURIComponent(vars["organisation"]));
+        }
+
+        if (vars["phase"] == null) {
+            setPhase("All");
+        } else {
+            setPhase(vars["phase"]);
+        }
+
+        if (vars["agileLifecycle"] == null) {
+            setAgileLifecycle("All");
+        } else {
+            setAgileLifecycle(vars["agileLifecycle"]);
+        }
+
+    });
+
+    var orderBy = "Title";
+
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+
+            if (typeof hash[1] === 'undefined') {
+                // does not exist
+            }
+            else {
+                vars[hash[0]] = hash[1].replace('#', '');
+                // does exist
+            }
+        }
+        return vars;
+    }
+
+    function setOrderBy(val) {
+        orderBy = val;
+        $("#btnSortby").html(val + " <span class='caret'></span>");
+    }
+
+    function setOrganisation(val) {
+        $("#Organisation").val(val);
+    }
+
+    function setPhase(val) {
+        $("#Phase").html(val + " <span class='caret'></span>");
+    }
+    function setAgileLifecycle(val) {
+        $("#AgileLifecycle").html(val + " <span class='caret'></span>");
+    }
+
+    function setCollaborationLevel(val) {
+        $("#CollaborationLevel").html(val + " <span class='caret'></span>");
+    }
+
+    function resetSearch() {
+
+
+        window.location.href = "/home/search/";
+    }
+    function submitSearch() {
+
+        var qs = "";
+        if ($("#Title").val().length > 0) {
+            qs += "title=" + $("#Title").val() + "&";
+        }
+        if ($("#Organisation").val().length > 0) {
+            qs += "organisation=" + $("#Organisation").text().trim() + "&";
+        }
+        if ($("#Department").val().length > 0) {
+            qs += "department=" + $("#Department").val() + "&";
+        }
+        if ($("#Phase").text().trim() != "All") {
+            qs += "phase=" + $("#Phase").text().trim() + "&";
+        }
+        if ($("#CollaborationLevel").text().trim() != "All") {
+            qs += "collaborationLevel=" + $("#CollaborationLevel").text().trim() + "&";
+        }
+        qs += "orderBy=" + orderBy + "&";
+        qs = "/home/search?" + qs.slice(0, -1);
+
+        window.location.href = qs;
+    }
+    
+  
+</script>
+<h1>Search page </h1>
+<div class="row">
+    <div class="col-sm-5">
+        <label for="Title">Project Title</label>
+        <div class="input-group input-group">
+            <input type="text" class="form-control" id="Title">
+            <span class="input-group-btn">
+                <button id="btnSearch" type="button" class="btn btn-primary" onclick="submitSearch()">Search</button>
+            </span>
         </div>
     </div>
-}
-<script>
-    jQuery(function ($) {
-        $('.datepicker').datepicker({
-            format: 'yyyy/mm/dd',
-            startDate: '-3d'
-        });
+    <div class="col-sm-3">
+        <label for="Organisation">Organisation</label>
+        <div class="input-group input-group">
+            <input id="Organisation" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Type organisation" name="title">
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <label for="Department">Department</label>
+        <input type="text" class="form-control" id="Department">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3">
+        <label for="Phase">Phase</label>
+        <div class="dropdown">
+            <button id="Phase" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="setPhase('All');">All</a></li>
 
-        $('.datepicker').on('change', function () {
-            $('.dropdown-menu').hide();
-        });
-    });
-</script>
+                @foreach (var phase in Model.Phases)
+                {
+                <li><a href="#" onclick="setPhase('@phase');">@phase</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-offset-2 col-sm-3">
+        <label for="CollaborationLevel">Collaboration Level</label>
+        <div class="dropdown">
+            <button id="CollaborationLevel" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                All
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="setCollaborationLevel('All');">All</a></li>
+                @foreach (var collaborationLevel in Model.CollaborationLevels){
+                <li><a href="#" onclick="setCollaborationLevel('@collaborationLevel');">@collaborationLevel</a></li>
+                }
+            </ul>
+        </div>
+
+    </div>
+    <div class="col-sm-3">
+        <label for="btnSortby"> Sort By</label>
+        <div class="dropdown">
+            <button id="btnSortby" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                Title
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="setOrderBy('Title');">Title</a></li>
+                <li><a href="#" onclick="setOrderBy('Organisation');">Organisation</a></li>
+                <li><a href="#" onclick="setOrderBy('Department');">Department</a></li>
+                <li><a href="#" onclick="setOrderBy('Phase');">Phase</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-1">
+        <label for="btnReset">&nbsp; </label>
+        <button id="btnReset" type="button" class="btn btn-secondary" onclick="resetSearch()">Reset</button>
+    </div>
+
+</div>
+<div class="row">
+    &nbsp;
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-fit">
+            <colgroup>
+                <col class="col-md-5">
+                <col class="col-md-3">
+                <col class="col-md-2">
+                <col class="col-md-1">
+                <col class="col-md-1">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Organisation</th>
+                <th>Department</th>
+                <th>Phase</th>
+                <th>Updated</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var res in Model.Result)
+            {
+                <tr>
+                    <td class="table-ellipsis">
+                        <a href="/wiki/@res.Id">@res.Title</a>
+                    </td>
+                    <td class="table-ellipsis">
+                        @res.Organisation
+                    </td>
+                    <td>
+                        @res.Department
+                    </td>
+                    <td>
+
+                        @if (res.ProjectStatus != null)
+                        {
+                            <span class="label label-stage label-stage-small label-@res.ProjectStatus.ToLower()"> @res.ProjectStatus.ToUpper()</span>
+                        }
+
+                    </td> 
+
+                    <td>@res.LastUpdated.ToString("MMM yyyy")</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <hr>
+    </div>
+</div>
+
+

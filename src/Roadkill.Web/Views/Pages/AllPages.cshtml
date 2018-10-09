@@ -1,69 +1,140 @@
 ﻿@model IEnumerable<PageViewModel>
 @{
-	ViewBag.Title = SiteStrings.AllPages_Title;
+    ViewBag.Title = SiteStrings.AllPages_Title;
 }
-@section Breadcrumb {
-    <li>Projects</li>
-}
+
 @if (RoadkillContext.IsAdmin)
 {
-	<script>
-		jQuery(function ($) {
-			Roadkill.Web.Setup.bindConfirmDelete();
-		});
-	</script>
+    <script>
+        jQuery(function ($) {
+            Roadkill.Web.Setup.bindConfirmDelete();
+        });
+    </script>
 }
 
 <section id="global__content">
-    <div class="row">
-        <div id="global__body_content" class="small-12 medium-8 columns body_content">
-            <h1>@SiteStrings.AllPages_Title</h1>
+    <div id="global__body_content">
+        <h1>@SiteStrings.AllPages_Title</h1>
 
-            <p>These are all the projects that have been added to Pipeline.</p>
+        <p>These are all the projects that have been added to Pipeline.</p>
 
-            @if (Model.Count() > 0)
-            {
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>@SiteStrings.AllPages_TitleColumnHeading</th>
-                                @if (RoadkillContext.IsLoggedIn)
-                                {
-                                    <th></th>
-                                    if (RoadkillContext.IsAdmin)
-                                    {
-                                        <th></th>
-                                    }
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (PageViewModel pageModel in Model)
-                {
-                                <tr>
-                                    <td class="pagename stretch">@Html.ActionLink(pageModel.Title, "Index", "Wiki", new { id = pageModel.Id, title = pageModel.EncodedTitle }, null)</td>
-                                    @if (RoadkillContext.IsLoggedIn)
-                                    {
-                                        if (!pageModel.IsLocked || (pageModel.IsLocked && RoadkillContext.IsAdmin))
-                                        {
-                                            <td>@Html.ActionLink(SiteStrings.Shared_EditLink, "Edit", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-default" })</td>
-                                        }
-                                        if (RoadkillContext.IsAdmin)
-                                        {
-                                            <td>@Html.ActionLink(SiteStrings.Shared_DeleteLink, "Delete", new { id = pageModel.Id }, new { @class = "btn btn-xs btn-danger confirm" })</td>
-                                        }
-                                    }
-                                </tr>
+        @if (Model.Count() > 0)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>@SiteStrings.AllPages_TitleColumnHeading</th>
+                            @if (RoadkillContext.IsLoggedIn)
+                            {
+                                <th></th>
+                                <th></th>
+
                             }
-                        </tbody>
-                    </table>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (PageViewModel pageModel in Model)
+                        {
+                            <tr>
+                                <td class="pagename stretch">@Html.ActionLink(pageModel.Title, "Index", "Wiki", new { id = pageModel.Id, title = pageModel.EncodedTitle }, null)</td>
+                              
+                                <td>
+                                    <div class="project-icon-wrapper">
+                                        @if (RoadkillContext.IsLoggedIn)
+                                        {
+                                            if (pageModel.IsLocked || !(RoadkillContext.IsAdmin || (pageModel.IsApprovedContributer(RoadkillContext.CurrentUsername))))
+                                            {
+                                            }
+                                            else
+                                            {
+                                                @*<a id="pageedit-button" class="text-blue" href="@Url.Action("Delete", "Pages", new { id = pageModel.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-remove-circle"></span> </a>*@
+
+                                                <a id="pageedit-button" class="text-blue" href="@Url.Action("Edit", "Pages", new { id = pageModel.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-pencil"></span> </a>
+                                            }
+
+                                            if (pageModel.RelationshipsWithLoggedInUser != null && pageModel.RelationshipsWithLoggedInUser.Any(x => x.relTypeId == 3))
+                                            {
+                                                <a class="btnwatch text-blue" title="You are watching this project"><span class="glyphicon glyphicon-eye-open"></span> <input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btnwatch text-grey" title="Click to watch this project"><span class="glyphicon glyphicon-eye-open"></span><input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+
+
+
+                                            var contributeStatus = pageModel.RelationshipsWithLoggedInUser?.FirstOrDefault(x => x.relTypeId == 4);
+
+                                            if (contributeStatus == null)
+                                            {
+                                                <a class="btncontrib text-grey cl" title="Click to contribute to this project"><span class="glyphicon glyphicon-heart"></span><input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+                                            else if (contributeStatus.pending == true && contributeStatus.approved == false)
+                                            {
+                                                <a class="btncontrib text-midred cl" title="You are not approved to contribute to this project"><span class="glyphicon glyphicon-heart"></span><input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+
+                                            else if (contributeStatus.approved == false)
+                                            {
+                                                <a class="btncontrib text-grey" title="Unfortunately you are not approved to contribute to this project, click to contribute"><span class="glyphicon glyphicon-heart"></span><input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+                                            else if (contributeStatus.approved == true)
+                                            {
+                                                <a class="btncontrib text-red" title="You are contributing this project"><span class="glyphicon glyphicon-heart"></span><input type="hidden" id="proj-watch-@pageModel.Id" value="@pageModel.Id" /></a>
+                                            }
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p>@SiteStrings.AllPages_NoPages</p>
+        }
+    </div>
+    <script>
+        jQuery('#pageedit0-button').popover('show');
+        $(".btnwatch").click(function () {
+
+            var modelId = $(this).children("input[type='hidden']:first").val();
+            var elem = $(this);
+            $.ajax('/api/user-status/request-watch/' + modelId,
+                {
+                    type: 'POST',
+                    success: function () {
+                        if (elem.hasClass("text-grey")) {
+                            elem.removeClass("text-grey");
+                            elem.addClass("text-blue");
+                        } else if (elem.hasClass("text-blue")) {
+                            elem.removeClass("text-blue");
+                            elem.addClass("text-grey");
+                        }
+
+                    }
+                });
+        });
+        $(".btncontrib").click(function () {
+
+            if ($(this).hasClass("cl")) {
+
+                var modelId = $(this).children("input[type='hidden']:first").val();
+                var elem = $(this);
+
+                $.ajax('/api/user-status/request-contribute/' + modelId,
+                    {
+                        type: 'POST',
+                        success: function () {
+                            elem.removeClass("text-grey");
+                            elem.removeClass("text-grey");
+                            elem.addClass("text-midred");
+                        }
+                    });
             }
-            else
-            {
-                <p>@SiteStrings.AllPages_NoPages</p>
-            }
-        </div>
-    </div><!-- Foundation .row end -->
+        });
+    </script>
 </section>

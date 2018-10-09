@@ -5,13 +5,13 @@ var Roadkill;
     (function (Web) {
         var Admin;
         (function (Admin) {
-            var SettingsMessages = (function () {
+            var SettingsMessages = /** @class */ (function () {
                 function SettingsMessages() {
                 }
                 return SettingsMessages;
             }());
             Admin.SettingsMessages = SettingsMessages;
-            var Settings = (function () {
+            var Settings = /** @class */ (function () {
                 function Settings(messages) {
                     var _this = this;
                     // Test button messages
@@ -90,7 +90,7 @@ var Roadkill;
                     request.fail(function (jqXHR, textStatus, errorThrown) {
                         // Logged out since the call was made
                         if (errorThrown.message.indexOf("unexpected character") !== -1) {
-                            window.location = window.location;
+                            //?window.location = window.location;
                         }
                         else {
                             toastr.error(errorMessage + errorThrown);

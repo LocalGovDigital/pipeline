@@ -19,10 +19,12 @@ namespace Roadkill.Core
 		/// </summary>
 		string CurrentUsername { get; }
 
-		/// <summary>
-		/// Gets whether the user (if logged in), is in the editors group.
-		/// </summary>
-		bool IsAdmin { get; }
+	    string CurrentUserFirstname { get; }
+	
+        /// <summary>
+        /// Gets whether the user (if logged in), is in the editors group.
+        /// </summary>
+        bool IsAdmin { get; }
 
 		/// <summary>
 		/// Gets whether the user (if logged in), is in the editors group.

@@ -1,25 +1,26 @@
 ﻿using System;
 using Mindscape.LightSpeed;
+using Roadkill.Core.Database.Repositories.LightSpeed;
 
 namespace Roadkill.Core.Database.LightSpeed
 {
-	[Table("roadkill_pages", IdentityMethod=IdentityMethod.IdentityColumn)]
-	public class PageEntity : Entity<int>
+    [Table("roadkill_pages", IdentityMethod = IdentityMethod.IdentityColumn)]
+    public class PageEntity : BasePageEntity<int>
 	{
-		[Column("title")]
-		private string _title;
+        [Column("title")]
+        private string _title;
 
-		[Column("createdby")]
-		private string _createdBy;
+        [Column("createdby")]
+        private string _createdBy;
 
-		[Column("createdon")]
-		private DateTime _createdOnColumn;
+        [Column("createdon")]
+        private DateTime _createdOnColumn;
 
-		[Column("modifiedby")]
-		private string _modifiedBy;
+        [Column("modifiedby")]
+        private string _modifiedBy;
 
-		[Column("modifiedon")]
-		private DateTime _modifiedOn;
+        [Column("modifiedon")]
+        private DateTime _modifiedOn;
 
         [Column("projectstart")]
         private DateTime _projectstart;
@@ -39,103 +40,103 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("orgID")]
         private int _orgID;
 
-		[Column("tags")]
-		private string _tags;
+        [Column("tags")]
+        private string _tags;
 
-		[Column("islocked")]
-		private bool _isLocked;
+        [Column("islocked")]
+        private bool _isLocked;
 
-		[ReverseAssociation("PageContents")]
-		private readonly EntityCollection<PageContentEntity> _pageContents = new EntityCollection<PageContentEntity>();
+        [ReverseAssociation("PageContents")]
+        private readonly EntityCollection<PageContentEntity> _pageContents = new EntityCollection<PageContentEntity>();
 
-		public EntityCollection<PageContentEntity> PageContents
-		{
-			get { return Get(_pageContents); }
-		}
+        public EntityCollection<PageContentEntity> PageContents
+        {
+            get { return Get(_pageContents); }
+        }
 
-		public string Title
-		{
-			get
-			{
-				return _title;
-			}
-			set
-			{
-				Set<string>(ref _title, value);
-			}
-		}
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                Set<string>(ref _title, value);
+            }
+        }
 
-		public string CreatedBy
-		{
-			get
-			{
-				return _createdBy;
-			}
-			set
-			{
-				Set<string>(ref _createdBy, value);
-			}
-		}
+        public string CreatedBy
+        {
+            get
+            {
+                return _createdBy;
+            }
+            set
+            {
+                Set<string>(ref _createdBy, value);
+            }
+        }
 
-		public DateTime CreatedOn
-		{
-			get
-			{
-				return _createdOnColumn;
-			}
-			set
-			{
-				Set<DateTime>(ref _createdOnColumn, value);
-			}
-		}
+        public DateTime CreatedOn
+        {
+            get
+            {
+                return _createdOnColumn;
+            }
+            set
+            {
+                Set<DateTime>(ref _createdOnColumn, value);
+            }
+        }
 
-		public string ModifiedBy
-		{
-			get
-			{
-				return _modifiedBy;
-			}
-			set
-			{
-				Set<string>(ref _modifiedBy, value);
-			}
-		}
+        public string ModifiedBy
+        {
+            get
+            {
+                return _modifiedBy;
+            }
+            set
+            {
+                Set<string>(ref _modifiedBy, value);
+            }
+        }
 
-		public DateTime ModifiedOn
-		{
-			get
-			{
-				return _modifiedOn;
-			}
-			set
-			{
-				Set<DateTime>(ref _modifiedOn, value);
-			}
-		}
+        public DateTime ModifiedOn
+        {
+            get
+            {
+                return _modifiedOn;
+            }
+            set
+            {
+                Set<DateTime>(ref _modifiedOn, value);
+            }
+        }
 
-		public string Tags
-		{
-			get
-			{
-				return _tags;
-			}
-			set
-			{
-				Set<string>(ref _tags, value);
-			}
-		}
+        public string Tags
+        {
+            get
+            {
+                return _tags;
+            }
+            set
+            {
+                Set<string>(ref _tags, value);
+            }
+        }
 
-		public bool IsLocked
-		{
-			get
-			{
-				return _isLocked;
-			}
-			set
-			{
-				Set<bool>(ref _isLocked, value);
-			}
-		}
+        public bool IsLocked
+        {
+            get
+            {
+                return _isLocked;
+            }
+            set
+            {
+                Set<bool>(ref _isLocked, value);
+            }
+        }
 
         public DateTime ProjectStart
         {
@@ -197,7 +198,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 Set<string>(ref _projectStatus, value);
             }
         }
-
+    
         public int orgID
         {
             get
@@ -209,5 +210,5 @@ namespace Roadkill.Core.Database.LightSpeed
                 Set<int>(ref _orgID, value);
             }
         }
-	}
+    }
 }

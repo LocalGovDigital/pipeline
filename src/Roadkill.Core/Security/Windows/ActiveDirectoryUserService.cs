@@ -225,7 +225,12 @@ namespace Roadkill.Core.Security.Windows
 			return list;
 		}
 
-		/// <summary>
+	    public override IEnumerable<UserViewModel> ListOrdinaryUsers()
+	    {
+	        throw new NotImplementedException();
+	    }
+
+	    /// <summary>
 		/// Gets the current <see cref="WindowsIdentity"/> username.
 		/// </summary>
 		public override string GetLoggedInUserName(HttpContextBase context)

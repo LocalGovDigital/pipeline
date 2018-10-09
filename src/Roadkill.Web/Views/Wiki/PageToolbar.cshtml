@@ -2,36 +2,82 @@
 
 @if (Model.Id != 0)
 {
-<div id="toolbar" class="btn-toolbar">
-	<div class="btn-group">
-	@if (RoadkillContext.IsLoggedIn)
-    {
-        if (Model.Rel.id == 0)
-        {
-            <a id="pageedit0-button" data-toggle="popover" data-placement="bottom" title="Get involved!" data-content="You can Like or Join a Project here." data-trigger="hover" class="btn btn-primary btn-sm" href="@Url.Action("New", "Rel", new { id = 0, pageID = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-star-empty"></span></a>
-        }
-        else if (Model.Rel.relTypeId == 1)
-        {
-            <a id="pageedit1-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-thumbs-up"></span></a>
-        }
-        else if (Model.Rel.relTypeId == 2)
-        {
-            <a id="pageedit2-button" class="btn btn-success btn-sm" href="@Url.Action("Edit", "Rel", new { id = Model.Rel.id, pageID = Model.Id })" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-plus-sign"></span></a>
-        }
+    <div id="toolbar" class="btn-toolbar pull-right">
+        <div class="btn-group">
+            @if (RoadkillContext.IsLoggedIn)
+            {
+             
 
-        if (Model.IsLocked && !RoadkillContext.IsAdmin)
-        {
-			<a id="pageedit-button" class="btn btn-default btn-sm disabled" href="#" title="@SiteStrings.Shared_EditLink - this page can only be edited by administrators."><span class="glyphicon glyphicon-pencil"></span></a>
-        }
-        else
-        {
-            <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("Edit", "Pages", new { id = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-pencil"></span></a>
-        }
-    }
-        <a id="pageinfo-button" class="btn btn-default btn-sm" href="javascript:;" title="Page information"><span class="glyphicon glyphicon-book"></span></a>
-        
-	</div>
-</div>
-<script>jQuery('#pageedit0-button').popover('show')</script>
-@*@Html.DialogPartial("PageInformation", Model)*@
+                if (Model.IsLocked || !(RoadkillContext.IsAdmin || (Model.IsApprovedContributer(RoadkillContext.CurrentUsername))))
+                {
+                  }
+                else
+                {
+                    <a id="pageedit-button" class="btn btn-default btn-sm" href="@Url.Action("Edit", "Pages", new { id = Model.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-pencil"></span></a>
+                }
+
+                if (Model.RelationshipsWithLoggedInUser.Any(x => x.relTypeId == 3))
+                {
+                    <a id="btnwatch" class="btn btn-primary btn-sm" title="You are watching this project"><span class="glyphicon glyphicon-eye-open"></span></a>
+                }
+                else
+                {
+                    <a id="btnwatch" class="btn btn-default btn-sm" title="Click to watch this project"><span class="glyphicon glyphicon-eye-open"></span></a>
+                }
+
+                var contributeStatus = Model.RelationshipsWithLoggedInUser.FirstOrDefault(x => x.relTypeId == 4);
+
+                if (contributeStatus == null)
+                {
+                    <a id="btncontrib" class="btn btn-default btn-sm cl" title="Click to contribute to this project"><span class="glyphicon glyphicon-heart"></span></a>
+                }
+                else if (contributeStatus.pending == true && contributeStatus.approved == false)
+                {
+                    <a id="btncontrib" class="btn btn-info btn-sm" title="Unfortunately you are not approved to contribute to this project"><span class="glyphicon glyphicon-heart"></span></a>
+                }
+
+                else if (contributeStatus.approved == false)
+                {
+                    <a id="btncontrib" class="btn btn-warning btn-sm cl" title="Unfortunately you are not approved to contribute to this project, click to contribute"><span class="glyphicon glyphicon-heart"></span></a>
+                }
+                else if (contributeStatus.approved == true)
+                {
+                    <a id="btncontrib" class="btn btn-primary btn-sm" title="You are contributing this project"><span class="glyphicon glyphicon-heart"></span></a>
+                }
+            }
+
+        </div>
+    </div>
+    <script>
+        jQuery('#pageedit0-button').popover('show');
+        $("#btnwatch").click(function () {
+            $.ajax('/api/user-status/request-watch/@Model.Id',
+                {
+                    type: 'POST',
+                    success: function () {
+                        if ($("#btnwatch").hasClass("btn-default")) {
+                            $("#btnwatch").removeClass("btn-default");
+                            $("#btnwatch").addClass("btn-primary");
+                        } else if ($("#btnwatch").hasClass("btn-primary")) {
+                            $("#btnwatch").removeClass("btn-primary");
+                            $("#btnwatch").addClass("btn-default");
+                        }
+                        
+                    }
+                });
+        });
+        $("#btncontrib").click(function () {
+            if ($("#btncontrib").hasClass("cl")) {
+                $.ajax('/api/user-status/request-contribute/@Model.Id',
+                {
+                    type: 'POST',
+                    success: function (data) {
+                        $("#btncontrib").removeClass("btn-default");
+                        $("#btncontrib").removeClass("btn-warning");
+                        $("#btncontrib").addClass("btn-info");
+                    }
+                    });
+            }
+        });
+    </script>
 }

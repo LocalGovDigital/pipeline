@@ -70,7 +70,8 @@ namespace Roadkill.Core.Database
         /// </value>
         public DateTime relDateTime { get; set; }
 
-
+	    public bool approved { get; set; }
+	    public bool pending { get; set; }
         /// <summary>
         /// The unique id for this object - for use with document stores that require a unique id for storage.
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9791D01-184A-44AE-9CDE-42E8C411026D}"
 EndProject
@@ -13,6 +13,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roadkill.Core", "src\Roadkill.Core\Roadkill.Core.csproj", "{9C86C475-F3BD-44D1-942A-78BF19158C3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roadkill.Web", "src\Roadkill.Web\Roadkill.Web.csproj", "{CD29D34E-4F1A-4D43-B150-08BA76EC9DA3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DatabaseScripts", "DatabaseScripts", "{D2BC810A-101E-4C95-9C77-CB992ABD7505}"
+	ProjectSection(SolutionItems) = preProject
+		DatabaseScripts\hackney-pipeline-sprint1.sql = DatabaseScripts\hackney-pipeline-sprint1.sql
+		DatabaseScripts\hackney-pipeline-sprint2.sql = DatabaseScripts\hackney-pipeline-sprint2.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,5 +102,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64758FFE-4F27-408D-BDD0-B003BB0BEEBD}
 	EndGlobalSection
 EndGlobal

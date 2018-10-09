@@ -8,7 +8,7 @@ var Roadkill;
             /**
              Event bindings and handlers for the file manager.
             */
-            var Setup = (function () {
+            var Setup = /** @class */ (function () {
                 function Setup() {
                 }
                 Setup.configure = function () {

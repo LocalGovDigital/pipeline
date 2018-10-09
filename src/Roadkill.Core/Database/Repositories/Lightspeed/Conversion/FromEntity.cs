@@ -12,52 +12,25 @@ namespace Roadkill.Core.Database.LightSpeed
 	/// <remarks>(AutoMapper was tried for this, but had problems with the Mindscape.LightSpeed.Entity class)</remarks>
 	public class FromEntity
 	{
-		public static Page ToPage(PageEntity entity)
-		{
-			if (entity == null)
-				return null;
+		//public static Page ToPage(PageEntity entity)
+		//{
+		//	if (entity == null)
+		//		return null;
 
-			Page page = new Page();
-			page.Id = entity.Id;
-			page.CreatedBy = entity.CreatedBy;
-			page.CreatedOn = entity.CreatedOn;
-			page.IsLocked = entity.IsLocked;
-			page.ModifiedBy = entity.ModifiedBy;
-			page.ModifiedOn = entity.ModifiedOn;
-			page.Tags = entity.Tags;
-			page.Title = entity.Title;
-            page.ProjectStart = entity.ProjectStart;
-            page.ProjectEnd = entity.ProjectEnd;
-            page.ProjectEstimatedTime = entity.ProjectEstimatedTime;
-            page.ProjectStatus = entity.ProjectStatus;
-            page.ProjectLanguage = entity.ProjectLanguage;
-            page.orgID = entity.orgID;
+		//    Page page = Page.FromPageEntity(entity);
+		//	return page;
+		//}
 
+		//public static PageContent ToPageContent(PageContentEntity entity)
+		//{
+		//	if (entity == null)
+		//		return null;
 
-			return page;
-		}
+		//	PageContent pageContent =  PageContent.FromPageContentEntity(entity);
+			
 
-		public static PageContent ToPageContent(PageContentEntity entity)
-		{
-			if (entity == null)
-				return null;
-
-			PageContent pageContent = new PageContent();
-			pageContent.Id = entity.Id;
-			pageContent.EditedOn = entity.EditedOn;
-			pageContent.EditedBy = entity.EditedBy;
-			pageContent.Text = entity.Text;
-			pageContent.VersionNumber = entity.VersionNumber;
-			pageContent.Page = ToPage(entity.Page);
-            pageContent.ProjectStart = entity.ProjectStart;
-            pageContent.ProjectEnd = entity.ProjectEnd;
-            pageContent.ProjectEstimatedTime = entity.ProjectEstimatedTime;
-            pageContent.ProjectStatus = entity.ProjectStatus;
-            pageContent.ProjectLanguage = entity.ProjectLanguage;
-            pageContent.orgID = entity.orgID;
-
-			return pageContent;
-		}
+		//	return pageContent;
+		//}
 
 		/// <summary>
 		/// Intentionally doesn't populate the User.Password property (as this is only ever stored).
@@ -117,6 +90,8 @@ namespace Roadkill.Core.Database.LightSpeed
             rel.relTypeId = entity.relTypeId;
             rel.relText = entity.relText;
             rel.relDateTime = entity.relDateTime;
+            rel.approved = entity.Approved;
+            rel.pending = entity.Pending;
 
             return rel;
         }
@@ -140,7 +115,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			List<PageContent> list = new List<PageContent>();
 			foreach (PageContentEntity entity in entities)
 			{
-				PageContent pageContent = ToPageContent(entity);
+				PageContent pageContent = PageContent.FromPageContentEntity(entity);
 				list.Add(pageContent);
 			}
 
@@ -152,7 +127,7 @@ namespace Roadkill.Core.Database.LightSpeed
 			List<Page> list = new List<Page>();
 			foreach (PageEntity entity in entities)
 			{
-				Page page = ToPage(entity);
+				Page page = Page.FromPageEntity(entity);
 				list.Add(page);
 			}
 

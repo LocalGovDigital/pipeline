@@ -1,13 +1,15 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Roadkill.Core.Database.LightSpeed;
+using Roadkill.Core.Hackney.Models;
 
 namespace Roadkill.Core.Database
 {
 	/// <summary>
 	/// Represents a version of a page's textual content, for use in the data store.
 	/// </summary>
-	public class PageContent : IDataStoreEntity
-	{
+	public class PageContent : Phase2PageModel,IDataStoreEntity
+    {
 		/// <summary>
 		/// Gets or sets the unique ID for the page version.
 		/// </summary>
@@ -76,6 +78,7 @@ namespace Roadkill.Core.Database
         /// The status of the project
         /// </summary>
         public string ProjectStatus { get; set; }
+        
 
         /// <summary>
         /// The main language of the project
@@ -103,5 +106,32 @@ namespace Roadkill.Core.Database
 			get { return Id; }
 			set { Id = value; }
 		}
-	}
+
+        public static PageContent FromPageContentEntity(PageContentEntity entity)
+        {
+            if (entity == null) return null;
+
+            var pageContent = new PageContent();
+            pageContent.Id = entity.Id;
+            pageContent.EditedOn = entity.EditedOn;
+            pageContent.EditedBy = entity.EditedBy;
+            pageContent.Text = entity.Text;
+            pageContent.VersionNumber = entity.VersionNumber;
+            pageContent.Page =Page.FromPageEntity(entity.Page);
+            pageContent.ProjectStart = entity.ProjectStart;
+            pageContent.ProjectEnd = entity.ProjectEnd;
+            pageContent.ProjectEstimatedTime = entity.ProjectEstimatedTime;
+            pageContent.ProjectStatus = entity.ProjectStatus;
+            pageContent.ProjectLanguage = entity.ProjectLanguage;
+            pageContent.orgID = entity.orgID;
+
+            pageContent.Department = entity.Department;
+            pageContent.Owner = entity.Owner;
+            pageContent.OwnerEmail = entity.OwnerEmail;
+            pageContent.ProjectAgileLifeCyclePhase = entity.ProjectAgileLifeCyclePhase;
+            pageContent.CollaborationLevel = entity.CollaborationLevel;
+            pageContent.FundingBoundary = entity.FundingBoundary;
+            return pageContent;
+        }
+    }
 }

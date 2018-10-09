@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var AjaxRequest = (function () {
+            var AjaxRequest = /** @class */ (function () {
                 function AjaxRequest() {
                 }
                 AjaxRequest.prototype.getFolderInfo = function (path, successFunction) {
@@ -43,7 +43,7 @@ var Roadkill;
                     request.fail(function (jqXHR, textStatus, errorThrown) {
                         // Logged out since the call was made
                         if (errorThrown.message.indexOf("unexpected character") !== -1) {
-                            window.location = window.location;
+                            //?window.location = window.location;
                         }
                         else {
                             toastr.error(errorMessage + errorThrown);

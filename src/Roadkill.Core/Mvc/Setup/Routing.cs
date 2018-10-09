@@ -44,10 +44,18 @@ namespace Roadkill.Core.Mvc
 				"Wiki",
 				"Wiki/{id}/{title}",
 				new { controller = "Wiki", action = "Index", title = UrlParameter.Optional }
-			);
+			);  
+		    
+		    
+		    //// The default way of getting to a page: "/wiki/123/page-title"
+		    //routes.MapLowercaseRoute(
+		    //    "Search",
+      //          "search/index",
+		    //    new { controller = "Search", action = "Index", title = UrlParameter.Optional }
+		    //);
 
-			// Don't lowercase pages that use Base64
-			routes.MapRoute(
+            // Don't lowercase pages that use Base64
+            routes.MapRoute(
 				"Pages",
 				"pages/byuser/{id}/{encoded}",
 				new { controller = "Pages", action = "ByUser", title = UrlParameter.Optional }

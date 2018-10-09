@@ -3,7 +3,7 @@ var Roadkill;
 (function (Roadkill) {
     var Web;
     (function (Web) {
-        var EditPage = (function () {
+        var EditPage = /** @class */ (function () {
             function EditPage(tags) {
                 this._timeout = null;
                 this._tagBlackList = [
@@ -56,7 +56,7 @@ var Roadkill;
                 $("#TagsEntry").keydown(function (e) {
                     // Tab adds the tag, but then focuses the toolbar (the next tab index)
                     var code = e.keyCode || e.which;
-                    if (code == "9") {
+                    if (code == "9" || code == "13") {
                         var tag = $("#TagsEntry").val();
                         if (_this.isValidTag(tag)) {
                             if ($("#IsLocked").length == 0)
@@ -79,6 +79,9 @@ var Roadkill;
                         $(this).addClass("tm-tag-success");
                         $(this).addClass("tm-success");
                     });
+                    if ($("#TagsEntry").val() != "") {
+                        $("#TagsEntry").focus();
+                    }
                 });
             };
             /**

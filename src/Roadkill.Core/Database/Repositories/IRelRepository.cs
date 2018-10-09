@@ -15,11 +15,19 @@ namespace Roadkill.Core.Database
 		/// </summary>
 		/// <returns></returns>
         IEnumerable<Relationship> FindAllRels();
-        IEnumerable<Relationship> GetRelByPage(int pageid);
+	    IEnumerable<Relationship> GetRelByPage(int pageid);
+	    IEnumerable<Relationship> GetRelByPageAndUsername(int pageid,string username);
         void DeleteRel(Relationship rel);
         Relationship GetRelById(int id);
         Relationship SaveOrUpdateRel(Relationship rel);
         IEnumerable<Relationship> FindRelsCreatedBy(string username);
         Organisation GetOrgByUser(string username);
- 	}
+	    Organisation GetOrganisationNameById(int id);
+
+	    int GetOrgIdByName(string spOrganisation);
+
+
+	    IList<string> GetOrganisationNames();
+
+    }
 }

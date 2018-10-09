@@ -27,7 +27,12 @@ namespace Roadkill.Core.Database.LightSpeed
         private string _reltext;
 
         [Column("reldatetime")]
-        private DateTime _reldatetime; 
+        private DateTime _reldatetime;
+
+        [Column("approved")]
+        private bool _approved;
+        [Column("pending")]
+        private bool _pending;
 
         public int id
         {
@@ -38,6 +43,28 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<int>(ref _id, value);
+            }
+        }
+        public bool Approved
+        {
+            get
+            {
+                return _approved;
+            }
+            set
+            {
+                Set<bool>(ref _approved, value);
+            }
+        }
+        public bool Pending
+        {
+            get
+            {
+                return _pending;
+            }
+            set
+            {
+                Set<bool>(ref _pending, value);
             }
         }
 

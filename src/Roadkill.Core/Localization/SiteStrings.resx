@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -130,7 +130,7 @@
     <value>Home</value>
   </data>
   <data name="Navigation_Categories" xml:space="preserve">
-    <value>Categories</value>
+    <value>Tags</value>
   </data>
   <data name="Navigation_AllPages" xml:space="preserve">
     <value>All projects</value>
@@ -358,7 +358,7 @@
     <value>An error occurred updating your profile</value>
   </data>
   <data name="NoMainPage_Title" xml:space="preserve">
-    <value>You have no main project set</value>
+    <value>Welcome to Pipeline from LocalGov Digital</value>
   </data>
   <data name="NoMainPage_Label" xml:space="preserve">
     <value>To set a main project, create a page and assign the tag 'homepage' to it.</value>
@@ -1019,6 +1019,9 @@
   </data>
   <data name="EditPage_ProjectStatus_Label" xml:space="preserve">
     <value>ProjectStatus</value>
+  </data>
+  <data name="EditPage_ProjectAgileLifeCyclePhase_Label" xml:space="preserve">
+    <value>ProjectAgileLifecyclePhase</value>
   </data>
   <data name="Shared_orgID_Label" xml:space="preserve">
     <value>Organisation</value>

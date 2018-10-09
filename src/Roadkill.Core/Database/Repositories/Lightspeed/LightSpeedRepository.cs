@@ -9,7 +9,9 @@ using Mindscape.LightSpeed.Linq;
 using Mindscape.LightSpeed.Logging;
 using Mindscape.LightSpeed.Querying;
 using Roadkill.Core.Configuration;
+using Roadkill.Core.Database.Repositories.LightSpeed;
 using Roadkill.Core.Database.Schema;
+using Roadkill.Core.Hackney.Parameters;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Mvc.ViewModels;
@@ -37,6 +39,30 @@ namespace Roadkill.Core.Database.LightSpeed
                 return UnitOfWork.Query<PageContentEntity>();
             }
         }
+        public IList<FundingBoundary> FundingBoundaries
+        {
+            get
+            {
+                return new List<FundingBoundary>()
+                {
+                    new FundingBoundary() {Id = "0", Text = "£0K > £50K"},
+                    new FundingBoundary() {Id = "50", Text = "£50K > £100k"},
+                    new FundingBoundary() {Id = "100", Text = "£100k > £250k"},
+                    new FundingBoundary() {Id = "250", Text = "£250k > £500k"},
+                    new FundingBoundary() {Id = "500", Text = "£500k > £1000k"}
+                };
+            }
+
+            
+        }
+        internal IQueryable<StatusUpdate> StatusUpdates
+        {
+            get
+            {
+                return UnitOfWork.Query<StatusUpdate>();
+            }
+        }
+
 
         internal IQueryable<UserEntity> Users
         {
@@ -286,7 +312,7 @@ namespace Roadkill.Core.Database.LightSpeed
         #endregion
 
         #region IPageRepository
-        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string projectStatus, string projectLanguage, int orgID)
+        public PageContent AddNewPage(Page page, string text, string editedBy, DateTime editedOn, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string projectStatus, Phase2Params phase2Params, string projectLanguage, int orgID)
         {
             PageEntity pageEntity = new PageEntity();
             ToEntity.FromPage(page, pageEntity);
@@ -308,17 +334,24 @@ namespace Roadkill.Core.Database.LightSpeed
                 ProjectStatus = projectStatus,
                 ProjectLanguage = projectLanguage,
                 orgID = orgID,
+                Owner = phase2Params.Owner,
+                OwnerEmail = phase2Params.OwnerEmail,
+                Department = phase2Params.Department,
+                CollaborationLevel = phase2Params.CollaborationLevel,
+                ProjectAgileLifeCyclePhase = phase2Params.ProjectAgileLifeCyclePhase,
+                FundingBoundary = phase2Params.FundingBoundary
+
             };
 
             UnitOfWork.Add(pageContentEntity);
             UnitOfWork.SaveChanges();
 
-            PageContent pageContent = FromEntity.ToPageContent(pageContentEntity);
-            pageContent.Page = FromEntity.ToPage(pageEntity);
+            PageContent pageContent = PageContent.FromPageContentEntity(pageContentEntity);
+            pageContent.Page = Page.FromPageEntity(pageEntity);
             return pageContent;
         }
 
-        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string projectStatus, string projectLanguage, int orgID)
+        public PageContent AddNewPageContentVersion(Page page, string text, string editedBy, DateTime editedOn, int version, DateTime projectStart, DateTime projectEnd, bool projectEstimatedTime, string projectStatus, Phase2Params phase2Params, string projectLanguage, int orgID)
         {
             if (version < 1)
                 version = 1;
@@ -341,6 +374,12 @@ namespace Roadkill.Core.Database.LightSpeed
                     ProjectStatus = projectStatus,
                     ProjectLanguage = projectLanguage,
                     orgID = orgID,
+                    Owner = phase2Params.Owner,
+                    OwnerEmail = phase2Params.OwnerEmail,
+                    Department = phase2Params.Department,
+                    CollaborationLevel = phase2Params.CollaborationLevel,
+                    FundingBoundary = phase2Params.FundingBoundary,
+                    ProjectAgileLifeCyclePhase = phase2Params.ProjectAgileLifeCyclePhase,
                 };
 
                 UnitOfWork.Add(pageContentEntity);
@@ -352,14 +391,33 @@ namespace Roadkill.Core.Database.LightSpeed
                 UnitOfWork.SaveChanges();
 
                 // Turn the content database entity back into a domain object
-                PageContent pageContent = FromEntity.ToPageContent(pageContentEntity);
-                pageContent.Page = FromEntity.ToPage(pageEntity);
+
+
+
+                PageContent pageContent = PageContent.FromPageContentEntity(pageContentEntity);
+                pageContent.Page = Page.FromPageEntity(pageEntity);
 
                 return pageContent;
             }
 
             Log.Error("Unable to update page content for page id {0} (not found)", page.Id);
             return null;
+        }
+
+        public int PageCountByStatus(string status)
+        {
+            return Pages.Count(x => x.ProjectStatus == status);
+        }
+        public int PageCountByAgileLifeCyclePhase(string phase)
+        {
+            Pages.Where(x => x.ProjectAgileLifeCyclePhase == phase).ToList();
+            return Pages.Count(x => x.ProjectAgileLifeCyclePhase == phase);
+        }
+
+
+        public IQueryable<PageEntity> Query()
+        {
+            return Pages;
         }
 
         public IEnumerable<Page> AllPages()
@@ -440,31 +498,33 @@ namespace Roadkill.Core.Database.LightSpeed
         public Page GetPageById(int id)
         {
             PageEntity entity = Pages.FirstOrDefault(p => p.Id == id);
-            return FromEntity.ToPage(entity);
+
+            return Page.FromPageEntity(entity);
         }
 
         public Page GetPageByTitle(string title)
         {
             PageEntity entity = Pages.FirstOrDefault(p => p.Title.ToLower() == title.ToLower());
-            return FromEntity.ToPage(entity);
+
+            return Page.FromPageEntity(entity);
         }
 
         public PageContent GetLatestPageContent(int pageId)
         {
             PageContentEntity entity = PageContents.Where(x => x.Page.Id == pageId).OrderByDescending(x => x.EditedOn).FirstOrDefault();
-            return FromEntity.ToPageContent(entity);
+            return PageContent.FromPageContentEntity(entity);
         }
 
         public PageContent GetPageContentById(Guid id)
         {
             PageContentEntity entity = PageContents.FirstOrDefault(p => p.Id == id);
-            return FromEntity.ToPageContent(entity);
+            return PageContent.FromPageContentEntity(entity);
         }
 
         public PageContent GetPageContentByPageIdAndVersionNumber(int id, int versionNumber)
         {
             PageContentEntity entity = PageContents.FirstOrDefault(p => p.Page.Id == id && p.VersionNumber == versionNumber);
-            return FromEntity.ToPageContent(entity);
+            return PageContent.FromPageContentEntity(entity);
         }
 
         public IEnumerable<PageContent> GetPageContentByEditedBy(string username)
@@ -472,6 +532,8 @@ namespace Roadkill.Core.Database.LightSpeed
             List<PageContentEntity> entities = PageContents.Where(p => p.EditedBy == username).ToList();
             return FromEntity.ToPageContentList(entities);
         }
+
+
 
         public Page SaveOrUpdatePage(Page page)
         {
@@ -482,13 +544,14 @@ namespace Roadkill.Core.Database.LightSpeed
                 ToEntity.FromPage(page, entity);
                 UnitOfWork.Add(entity);
                 UnitOfWork.SaveChanges();
-                page = FromEntity.ToPage(entity);
+                page = Page.FromPageEntity(entity);
             }
             else
             {
                 ToEntity.FromPage(page, entity);
                 UnitOfWork.SaveChanges();
-                page = FromEntity.ToPage(entity);
+                page = Page.FromPageEntity(entity);
+
             }
 
             return page;
@@ -506,7 +569,7 @@ namespace Roadkill.Core.Database.LightSpeed
             {
                 ToEntity.FromPageContent(content, entity);
                 UnitOfWork.SaveChanges();
-                content = FromEntity.ToPageContent(entity);
+                content = PageContent.FromPageContentEntity(entity);
             }
         }
 
@@ -615,6 +678,12 @@ namespace Roadkill.Core.Database.LightSpeed
         public IEnumerable<User> FindAllEditors()
         {
             List<UserEntity> entities = Users.Where(x => x.IsEditor).ToList();
+            return FromEntity.ToUserList(entities);
+        }
+
+        public IEnumerable<User> FindOrdinaryUsers()
+        {
+            List<UserEntity> entities = Users.Where(x => !x.IsEditor && !x.IsAdmin).ToList();
             return FromEntity.ToUserList(entities);
         }
 
@@ -728,6 +797,11 @@ namespace Roadkill.Core.Database.LightSpeed
             List<RelEntity> entities = Rels.Where(p => p.pageId == pageid).ToList();
             return FromEntity.ToRelList(entities);
         }
+        public IEnumerable<Relationship> GetRelByPageAndUsername(int pageid, string username)
+        {
+            List<RelEntity> entities = Rels.Where(p => p.pageId == pageid && p.username == username).ToList();
+            return FromEntity.ToRelList(entities);
+        }
 
         public IEnumerable<Relationship> FindAllRels()
         {
@@ -775,7 +849,22 @@ namespace Roadkill.Core.Database.LightSpeed
             OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);
             return FromEntity.ToOrg(orgentity);
         }
+        public Organisation GetOrganisationNameById(int id)
+        {
+            OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == id);
+            return FromEntity.ToOrg(orgentity);
+        }
 
+        public int GetOrgIdByName(string orgName)
+        {
+            OrgEntity orgEntity = Orgs.FirstOrDefault(p => p.OrgName == orgName);
+            return orgEntity.Id;
+        }
+
+        public IList<string> GetOrganisationNames()
+        {
+            return Orgs.Select(x => x.OrgName).ToList();
+        }
 
         /// <summary>
         /// Gets an IEnumerable{SelectListItem} of project statuses, as a default
@@ -786,7 +875,7 @@ namespace Roadkill.Core.Database.LightSpeed
             List<Activity> WhatsHotList = new List<Activity>();
 
             DateTime filter = DateTime.Now.AddDays(-28);
-            
+
             IEnumerable<Page> PageList;
             PageList = AllPages();
             PageList = PageList.Where(x => x.ModifiedOn.Date > filter).ToList();
@@ -814,7 +903,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
             WhatsHotList = WhatsHotList.OrderByDescending(x => x.id).ToList();
             WhatsHotList = WhatsHotList.Take(3).ToList();
-            
+
             return WhatsHotList;
 
         }
@@ -845,7 +934,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 {
                     User user = new User();
                     user = GetUserByUsername(rel.username);
-                    item.userNames = user.Firstname + " " + user.Lastname;
+                    item.userNames = user?.Firstname + " " + user?.Lastname;
                 }
                 catch { fail = true; }
 
@@ -862,6 +951,14 @@ namespace Roadkill.Core.Database.LightSpeed
                     if (reltype.relTypeText == "Join")
                     {
                         activityPastTense = "joined";
+                    }
+                    if (reltype.relTypeText == "Watcher")
+                    {
+                        activityPastTense = "watched";
+                    }
+                    if (reltype.relTypeText == "Contributer")
+                    {
+                        activityPastTense = "contributed to";
                     }
 
                     item.activityName = activityPastTense;
@@ -913,7 +1010,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 {
                     User user = new User();
                     user = GetUserByUsername(page.ModifiedBy);
-                    item.userNames = user.Firstname + " " + user.Lastname;
+                    item.userNames = user?.Firstname + " " + user?.Lastname;
                 }
                 catch { }
 
@@ -981,7 +1078,14 @@ namespace Roadkill.Core.Database.LightSpeed
                 Organisation org = new Organisation();
                 org = GetOrgByID(user.orgID);
 
-                string orgname = org.OrgName;
+
+                var orgname = string.Empty;
+                if (org != null)
+                {
+
+                    orgname = org.OrgName;
+
+                }
 
                 if (orgname.Contains("_") != true)
                 {
@@ -1015,6 +1119,139 @@ namespace Roadkill.Core.Database.LightSpeed
         {
             if (_applicationSettings.Installed && string.IsNullOrEmpty(_applicationSettings.ConnectionString))
                 throw new DatabaseException("The connection string is empty in the web.config file (and the roadkill.config's installed=true).", null);
+        }
+
+
+        #region statusupdates
+
+        public void CreateStatusUpdate(StatusUpdateViewModel model)
+        {
+            var statusUpdate = StatusUpdate.FromViewModel(model);
+
+            statusUpdate.UpdateDate = DateTime.Now;
+            UnitOfWork.Add(statusUpdate);
+            UnitOfWork.SaveChanges();
+
+        }
+        public IList<StatusUpdateViewModel> GetStatusUpdates(int pageId)
+        {
+            return StatusUpdates.Where(x => x.PageId == pageId).OrderByDescending(x => x.UpdateDate).Select(x => StatusUpdateViewModel.FromModel(x)).ToList();
+        }
+
+        #endregion
+
+        public void UnWatchProject(int projectid, string username)
+        {
+            if (IsWatched(projectid, username))
+            {
+                Rels.Remove(x => x.username == username && x.pageId == projectid && x.relTypeId == 3);
+
+                UnitOfWork.SaveChanges();
+            }
+        }
+
+        public void WatchProject(int projectid, string username, int organisationId)
+        {
+            if (!IsWatched(projectid, username))
+            {
+                var rel = new RelEntity()
+                {
+
+                    pageId = projectid,
+                    username = username,
+                    relTypeId = 3,
+                    relDateTime = DateTime.Now,
+                    Approved = true,
+                    orgID = organisationId
+                };
+
+                UnitOfWork.Add(rel);
+                UnitOfWork.SaveChanges();
+            }
+        }
+
+        public bool IsWatched(int projectid, string username)
+        {
+
+            return Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 3);
+
+        }
+
+        public bool IsContributePending(int projectid, string username)
+        {
+            if (Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4 && x.Pending == true))
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        public void SetPendingApprovedInProject(int projectid, string username, int organisationId)
+        {
+            if (!IsContributePending(projectid, username))
+            {
+                var rel = new RelEntity()
+                {
+
+                    pageId = projectid,
+                    username = username,
+                    relTypeId = 4,
+                    relDateTime = DateTime.Now,
+                    Approved = false,
+                    Pending = true,
+                    orgID = organisationId
+                };
+
+                UnitOfWork.Add(rel);
+                UnitOfWork.SaveChanges();
+            }
+        }
+
+        public void SetContributeAutoApprovedInProject(int projectid, string username, int organisationId)
+        {
+            var rel = new RelEntity()
+            {
+
+                pageId = projectid,
+                username = username,
+                relTypeId = 4,
+                relDateTime = DateTime.Now,
+                Approved = true,
+                Pending = true,
+                orgID = organisationId
+            };
+
+            UnitOfWork.Add(rel);
+            UnitOfWork.SaveChanges();
+        }
+
+        public void SetContributeApprovedInProject(int projectid, int id)
+        {
+
+            var rel = Rels.FirstOrDefault(x => x.id == id && x.pageId == projectid && x.relTypeId == 4);
+            rel.Approved = true;
+            UnitOfWork.SaveChanges();
+
+        }
+        public void SetContributeRejectedInProject(int projectid, int id)
+        {
+
+            var rel = Rels.FirstOrDefault(x => x.id == id && x.pageId == projectid && x.relTypeId == 4);
+            rel.Pending = false;
+            rel.Approved = false;
+            UnitOfWork.SaveChanges();
+
+        }
+
+        public bool IsContributeApproved(int projectid, int id)
+        {
+            if (Rels.Any(x => x.id == id && x.pageId == projectid && x.relTypeId == 4 && x.Approved == true))
+            {
+                return true;
+
+            }
+            return false;
         }
     }
 }

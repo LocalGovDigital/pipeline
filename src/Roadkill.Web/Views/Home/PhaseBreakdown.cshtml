@@ -1,0 +1,66 @@
+﻿<article role="article">
+
+    <h2 class="visuallyhidden">Current status</h2>
+    @{
+        var dict = ActivityViewModel.GetPageCountByAgilePhase();
+
+    }
+    <div class="row">
+        <div class="col-sm-offset-1 col-sm-10">
+            <ul class="phases group">
+                <li class="discovery">
+                    <h3 class="box d" data-toggle="tooltip" title="Find out more about the discovery phase" url='https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works'>Discovery</h3>
+                    <div class="lrg-number phase-count"><a href="/home/search?phase=Discovery"> @dict["Discovery"]</a></div>
+                    <p>User needs are researched and identified</p>
+                    @*<p><a href="https://www.gov.uk/service-manual/phases/discovery">Learn more about the discovery phase</a></p>*@
+                </li>
+
+                <li class="alpha">
+                    <h3 class="box a"  data-toggle="tooltip" title="Find out more about the alpha phase" url='https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works'>Alpha</h3>
+                    <div class="lrg-number phase-count"><a href="/home/search?phase=Alpha">@dict["Alpha"]</a></div>
+                    <p>A core service is built to meet the main user needs</p>
+                    @*<p><a href="https://www.gov.uk/service-manual/phases/alpha">Learn more about the alpha phase</a></p>*@
+                </li>
+
+                <li class="beta">
+                    <h3 class="box b" data-toggle="tooltip" title="Find out more about the beta phase" url='https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works'>Beta</h3>
+                    <div class="lrg-number phase-count"><a href="/home/search?phase=Beta">@dict["Beta"]</a></div>
+                    <p>The service is improved, then tested in public</p>
+                    @*<p><a href="https://www.gov.uk/service-manual/phases/beta">Learn more about the beta phase</a></p>*@
+                </li>
+
+                <li class="live">
+                    <h3 class="box l" data-toggle="tooltip" title="Find out more about the live phase" url='https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works'>Live</h3>
+                    <div class="lrg-number phase-count"><a href="/home/search?phase=Live">@dict["Live"]</a></div>
+                    <p>The service is public and works well.</p>
+                    @*<p><a href="https://www.gov.uk/service-manual/phases/live">Learn more about the live phase</a></p>*@
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        jQuery('.box').tooltip();
+        jQuery('.box').click(function () {
+            
+            window.open(jQuery(this).attr("url"),'_blank');
+        });
+        //$("[data-toggle=popover]")
+        //    .popover({ html: true})
+        //    .on("focus", function () {
+        //        $(this).popover("show");
+        //    }).on("focusout", function () {
+        //        var _this = this;
+        //        if (!$(".popover:hover").length) {
+        //            $(this).popover("hide");
+        //        }
+        //        else {
+        //            $('.popover').mouseleave(function() {
+        //                $(_this).popover("hide");
+        //                $(this).off('mouseleave');
+        //            });
+        //        }
+        //    });
+    </script>
+</article>

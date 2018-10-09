@@ -6,7 +6,7 @@ var Roadkill;
         /**
         Event bindings and handlers for the edit text area toolbar.
         */
-        var WysiwygEditor = (function () {
+        var WysiwygEditor = /** @class */ (function () {
             function WysiwygEditor() {
             }
             WysiwygEditor.prototype.bindEvents = function () {

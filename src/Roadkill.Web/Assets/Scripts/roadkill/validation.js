@@ -3,7 +3,7 @@ var Roadkill;
 (function (Roadkill) {
     var Web;
     (function (Web) {
-        var Validation = (function () {
+        var Validation = /** @class */ (function () {
             function Validation() {
             }
             /* "rules" should be in the format:

@@ -126,10 +126,13 @@ namespace Roadkill.Core.Security
 		/// <returns>A list of email/usernames who are editors.</returns>
 		public abstract IEnumerable<UserViewModel> ListEditors();
 
-		/// <summary>
-		/// Signs the user out with (typically with <see cref="FormsAuthentication"/>).
-		/// </summary>
-		public abstract void Logout();
+	    public abstract IEnumerable<UserViewModel> ListOrdinaryUsers();
+
+
+        /// <summary>
+        /// Signs the user out with (typically with <see cref="FormsAuthentication"/>).
+        /// </summary>
+        public abstract void Logout();
 
 		/// <summary>
 		/// Resets the password for the user with the given email.

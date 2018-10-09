@@ -147,7 +147,7 @@ namespace Roadkill.Core.Converters
 
 		public string UnderlineToken
 		{
-			get { return ""; }
+			get { return "__"; }
 		}
 
 		public string LinkStartToken

@@ -6,6 +6,7 @@ using Roadkill.Core.Cache;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
+using Roadkill.Core.Hackney.Parameters;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
 
@@ -158,10 +159,12 @@ namespace Roadkill.Core.Services
                 DateTime projectEnd = versionContent.ProjectEnd;
                 bool projectEstimatedTime = versionContent.ProjectEstimatedTime;
                 string projectLanguage = versionContent.ProjectLanguage;
-                string projectStatus = versionContent.ProjectStatus;
+			    string projectStatus = versionContent.ProjectStatus;
+			    string projectAgileLifeCyclePhase = versionContent.ProjectAgileLifeCyclePhase;
+			    string fundingBoundary = versionContent.FundingBoundary;
                 int orgID = versionContent.orgID;
 
-                Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, projectLanguage, orgID);
+                Repository.AddNewPageContentVersion(page, text, editedBy, editedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, Phase2Params.FromPageContent(versionContent), projectLanguage, orgID);
 
 				// Clear the cache
 				_pageViewModelCache.Remove(page.Id);

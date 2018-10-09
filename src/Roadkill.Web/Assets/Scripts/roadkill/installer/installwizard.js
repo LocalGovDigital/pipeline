@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var Installer;
         (function (Installer) {
-            var InstallWizard = (function () {
+            var InstallWizard = /** @class */ (function () {
                 function InstallWizard() {
                     // Set the bottom submit button to submit the form above it
                     $("#bottom-buttons button[type=submit]").click(function () {

@@ -1,0 +1,32 @@
+﻿@*<article role="article">
+    @{
+        var dict = ActivityViewModel.GetPageCountByAgileLifeCycle();
+    }
+    <h2 class="visuallyhidden">Hackney Agile Lifecycle</h2>
+    <ul class="phases group">
+        <li class="">
+            <h3>Discover</h3>
+            <div class="lrg-number phase-count"><a href="/search/index?agileLifecycle=Discover">@dict["Discover"]</a></div>
+            <p>The discovery phase enables you to form a team around a clear understanding of a problem. </p>
+            <p><a href="https://lbhackney-it.github.io/HAL/Phase-1-Discover/">Learn more about the Discover page</a></p>
+        </li>
+        <li class="">
+            <h3>Prototype</h3>
+            <div class="lrg-number phase-count"><a href="/search/index?agileLifecycle=Prototype">@dict["Prototype"]</a></div>
+            <p>After a Discovery phase we develop a 'minimum viable product'. </p>
+            <p><a href="https://lbhackney-it.github.io/HAL/Phase-2-MVP/">Learn more about the Prototype page</a></p>
+        </li>
+        <li class="">
+            <h3>Build</h3>
+            <div class="lrg-number phase-count"><a href="/search/index?agileLifecycle=Build">@dict["Build"]</a></div>
+            <p>This phase is where you start building the service and releasing it for customers to use in a ‘production environment’.</p>
+            <p><a href="https://lbhackney-it.github.io/HAL/Phase-3-Build/">Learn more about the Build phase</a></p>
+        </li>
+        <li class="">
+            <h3>Improve</h3>
+            <div class="lrg-number phase-count"><a href="/search/index?agileLifecycle=Improve">@dict["Improve"]</a></div>
+            <p>This phase describes the key activities that happen to support the continuous improvement of the service. </p>
+            <p><a href="https://lbhackney-it.github.io/HAL/Phase-4-Improve/">Learn more about the Improve phase</a></p>
+        </li>
+    </ul>
+</article>*@

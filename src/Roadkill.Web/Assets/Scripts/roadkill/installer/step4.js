@@ -5,13 +5,13 @@ var Roadkill;
     (function (Web) {
         var Installer;
         (function (Installer) {
-            var Step4Messages = (function () {
+            var Step4Messages = /** @class */ (function () {
                 function Step4Messages() {
                 }
                 return Step4Messages;
             }());
             Installer.Step4Messages = Step4Messages;
-            var Step4 = (function () {
+            var Step4 = /** @class */ (function () {
                 function Step4(wizard, messages) {
                     this._wizard = wizard;
                     this._messages = messages;

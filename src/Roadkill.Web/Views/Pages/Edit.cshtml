@@ -1,4 +1,5 @@
-﻿@model PageViewModel
+﻿@using System.Globalization
+@model PageViewModel
 @{
     ViewBag.Title = "Edit project";
 
@@ -12,6 +13,9 @@
 }
 
 <section id="global__content">
+
+
+
     <div class="row">
         <div id="global__body_content" class="medium-6 columns body_content">
             <script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
@@ -36,6 +40,23 @@
             @Html.BootstrapValidationSummary(SiteStrings.EditPage_Error)
 
             <form class="form-horizontal" role="form" method="post" id="editpage-form">
+                @Html.BootstrapValidationSummary("Validation Issues")
+
+                <div id="editpage-button-container" class="form-group">
+                    <div class="col-sm-12">
+                        <button type="button" class="button saveButton" tabindex="50" onclick="$('#btnsave').click();">@SiteStrings.Button_Save</button>
+                        @if (Model.Id > 0)
+                        {
+                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
+                        }
+                    </div>
+                </div>
+
+
                 @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
                 @(Html.HiddenFor<PageViewModel, string>(p => p.PreviousTitle))
                 @(Html.HiddenFor<PageViewModel, string>(p => p.RawTags))
@@ -43,40 +64,21 @@
                 <div class="form-group">
                     <div class="col-sm-12">
                         <label for="title">Title</label>
-                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false, 1))
+                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false))
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="checkbox">
-                            @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", tabindex = 2, placeholder = SiteStrings.EditPage_Tags_Label }))
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label for="ProjectStart">Project Start</label>
-                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false, 3))
+                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false))
                     </div>
                     <div class="col-sm-6">
                         <label for="ProjectEnd">Project End</label>
-                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false, 4))
+                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false))
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <div class="checkbox">
-                            <label>
-                                @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.ProjectEstimatedTime, SiteStrings.EditPage_ProjectEstimatedTime_Label, 5))
-                                Are these dates fixed?
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group">
                     <div class="col-sm-6">
                         <label for="ProjectStatus">Project Status</label>
@@ -90,14 +92,74 @@
                         @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label for="Department">Department</label>
+                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Department, "Department", false))
+
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Owner">Key Contact</label>
+                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Owner, "Owner", false))
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label for="fundingBoundary">Budget</label>
+                        @Html.BootstrapDropDownListFor(p => p.FundingBoundary, Model.FundingBoundariesAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="OwnerEmail">Key Contact Email</label>
+                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.OwnerEmail, "OwnerEmail", false))
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label for="CollaborationLevel">Allow Collaboration</label>
+                        @Html.BootstrapDropDownListFor(p => p.CollaborationLevel, Model.CollaborationLevelAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+
+
+                    </div>
+                </div>
+                @if (Model.VersionNumber != 0)
+                {
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4>Status Updates</h4>
+                            <div class="input-group input-group-lg">
+                                <input id="UpdateSearchTxt" type="text" class="form-control" autocomplete="off" placeholder="Enter an update">
+                                <span class="input-group-btn">
+                                    <button id="updateSearchBtn" type="button" class="btn btn-primary">Update Status</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12" id="statuses">
+                            @foreach (var statusUpdate in Model.StatusUpdates)
+                            {
+                                <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+
+                                        <div> <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
+                                        <div>@statusUpdate.Text</div>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                    </div>
+                }
 
                 @if (RoadkillContext.IsAdmin)
-    {
+                {
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="checkbox">
                                 <label>
-                                    @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly, 3))
+                                    @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly))
                                     @SiteStrings.EditPage_AdminOnly
                                 </label>
                             </div>
@@ -105,12 +167,13 @@
                     </div>
                 }
 
+                <label for="Content">Description</label>
                 @Html.Partial("WysiwgToolbar")
-                @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control", tabindex = 5 }))
+                @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control" }))
 
                 <div id="editpage-button-container" class="form-group">
                     <div class="col-sm-12">
-                        <button type="submit" class="button saveButton" tabindex="6">@SiteStrings.Button_Save</button>
+                        <button id="btnsave" type="submit" class="button saveButton" tabindex="6">@SiteStrings.Button_Save</button>
                         @if (Model.Id > 0)
                         {
                             @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
@@ -121,19 +184,168 @@
                         }
                     </div>
                 </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+
+                        <label for="ProjectStart">Tags</label>
+                        <div class="checkbox">
+                            @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
+                        </div>
+                    </div>
+                </div>
                 @Html.DialogPartial("ChooseImage")
                 @Html.DialogPartial("MarkupHelp")
+
             </form>
-            </div>
         </div>
-        <div class="medium-6 columns" id="previewpanel-container">
-            <div id="previewpanel-inner" class="panel panel-default">
-                <div id="preview-heading" class="panel-heading">@SiteStrings.EditPage_Preview</div>
-                <div class="panel-body" id="preview-wrapper">
-                    <div id="previewLoading" class="hide"><img src="@(Url.Content("~/Assets/Images/white-loading.gif"))" border="0" alt="loading" /></div>
-                    <div id="preview"><br class="clear" /></div>
-                </div>
+
+        <h2>Project Admin</h2>
+
+
+        @if (Model.Relationships != null && Model.Relationships.Any(x => x.relTypeId == 3 || x.relTypeId == 4))
+        {<p>The following users are watching contributing to this project</p>
+
+            <table class="table">
+                <tr>
+                    <td>Watching/Contributing</td>
+                    <td>User</td>
+                    <td>Organisation</td>
+                    <td></td>
+                </tr>
+                @foreach (var rel in Model.Relationships.Where(x => x.relTypeId == 3 || x.relTypeId == 4))
+                {
+                    <tr>
+                        <td>
+                            @if (rel.relTypeId == 3)
+                            {
+                                <span class="glyphicon glyphicon-eye-open"></span>
+
+                            }
+                            else if (rel.relTypeId == 4)
+                            {
+                                <span class="glyphicon glyphicon-heart"></span>
+
+                            }
+                        </td>
+                        <td>@rel.username</td>
+                        <td>
+                            @if (rel.orgID != 0)
+                            {
+                                @Model.OrgsAsNewSelectList.FirstOrDefault(x => x.Value == rel.orgID.ToString()).Text;
+                            }
+                        </td>
+
+                        <td>
+                            @if (rel.relTypeId == 3)
+                            {
+                                <span class="badge">Watching</span>
+                            }
+                            else if (rel.relTypeId == 4)
+                            {
+                                if (rel.pending == true && rel.approved == false)
+                                {
+                                    <span id="badge-@rel.id" class="badge">Pending</span>
+                                    <button id="approve-@rel.id" type="button" class="approve-as-contributer btn btn-primary btn-xs">Approve</button>
+                                    <button id="reject-@rel.id" type="button" class="reject-as-contributer btn btn-default btn-xs">Reject</button>
+                                }
+                                if (rel.pending == false && rel.approved == false)
+                                {
+                                    <span id="@rel.username-badge" class="badge">Rejected</span>
+                                }
+                                else if (rel.approved == true)
+                                {
+                                    <span class="badge">Contributing</span>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                There are no watchers or contributers on this project at the moment.
             </div>
-        </div>
+
+        }
     </div>
+    <script type="text/javascript">
+
+        $().ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    if (event.target.localName != "textarea") {
+                            event.preventDefault();
+                        return false;
+                    }
+                }
+            });
+
+
+            $("#btnsave").click(function() {
+                $("#editpage-form").submit();
+            });
+            $("#Owner").attr("required","true");
+            $("#OwnerEmail").attr("required", "true");
+            $("#editpage-form").validate({
+                rules: {
+                    Owner:{ required: true },
+                    OwnerEmail:{ required: true }
+                },
+                messages: {
+                    Owner: "Please enter a key contact",
+                    OwnerEmail: "Please enter your key contact email"
+                }
+            });
+            
+            $('#ProjectStart').val($('#ProjectStart').val().replace('00:00:00', ''));
+            $('#ProjectEnd').val($('#ProjectEnd').val().replace('00:00:00', ''));
+
+    $(".approve-as-contributer").click(function () {
+        var relid = $(this).attr('id').split("-")[1];
+        $.ajax('/api/user-status/approve-contribute/@Model.Id/' + relid +"/",
+            {
+                type: 'POST',
+                success: function (data) {
+                    $("#badge-" + relid).html("Approved");
+                    $("#reject-" + relid).hide();
+                    $("#approve-" + relid).hide();
+                }
+            });
+    });
+
+    $(".reject-as-contributer").click(function () {
+        var relid = $(this).attr('id').split("-")[1];
+        $.ajax('/api/user-status/approve-contribute/@Model.Id/' + relid,
+            {
+                type: 'POST',
+                success: function (data) {
+                    $("#badge-" + relid).html("Rejected");
+                    $("#reject-" + relid).hide();
+                    $("#approve-" + relid).hide();
+                }
+            });
+    });
+
+    $("#updateSearchBtn").click(function () {
+
+        var obj ={ Text :$('#UpdateSearchTxt').val(), PageId:@Model.Id}
+
+        $.ajax('/api/project-status/update/',{
+                data: JSON.stringify(obj),
+                contentType: 'application/json',
+                type: 'POST',
+                success: function () {
+                    $("#statuses").prepend("<h4>Just now</h4><ul class='list-group'><li class='list-group-item'><div> <span class='relationship-icon glyphicon glyphicon-bell'></span> </div><div>" + obj.Text+"</div></li></ul>");
+                    $('#UpdateSearchTxt').val('');
+                }
+            });
+    });
+    });
+
+    </script>
 </section>
+

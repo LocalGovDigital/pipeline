@@ -16,12 +16,16 @@ namespace Roadkill.Core.Services
 		/// <exception cref="SearchException">An error occurred adding the page to the search index.</exception>
 		PageViewModel AddPage(PageViewModel model);
 
-		/// <summary>
-		/// Retrieves a list of all pages in the system.
-		/// </summary>
-		/// <returns>An <see cref="IEnumerable{PageViewModel}"/> of the pages.</returns>
-		/// <exception cref="DatabaseException">An database error occurred while retrieving the list.</exception>
-		IEnumerable<PageViewModel> AllPages(bool loadPageContent = false);
+	    bool IsApprovedContributer(int pageid, string username);
+
+
+        IEnumerable<RelViewModel> GetRelByPage(int pageid);
+        /// <summary>
+        /// Retrieves a list of all pages in the system.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{PageViewModel}"/> of the pages.</returns>
+        /// <exception cref="DatabaseException">An database error occurred while retrieving the list.</exception>
+        IEnumerable<PageViewModel> AllPages(bool loadPageContent = false);
 
 		/// <summary>
 		/// Gets alls the pages created by a user.
