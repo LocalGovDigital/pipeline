@@ -58,7 +58,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public string usertext { get; set; }
 
-
+        public bool approved { get; set; }
 
         /// <summary>
         /// Constructor used by none-controllers
@@ -85,6 +85,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             reltypetext = GetRelType(relTypeID);
             orgtext = GetOrg(rel.orgID);
             usertext = GetUser(rel.username);
+            approved = rel.approved;
         }
 
 
@@ -156,7 +157,7 @@ namespace Roadkill.Core.Mvc.ViewModels
                 LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
                 User _user;
                 _user = repository.GetUserByUsername(username);
-                _usernames = _user.Firstname + " " + _user.Lastname;
+                _usernames = _user?.Firstname + " " + _user?.Lastname;
             }
             catch { }
 

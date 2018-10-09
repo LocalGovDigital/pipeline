@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var BreadCrumbTrail = (function () {
+            var BreadCrumbTrail = /** @class */ (function () {
                 function BreadCrumbTrail() {
                 }
                 BreadCrumbTrail.removeLastItem = function () {
@@ -18,7 +18,7 @@ var Roadkill;
                 };
                 BreadCrumbTrail.removePriorBreadcrumb = function () {
                     var count = $("ul.navigator li").length;
-                    if (count == 1)
+                    if (count == 1) // cannot delete base attachments directory
                         return;
                     var li = $("ul.navigator li:last-child").prev("li");
                     var level = li.attr("data-level");

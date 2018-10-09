@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var HtmlBuilder = (function () {
+            var HtmlBuilder = /** @class */ (function () {
                 function HtmlBuilder() {
                 }
                 HtmlBuilder.prototype.getNewFolder = function () {

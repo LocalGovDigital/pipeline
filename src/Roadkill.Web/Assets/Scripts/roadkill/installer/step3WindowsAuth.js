@@ -5,13 +5,13 @@ var Roadkill;
     (function (Web) {
         var Installer;
         (function (Installer) {
-            var Step3WindowsAuthMessages = (function () {
+            var Step3WindowsAuthMessages = /** @class */ (function () {
                 function Step3WindowsAuthMessages() {
                 }
                 return Step3WindowsAuthMessages;
             }());
             Installer.Step3WindowsAuthMessages = Step3WindowsAuthMessages;
-            var step3WindowsAuth = (function () {
+            var step3WindowsAuth = /** @class */ (function () {
                 function step3WindowsAuth(wizard, messages) {
                     this._wizard = wizard;
                     this._messages = messages;

@@ -21,6 +21,7 @@ using Roadkill.Core.Mvc.ViewModels;
 using System.Web.Configuration;
 using System.Web.Mvc.Html;
 using System.Linq.Expressions;
+using Lucene.Net.Util;
 using Roadkill.Core.Services;
 using StructureMap;
 using StructureMap.Attributes;
@@ -81,7 +82,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// </summary>
         public ActivityViewModel()
         {
-           
+
         }
 
 
@@ -123,7 +124,31 @@ namespace Roadkill.Core.Mvc.ViewModels
 
             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
             return repository.AllPagesCount();
+        }
 
+        /// <summary>
+        /// Gets the number of organisations signed up to Pipeline
+        /// </summary>
+        public static Dictionary<string, int> GetPageCountByAgilePhase()
+        {
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            var dictionary = new Dictionary<string,int>();
+            dictionary["Discovery"] = repository.PageCountByStatus("Discovery");
+            dictionary["Alpha"] = repository.PageCountByStatus("Alpha");
+            dictionary["Beta"] = repository.PageCountByStatus("Beta");
+            dictionary["Live"] = repository.PageCountByStatus("Live");
+            return dictionary;
+        }
+
+        public static Dictionary<string, int> GetPageCountByAgileLifeCycle()
+        {
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            var dictionary = new Dictionary<string, int>();
+            dictionary["Discover"] = repository.PageCountByAgileLifeCyclePhase("Discover");
+            dictionary["Prototype"] = repository.PageCountByAgileLifeCyclePhase("Prototype");
+            dictionary["Build"] = repository.PageCountByAgileLifeCyclePhase("Build");
+            dictionary["Improve"] = repository.PageCountByAgileLifeCyclePhase("Improve");
+            return dictionary;
         }
 
 
@@ -162,6 +187,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         }
 
 
+        
     }
 }
 

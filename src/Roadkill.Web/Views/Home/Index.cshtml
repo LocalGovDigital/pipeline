@@ -3,17 +3,18 @@
     ViewBag.Title = Model.Title;
 }
 
-<section id="home__intro">
-    <div class="row">
-        <div class="small-12 medium-8 column home-intro">
-            <h1>Welcome to Pipeline</h1>
-            <div class="formatted-intro">Pipeline is a service from <a href="https://localgov.digital/">LocalGov Digital</a> to aid innovation and collaboration in local government digital.</div>
-        </div>
-        <div class="small-12 medium-4 column popular-links">
-            @Html.Action("Activity", "Home", new { View = "Summary" })
-        </div>
-    </div>
-</section>
+<div class="row">
+    <h1>Welcome to Pipeline</h1>
+    Pipeline is a service from <a href="https://localgov.digital/">LocalGov Digital</a> to aid innovation and collaboration in local government digital.
+</div>
+
+<div class="row">
+    @Html.Action("Activity", "Home", new { View = "Summary" })
+</div>
+@Html.Action("Activity", "Home", new { View = "PhaseBreakdown" })
+
+@Html.Action("Activity", "Home", new { View = "AgileProgressBreakdown" })
+
 
 @section Activity
 {

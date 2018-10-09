@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using Roadkill.Core.Database.LightSpeed;
+using Roadkill.Core.Hackney.Models;
 
 
 namespace Roadkill.Core.Database
@@ -8,8 +10,8 @@ namespace Roadkill.Core.Database
 	/// <summary>
 	/// Represents a page's meta data (not content) in the data store.
 	/// </summary>
-	public class Page : IDataStoreEntity
-	{
+	public class Page :  Phase2PageModel,IDataStoreEntity
+    {
 		private Guid _objectId;
 
 		/// <summary>
@@ -130,5 +132,37 @@ namespace Roadkill.Core.Database
 			get { return _objectId; }
 			set { _objectId = value; }
 		}
-	}
+
+
+        public static Page FromPageEntity(PageEntity entity)
+        {
+
+            if(entity==null) return null;
+            var page = new Page();
+            page.Id = entity.Id;
+            page.CreatedBy = entity.CreatedBy;
+            page.CreatedOn = entity.CreatedOn;
+            page.IsLocked = entity.IsLocked;
+            page.ModifiedBy = entity.ModifiedBy;
+            page.ModifiedOn = entity.ModifiedOn;
+            page.Tags = entity.Tags;
+            page.Title = entity.Title;
+            page.ProjectStart = entity.ProjectStart;
+            page.ProjectEnd = entity.ProjectEnd;
+            page.ProjectEstimatedTime = entity.ProjectEstimatedTime;
+            page.ProjectStatus = entity.ProjectStatus;
+            page.ProjectLanguage = entity.ProjectLanguage;
+            page.orgID = entity.orgID;
+
+
+            page.Department = entity.Department;
+            page.Owner = entity.Owner;
+            page.OwnerEmail = entity.OwnerEmail;
+            page.ProjectAgileLifeCyclePhase = entity.ProjectAgileLifeCyclePhase;
+            page.CollaborationLevel = entity.CollaborationLevel;
+            page.FundingBoundary = entity.FundingBoundary;
+            return page;
+
+        }
+    }
 }

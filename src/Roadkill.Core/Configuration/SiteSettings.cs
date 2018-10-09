@@ -201,7 +201,8 @@ namespace Roadkill.Core.Configuration
 			return "* %mainpage%\r\n" +
 					"* %categories%\r\n" +
 					"* %allpages%\r\n" +
-					"* %newpage%\r\n" +
+                    "* %search%\r\n" +
+                    "* %newpage%\r\n" +
 					"* %managefiles%\r\n" +
 					"* %sitesettings%\r\n\r\n";
 		}

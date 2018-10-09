@@ -1,11 +1,8 @@
 ﻿/* Page and pen toolbar */
-#toolbar
+
+*#toolbar
 {
-    top: 100px;
-    right: 40px;
-    z-index: 99;
-    float:right;
-    position:relative;
+    margin-top: 10px;
 }
 
 /* Relationships */

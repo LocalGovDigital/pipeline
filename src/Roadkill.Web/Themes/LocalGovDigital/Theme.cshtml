@@ -16,9 +16,11 @@
     <link rel='dns-prefetch' href='//code.jquery.com'>
     <link rel='dns-prefetch' href='//cdnjs.cloudflare.com'>
     <link rel='dns-prefetch' href='//cdn.jsdelivr.net'>
-    <link rel='stylesheet' id='foundation-css'  href='https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css' type='text/css'>
-    <link rel='stylesheet' id='fontawesome-css'  href='https://cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css' type='text/css'>
-    <link rel='stylesheet' id='styles-css'  href='https://localgov.digital/wp-content/themes/localgovdigital/style.css' type='text/css'>
+    <link rel='stylesheet' id='foundation-css' href='https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css' type='text/css'>
+    <link rel='stylesheet' id='fontawesome-css' href='https://cdn.jsdelivr.net/fontawesome/4.7.0/css/font-awesome.min.css' type='text/css'>
+    <link rel='stylesheet' id='styles-css' href='https://localgov.digital/wp-content/themes/localgovdigital/style.css' type='text/css'>
+
+
     <script type='text/javascript' src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <link rel="icon" href="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-150x150.png" sizes="32x32">
     <link rel="icon" href="https://localgov.digital/wp-content/uploads/2017/01/localgovdigital-icon-300x300.png" sizes="192x192">
@@ -31,66 +33,49 @@
 </head>
 <body class="@(ViewBag.IsHome == null ? "" : "home")">
     @RenderSection("PageToolbar", false)
-<a href="#content-start" class="screen-reader-text">skip to main content</a>
+    <a href="#content-start" class="screen-reader-text">skip to main content</a>
 
-<header id="header__page">
-    <div id="global__brand-nav">
-        <div class="top-links">
-            <section>
-                <div class="menu-top-menu-container">
-                    <ul id="menu-top-menu" class="menu">
-                        <li class="menu-twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-2967"><a href="https://twitter.com/LocalGovDigital">Twitter</a></li>
-                        <li class="menu-google-plus menu-item menu-item-type-custom menu-item-object-custom menu-item-2968"><a href="https://plus.google.com/communities/114124478761452023264">Google +</a></li>
-                        <li class="menu-slack menu-item menu-item-type-custom menu-item-object-custom menu-item-2989"><a href="https://localgovdigital.slack.com/">Slack</a></li>
-                    </ul>
-                </div>                
-            </section>
-        </div>
-        <div class="brand">
-            <a href="/"><img src="https://localgov.digital/wp-content/uploads/2017/01/lgd_logo-1-e1485652490381.png" alt="LocalGov Digital"></a>
-            <ul class="toggle-area" aria-hidden="true">
-                <li id="mobile-menu">
-                    <i class="fa fa-nav"></i>
-                </li>
-            </ul>
-        </div>
-        <div class="main-nav">
-            <nav class="navbar" data-topbar role="navigation">
+    <header id="header__page">
+        <div id="global__brand-nav">
+            <div class="top-links">
                 <section>
-                    @Html.Action("BootstrapNavMenu", "Home")
-                    @Html.Action("LoggedInAs", "User")
+                    <div class="menu-top-menu-container">
+                        <ul id="menu-top-menu" class="menu">
+                            <li class="menu-twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-2967"><a href="https://twitter.com/LocalGovDigital">Twitter</a></li>
+                            <li class="menu-google-plus menu-item menu-item-type-custom menu-item-object-custom menu-item-2968"><a href="https://plus.google.com/communities/114124478761452023264">Google +</a></li>
+                            <li class="menu-slack menu-item menu-item-type-custom menu-item-object-custom menu-item-2989"><a href="https://localgovdigital.slack.com/">Slack</a></li>
+                        </ul>
+                    </div>
                 </section>
-            </nav>
-        </div>
-    </div>
-    <div id="global__brand-lines">
-        <ul>
-            <li class="brand-lines brand-red"></li>
-            <li class="brand-lines brand-green"></li>
-            <li class="brand-lines brand-blue"></div>
-        </ul>
-    </div>
-</header>
-@if (IsSectionDefined("Breadcrumb")) {
-<div id="global__breadcrumb" typeof="BreadcrumbList" vocab="http://schema.org/">
-    <div class="row">
-        <div class="small-12 column">
-            <ul aria-label="breadcrumb" role="navigation">
-                <li><a property="item" typeof="WebPage" title="Go to LocalGov Digital" href="https://localgov.digital" class="home">LocalGov Digital</a></li>
-                <li><a property="item" typeof="WebPage" title="Go to LocalGov Digital Pipeline" href="@Url.Content("~/")" class="home">Pipeline</a></li>
-                @RenderSection("Breadcrumb")
-            </ul>
-        </div>
-    </div>
-</div>
-}
-    @*<div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <span class="label label-stage label-alpha">ALPHA</span> This is a prototype, <a href="https://localgovdigital.typeform.com/to/BUXokv">your feedback will help us improve this service</a>.
+            </div>
+            <div class="brand">
+                <a href="/"><img src="https://localgov.digital/wp-content/uploads/2017/01/lgd_logo-1-e1485652490381.png" alt="LocalGov Digital"></a>
+                <ul class="toggle-area" aria-hidden="true">
+                    <li id="mobile-menu">
+                        <i class="fa fa-nav"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="main-nav">
+                <nav class="navbar" data-topbar role="navigation">
+                    <section>
+                        @Html.Action("BootstrapNavMenu", "Home")
+                        @Html.Action("LoggedInAs", "User")
+                    </section>
+                </nav>
             </div>
         </div>
-    </div>*@
+        <div id="global__brand-lines">
+            <ul>
+                <li class="brand-lines brand-red"></li>
+                <li class="brand-lines brand-green"></li>
+                <li class="brand-lines brand-blue"></li>
+            </ul>
+        </div>
+    </header>
+
+    }
+
     <main>
         @RenderSection("PluginPreContainer", false)
         @RenderBody()

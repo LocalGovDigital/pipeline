@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<ActivityViewModel>
+
 <section>
     <div class="row">
         <h3>Search for projects</h3>
         <p class="hidden-sm hidden-xs">Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.</p>
         <form method="get" action="@Url.Action("Search", "Home")">
             <div class="input-group input-group-lg">
-                <input type="text" class="form-control" placeholder="Enter text to search" name="q">
+                <input id="Search" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Enter text to search" name="title">
                 <span class="input-group-btn">
-                    <button type="submit" class="button">Search</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </span>
             </div>
         </form>
@@ -15,21 +16,10 @@
     <div class="row">
         @if (Model.Count() > 0)
         {
-            @*<div id="hotlist">
-                    <h3 id="whatshottitle">Top Projects</h3>
-                    <ul class="list-unstyled">
-                        @foreach (Activity hotpage in ActivityViewModel.WhatsHotList())
-                        {
-                            <li>
-                                <a href="/wiki/@(hotpage.projectId)">@(hotpage.projectName)</a> from @(hotpage.orgName)
-                            </li>
-                        }
-                    </ul>
-                </div>*@
+       
+            var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
 
-        var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
-
-        <h3>Latest Activity</h3>
+            <h3>Latest Activity</h3>
 
             foreach (var Date in Grouped)
             {
@@ -39,26 +29,26 @@
                     {
                         <li class="list-group-item">
                             @switch (activityModel.activityName)
-                        {
-                            case "signup":
+                            {
+                                case "signup":
                                     @*<text><span class="relationship-icon glyphicon glyphicon-log-in"></span>
                                         Someone new @(activityModel.orgName) signed-up to Pipeline</text>*@
-                                break;
-                            case "added":
-                            case "edited":
-                                <text>@if (activityModel.activityName == "added")
-                                { <span class="relationship-icon glyphicon glyphicon-floppy-disk"></span> }
-                                else if (activityModel.activityName == "edited")
-                                { <span class="relationship-icon glyphicon glyphicon-floppy-save"></span> }
-                                <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
+                                    break;
+                                case "added":
+                                case "edited":
+                                    <text>@if (activityModel.activityName == "added")
+                                          { <span class="relationship-icon glyphicon glyphicon-pencil"></span> }
+                                          else if (activityModel.activityName == "edited")
+                                          { <span class="relationship-icon glyphicon glyphicon-pencil"></span> }
+                                        <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
                                     break;
                                 default:
                                     <text>@if (activityModel.activityName == "liked")
-                                { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
-                                else if (activityModel.activityName == "joined")
-                                { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
-                                    @(activityModel.userNames) @(activityModel.activityName)
-                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
+                                          { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
+                                          else if (activityModel.activityName == "joined")
+                                          { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
+                                        @(activityModel.userNames) @(activityModel.activityName)
+                                        <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
                                     break;
                             }
                         </li>
@@ -68,3 +58,30 @@
         }
     </div>
 </section>
+<script type="text/javascript">
+    $("#Search").typeahead({
+        source: function (query, process) {
+            var results = [];
+            map = {};
+
+            // This is going to make an HTTP post request to the controller
+            return $.get('/api/page-search/search-ahead/' + query, function (data) {
+
+                // Loop through and push to the array
+                $.each(data, function (i, text) {
+                    map[text] = text;
+                    results.push(text);
+                });
+
+                // Process the details
+                process(results);
+            });
+        },
+        updater: function (item) {
+            var text = map[text];
+            // Set the text to our selected id
+            $("#search").text(text);
+            return item;
+        }
+    });
+</script>

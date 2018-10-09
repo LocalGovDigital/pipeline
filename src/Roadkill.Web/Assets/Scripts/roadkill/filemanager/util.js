@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var Util = (function () {
+            var Util = /** @class */ (function () {
                 function Util() {
                 }
                 Util.IsStringNullOrEmpty = function (text) {

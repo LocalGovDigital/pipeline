@@ -5,14 +5,23 @@
     <title>@ViewBag.Title</title>
     @Html.Partial("HeadContent")
     @RenderSection("PluginHead", false)
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126948959-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-126948959-1');
+    </script>
 </head>
 <body class="makers">
-    @RenderSection("PageToolbar", false)
     <nav class="navbar-head" role="navigation">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <a class="navbar-brand" href="http://localgovdigital.info"><img src="http://localgovdigital.info/media/1005/lgd_logo.png" alt="LocalGov Digital Logo" height="25"></a>
+                <div class="col-md-12">
+                    <a class="navbar-brand" href="https://localgovdigital.info"><img src="https://localgovdigital.info/media/1005/lgd_logo.png" alt="LocalGov Digital Logo" height="25"></a>
                     <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs" role="tablist">
                         <li role="presentation"><a href="http://localgovdigital.info/" class="localgovdigital">LocalGov Digital</a></li>
                         <li role="presentation"><a href="http://localgovdigital.info/localgovcamp/" class="localgovcamp">LocalGovCamp</a></li>
@@ -24,76 +33,105 @@
             </div>
         </div>
     </nav>
+    <nav class="navbar-app navbar-default" role="navigation">
+        <div class="container">
 
-    <nav class="navbar navbar-app navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">Pipeline</a>
+        </div>
+        <div class="container">
+            <div class="col-md-2 padding-0">
+                <div class="row">
+                    <a class="brand-title" href="/">Pipeline</a>
+                </div>
+            </div>
+            <div class="col-md-10 no-padding-r">
+                <div class="navbar-header prototype-message pull-right">
+                    <span class="label prototype-message-label-stage label-alpha">ALPHA</span> This is a prototype, <a href="https://localgovdigital.typeform.com/to/BUXokv">your feedback will help us improve this service</a>.
                 </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    @Html.Action("BootstrapNavMenu", "Home")
-                    @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { role = "search", @class = "navbar-form navbar-left hidden-xs hidden" }))
-                {
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="q" placeholder="@SiteStrings.Search_PlaceHolder">
-                        </div>
-                        <button type="submit" class="btn btn-default">Search</button>
-                }
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 navbar-header padding-0">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse padding-0" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a class="padding-0" href="/pages/alltags">Tags</a></li>
+                        <li><a href="/pages/allpages">All projects</a></li>
+                        @Html.Action("BootstrapNavMenu", "Home")
+                    </ul>
+
                     <ul class="nav navbar-nav navbar-right">
                         @Html.Action("LoggedInAs", "User")
                     </ul>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <span class="label label-stage label-alpha">ALPHA</span> This is a prototype, <a href="https://localgovdigital.typeform.com/to/BUXokv">your feedback will help us improve this service</a>.
+        </div>
+        <div class="container">
+            <div class="col-md-9 padding-0">
+                <ol class="breadcrumb breadcrumb-arrow no-margin">
+                    <li class="breadcrumb-item">@Html.ActionLink("Projects", "AllPages", "Pages")</li>
+                    <li class="breadcrumb-item active" aria-current="page"><span>@ViewBag.Title</span></li>
+                </ol>
+            </div>
+            <div class="col-md-3 padding-0">
+                <form method="get" action="@Url.Action("Search", "Home")">
+                    <div class="input-group">
+                        <input id="Search" type="text" class="form-control-nav" data-provide="typeahead" autocomplete="off" placeholder="Enter text to search" name="title">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                @RenderSection("PluginPreContainer", false)
-                @RenderBody()
-                @RenderSection("Activity", false)
-                @RenderSection("RelatedRelationships", false)
-                @RenderSection("PluginPostContainer", false)
+    </nav>
+    <div class="container">
+        <div class="col-md-12 pull-right">
+            <div class="row">
+                @RenderSection("PageToolbar", false)
             </div>
         </div>
     </div>
 
-    <footer>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <p>
-                        @RenderSection("PageDetailsFooter", false)
-                        @RenderSection("ViewHistoryLink", false)
-                    </p>
-                </div>
-                <div id="top-link" class="col-md-1">
-                    <p><a href="#">Top</a></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <p>Pipeline is a <a href="http://localgovdigital.info/localgov-digital-makers">LocalGov Digital Makers</a> project.</p>
-                    <p>The source is available on <a href="https://github.com/LocalGovDigital/pipeline">GitHub</a>. A list of feature requests can be found on <a href="https://trello.com/b/a80RaQ0s/pipeline">Trello</a>.</p>
-                </div>
-            </div>
+    <div class="container">
+        <div class="col-md-12">
+            @RenderSection("PluginPreContainer", false)
+            @RenderBody()
+            @RenderSection("Activity", false)
+            @RenderSection("RelatedRelationships", false)
+            @RenderSection("PluginPostContainer", false)
+        </div>
+    </div>
 
-            @RenderSection("PluginFooter", false)
+    <footer>
+
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
+
+                    @RenderSection("PageDetailsFooter", false)
+                    @RenderSection("ViewHistoryLink", false)
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <p>Pipeline is a <a href="http://localgovdigital.info/localgov-digital-makers">LocalGov Digital Makers</a> project.</p>
+                        <p>The source is available on <a href="https://github.com/LocalGovDigital/pipeline">GitHub</a>. A list of feature requests can be found on <a href="https://trello.com/b/a80RaQ0s/pipeline">Trello</a>.</p>
+                    </div>
+                    <div class="col-md-1">
+                        <div id="top-link" class="col-md-1 text-right">
+                            <p><a href="#">Top</a></p>
+                        </div>
+                    </div>
+
+                    @RenderSection("PluginFooter", false)
+                </div>
+            </div>
         </div>
     </footer>
 </body>

@@ -17,7 +17,8 @@ namespace Roadkill.Core.Text
 	{
 		private static readonly string CATEGORIES_TOKEN = "%categories%";
 		private static readonly string ALLPAGES_TOKEN = "%allpages%";
-		private static readonly string MAINPAGE_TOKEN = "%mainpage%";
+	    private static readonly string SEARCH_TOKEN = "%search%";
+        private static readonly string MAINPAGE_TOKEN = "%mainpage%";
 		private static readonly string NEWPAGE_TOKEN = "%newpage%";
 		private static readonly string MANAGEFILES_TOKEN = "%managefiles%";
 		private static readonly string SITESETTINGS_TOKEN = "%sitesettings%";
@@ -100,8 +101,9 @@ namespace Roadkill.Core.Text
 				return "";
 
 			string categories = CreateAnchorTag("/pages/alltags", SiteStrings.Navigation_Categories);
-			string allPages = CreateAnchorTag("/pages/allpages", SiteStrings.Navigation_AllPages);
-			string mainPage = CreateAnchorTag("/", SiteStrings.Navigation_MainPage);
+		    string allPages = CreateAnchorTag("/pages/allpages", SiteStrings.Navigation_AllPages);
+		    string search = CreateAnchorTag("/home/search", "Search");
+            string mainPage = CreateAnchorTag("/", SiteStrings.Navigation_MainPage);
 			string newpage = CreateAnchorTag("/pages/new", SiteStrings.Navigation_NewPage);
 			string manageFiles = CreateAnchorTag("/filemanager", SiteStrings.FileManager_Title);
 			string siteSettings = CreateAnchorTag("/settings", SiteStrings.Navigation_SiteSettings);
@@ -111,8 +113,9 @@ namespace Roadkill.Core.Text
 				UrlHelper urlHelper = new UrlHelper(HttpContext.Current.Request.RequestContext);
 
 				categories = CreateAnchorTag(urlHelper.Action("AllTags", "Pages"), SiteStrings.Navigation_Categories);
-				allPages = CreateAnchorTag(urlHelper.Action("AllPages", "Pages"), SiteStrings.Navigation_AllPages);
-				mainPage = CreateAnchorTag(urlHelper.Action("Index", "Home"), SiteStrings.Navigation_MainPage);
+			    allPages = CreateAnchorTag(urlHelper.Action("AllPages", "Pages"), SiteStrings.Navigation_AllPages);
+			    search = CreateAnchorTag(urlHelper.Action("Search", "Home"), "Search");
+                mainPage = CreateAnchorTag(urlHelper.Action("Index", "Home"), SiteStrings.Navigation_MainPage);
 				newpage = CreateAnchorTag(urlHelper.Action("New", "Pages"), SiteStrings.Navigation_NewPage);
 				manageFiles = CreateAnchorTag(urlHelper.Action("Index", "FileManager"), SiteStrings.FileManager_Title);
 				siteSettings = CreateAnchorTag(urlHelper.Action( "Index", "Settings"), SiteStrings.Navigation_SiteSettings);
@@ -130,8 +133,9 @@ namespace Roadkill.Core.Text
 			}
 
 			html = html.Replace(CATEGORIES_TOKEN, categories);
-			html = html.Replace(ALLPAGES_TOKEN, allPages);
-			html = html.Replace(MAINPAGE_TOKEN, mainPage);
+		    html = html.Replace(ALLPAGES_TOKEN, allPages);
+		    html = html.Replace(SEARCH_TOKEN, search);
+            html = html.Replace(MAINPAGE_TOKEN, mainPage);
 			html = html.Replace(NEWPAGE_TOKEN, newpage);
 			html = html.Replace(MANAGEFILES_TOKEN, manageFiles);
 			html = html.Replace(SITESETTINGS_TOKEN, siteSettings);

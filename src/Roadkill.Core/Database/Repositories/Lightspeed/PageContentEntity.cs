@@ -1,22 +1,24 @@
 ﻿using System;
 using Mindscape.LightSpeed;
+using Roadkill.Core.Database.Repositories.LightSpeed;
+using Roadkill.Core.Hackney.Models;
 
 namespace Roadkill.Core.Database.LightSpeed
 {
-	[Table("roadkill_pagecontent")]
-	public class PageContentEntity : Entity<Guid>
-	{
-		[Column("text")]
-		private string _text;
+    [Table("roadkill_pagecontent")]
+    public class PageContentEntity : BasePageEntity<Guid>
+    {
+        [Column("text")]
+        private string _text;
 
-		[Column("editedby")]
-		private string _editedBy;
+        [Column("editedby")]
+        private string _editedBy;
 
-		[Column("editedon")]
-		private DateTime _editedOn;
+        [Column("editedon")]
+        private DateTime _editedOn;
 
-		[Column("versionnumber")]
-		private int _versionNumber;
+        [Column("versionnumber")]
+        private int _versionNumber;
 
         [Column("projectstart")]
         private DateTime _projectStart;
@@ -33,78 +35,83 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("projectStatus")]
         private string _projectStatus;
 
+
         [Column("orgID")]
         private int _orgID;
 
-		[ReverseAssociation("PageId")]
-		private readonly EntityHolder<PageEntity> _page = new EntityHolder<PageEntity>();
-		private int _pageId;
+        [ReverseAssociation("PageId")]
+        private readonly EntityHolder<PageEntity> _page = new EntityHolder<PageEntity>();
 
-		public PageEntity Page
-		{
-			get
-			{
-				return Get(_page);
-			}
-			set
-			{
-				Set(_page, value);
-			}
-		}
 
-		public int PageId
-		{
-			get { return Get(ref _pageId, "PageId"); }
-			set { Set(ref _pageId, value, "PageId"); }
-		}
+        private int _pageId;
 
-		public string Text
-		{
-			get
-			{
-				return _text;
-			}
-			set
-			{
-				Set<string>(ref _text, value);
-			}
-		}
 
-		public string EditedBy
-		{
-			get
-			{
-				return _editedBy;
-			}
-			set
-			{
-				Set<string>(ref _editedBy, value);
-			}
-		}
 
-		public DateTime EditedOn
-		{
-			get
-			{
-				return _editedOn;
-			}
-			set
-			{
-				Set<DateTime>(ref _editedOn, value);
-			}
-		}
+        public PageEntity Page
+        {
+            get
+            {
+                return Get(_page);
+            }
+            set
+            {
+                Set(_page, value);
+            }
+        }
 
-		public int VersionNumber
-		{
-			get
-			{
-				return _versionNumber;
-			}
-			set
-			{
-				Set<int>(ref _versionNumber, value);
-			}
-		}
+        public int PageId
+        {
+            get { return Get(ref _pageId, "PageId"); }
+            set { Set(ref _pageId, value, "PageId"); }
+        }
+
+        public string Text
+        {
+            get
+            {
+                return _text;
+            }
+            set
+            {
+                Set<string>(ref _text, value);
+            }
+        }
+
+        public string EditedBy
+        {
+            get
+            {
+                return _editedBy;
+            }
+            set
+            {
+                Set<string>(ref _editedBy, value);
+            }
+        }
+
+        public DateTime EditedOn
+        {
+            get
+            {
+                return _editedOn;
+            }
+            set
+            {
+                Set<DateTime>(ref _editedOn, value);
+            }
+        }
+
+        public int VersionNumber
+        {
+            get
+            {
+                return _versionNumber;
+            }
+            set
+            {
+                Set<int>(ref _versionNumber, value);
+            }
+        }
 
         public DateTime ProjectStart
         {
@@ -178,5 +185,6 @@ namespace Roadkill.Core.Database.LightSpeed
                 Set<int>(ref _orgID, value);
             }
         }
-	}
+
+    }
 }

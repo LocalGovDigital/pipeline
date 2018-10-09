@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var Installer;
         (function (Installer) {
-            var Step5 = (function () {
+            var Step5 = /** @class */ (function () {
                 function Step5(wizard) {
                     this._wizard = wizard;
                     this._wizard.updateNavigation(5);

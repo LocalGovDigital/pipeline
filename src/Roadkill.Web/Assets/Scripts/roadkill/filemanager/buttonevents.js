@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var ButtonEvents = (function () {
+            var ButtonEvents = /** @class */ (function () {
                 function ButtonEvents() {
                     this._htmlBuilder = new FileManager.HtmlBuilder();
                     this._ajaxRequest = new FileManager.AjaxRequest();

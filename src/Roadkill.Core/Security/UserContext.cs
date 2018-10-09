@@ -62,10 +62,38 @@ namespace Roadkill.Core.Security
 			}
 		}
 
-		/// <summary>
-		/// Indicates whether the current user is a member of the admin role.
-		/// </summary>
-		public bool IsAdmin
+	    public string CurrentUserFirstname
+	    {
+	        get
+	        {
+	            if (IsLoggedIn)
+	            {
+	                if (_user == null)
+	                {
+	                    _user = _userService.GetLoggedInUser(CurrentUser);
+
+	                    if (_user == null)
+	                    {
+	                        // Assume the cookie/request identity value is bad, and logout.
+	                        _userService.Logout();
+	                        return "";
+	                    }
+	                }
+
+	                if (string.IsNullOrEmpty(_user.Firstname)) return _user.Username;
+                    return _user.Firstname;
+	            }
+	            else
+	            {
+	                return "";
+	            }
+	        }
+	    }
+
+        /// <summary>
+        /// Indicates whether the current user is a member of the admin role.
+        /// </summary>
+        public bool IsAdmin
 		{
 			get
 			{

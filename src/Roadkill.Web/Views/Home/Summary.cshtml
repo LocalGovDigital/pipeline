@@ -1,17 +1,22 @@
 ﻿@model IEnumerable<ActivityViewModel>
 <div class="row">
-    <div class="col-md-12 col-xs-6">
-<div class="stats">
-    <div>@(ActivityViewModel.OrganisationCount())</div>
-    Organisations
+    &nbsp;
 </div>
-</div>
+<div class="row">
+    <div class="col-sm-6">
 
-    <div class="col-md-12 col-xs-6">
-<div class="stats">
-    <div>@(ActivityViewModel.PageCount())</div>
-    <a href="/pages/allpages">Projects</a>
+        <div style="text-align: center;">
+            <div class="lrg-number"> <a href="#">@(ActivityViewModel.OrganisationCount())</a></div>
+            Organisations
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div style="text-align: center;">
+            <div class="lrg-number">  <a href="/home/search">@(ActivityViewModel.PageCount())</a></div>
+            Projects
+        </div>
+    </div>
 </div>
-</div></div>
 
 

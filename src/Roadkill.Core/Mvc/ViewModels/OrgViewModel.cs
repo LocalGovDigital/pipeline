@@ -95,7 +95,12 @@ namespace Roadkill.Core.Mvc.ViewModels
                     items.Add(item);
                 }
 
-                return items;
+                items.Sort((x, y) => string.Compare(x.Text, y.Text));
+                var firstItem = items.First(x => x.Text == "None");
+                items.Remove(firstItem);
+                var sortedItems = new List<SelectListItem>() { firstItem };
+                sortedItems.AddRange(items);
+                return sortedItems;
             }
         }
 

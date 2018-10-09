@@ -3,7 +3,7 @@ var Roadkill;
 (function (Roadkill) {
     var Web;
     (function (Web) {
-        var Dialogs = (function () {
+        var Dialogs = /** @class */ (function () {
             function Dialogs() {
             }
             Dialogs.alert = function (message) {

@@ -2,10 +2,6 @@
 @{
     ViewBag.Title = Model.Title;
 }
-@section Breadcrumb {
-    <li>@Html.ActionLink("Projects", "AllPages", "Pages")</li>
-    <li>@ViewBag.Title</li>
-}
 
 @section PageToolbar
 {
@@ -21,33 +17,97 @@
     <div class="row">
         <div id="global__body_content" class="small-12 medium-8 columns body_content">
             <h1>@Model.Title <span class="label label-stage label-@Model.ProjectStatus.ToLower()">@Model.ProjectStatus.ToUpper()</span></h1>
-
-            @MvcHtmlString.Create(Model.ContentAsHtml)
-
-            @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Project details:</h2>
+            </div>
+            <div class="col-sm-12">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Organisation </td>
+                            <td>@(Model?.OrgContactDetails?.OrgName)</td>
+                        </tr>
+                        <tr>
+                            <td>Department</td>
+                            <td>@Model.Department</td>
+                        </tr>
+                        <tr>
+                            <td>Collaboration Level</td>
+                            <td>@(Model?.CollaborationLevel)</td>
+                        </tr>
+                        <tr>
+                            <td>Budget</td>
+                            <td>@(Model?.FundingBoundaryText)</td>
+                        </tr>
+                        <tr>
+                            <td>Key Contact</td>
+                            <td><a href="mailto:@(Model.OwnerEmail)"> @Model.Owner</a></td>
+                        </tr>
+                        <tr>
+                            <td>Project contact points </td>
+                            <td>@(Model?.OrgContactDetails?.email)</td>
+                        </tr>
+                        <tr>
+                            <td>Phase start </td>
+                            <td>@Model.ProjectStart.ToLongDateString()</td>
+                        </tr>
+                        <tr>
+                            <td>Phase Estimated end </td>
+                            <td>@Model.ProjectEnd.ToLongDateString()</td>
+                        </tr>
 
-        <div id="global__sidebar" class="small-12 medium-4 columns">
-            <aside>
-                <div class="sidebar_content">
-                    <h4>Project owner</h4>
-                    <p>@MvcHtmlString.Create(Model.OrgContactDetails.OrgName)</p>
 
-                    <h4>
-                        @if (!Model.ProjectEstimatedTime)
-                    { <text>Estimated </text> }Dates
-                    </h4>
-                    <p>@MvcHtmlString.Create(Model.ProjectStart.ToLongDateString()) to @MvcHtmlString.Create(Model.ProjectEnd.ToLongDateString())</p>
+                    </tbody>
+                </table>
+                <H4>Tags</H4>
+                <div id="tagcloud" class="col-sm-12">
 
-                    <h4>Last modified</h4>
-                    <p>@Model.ModifiedOn.ToLongDateString() by @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+                    @foreach (var tag in Model.TagCloud)
+                    {
+                        <a href="/pages/tag/@tag.Item1" class="@("tagcloud"+tag.Item2)">@tag.Item1</a>
+                    }
                 </div>
-            </aside>
+
+            </div>
+          
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>
+                    Description:
+                </h2>
+                @MvcHtmlString.Create(Model.ContentAsHtml)
+
+                @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
+            </div>
+            <div class="col-sm-12">
+                <h2>Status Updates</h2>
+                @foreach (var statusUpdate in Model.StatusUpdates){
+                    <h4>@statusUpdate.UpdateDate.ToLongDateString()</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+
+                            <div>   <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
+                            <div>@statusUpdate.Text</div>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div> <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <h2>Last modified</h2>
+                    <p>@Model.ModifiedOn.ToLongDateString() by @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+
+                </aside>
+            </div>
         </div>
     </div><!-- Foundation .row end -->
 </section>
 
-@*@section RelatedRelationships
+@*@section R=[0-latedRelationships
     {
         @* This is rendered by an action (and not a partial/extension method) for future donut caching * @
         @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })

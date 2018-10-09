@@ -5,7 +5,7 @@ var Roadkill;
     (function (Web) {
         var FileManager;
         (function (FileManager) {
-            var TableEvents = (function () {
+            var TableEvents = /** @class */ (function () {
                 function TableEvents() {
                 }
                 TableEvents.prototype.bind = function () {

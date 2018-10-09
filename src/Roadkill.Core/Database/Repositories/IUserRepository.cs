@@ -10,7 +10,8 @@ namespace Roadkill.Core.Database
 		void DeleteAllUsers();
 		void DeleteUser(User user);
 		IEnumerable<User> FindAllEditors();
-		IEnumerable<User> FindAllAdmins();
+	    IEnumerable<User> FindOrdinaryUsers();
+        IEnumerable<User> FindAllAdmins();
 		User GetAdminById(Guid id);
 		User GetUserByActivationKey(string key);
 		User GetEditorById(Guid id);

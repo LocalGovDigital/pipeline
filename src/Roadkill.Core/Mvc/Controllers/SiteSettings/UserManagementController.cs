@@ -63,9 +63,10 @@ namespace Roadkill.Core.Mvc.Controllers
 		{
 			var list = new List<IEnumerable<UserViewModel>>();
 			list.Add(UserService.ListAdmins());
-			list.Add(UserService.ListEditors());
+		    list.Add(UserService.ListEditors());
+		    list.Add(UserService.ListOrdinaryUsers());
 
-			if (UserService.IsReadonly)
+            if (UserService.IsReadonly)
 				return View("IndexReadOnly", list);
 			else
 				return View(list);
@@ -99,14 +100,18 @@ namespace Roadkill.Core.Mvc.Controllers
 		public ActionResult AddEditor()
 		{
 			return View(new UserViewModel());
-		}
+	    }
+	    public ActionResult AddOrdinaryUser()
+	    {
+	        return View(new UserViewModel());
+	    }
 
-		/// <summary>
-		/// Adds an editor user to the system, validating the <see cref="UserViewModel"/> first.
-		/// </summary>
-		/// <param name="model">The user details to add.</param>
-		/// <returns>Redirects to the Users action. Additionally, if an error occurred, TempData["action"] contains the string "addeditor".</returns>
-		[HttpPost]
+        /// <summary>
+        /// Adds an editor user to the system, validating the <see cref="UserViewModel"/> first.
+        /// </summary>
+        /// <param name="model">The user details to add.</param>
+        /// <returns>Redirects to the Users action. Additionally, if an error occurred, TempData["action"] contains the string "addeditor".</returns>
+        [HttpPost]
 		public ActionResult AddEditor(UserViewModel model)
 		{
 			if (ModelState.IsValid)
@@ -121,7 +126,22 @@ namespace Roadkill.Core.Mvc.Controllers
 			}
 		}
 
-		public ActionResult EditUser(Guid id)
+	    [HttpPost]
+	    public ActionResult AddOrdinaryUser(UserViewModel model)
+	    {
+	        if (ModelState.IsValid)
+	        {
+	            UserService.AddUser(model.NewEmail, model.NewUsername, model.Password,false, false);
+	            return RedirectToAction("Index");
+
+	        }
+	        else
+	        {
+	            return View(model);
+	        }
+	    }
+
+        public ActionResult EditUser(Guid id)
 		{
 			User user = UserService.GetUserById(id);
 			if (user == null)

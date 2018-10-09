@@ -21,7 +21,7 @@ var Roadkill;
         /**
         Event bindings and handlers for all pages.
         */
-        var Setup = (function () {
+        var Setup = /** @class */ (function () {
             function Setup() {
             }
             Setup.configureBinds = function () {

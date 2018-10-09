@@ -10,7 +10,9 @@ using Roadkill.Core.Cache;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Configuration;
 using System.Web;
+using Roadkill.Core.Hackney.Parameters;
 using Roadkill.Core.Logging;
+using Roadkill.Core.Models;
 using Roadkill.Core.Text;
 using Roadkill.Core.Plugins;
 
@@ -26,6 +28,7 @@ namespace Roadkill.Core.Services
         private PageHistoryService _historyService;
         private IUserContext _context;
         private ListCache _listCache;
+        private ModelCache _modelCache;
         private PageViewModelCache _pageViewModelCache;
         private SiteCache _siteCache;
         private IPluginFactory _pluginFactory;
@@ -33,7 +36,7 @@ namespace Roadkill.Core.Services
 
         public PageService(ApplicationSettings settings, IRepository repository, SearchService searchService,
             PageHistoryService historyService, IUserContext context,
-            ListCache listCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory)
+            ListCache listCache, ModelCache modelCache, PageViewModelCache pageViewModelCache, SiteCache sitecache, IPluginFactory pluginFactory)
             : base(settings, repository)
         {
             _searchService = searchService;
@@ -41,6 +44,7 @@ namespace Roadkill.Core.Services
             _historyService = historyService;
             _context = context;
             _listCache = listCache;
+            _modelCache = modelCache;
             _pageViewModelCache = pageViewModelCache;
             _siteCache = sitecache;
             _pluginFactory = pluginFactory;
@@ -72,13 +76,17 @@ namespace Roadkill.Core.Services
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
                 page.ProjectStatus = model.ProjectStatus;
+                page.ProjectAgileLifeCyclePhase = model.ProjectAgileLifeCyclePhase;
+                page.Department = model.Department;
+                page.FundingBoundary = model.FundingBoundary;
                 page.orgID = model.orgID;
 
                 // Double check, incase the HTML form was faked.
                 if (_context.IsAdmin)
                     page.IsLocked = model.IsLocked;
 
-                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.orgID);
+
+                PageContent pageContent = Repository.AddNewPage(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, Phase2Params.FromModel(model), model.ProjectLanguage, model.orgID);
 
                 _listCache.RemoveAll();
                 _pageViewModelCache.RemoveAll(); // completely clear the cache to update any reciprocal links.
@@ -94,6 +102,7 @@ namespace Roadkill.Core.Services
                     // TODO: log
                 }
 
+                Repository.SetContributeAutoApprovedInProject(savedModel.Id, currentUser, savedModel.orgID);
                 return savedModel;
             }
             catch (DatabaseException e)
@@ -112,12 +121,13 @@ namespace Roadkill.Core.Services
             try
             {
                 string cacheKey = "";
-                IEnumerable<PageViewModel> pageModels;
+                IEnumerable<PageViewModel> pageModels = null;
+                IEnumerable<PageViewModel> pageModels2 = null;
 
                 if (loadPageContent)
                 {
                     cacheKey = CacheKeys.AllPagesWithContent();
-                    pageModels = _listCache.Get<PageViewModel>(cacheKey);
+                    //   pageModels = _listCache.Get<PageViewModel>(cacheKey);
 
                     if (pageModels == null)
                     {
@@ -131,7 +141,7 @@ namespace Roadkill.Core.Services
                 else
                 {
                     cacheKey = CacheKeys.AllPages();
-                    pageModels = _listCache.Get<PageViewModel>(cacheKey);
+                    //  pageModels = _listCache.Get<PageViewModel>(cacheKey);
 
                     if (pageModels == null)
                     {
@@ -139,11 +149,15 @@ namespace Roadkill.Core.Services
                         pageModels = from page in pages
                                      select new PageViewModel() { Id = page.Id, Title = page.Title };
 
-                        _listCache.Add<PageViewModel>(cacheKey, pageModels);
+
+                        pageModels2 = from page in pageModels
+                                      select new PageViewModel() { Id = page.Id, Title = page.Title, Relationships = page.GetRelationships(), RelationshipsWithLoggedInUser = page.GetRelationshipWithUser() };
+
+                        _listCache.Add<PageViewModel>(cacheKey, pageModels2);
                     }
                 }
 
-                return pageModels;
+                return pageModels2;
             }
             catch (DatabaseException ex)
             {
@@ -466,10 +480,42 @@ namespace Roadkill.Core.Services
                     int index = rels.IndexOf(relModel);
 
                     rels.Add(relModel);
-   
+
                 }
 
                 return rels;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred finding the tag '{0}' in the database", pageid);
+            }
+        }
+
+
+        public string GetFundingBoundaryText(string id)
+        {
+
+            return Repository.FundingBoundaries.FirstOrDefault(x=>x.Id==id).Text;
+        }
+        /// <summary>
+        /// Finds all relationships related to the page.
+        /// </summary>
+        /// <param name="id">The pageid to search for.</param>
+        /// <returns>A <see cref="IEnumerable{PageViewModel}"/> of pages tagged with the provided tag.</returns>
+        /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
+        public bool IsApprovedContributer(int pageid, string username)
+        {
+            try
+            {
+
+                IEnumerable<Relationship> relsList = Repository.GetRelByPageAndUsername(pageid, username);
+
+
+                var isApproved = relsList.Any(x => x.relTypeId == 4 && x.approved);
+
+                return isApproved;
+
+
             }
             catch (DatabaseException ex)
             {
@@ -531,6 +577,14 @@ namespace Roadkill.Core.Services
                 page.ProjectEnd = model.ProjectEnd;
                 page.ProjectEstimatedTime = model.ProjectEstimatedTime;
                 page.ProjectLanguage = model.ProjectLanguage;
+
+                page.Owner = model.Owner;
+                page.OwnerEmail = model.OwnerEmail;
+                page.ProjectAgileLifeCyclePhase = model.ProjectAgileLifeCyclePhase;
+                page.CollaborationLevel = model.CollaborationLevel;
+                page.Department = model.Department;
+                page.FundingBoundary = model.FundingBoundary;
+
                 page.ProjectStatus = model.ProjectStatus;
                 page.orgID = model.orgID;
 
@@ -552,7 +606,7 @@ namespace Roadkill.Core.Services
                 _listCache.RemoveAll();
 
                 int newVersion = _historyService.MaxVersion(model.Id) + 1;
-                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, model.ProjectLanguage, model.orgID);
+                PageContent pageContent = Repository.AddNewPageContentVersion(page, model.Content, AppendIpForDemoSite(currentUser), DateTime.UtcNow, newVersion, model.ProjectStart, model.ProjectEnd, model.ProjectEstimatedTime, model.ProjectStatus, Phase2Params.FromModel(model), model.ProjectLanguage, model.orgID);
 
                 // Update all links to this page (if it has had its title renamed). Case changes don't need any updates.
                 if (model.PreviousTitle != null && model.PreviousTitle.ToLower() != model.Title.ToLower())
@@ -699,25 +753,16 @@ namespace Roadkill.Core.Services
         /// </summary>
         public string GetBootStrapNavMenu(IUserContext userContext)
         {
-            MenuParser parser = new MenuParser(_markupConverter, Repository, _siteCache, userContext);
-
-            // TODO: turn this into a theme-based bit of template HTML
-            StringBuilder builder = new StringBuilder();
-
-            //builder.AppendLine("<nav id=\"leftmenu\" class=\"navbar navbar-default\" role=\"navigation\">");
-            //builder.Append(GetCollapsableMenuHtml());
-
-            //builder.AppendLine(@"<div id=""left-menu-toggle"" class=""collapse navbar-collapse"">");
-
-            // Add bootstrap into the <ul>
-            string menuHtml = parser.GetMenu();
-            menuHtml = menuHtml.Replace("<ul>", "<ul class =\"nav navbar-nav\">");
-            builder.AppendLine(menuHtml);
-
-            //builder.AppendLine("</div>");
-            //builder.AppendLine("</nav>");
-
-            return builder.ToString();
+            var content = string.Empty;
+            if (userContext.IsLoggedIn)
+            {
+                content = "<li><a href =\"/pages/new\">Add Project</a></li>";
+            }
+            if (userContext.IsAdmin)
+            {
+                content += "<li><a href =\"/settings\">Settings</a></li>";
+            }
+            return content;
         }
 
         /// <summary>
@@ -763,5 +808,97 @@ namespace Roadkill.Core.Services
             }
         }
 
+
+        public IList<string> GetOrganisationNames()
+        {
+
+            var orgs = _modelCache.Get<IList<string>>("OrganisationStrings");
+
+            if (orgs == null)
+            {
+                orgs = Repository.GetOrganisationNames();
+                _listCache.Add<string>("OrganisationStrings", orgs);
+            }
+
+            return orgs;
+        }
+
+        public SearchResults<IList<ProjectSearchResult>> Search(ProjectSearchParameters sp)
+        {
+
+            try
+            {
+
+                var searchResults = _modelCache.Get<SearchResults<IList<ProjectSearchResult>>>(sp.ToString());
+                if (searchResults == null)
+                {
+                    var query = Repository.Query();
+
+
+
+                    if (!string.IsNullOrEmpty(sp.Organisation))
+                    {
+                        var orgId = Repository.GetOrgIdByName(sp.Organisation);
+                        query = query.Where(x => x.orgID == orgId);
+                    }
+
+
+                    if (!string.IsNullOrEmpty(sp.Title)) query = query.Where(x => x.Title.ToLower().Contains(sp.Title.ToLower()));
+                    if (!string.IsNullOrEmpty(sp.Phase)) query = query.Where(x => x.ProjectStatus == sp.Phase);
+                    if (!string.IsNullOrEmpty(sp.Department)) query = query.Where(x => x.Department.ToLower().Contains(sp.Department.ToLower()));
+                    if (!string.IsNullOrEmpty(sp.AgileLifecycle )) query = query.Where(x => x.ProjectAgileLifeCyclePhase == sp.AgileLifecycle);
+                    if (!string.IsNullOrEmpty(sp.CollaborationLevel)) query = query.Where(x => x.CollaborationLevel == sp.CollaborationLevel);
+                    if (!string.IsNullOrEmpty(sp.FundingBoundary)) query = query.Where(x => x.FundingBoundary == sp.FundingBoundary);
+
+                    int count = query.Count();
+
+                    //paging
+                    if (sp.Take.HasValue) query = query.Take(sp.Take.Value);
+                    if (sp.Skip.HasValue) query = query.Skip(sp.Skip.Value);
+
+                    //sortby
+                    if (sp.OrderBy == nameof(sp.Title))
+                    {
+                        query = query.OrderBy(x => x.Title);
+                    }
+                    if (sp.OrderBy == nameof(sp.Department))
+                    {
+                        query = query.OrderBy(x => x.Department);
+                    }
+                    if (sp.OrderBy == nameof(sp.Organisation))
+                    {
+                        query = query.OrderBy(x => x.orgID);
+                    }
+                    if (sp.OrderBy == nameof(sp.Phase))
+                    {
+                        query = query.OrderBy(x => x.ProjectStatus);
+                    }
+                    if (sp.OrderBy == nameof(sp.AgileLifecycle))
+                    {
+                        query = query.OrderBy(x => x.ProjectAgileLifeCyclePhase);
+                    }
+                    if (sp.OrderBy == nameof(sp.FundingBoundary))
+                    {
+                        query = query.OrderBy(x => x.FundingBoundary);
+                    }
+
+
+                    var searchresults = query.ToList().Select(ProjectSearchResult.FromPageEntity).ToList();
+
+                    foreach (var projectSearchResult in searchresults)
+                    {
+                        projectSearchResult.Organisation = Repository.GetOrganisationNameById(projectSearchResult.OrganisationId).OrgName;
+                    }
+
+                    searchResults = new SearchResults<IList<ProjectSearchResult>>() { Count = count, Result = searchresults };
+                    _modelCache.Add<SearchResults<IList<ProjectSearchResult>>>(sp.ToString(), searchResults);
+                }
+                return searchResults;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred while retrieving all pages from the database");
+            }
+        }
     }
 }

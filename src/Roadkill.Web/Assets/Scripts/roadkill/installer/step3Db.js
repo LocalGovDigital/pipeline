@@ -5,13 +5,13 @@ var Roadkill;
     (function (Web) {
         var Installer;
         (function (Installer) {
-            var Step3DbMessages = (function () {
+            var Step3DbMessages = /** @class */ (function () {
                 function Step3DbMessages() {
                 }
                 return Step3DbMessages;
             }());
             Installer.Step3DbMessages = Step3DbMessages;
-            var Step3Db = (function () {
+            var Step3Db = /** @class */ (function () {
                 function Step3Db(wizard, messages) {
                     this._wizard = wizard;
                     this._messages = messages;

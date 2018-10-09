@@ -133,7 +133,7 @@ namespace Roadkill.Core.Security
 				User user = Repository.GetUserByEmail(email);
 				if (user != null)
 				{
-					if (user.Password == User.HashPassword(password, user.Salt))
+                    if (user.Password == User.HashPassword(password, user.Salt))
 					{
 						bool isFormsAuthEnabled = FormsAuthenticationWrapper.IsEnabled();
 						if (isFormsAuthEnabled)
@@ -376,10 +376,23 @@ namespace Roadkill.Core.Security
 			}
 		}
 
-		/// <summary>
-		/// Signs the user out with (typically with <see cref="FormsAuthentication"/>).
-		/// </summary>
-		public override void Logout()
+	    public override IEnumerable<UserViewModel> ListOrdinaryUsers()
+	    {
+	        try
+	        {
+	            var users = Repository.FindOrdinaryUsers().Select(u => new UserViewModel(u));
+	            return users;
+	        }
+	        catch (DatabaseException ex)
+	        {
+	            throw new SecurityException(ex, "An error occurred listing all the editor");
+	        }
+	    }
+
+        /// <summary>
+        /// Signs the user out with (typically with <see cref="FormsAuthentication"/>).
+        /// </summary>
+        public override void Logout()
 		{
 			bool isFormsAuthEnabled = FormsAuthenticationWrapper.IsEnabled();
 			if (isFormsAuthEnabled)

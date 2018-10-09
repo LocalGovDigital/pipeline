@@ -71,7 +71,7 @@ module Roadkill.Web
 			{
 				// Tab adds the tag, but then focuses the toolbar (the next tab index)
 				var code = e.keyCode || e.which;
-				if (code == "9")
+				if (code == "9" ||code=="13")
 				{
 					var tag: string = $("#TagsEntry").val();
 					if (this.isValidTag(tag))
@@ -87,8 +87,7 @@ module Roadkill.Web
 				return true;
 			});
 
-			$("#TagsEntry").blur(function (e)
-			{
+			$("#TagsEntry").blur(function (e) {
 				// Push the tag when focus is lost, e.g. Save is pressed
 				$("#TagsEntry").tagsManager("pushTag", $("#TagsEntry").val());
 
@@ -101,7 +100,11 @@ module Roadkill.Web
 				{
 					$(this).addClass("tm-tag-success");
 					$(this).addClass("tm-success");
-				});
+                });
+
+			    if ($("#TagsEntry").val() != "") {
+			        $("#TagsEntry").focus();
+			    }
 			});
 		}
 

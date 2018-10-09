@@ -71,5 +71,31 @@
 		</tr>
 	}
 	</table>
-	<br class="clear" />
+    <br class="clear" />
+    
+    <h1>Ordinary Users</h1>
+    <p>
+        <a href="@Url.Action("AddOrdinaryUser", "UserManagement")" class="btn btn-primary btn-success">
+           New Ordinary User
+        </a>
+    </p>
+    <table class="table table-striped" id="editors-table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th colspan="2"></th>
+        </tr>
+        </thead>
+        @foreach (UserViewModel user in Model[2])
+        {
+            <tr>
+                <td style="width:30%;">@user.ExistingUsername</td>
+                <td class="stretch">@user.ExistingEmail</td>
+                <td class="edit">@Html.ActionLink(SiteStrings.Navigation_Edit, "EditUser", new { id = user.Id }, new { @class = "btn btn-primary btn-mini" })</td>
+                <td class="delete">@Html.ActionLink(SiteStrings.Navigation_Delete, "DeleteUser", new { id = user.ExistingEmail }, new { @class = "confirm btn btn-danger btn-mini" })</td>
+            </tr>
+        }
+    </table>
+    <br class="clear" />
 </div>

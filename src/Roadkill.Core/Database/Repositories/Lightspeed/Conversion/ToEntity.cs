@@ -45,7 +45,14 @@ namespace Roadkill.Core.Database.LightSpeed
             entity.orgID = page.orgID;
 			entity.Tags = page.Tags;
 			entity.Title = page.Title;
-		}
+
+		    entity.Owner = page.Owner;
+		    entity.OwnerEmail = page.OwnerEmail;
+		    entity.Department = page.Department;
+            entity.ProjectAgileLifeCyclePhase = page.ProjectAgileLifeCyclePhase;
+		    entity.CollaborationLevel = page.CollaborationLevel;
+		    entity.FundingBoundary = page.FundingBoundary;
+        }
 
 		public static void FromPageContent(PageContent pageContent, PageContentEntity entity)
 		{

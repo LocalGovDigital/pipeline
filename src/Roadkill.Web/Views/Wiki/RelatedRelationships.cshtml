@@ -6,16 +6,20 @@
     <ul class="list-group">
         @foreach (RelViewModel pageModel in Model)
         {
-            <li class="list-group-item">
-                @if (pageModel.relTypeID == 1)
-                { <span class="relationship-icon fa fa-thumbs-up"></span><span class="relationship-text">Liked</span> }
-                @if (pageModel.relTypeID == 2)
-                { <span class="relationship-icon fa fa-plus-circle"></span><span class="relationship-text">Joined</span> }
-                @pageModel.usertext
-                <div>
-                    @pageModel.reltext
-                </div>
-            </li>
+        <li class="list-group-item">
+            @if (pageModel.relTypeID == 1)
+            {<span class="relationship-icon fa fa-thumbs-up"></span><span class="relationship-text">Liked</span>}
+            @if (pageModel.relTypeID == 2)
+            {<span class="relationship-icon fa fa-plus-circle"></span><span class="relationship-text">Joined</span>}
+            @if (pageModel.relTypeID == 3)
+            {<span class="relationship-icon fa fa-thumbs-up"></span><span class="relationship-text">Watched</span>}
+            @if (pageModel.relTypeID == 4)
+            {<span class="relationship-icon fa fa-plus-circle"></span><span class="relationship-text">Contributed</span>}
+            @pageModel.usertext
+            <div>
+                @pageModel.reltext
+            </div>
+        </li>
         }
     </ul>
 }
