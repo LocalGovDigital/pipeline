@@ -88,21 +88,31 @@ namespace Roadkill.Core.Email
 			if (string.IsNullOrEmpty(emailTo))
 				emailTo = model.NewEmail;
 
-			if (string.IsNullOrEmpty(emailTo))
+		    if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
+		    {
+		        var environmentPrefix = ConfigurationManager.AppSettings["environment"];
+		        if (environmentPrefix == "DEV")
+		        {
+		            var allowedEmails = ConfigurationManager.AppSettings["allowedEmailAddresses"];
+		            var allowedEmailList = allowedEmails.Split(';');
+		            if (!allowedEmailList.Contains(emailTo.ToLower()))
+		            {
+		                return;
+		            }
+		        }
+		    }
+
+            if (string.IsNullOrEmpty(emailTo))
 				throw new EmailException(null, "The UserViewModel has an empty current or new email address");
 
 			// Construct the message and the two views
 			MailMessage message = new MailMessage();
 			message.To.Add(emailTo);
 			message.Subject = "Please confirm your email address";
-			
-			AlternateView plainTextView = AlternateView.CreateAlternateViewFromString(plainTextContent, new ContentType("text/plain"));
-			AlternateView htmlView = AlternateView.CreateAlternateViewFromString(htmlContent, new ContentType("text/html"));
-			message.AlternateViews.Add(htmlView);
-			message.AlternateViews.Add(plainTextView);
+		    message.Body = htmlContent;
+		    message.IsBodyHtml = true;
 
-			// Add "~" support for pickupdirectories.
-			if (EmailClient.GetDeliveryMethod() == SmtpDeliveryMethod.SpecifiedPickupDirectory && 
+            if (EmailClient.GetDeliveryMethod() == SmtpDeliveryMethod.SpecifiedPickupDirectory && 
 				!string.IsNullOrEmpty(EmailClient.PickupDirectoryLocation) &&
 				EmailClient.PickupDirectoryLocation.StartsWith("~"))
 			{
@@ -151,7 +161,7 @@ namespace Roadkill.Core.Email
 			result = result.Replace("{FIRSTNAME}", model.Firstname);
 			result = result.Replace("{LASTNAME}", model.Lastname);
 			result = result.Replace("{EMAIL}", model.NewEmail);
-			result = result.Replace("{USERNAME}", model.NewUsername);
+			result = result.Replace("{USERNAME}", model.NewEmail);
 			result = result.Replace("{SITEURL}", SiteSettings.SiteUrl);
 			result = result.Replace("{ACTIVATIONKEY}", model.ActivationKey);
 			result = result.Replace("{RESETKEY}", model.PasswordResetKey);

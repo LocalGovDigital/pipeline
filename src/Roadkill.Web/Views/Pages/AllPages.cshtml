@@ -43,13 +43,12 @@
                                     <div class="project-icon-wrapper">
                                         @if (RoadkillContext.IsLoggedIn)
                                         {
-                                            if (pageModel.IsLocked || !(RoadkillContext.IsAdmin || (pageModel.IsApprovedContributer(RoadkillContext.CurrentUsername))))
+                                            if (pageModel.IsLocked || !(RoadkillContext.IsAdmin || (pageModel.IsApprovedContributer(RoadkillContext.CurrentUserId))))
                                             {
                                             }
                                             else
                                             {
-                                                @*<a id="pageedit-button" class="text-blue" href="@Url.Action("Delete", "Pages", new { id = pageModel.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-remove-circle"></span> </a>*@
-
+              
                                                 <a id="pageedit-button" class="text-blue" href="@Url.Action("Edit", "Pages", new { id = pageModel.Id})" title="@SiteStrings.Shared_EditLink"><span class="glyphicon glyphicon-pencil"></span> </a>
                                             }
 

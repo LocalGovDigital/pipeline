@@ -92,6 +92,7 @@ namespace Roadkill.Core.Database.LightSpeed
             rel.relDateTime = entity.relDateTime;
             rel.approved = entity.Approved;
             rel.pending = entity.Pending;
+            rel.userid = entity.UserId;
 
             return rel;
         }

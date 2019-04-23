@@ -26,12 +26,13 @@ else
         </div>
 	}
     
-    <form role="form" method="post" class="col-md-6">
-        @(Html.HiddenFor<UserViewModel, Guid?>(h => h.Id))
-        @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingEmail))
-        @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingUsername))
+        <form role="form" method="post" >
+            @(Html.HiddenFor<UserViewModel, Guid?>(h => h.Id))
+            @(Html.HiddenFor<UserViewModel, string>(h => h.NewEmail))
+            @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingEmail))
+            @(Html.HiddenFor<UserViewModel, string>(h => h.ExistingUsername))
 
-        <!-- Firstname -->
+            @*<!-- Firstname -->
         <div class="form-group">
             <label for="NewEmail" class="control-label">@SiteStrings.Shared_Firstname_Label</label>
             <div>
@@ -93,12 +94,55 @@ else
             <div>
                 @(Html.PasswordFor<UserViewModel, string>(t => t.PasswordConfirmation, new { @class = "form-control" }))
             </div>
-        </div>
+        </div>*@
 
-        <div class="form-group">
-            <div>
-                <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Save</button>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label for="NewEmail" class="control-label">Email</label>
+                    <p>@Model.NewEmail</p>
+                    @*<div>
+                        @(Html.TextBoxFor<UserViewModel, string>(t => t.NewEmail, new { @class = "form-control", type = "email" }))
+                        <span class="help-block">This is also your Username</span>
+                    </div>*@
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="OrgID" class="control-label">Organisation</label>
+                    <div>
+                        @(Html.BootstrapDropDownListFor<UserViewModel, int>(t => t.orgID, UserViewModel.OrgsAsNewSelectList, ""))
+                        <span class="help-block"><a href="mailto:pipeline@localgovdigital.info">Email us if you'd like your organisation added</a>.</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label for="Firstname" class="control-label">@SiteStrings.Shared_Firstname_Label</label>
+                    <div>
+                        @(Html.TextBoxFor<UserViewModel, string>(t => t.Firstname, new { @class = "form-control" }))
+                    </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="Lastname" class="control-label">@SiteStrings.Shared_Lastname_Label</label>
+                    <div>
+                        @(Html.TextBoxFor<UserViewModel, string>(t => t.Lastname, new { @class = "form-control" }))
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label for="Password" class="control-label">@SiteStrings.Shared_Password_Label</label>
+                    <div>
+                        @(Html.PasswordFor<UserViewModel, string>(t => t.Password, new { @class = "form-control" }))
+                    </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label for="PasswordConfirmation" class="control-label">@SiteStrings.Shared_PasswordConfirm_Label</label>
+                    @(Html.PasswordFor<UserViewModel, string>(t => t.PasswordConfirmation, new { @class = "form-control" }))
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Save</button>
+                </div>
+            </div>
+        </form>
 }

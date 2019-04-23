@@ -10,6 +10,7 @@ using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web;
+using Roadkill.Core.Email;
 using Roadkill.Core.Text;
 using Roadkill.Core.Extensions;
 
@@ -27,15 +28,18 @@ namespace Roadkill.Core.Mvc.Controllers
         private SearchService _searchService;
         private PageHistoryService _historyService;
 
+        private ProjectUpdateEmail _projectUpdateEmail;
+
         public PagesController(ApplicationSettings settings, UserServiceBase userManager,
             SettingsService settingsService, IPageService pageService, SearchService searchService,
-            PageHistoryService historyService, IUserContext context)
+            PageHistoryService historyService, IUserContext context, ProjectUpdateEmail projectUpdateEmail)
             : base(settings, userManager, context, settingsService)
         {
             _settingsService = settingsService;
             _pageService = pageService;
             _searchService = searchService;
             _historyService = historyService;
+            _projectUpdateEmail = projectUpdateEmail;
         }
 
         /// <summary>
@@ -126,9 +130,10 @@ namespace Roadkill.Core.Mvc.Controllers
             {
 
                 var username = Context.CurrentUsername;
-                if (model.IsLocked || !(Context.IsAdmin || (_pageService.IsApprovedContributer(id, username))))
+                var userId= Context.CurrentUserId;
+                if (model.IsLocked || !(Context.IsAdmin || (_pageService.IsApprovedContributer(id, userId))))
                     return RedirectToAction("Forbidden", "Wiki");
-               
+
                 model.AllTags = _pageService.AllTags().ToList();
 
                 var tags = new List<string>();
@@ -160,14 +165,14 @@ namespace Roadkill.Core.Mvc.Controllers
         public ActionResult Edit(PageViewModel model)
         {
             var username = Context.CurrentUsername;
-            if (model.IsLocked && (!Context.IsAdmin || !(_pageService.GetRelByPage(model.Id).Any(x => x.userName == username && x.relTypeID == 4))))
-                return new HttpStatusCodeResult(403, string.Format("The page '{0}' can only be edited by administrators or contributers.", model.Title));
+            if (model.IsLocked && (!Context.IsAdmin || !(_pageService.GetRelationsByPageId(model.Id).Any(x => x.userName == username && x.relTypeID == 4))))
+                return new HttpStatusCodeResult(403, string.Format("The page '{0}' can only be edited by administrators or contributors.", model.Title));
 
             if (!ModelState.IsValid)
                 return View("Edit", model);
 
             _pageService.UpdatePage(model);
-
+            _pageService.SendUpdate(model.Id, model.Id, model.Title, _projectUpdateEmail);
             return RedirectToAction("Index", "Wiki", new { id = model.Id });
         }
 

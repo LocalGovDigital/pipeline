@@ -45,15 +45,17 @@ namespace Roadkill.Core.Database.LightSpeed
             {
                 return new List<FundingBoundary>()
                 {
+                    new FundingBoundary() {Id = "-1", Text = "Unknown"},
                     new FundingBoundary() {Id = "0", Text = "£0K > £50K"},
                     new FundingBoundary() {Id = "50", Text = "£50K > £100k"},
                     new FundingBoundary() {Id = "100", Text = "£100k > £250k"},
                     new FundingBoundary() {Id = "250", Text = "£250k > £500k"},
+                    new FundingBoundary() {Id = "500", Text = "£500k > £1000k"},
                     new FundingBoundary() {Id = "500", Text = "£500k > £1000k"}
                 };
             }
 
-            
+
         }
         internal IQueryable<StatusUpdate> StatusUpdates
         {
@@ -577,6 +579,20 @@ namespace Roadkill.Core.Database.LightSpeed
         public List<Relationship> FindPageRelationships(int pageID)
         {
             List<RelEntity> entities = Rels.Where(p => p.pageId == pageID).ToList();
+
+            foreach (var relEntity in entities)
+            {
+
+                if (string.IsNullOrEmpty(relEntity.username))
+                {
+                    var user = GetUserById(relEntity.UserId);
+                    if (user != null)
+                    {
+                        relEntity.username = user.Username;
+                    }
+                }
+            }
+
             return FromEntity.ToRelList(entities);
         }
 
@@ -635,6 +651,7 @@ namespace Roadkill.Core.Database.LightSpeed
 
         public User GetUserByEmail(string email, bool? isActivated = null)
         {
+            email = email.ToLower();
             UserEntity entity;
 
             if (isActivated.HasValue)
@@ -666,6 +683,11 @@ namespace Roadkill.Core.Database.LightSpeed
         public User GetUserByUsername(string username)
         {
             UserEntity entity = Users.FirstOrDefault(x => x.Username == username);
+            return FromEntity.ToUser(entity);
+        }
+        public User GetUserByUsername(Guid id)
+        {
+            UserEntity entity = Users.FirstOrDefault(x => x.Id == id);
             return FromEntity.ToUser(entity);
         }
 
@@ -797,9 +819,27 @@ namespace Roadkill.Core.Database.LightSpeed
             List<RelEntity> entities = Rels.Where(p => p.pageId == pageid).ToList();
             return FromEntity.ToRelList(entities);
         }
-        public IEnumerable<Relationship> GetRelByPageAndUsername(int pageid, string username)
+
+        //public IEnumerable<Relationship> GetRelByPageAndUsername(int pageid, string username)
+        //{
+        //    List<RelEntity> entities = Rels.Where(p => p.pageId == pageid && p.username == username).ToList();
+        //    return FromEntity.ToRelList(entities);
+        //}
+        //public IEnumerable<Relationship> GetRelByUsername(string username)
+        //{
+        //    List<RelEntity> entities = Rels.Where(p => p.username == username).ToList();
+        //    return FromEntity.ToRelList(entities);
+        //}
+
+
+        public IEnumerable<Relationship> GetRelByPageAndUserId(int pageid, Guid userid)
         {
-            List<RelEntity> entities = Rels.Where(p => p.pageId == pageid && p.username == username).ToList();
+            List<RelEntity> entities = Rels.Where(p => p.pageId == pageid && p.UserId == userid).ToList();
+            return FromEntity.ToRelList(entities);
+        }
+        public IEnumerable<Relationship> GetRelByUserId(Guid userid)
+        {
+            List<RelEntity> entities = Rels.Where(p => p.UserId == userid).ToList();
             return FromEntity.ToRelList(entities);
         }
 
@@ -843,9 +883,9 @@ namespace Roadkill.Core.Database.LightSpeed
             return _RelToUserToPage;
         }
 
-        public Organisation GetOrgByUser(string username)
+        public Organisation GetOrgByUser(Guid userId)
         {
-            UserEntity userentity = Users.FirstOrDefault(p => p.Username == username);
+            UserEntity userentity = Users.FirstOrDefault(p => p.Id == userId);
             OrgEntity orgentity = Orgs.FirstOrDefault(p => p.Id == userentity.orgID);
             return FromEntity.ToOrg(orgentity);
         }
@@ -933,7 +973,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 try
                 {
                     User user = new User();
-                    user = GetUserByUsername(rel.username);
+                    user = GetUserById(rel.userid);
                     item.userNames = user?.Firstname + " " + user?.Lastname;
                 }
                 catch { fail = true; }
@@ -1124,41 +1164,54 @@ namespace Roadkill.Core.Database.LightSpeed
 
         #region statusupdates
 
-        public void CreateStatusUpdate(StatusUpdateViewModel model)
+        public StatusUpdateViewModel CreateStatusUpdate(StatusUpdateViewModel model)
         {
             var statusUpdate = StatusUpdate.FromViewModel(model);
 
             statusUpdate.UpdateDate = DateTime.Now;
+
             UnitOfWork.Add(statusUpdate);
+            UnitOfWork.SaveChanges();
+
+            return StatusUpdateViewModel.FromModel(statusUpdate);
+
+        }
+        public void DeleteStatusUpdate(int statusUpdateId)
+        {
+            var result = UnitOfWork.FindById(typeof(StatusUpdate), statusUpdateId);
+            UnitOfWork.Remove(result);
             UnitOfWork.SaveChanges();
 
         }
         public IList<StatusUpdateViewModel> GetStatusUpdates(int pageId)
         {
-            return StatusUpdates.Where(x => x.PageId == pageId).OrderByDescending(x => x.UpdateDate).Select(x => StatusUpdateViewModel.FromModel(x)).ToList();
+
+            var statusUpdates = StatusUpdates.Where(x => x.PageId == pageId).OrderByDescending(x => x.UpdateDate)
+                .ToList();
+            return statusUpdates.Select(x => StatusUpdateViewModel.FromModel(x)).ToList();
         }
 
         #endregion
 
-        public void UnWatchProject(int projectid, string username)
+        public void UnWatchProject(int projectid, Guid userId)
         {
-            if (IsWatched(projectid, username))
+            if (IsWatched(projectid, userId))
             {
-                Rels.Remove(x => x.username == username && x.pageId == projectid && x.relTypeId == 3);
+                Rels.Remove(x => x.UserId == userId && x.pageId == projectid && x.relTypeId == 3);
 
                 UnitOfWork.SaveChanges();
             }
         }
 
-        public void WatchProject(int projectid, string username, int organisationId)
+        public void WatchProject(int projectid, Guid userId, int organisationId)
         {
-            if (!IsWatched(projectid, username))
+            if (!IsWatched(projectid, userId))
             {
                 var rel = new RelEntity()
                 {
 
                     pageId = projectid,
-                    username = username,
+                    UserId = userId,
                     relTypeId = 3,
                     relDateTime = DateTime.Now,
                     Approved = true,
@@ -1170,16 +1223,16 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
-        public bool IsWatched(int projectid, string username)
+        public bool IsWatched(int projectid, Guid userId)
         {
 
-            return Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 3);
+            return Rels.Any(x => x.UserId == userId && x.pageId == projectid && x.relTypeId == 3);
 
         }
 
-        public bool IsContributePending(int projectid, string username)
+        public bool IsContributePending(int projectid, Guid userId)
         {
-            if (Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4 && x.Pending == true))
+            if (Rels.Any(x => x.UserId == userId && x.pageId == projectid && x.relTypeId == 4 && x.Pending == true))
             {
                 return true;
             }
@@ -1187,15 +1240,15 @@ namespace Roadkill.Core.Database.LightSpeed
 
         }
 
-        public void SetPendingApprovedInProject(int projectid, string username, int organisationId)
+        public void SetPendingApprovedInProject(int projectid, Guid userId, int organisationId)
         {
-            if (!IsContributePending(projectid, username))
+            if (!IsContributePending(projectid, userId))
             {
                 var rel = new RelEntity()
                 {
 
                     pageId = projectid,
-                    username = username,
+                    UserId = userId,
                     relTypeId = 4,
                     relDateTime = DateTime.Now,
                     Approved = false,
@@ -1208,13 +1261,13 @@ namespace Roadkill.Core.Database.LightSpeed
             }
         }
 
-        public void SetContributeAutoApprovedInProject(int projectid, string username, int organisationId)
+        public void SetContributeAutoApprovedInProject(int projectid, Guid userId, int organisationId)
         {
             var rel = new RelEntity()
             {
 
                 pageId = projectid,
-                username = username,
+                UserId = userId,
                 relTypeId = 4,
                 relDateTime = DateTime.Now,
                 Approved = true,
@@ -1252,6 +1305,14 @@ namespace Roadkill.Core.Database.LightSpeed
 
             }
             return false;
+        }
+
+        public void AddOrganisation(string model)
+        {
+            var org = new OrgEntity();
+            org.OrgName = model;
+            UnitOfWork.Add(org);
+            UnitOfWork.SaveChanges();
         }
     }
 }

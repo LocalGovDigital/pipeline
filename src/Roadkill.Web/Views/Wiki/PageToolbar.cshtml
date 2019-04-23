@@ -8,7 +8,7 @@
             {
              
 
-                if (Model.IsLocked || !(RoadkillContext.IsAdmin || (Model.IsApprovedContributer(RoadkillContext.CurrentUsername))))
+                if (Model.IsLocked || !(RoadkillContext.IsAdmin || (Model.IsApprovedContributer(RoadkillContext.CurrentUserId))))
                 {
                   }
                 else

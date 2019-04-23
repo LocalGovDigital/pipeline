@@ -71,11 +71,11 @@
 
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <label for="ProjectStart">Project Start</label>
+                        <label for="ProjectStart">Phase Start</label>
                         @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false))
                     </div>
                     <div class="col-sm-6">
-                        <label for="ProjectEnd">Project End</label>
+                        <label for="ProjectEnd">Phase End</label>
                         @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false))
                     </div>
                 </div>
@@ -126,30 +126,55 @@
                 </div>
                 @if (Model.VersionNumber != 0)
                 {
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <h4>Status Updates</h4>
-                            <div class="input-group input-group-lg">
-                                <input id="UpdateSearchTxt" type="text" class="form-control" autocomplete="off" placeholder="Enter an update">
-                                <span class="input-group-btn">
-                                    <button id="updateSearchBtn" type="button" class="btn btn-primary">Update Status</button>
-                                </span>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="updateSuccessModal" role="dialog">
+                        <div class="modal-dialog">
+    
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Status update posted</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Status update has been posted.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
                             </div>
+      
                         </div>
+                    </div>
 
-                        <div class="col-sm-12" id="statuses">
-                            @foreach (var statusUpdate in Model.StatusUpdates)
-                            {
-                                <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
+                    <div class="form-group">
+                        <div id="status-update-editor" class="col-sm-12">
+                            <h4>Status Updates</h4>
+                            <textarea id="UpdateStatusTxt" type="text" class="form-control" autocomplete="off" placeholder="Enter an update"></textarea>
 
-                                        <div> <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
-                                        <div>@statusUpdate.Text</div>
-                                    </li>
-                                </ul>
-                            }
+
+                        </div><div class="col-sm-12">
+                            <button id="UpdateStatusBtn" type="button" class="btn btn-primary pull-right">Update Status</button>
+
                         </div>
+                              <div id="statuses">
+                                  @foreach (var statusUpdate in Model.StatusUpdates)
+                                  {<div class="col-lg-12"  id="statuscontents-@statusUpdate.Id">
+                                      <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
+                                      <ul class="list-group">
+                                          <li class="list-group-item">
+
+                                              <div> <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
+                                              <div>@Html.Raw(statusUpdate.Text)</div>
+                                          </li>
+                                      </ul>
+                                       <div class="col-lg-offset-10">
+                                           <button id="statusdelete-@statusUpdate.Id" type="button" class="btn-danger delete-status-button btn pull-right">Delete Status Update</button>
+                                       </div>
+                                   </div>
+                                  }
+                              </div>
                     </div>
                 }
 
@@ -168,12 +193,12 @@
                 }
 
                 <label for="Content">Description</label>
-                @Html.Partial("WysiwgToolbar")
-                @(Html.TextAreaFor<PageViewModel, string>(p => p.Content, new { @class = "form-control" }))
+                <textarea class="form-control" cols="20" id="Content" name="Content" rows="2">@Model.ContentAsHtml</textarea>
+
 
                 <div id="editpage-button-container" class="form-group">
                     <div class="col-sm-12">
-                        <button id="btnsave" type="submit" class="button saveButton" tabindex="6">@SiteStrings.Button_Save</button>
+                        <button id="btnsave" type="submit" class="button saveButton btn btn-primary" tabindex="6">@SiteStrings.Button_Save</button>
                         @if (Model.Id > 0)
                         {
                             @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
@@ -188,7 +213,6 @@
 
                 <div class="form-group">
                     <div class="col-sm-12">
-
                         <label for="ProjectStart">Tags</label>
                         <div class="checkbox">
                             @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
@@ -267,14 +291,20 @@
         else
         {
             <div class="alert alert-warning">
-                There are no watchers or contributers on this project at the moment.
+                There are no watchers or contributors on this project at the moment.
             </div>
 
         }
     </div>
     <script type="text/javascript">
-
         $().ready(function () {
+            $('#UpdateStatusTxt').summernote({
+                height: 100
+            });
+            $('#Content').summernote({
+                height: 300
+            });
+
             $(window).keydown(function (event) {
                 if (event.keyCode == 13) {
                     if (event.target.localName != "textarea") {
@@ -300,7 +330,7 @@
                     OwnerEmail: "Please enter your key contact email"
                 }
             });
-            
+
             $('#ProjectStart').val($('#ProjectStart').val().replace('00:00:00', ''));
             $('#ProjectEnd').val($('#ProjectEnd').val().replace('00:00:00', ''));
 
@@ -330,20 +360,34 @@
             });
     });
 
-    $("#updateSearchBtn").click(function () {
+    $("#UpdateStatusBtn").click(function () {
 
-        var obj ={ Text :$('#UpdateSearchTxt').val(), PageId:@Model.Id}
+        var obj = { Text: $('#UpdateStatusTxt').val(), PageId:@Model.Id}
 
         $.ajax('/api/project-status/update/',{
                 data: JSON.stringify(obj),
                 contentType: 'application/json',
                 type: 'POST',
-                success: function () {
-                    $("#statuses").prepend("<h4>Just now</h4><ul class='list-group'><li class='list-group-item'><div> <span class='relationship-icon glyphicon glyphicon-bell'></span> </div><div>" + obj.Text+"</div></li></ul>");
-                    $('#UpdateSearchTxt').val('');
+                success: function (data) {
+                    $("#statuses").prepend("<div class='col-lg-12'><h4>Just now</h4><ul class='list-group'><li class='list-group-item'><div> <span class='relationship-icon glyphicon glyphicon-bell'></span>" + data.Author + " </div><div>" + data.Text +"</div></li></ul></div>");
+                    $('#updateStatusTxt').val('');
+
+                    $('#status-update-editor .note-editable').empty();
+                    $("#updateSuccessModal").modal();
+                   
                 }
             });
-    });
+     });
+
+            $(".delete-status-button").click(function () {
+             var id=   $(this).attr("id").split("-")[1];
+         $.ajax('/api/project-status/delete/' + id, {
+             type:'DELETE',
+                    success: function (data) {
+                        $("#statuscontents-" + data).fadeOut();
+                    }
+                });
+     });
     });
 
     </script>

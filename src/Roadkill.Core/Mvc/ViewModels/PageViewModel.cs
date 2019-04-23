@@ -156,7 +156,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         /// The main language of the project
         /// </summary>
         public IList<Relationship> Relationships { get; set; }
-        public IList<Relationship> RelationshipsWithLoggedInUser  { get; set; }
+        public IList<Relationship> RelationshipsWithLoggedInUser { get; set; }
 
         /// <summary>
         /// Displays ModifiedOn in IS8601 format, plus the timezone offset included for timeago
@@ -276,7 +276,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             ProjectEnd = DateTime.Today;
             ProjectStart = DateTime.Today;
 
-           
+
 
         }
 
@@ -680,8 +680,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         public List<Relationship> GetRelationshipWithUser()
         {
             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-            var rels = repository.FindPageRelationships(Id);
-            return rels.Where(x => x.username == ObjectFactory.GetInstance<IUserContext>().CurrentUsername).ToList();
+            return repository.GetRelByPageAndUserId(Id, ObjectFactory.GetInstance<IUserContext>().CurrentUserId).ToList();
         }
 
 
@@ -734,11 +733,11 @@ namespace Roadkill.Core.Mvc.ViewModels
             }
         }
 
-        public bool IsApprovedContributer(string username)
+        public bool IsApprovedContributer(Guid userId)
         {
 
             LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-            IEnumerable<Relationship> relsList = repository.GetRelByPageAndUsername(Id, username);
+            IEnumerable<Relationship> relsList = repository.GetRelByPageAndUserId(Id, userId);
             var isApproved = relsList.Any(x => x.relTypeId == 4 && x.approved);
             return isApproved;
         }

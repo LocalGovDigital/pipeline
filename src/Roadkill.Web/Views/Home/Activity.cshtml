@@ -16,7 +16,7 @@
     <div class="row">
         @if (Model.Count() > 0)
         {
-       
+
             var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
 
             <h3>Latest Activity</h3>
@@ -37,18 +37,22 @@
                                 case "added":
                                 case "edited":
                                     <text>@if (activityModel.activityName == "added")
-                                          { <span class="relationship-icon glyphicon glyphicon-pencil"></span> }
-                                          else if (activityModel.activityName == "edited")
-                                          { <span class="relationship-icon glyphicon glyphicon-pencil"></span> }
-                                        <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
+                                        {<span class="relationship-icon glyphicon glyphicon-pencil"></span> }
+                                        else if (activityModel.activityName == "edited")
+                                        { <span class="relationship-icon glyphicon glyphicon-pencil"></span>}
+                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
                                     break;
                                 default:
                                     <text>@if (activityModel.activityName == "liked")
-                                          { <span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
-                                          else if (activityModel.activityName == "joined")
-                                          { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span> }
-                                        @(activityModel.userNames) @(activityModel.activityName)
-                                        <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
+                                        {<span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
+                                        else if (activityModel.activityName == "joined")
+                                        { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span>}
+                                        else if (activityModel.activityName == "watched")
+                                        {<span class="relationship-icon glyphicon glyphicon-eye-open"></span>}
+                                        else if (activityModel.activityName == "contributed to")
+                                        {<span class="relationship-icon glyphicon glyphicon-heart"></span>}
+                                    @(activityModel.userNames) @(activityModel.activityName)
+                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
                                     break;
                             }
                         </li>

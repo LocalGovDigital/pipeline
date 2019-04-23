@@ -43,7 +43,7 @@ namespace Roadkill.Core.Services
 				IEnumerable<PageContent> contentList = Repository.FindPageContentsByPageId(pageId);
 				IEnumerable<PageHistoryViewModel> historyList = from p in contentList
 														  select new PageHistoryViewModel(p);
-
+			  
 				return historyList.OrderByDescending(h => h.VersionNumber);
 			}
 			catch (ArgumentNullException ex)

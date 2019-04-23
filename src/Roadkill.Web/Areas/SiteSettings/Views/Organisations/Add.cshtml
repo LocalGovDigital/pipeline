@@ -1,0 +1,31 @@
+﻿
+@{
+
+    ViewBag.Title = "Add Organisation"; ;
+    ViewData["OrganisationsActive"] = true;
+}
+
+@Html.SiteSettingsNavigation()
+
+
+
+<div class="col-md-7" id="configuration-container">
+    @Html.ActionLink("< back", "Index")
+    @using (Html.BeginForm("Add", "Organisations"))
+    {
+
+
+        <fieldset>
+
+            <div class="form-group">
+                <label for="txtNewOrganisation">New Organisation Name</label>
+                <input class="form-control" type="text" name="Organisation" value="" />
+
+            </div>   <input id="BtnNewOrganisation" type="submit" class="btn btn-primary" value="@SiteStrings.Button_Save" />
+        </fieldset>
+
+
+
+
+    }
+</div>

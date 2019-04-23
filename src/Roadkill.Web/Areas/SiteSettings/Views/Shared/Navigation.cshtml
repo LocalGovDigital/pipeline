@@ -1,44 +1,58 @@
 ﻿@{
-	MvcHtmlString activeCss = MvcHtmlString.Create("active");
-	MvcHtmlString nav1Active = activeCss;
-	MvcHtmlString nav2Active = MvcHtmlString.Empty;
-	MvcHtmlString nav3Active = MvcHtmlString.Empty;
-	MvcHtmlString nav4Active = MvcHtmlString.Empty;
-	MvcHtmlString nav5Active = MvcHtmlString.Empty;
-	
-	// Highlight the currently selected page using the CSS class and some viewdata
-	if (ViewData["UsersActive"] !=  null)
-	{
-		nav1Active = MvcHtmlString.Empty;
-		nav2Active = activeCss;
-		nav3Active = MvcHtmlString.Empty;
-		nav4Active = MvcHtmlString.Empty;
-		nav5Active = MvcHtmlString.Empty;		
-	}
-	else if (ViewData["ToolsActive"] != null)
-	{
-		nav1Active = MvcHtmlString.Empty;
-		nav2Active = MvcHtmlString.Empty;
-		nav3Active = activeCss;
-		nav4Active = MvcHtmlString.Empty;
-		nav5Active = MvcHtmlString.Empty;		
-	}
-	else if (ViewData["CacheActive"] != null)
-	{
-		nav1Active = MvcHtmlString.Empty;
-		nav2Active = MvcHtmlString.Empty;
-		nav3Active = MvcHtmlString.Empty;
-		nav4Active = activeCss;
-		nav5Active = MvcHtmlString.Empty;
-	}
-	else if (ViewData["PluginSettingsActive"] != null)
-	{
-		nav1Active = MvcHtmlString.Empty;
-		nav2Active = MvcHtmlString.Empty;
-		nav3Active = MvcHtmlString.Empty;
-		nav4Active = MvcHtmlString.Empty;
-		nav5Active = activeCss;
-	}
+    MvcHtmlString activeCss = MvcHtmlString.Create("active");
+    MvcHtmlString nav1Active = activeCss;
+    MvcHtmlString nav2Active = MvcHtmlString.Empty;
+    MvcHtmlString nav3Active = MvcHtmlString.Empty;
+    MvcHtmlString nav4Active = MvcHtmlString.Empty;
+    MvcHtmlString nav5Active = MvcHtmlString.Empty;
+    MvcHtmlString nav6Active = MvcHtmlString.Empty;
+
+    // Highlight the currently selected page using the CSS class and some viewdata
+    if (ViewData["UsersActive"] !=  null)
+    {
+        nav1Active = MvcHtmlString.Empty;
+        nav2Active = activeCss;
+        nav3Active = MvcHtmlString.Empty;
+        nav4Active = MvcHtmlString.Empty;
+        nav5Active = MvcHtmlString.Empty;
+        nav6Active = MvcHtmlString.Empty;
+    }
+    else if (ViewData["ToolsActive"] != null)
+    {
+        nav1Active = MvcHtmlString.Empty;
+        nav2Active = MvcHtmlString.Empty;
+        nav3Active = activeCss;
+        nav4Active = MvcHtmlString.Empty;
+        nav5Active = MvcHtmlString.Empty;
+        nav6Active = MvcHtmlString.Empty;
+    }
+    else if (ViewData["CacheActive"] != null)
+    {
+        nav1Active = MvcHtmlString.Empty;
+        nav2Active = MvcHtmlString.Empty;
+        nav3Active = MvcHtmlString.Empty;
+        nav4Active = activeCss;
+        nav5Active = MvcHtmlString.Empty;
+        nav6Active = MvcHtmlString.Empty;
+    }
+    else if (ViewData["PluginSettingsActive"] != null)
+    {
+        nav1Active = MvcHtmlString.Empty;
+        nav2Active = MvcHtmlString.Empty;
+        nav3Active = MvcHtmlString.Empty;
+        nav4Active = MvcHtmlString.Empty;
+        nav5Active = activeCss;
+        nav6Active = MvcHtmlString.Empty;
+    }
+    else if (ViewData["OrganisationsActive"] != null)
+    {
+        nav1Active = MvcHtmlString.Empty;
+        nav2Active = MvcHtmlString.Empty;
+        nav3Active = MvcHtmlString.Empty;
+        nav4Active = MvcHtmlString.Empty;
+        nav5Active = MvcHtmlString.Empty;
+        nav6Active = activeCss;
+    }
 }
 
 <div id="settings-navigation" class="navbar">
@@ -49,6 +63,7 @@
 			<li class="@nav3Active">@Html.ActionLink(SiteStrings.SiteSettings_Tools, "Index", "Tools")</li>
 			<li class="@nav4Active">@Html.ActionLink(SiteStrings.SiteSettings_Configuration_ObjectCaching, "Index", "Cache")</li>
 			<li class="@nav5Active">@Html.ActionLink(SiteStrings.SiteSettings_Plugins_Title, "Index", "PluginSettings")</li>
+			<li class="@nav6Active">@Html.ActionLink("Organisations", "Index", "Organisations")</li>
 		</ul>
 	</nav>
 </div>

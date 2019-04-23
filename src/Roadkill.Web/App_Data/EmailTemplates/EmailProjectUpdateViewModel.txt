@@ -1,0 +1,8 @@
+﻿Dear {Name},
+
+There have been updates to a project you follow please click the link below to see whats changed.</p>
+
+{SITEURL}/wiki/{ProjectId}/">{ProjectName}
+
+Thanks,
+The Pipeline team

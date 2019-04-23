@@ -513,3 +513,27 @@
 .text-grey {
     color: #434a54;
 }
+
+.list-group-item-inline {
+    position: relative;
+    display: inline-table;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+
+.btnwatch {
+    cursor: pointer;
+}
+
+.btncontrib {
+    cursor: pointer;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

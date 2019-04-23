@@ -64,7 +64,7 @@ namespace Roadkill.Core.Mvc.Controllers
             if (model == null)
                 throw new HttpException(404, string.Format("The page with id '{0}' could not be found", id));
 
-         
+
             return View(model);
         }
 
@@ -86,11 +86,22 @@ namespace Roadkill.Core.Mvc.Controllers
             if (id == null || id < 1)
                 return Content("");
 
-            IEnumerable<RelViewModel> model = PageService.GetRelByPage(id);
+            IEnumerable<RelViewModel> model = PageService.GetRelationsByPageId(id);
 
             if (model == null)
                 return Content(string.Format("The page with id '{0}' could not be found", id));
 
+            return PartialView(model);
+        }
+        public ActionResult RelatedRelationshipsByUserId(Guid userId)
+        {
+            if (Guid.Empty ==userId)
+                return Content("");
+
+            IEnumerable<RelViewModel> model = PageService.GetRelByUserId(userId);
+
+            if (model == null)
+                return Content(string.Format("The component with id '{0}' could not be found", userId));
             return PartialView(model);
         }
 
