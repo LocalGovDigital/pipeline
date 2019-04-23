@@ -46,10 +46,6 @@
                             <td><a href="mailto:@(Model.OwnerEmail)"> @Model.Owner</a></td>
                         </tr>
                         <tr>
-                            <td>Project contact points </td>
-                            <td>@(Model?.OrgContactDetails?.email)</td>
-                        </tr>
-                        <tr>
                             <td>Phase start </td>
                             <td>@Model.ProjectStart.ToLongDateString()</td>
                         </tr>
@@ -61,46 +57,60 @@
 
                     </tbody>
                 </table>
-                <H4>Tags</H4>
-                <div id="tagcloud" class="col-sm-12">
 
-                    @foreach (var tag in Model.TagCloud)
-                    {
-                        <a href="/pages/tag/@tag.Item1" class="@("tagcloud"+tag.Item2)">@tag.Item1</a>
-                    }
-                </div>
+
+                <h4>Tags</h4>
+
+                @if (Model.TagCloud.Count == 0)
+                {
+                    <p>No tags</p>
+
+                }
+                else
+                {<div id="tagcloud" class="col-sm-12">
+
+                        @foreach (var tag in Model.TagCloud)
+                        {
+                            <a href="/pages/tag/@tag.Item1" class="@("tagcloud"+tag.Item2)">@tag.Item1</a>
+                        }
+                    </div>
+                }
+
 
             </div>
-          
-        </div>
-        <div class="row">
             <div class="col-sm-12">
-                <h2>
-                    Description:
-                </h2>
-                @MvcHtmlString.Create(Model.ContentAsHtml)
-
+                <h4>
+                    Description
+                </h4>
+                @MvcHtmlString.Create(HttpUtility.HtmlDecode(Model.ContentAsHtml))
                 @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
             </div>
             <div class="col-sm-12">
                 <h2>Status Updates</h2>
-                @foreach (var statusUpdate in Model.StatusUpdates){
+                @foreach (var statusUpdate in Model.StatusUpdates)
+                {
                     <h4>@statusUpdate.UpdateDate.ToLongDateString()</h4>
                     <ul class="list-group">
                         <li class="list-group-item">
 
                             <div>   <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
-                            <div>@statusUpdate.Text</div>
+                            <div>@Html.Raw(statusUpdate.Text)</div>
                         </li>
                     </ul>
                 }
             </div>
-        </div> <div class="row">
             <div class="col-sm-12">
                 <aside>
                     <h2>Last modified</h2>
-                    <p>@Model.ModifiedOn.ToLongDateString() by @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
 
+                    @if (RoadkillContext.IsLoggedIn)
+                    {
+                        <p>@Model.ModifiedOn.ToLongDateString() @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+                    }
+                    else
+                    {
+                        <p>@Model.ModifiedOn.ToLongDateString()  </p>
+                    }
                 </aside>
             </div>
         </div>

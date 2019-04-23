@@ -6,11 +6,14 @@
     @Html.Partial("HeadContent")
     @RenderSection("PluginHead", false)
     
+    <!-- include summernote css/js -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126948959-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'UA-126948959-1');
@@ -74,8 +77,17 @@
         </div>
         <div class="container">
             <div class="col-md-9 padding-0">
-                <ol class="breadcrumb breadcrumb-arrow no-margin">
-                    <li class="breadcrumb-item">@Html.ActionLink("Projects", "AllPages", "Pages")</li>
+                <ol class="breadcrumb breadcrumb-arrow no-margin ellipsis">
+                    @if (ViewBag.Controller == null)
+                    {
+                        <li class="breadcrumb-item">@Html.ActionLink("Projects", "AllPages", "Pages")</li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item">
+                            <a href="#">@ViewBag.Controller</a>)
+                        </li>
+                    }
                     <li class="breadcrumb-item active" aria-current="page"><span>@ViewBag.Title</span></li>
                 </ol>
             </div>

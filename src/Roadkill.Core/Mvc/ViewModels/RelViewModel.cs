@@ -60,6 +60,11 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         public bool approved { get; set; }
 
+        public string projectname { get; set; }
+
+        public string userEmail { get; set; }
+        public Guid userId { get; set; }
+
         /// <summary>
         /// Constructor used by none-controllers
         /// </summary>
@@ -84,7 +89,34 @@ namespace Roadkill.Core.Mvc.ViewModels
             reldatetime = rel.relDateTime;
             reltypetext = GetRelType(relTypeID);
             orgtext = GetOrg(rel.orgID);
-            usertext = GetUser(rel.username);
+            var user = GetUser(rel.userid);
+            usertext = user?.Firstname + " " + user?.Lastname;
+            userEmail = user?.Email;
+
+            if (user == null)userId = Guid.Empty;
+            else  userId = user.Id;
+            approved = rel.approved;
+        }
+        public RelViewModel(Relationship rel, bool resolveProjectName)
+        {
+            if (id == null)
+                throw new ArgumentNullException("rel");
+
+            id = rel.id;
+            userName = rel.username;
+            orgID = rel.orgID;
+            pageID = rel.pageId;
+            projectname = GetProjectName(rel.pageId);
+            relTypeID = rel.relTypeId;
+            reltext = rel.relText;
+            reldatetime = rel.relDateTime;
+            reltypetext = GetRelType(relTypeID);
+            orgtext = GetOrg(rel.orgID);
+            var user = GetUser(rel.userid);
+            usertext = user?.Firstname + " " + user?.Lastname;
+            userEmail = user?.Email;
+            if (user == null) userId = Guid.Empty;
+            else userId = user.Id;
             approved = rel.approved;
         }
 
@@ -143,25 +175,23 @@ namespace Roadkill.Core.Mvc.ViewModels
 
         }
 
+        public string GetProjectName(int pageId)
+        {
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            var page = repository.GetPageById(pageId);
+            return page?.Title;
+        }
 
         /// <summary>
         /// Returns the user name
         /// </summary>
-        public string GetUser(string username)
+        public User GetUser(Guid userid)
         {
 
-            string _usernames = "unknown";
-            try
-            {
 
-                LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
-                User _user;
-                _user = repository.GetUserByUsername(username);
-                _usernames = _user?.Firstname + " " + _user?.Lastname;
-            }
-            catch { }
+            LightSpeedRepository repository = new LightSpeedRepository(GetAppSettings());
+            return repository.GetUserById(userid);
 
-            return _usernames;
 
         }
 
@@ -189,27 +219,6 @@ namespace Roadkill.Core.Mvc.ViewModels
             return appSettings;
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

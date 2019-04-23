@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
+using Roadkill.Core.Email;
 using Roadkill.Core.Mvc.ViewModels;
 
 namespace Roadkill.Core.Services
@@ -16,10 +18,10 @@ namespace Roadkill.Core.Services
 		/// <exception cref="SearchException">An error occurred adding the page to the search index.</exception>
 		PageViewModel AddPage(PageViewModel model);
 
-	    bool IsApprovedContributer(int pageid, string username);
+	    bool IsApprovedContributer(int pageid, Guid userId);
 
 
-        IEnumerable<RelViewModel> GetRelByPage(int pageid);
+        IEnumerable<RelViewModel> GetRelationsByPageId(int pageid);
         /// <summary>
         /// Retrieves a list of all pages in the system.
         /// </summary>
@@ -133,5 +135,8 @@ namespace Roadkill.Core.Services
 		/// </summary>
 		/// <exception cref="DatabaseException">A datastore error occurred while clearing the page data.</exception>
 		void ClearPageTables();
+
+	    void SendUpdate(int pageId , int projectId, string projectTitle, ProjectUpdateEmail _projectUpdateEmail);
+
 	}
 }

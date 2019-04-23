@@ -3,12 +3,11 @@ using Mindscape.LightSpeed;
 
 namespace Roadkill.Core.Database.LightSpeed
 {
-	[Table("pipeline_orgs")]
-	[Cached(ExpiryMinutes = 1)]
+	[Table("pipeline_orgs", IdentityMethod = IdentityMethod.IdentityColumn)]
 	public class OrgEntity : Entity<int>
 	{
 		[Column("id")]
-		private int _orgID;
+		private int _id;
 
 		[Column("OrgName")]
 		private string _orgname;
@@ -23,15 +22,15 @@ namespace Roadkill.Core.Database.LightSpeed
         private string _twitter;
 
 		
-		public int Id
+		public int id
         {
             get
             {
-                return _orgID;
+                return _id;
             }
             set
             {
-                Set<int>(ref _orgID, value);
+                Set<int>(ref _id, value);
             }
         }
 

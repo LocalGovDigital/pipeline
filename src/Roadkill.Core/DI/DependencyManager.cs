@@ -211,6 +211,8 @@ namespace Roadkill.Core.DI
 			// Emails
 			scanner.AddAllTypesOf<SignupEmail>();
 			scanner.AddAllTypesOf<ResetPasswordEmail>();
+			scanner.AddAllTypesOf<ProjectUpdateEmail>();
+			scanner.AddAllTypesOf<ProjectStatusUpdateEmail>();
 
 			// Cache
 			scanner.AddAllTypesOf<ListCache>();

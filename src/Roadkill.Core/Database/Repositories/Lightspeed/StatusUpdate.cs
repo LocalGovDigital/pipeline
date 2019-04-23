@@ -29,7 +29,7 @@ namespace Roadkill.Core.Database.Repositories.LightSpeed
         private DateTime _updateDate;
 
 
-        public int Id
+        public int id
         {
             get
             {

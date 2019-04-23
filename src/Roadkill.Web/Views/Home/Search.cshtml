@@ -1,6 +1,6 @@
 ﻿@model Roadkill.Core.Models.SearchResults<IList<Roadkill.Core.Models.ProjectSearchResult>>
 <script>
-  
+
     $(document).ready(function () {
         $("#Title").keyup(function (event) {
             if (event.keyCode === 13) {
@@ -33,7 +33,7 @@
         $("#Department").val(vars["department"]);
         $("#Phase").val(vars["phase"]);
         $("#AgileLifecycle").val(vars["agileLifecycle"]);
-    
+
         if (vars["orderBy"] == null) {
             setOrderBy("Title");
         } else {
@@ -135,19 +135,14 @@
 
         window.location.href = qs;
     }
-    
-  
+
+
 </script>
 <h1>Search page </h1>
 <div class="row">
     <div class="col-sm-5">
         <label for="Title">Project Title</label>
-        <div class="input-group input-group">
-            <input type="text" class="form-control" id="Title">
-            <span class="input-group-btn">
-                <button id="btnSearch" type="button" class="btn btn-primary" onclick="submitSearch()">Search</button>
-            </span>
-        </div>
+        <input type="text" class="form-control" id="Title">
     </div>
     <div class="col-sm-3">
         <label for="Organisation">Organisation</label>
@@ -173,11 +168,13 @@
 
                 @foreach (var phase in Model.Phases)
                 {
-                <li><a href="#" onclick="setPhase('@phase');">@phase</a></li>
+                    <li><a href="#" onclick="setPhase('@phase');">@phase</a></li>
                 }
             </ul>
         </div>
     </div>
+
+
     <div class="col-sm-offset-2 col-sm-3">
         <label for="CollaborationLevel">Collaboration Level</label>
         <div class="dropdown">
@@ -187,8 +184,9 @@
             </button>
             <ul class="dropdown-menu">
                 <li><a href="#" onclick="setCollaborationLevel('All');">All</a></li>
-                @foreach (var collaborationLevel in Model.CollaborationLevels){
-                <li><a href="#" onclick="setCollaborationLevel('@collaborationLevel');">@collaborationLevel</a></li>
+                @foreach (var collaborationLevel in Model.CollaborationLevels)
+                {
+                    <li><a href="#" onclick="setCollaborationLevel('@collaborationLevel');">@collaborationLevel</a></li>
                 }
             </ul>
         </div>
@@ -209,14 +207,22 @@
             </ul>
         </div>
     </div>
-    <div class="col-sm-1">
+
+
+</div>
+
+
+<div class="row">
+    <div class="col-lg-offset-10 col-sm-2">
+
+        <button id="btnSearch" type="button" class="btn btn-primary" onclick="submitSearch()">Search</button>
         <label for="btnReset">&nbsp; </label>
         <button id="btnReset" type="button" class="btn btn-secondary" onclick="resetSearch()">Reset</button>
     </div>
 
 </div>
 <div class="row">
-    &nbsp;
+    <hr />
 </div>
 
 <div class="row">
@@ -230,39 +236,39 @@
                 <col class="col-md-1">
             </colgroup>
             <thead>
-            <tr>
-                <th>Title</th>
-                <th>Organisation</th>
-                <th>Department</th>
-                <th>Phase</th>
-                <th>Updated</th>
-            </tr>
+                <tr>
+                    <th>Title</th>
+                    <th>Organisation</th>
+                    <th>Department</th>
+                    <th>Phase</th>
+                    <th>Updated</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var res in Model.Result)
-            {
-                <tr>
-                    <td class="table-ellipsis">
-                        <a href="/wiki/@res.Id">@res.Title</a>
-                    </td>
-                    <td class="table-ellipsis">
-                        @res.Organisation
-                    </td>
-                    <td>
-                        @res.Department
-                    </td>
-                    <td>
+                @foreach (var res in Model.Result)
+                {
+                    <tr>
+                        <td class="table-ellipsis">
+                            <a href="/wiki/@res.Id">@res.Title</a>
+                        </td>
+                        <td class="table-ellipsis">
+                            @res.Organisation
+                        </td>
+                        <td>
+                            @res.Department
+                        </td>
+                        <td>
 
-                        @if (res.ProjectStatus != null)
-                        {
-                            <span class="label label-stage label-stage-small label-@res.ProjectStatus.ToLower()"> @res.ProjectStatus.ToUpper()</span>
-                        }
+                            @if (res.ProjectStatus != null)
+                            {
+                                <span class="label label-stage label-stage-small label-@res.ProjectStatus.ToLower()"> @res.ProjectStatus.ToUpper()</span>
+                            }
 
-                    </td> 
+                        </td>
 
-                    <td>@res.LastUpdated.ToString("MMM yyyy")</td>
-                </tr>
-            }
+                        <td>@res.LastUpdated.ToString("MMM yyyy")</td>
+                    </tr>
+                }
             </tbody>
         </table>
         <hr>

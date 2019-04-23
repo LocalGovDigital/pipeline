@@ -17,13 +17,18 @@ namespace Roadkill.Core.Database
 	{
 		void Startup(DataStoreType dataStoreType, string connectionString, bool enableCache);
 		void TestConnection(DataStoreType dataStoreType, string connectionString);
-	    void SetPendingApprovedInProject(int projectid, string username, int organisationId);
+	    void SetPendingApprovedInProject(int projectid, Guid userId, int organisationId);
 	    void SetContributeApprovedInProject(int projectid, int id);
 
-	    void SetContributeAutoApprovedInProject(int projectid, string username, int organisationId);
+	    void SetContributeAutoApprovedInProject(int projectid, Guid userId, int organisationId);
 
 
-	    IList<FundingBoundary> FundingBoundaries { get;}
+
+        IList<FundingBoundary> FundingBoundaries { get;}
+
+	    void AddOrganisation(string model);
+	    void DeleteStatusUpdate(int statusUpdateId);
+
 
 	}
 }

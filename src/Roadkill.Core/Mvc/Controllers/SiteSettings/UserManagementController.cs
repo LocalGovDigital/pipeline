@@ -169,7 +169,7 @@ namespace Roadkill.Core.Mvc.Controllers
 						ModelState.AddModelError("General", SiteStrings.SiteSettings_UserManagement_EditUser_Error);
 					}
 
-					model.ExistingEmail = model.NewEmail;
+					model.ExistingEmail = model.NewEmail.ToLower();
 				}
 
 				if (!string.IsNullOrEmpty(model.Password))

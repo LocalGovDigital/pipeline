@@ -6,6 +6,7 @@ ALTER TABLE [roadkill_pagecontent] ADD [projectAgileLifeCyclePhase] TEXT NULL ;
 ALTER TABLE [roadkill_pages] ADD [department] TEXT NULL;
 ALTER TABLE [roadkill_pagecontent] ADD [department] TEXT NULL;
 
+n
 ALTER TABLE [roadkill_pages] ADD [owner] TEXT NULL;
 ALTER TABLE [roadkill_pagecontent] ADD [owner] TEXT NULL;
 

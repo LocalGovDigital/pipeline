@@ -19,7 +19,10 @@ namespace Roadkill.Core.Database
 		User GetUserById(Guid id, bool? isActivated = null);
 		User GetUserByPasswordResetKey(string key);
 		User GetUserByUsername(string username);
-		User GetUserByUsernameOrEmail(string username, string email);
+
+	    User GetUserByUsername(Guid id);
+
+        User GetUserByUsernameOrEmail(string username, string email);
 		User SaveOrUpdateUser(User user);
 	}
 }

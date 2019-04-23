@@ -1,0 +1,29 @@
+﻿@model UserProfileViewModel
+@{
+    ViewBag.Title = SiteStrings.Profile_Title;
+    ViewBag.Controller = "User";
+}
+
+<section id="global__content">
+    <div class="row">
+        <div id="global__body_content" class="small-12 medium-8 columns body_content">
+            <h1>@Model.Firstname @Model.Lastname</h1>
+            <h3>@Model.Organisation</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                Email
+            </div>
+            <div class="col-sm-10">
+                <span><a href="mailto:@Model.Email">@Model.Email</a></span>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                @Html.Action("RelatedRelationshipsByUserId", "Wiki", new { userId = Model.Id })
+            </div>
+        </div>
+    </div>
+</section>

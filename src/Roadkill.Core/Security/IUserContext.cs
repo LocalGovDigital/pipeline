@@ -18,8 +18,11 @@ namespace Roadkill.Core
 		/// The username for the logged in user, retrieved by looking up the ID stored by the CurrentUser property.
 		/// </summary>
 		string CurrentUsername { get; }
+		Guid CurrentUserId{ get; }
 
-	    string CurrentUserFirstname { get; }
+	    string CurrentUserFirstName { get; }
+	    string CurrentUserLastName { get; }
+	    string CurrentUserFullName { get; }
 	
         /// <summary>
         /// Gets whether the user (if logged in), is in the editors group.

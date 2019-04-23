@@ -10,6 +10,7 @@ using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Security;
 using Roadkill.Core.Services;
+using StructureMap;
 
 namespace Roadkill.Core.Mvc.Controllers.Api
 {
@@ -22,7 +23,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         /// Initializes a new instance of the <see cref="SearchController"/> class.
         /// </summary>
         /// <param name="searchService">The search service.</param>
-        public UserStatusController(SearchService searchService, ApplicationSettings appSettings, UserServiceBase userService, IUserContext userContext)
+        public UserStatusController(SearchService searchService, ApplicationSettings appSettings,
+            UserServiceBase userService, IUserContext userContext)
             : base(appSettings, userService, userContext)
         {
             _searchService = searchService;
@@ -34,32 +36,27 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         public bool RequestWatch(int projectid)
         {
 
-            var username = UserContext.CurrentUsername;
+            var userId = UserContext.CurrentUserId;
+            LightSpeedRepository repository =
+                new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
+            var organisation = repository.GetOrgByUser(userId);
 
-            LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-            var organisation = repository.GetOrgByUser(username);
-
-            if (repository.IsWatched(projectid, username))
+            if (repository.IsWatched(projectid, userId))
             {
 
-                repository.UnWatchProject(projectid, username);
+                repository.UnWatchProject(projectid, userId);
 
             }
             else
             {
 
-                repository.WatchProject(projectid, username, organisation?.Id ?? 0);
+                repository.WatchProject(projectid, userId, organisation?.Id ?? 0);
 
 
             }
 
-            return repository.IsWatched(projectid, username);
+            return repository.IsWatched(projectid, userId);
         }
 
         [HttpGet]
@@ -67,39 +64,29 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         public bool WatchStatus(int projectid)
         {
 
-            var username = string.Empty;
+            var userid = UserContext.CurrentUserId;
+            LightSpeedRepository repository =
+                new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
-
-            LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-            return repository.Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 3);
+            return repository.Rels.Any(x => x.UserId == userid && x.pageId == projectid && x.relTypeId == 3);
         }
 
         [HttpPost]
         [Route("request-contribute/{projectid}")]
         public bool RequestContribute(int projectid)
         {
-            var username = UserContext.CurrentUsername;
+            var userId = UserContext.CurrentUserId;
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
+            LightSpeedRepository repository =
+                new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
-            LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-
-            var organisation = repository.GetOrgByUser(username);
-            if (!repository.IsContributePending(projectid, username))
+            var organisation = repository.GetOrgByUser(userId);
+            if (!repository.IsContributePending(projectid, userId))
             {
-                repository.SetPendingApprovedInProject(projectid, username, organisation?.Id ?? 0);
+                repository.SetPendingApprovedInProject(projectid, userId, organisation?.Id ?? 0);
             }
 
-            return repository.IsContributePending(projectid, username);
+            return repository.IsContributePending(projectid, userId);
         }
 
         [HttpPost]
@@ -108,13 +95,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         {
             if (UserContext.IsAdmin)
             {
-                ApplicationSettings appSettings = new ApplicationSettings();
-                appSettings.DataStoreType = DataStoreType.Sqlite;
-                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-                appSettings.LoggingTypes = "none";
-                appSettings.UseBrowserCache = false;
-
-                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+                LightSpeedRepository repository =
+                    new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
                 if (!repository.IsContributeApproved(projectid, relid))
                 {
@@ -123,6 +105,7 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 
                 return true;
             }
+
             return false;
         }
 
@@ -132,13 +115,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         {
             if (UserContext.IsAdmin)
             {
-                ApplicationSettings appSettings = new ApplicationSettings();
-                appSettings.DataStoreType = DataStoreType.Sqlite;
-                appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-                appSettings.LoggingTypes = "none";
-                appSettings.UseBrowserCache = false;
-
-                LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+                LightSpeedRepository repository =
+                    new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
                 if (!repository.IsContributeApproved(projectid, relid))
                 {
@@ -147,44 +125,41 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 
                 return true;
             }
+
             return false;
         }
+        
 
         [HttpGet]
-        [Route("can-contribute/{projectid}")]
-        public string CanContribute(int projectid)
+        [Route("update-database/{u}/{password}")]
+        public int UpdateDatabase(string u, string password)
         {
 
-            var username = string.Empty;
+            var count = 0;
 
-            ApplicationSettings appSettings = new ApplicationSettings();
-            appSettings.DataStoreType = DataStoreType.Sqlite;
-            appSettings.ConnectionString = "Data Source=|DataDirectory|\roadkill.sqlite;";
-            appSettings.LoggingTypes = "none";
-            appSettings.UseBrowserCache = false;
-
-            LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-
-            if (repository.Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4))
+            if (u == "updg0022" && password == "C6MGRkq4AhHutyEeaT3S7bgrxnVUjpzDWwZcKNP9v8fmJ2L5Bs")
             {
-                return "notrequested";
+                LightSpeedRepository repository =
+                    new LightSpeedRepository(ObjectFactory.GetInstance<ApplicationSettings>());
 
-            }
-            if (repository.Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4 && x.Approved == false))
-            {
-                return "requested";
+                foreach (var rel in repository.Rels)
+                {
+                    var user = repository.Users.FirstOrDefault(x => x.Username == rel.username);
 
-            }
-            if (repository.Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4 && x.Approved == false))
-            {
-                return "notapproved";
-            }
-            if (repository.Rels.Any(x => x.username == username && x.pageId == projectid && x.relTypeId == 4 && x.Approved == false))
-            {
-                return "approved";
+                    if (user != null)
+                    {
+                        if (user.Id != Guid.Empty)
+                        {
+                            rel.UserId = user.Id;
+                            repository.UnitOfWork.SaveChanges();
+                            count++;
+                        }
+                    }
+                }
+                return count;
             }
 
-            throw new NotImplementedException();
+            return count;
         }
     }
 }

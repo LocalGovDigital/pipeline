@@ -58,11 +58,13 @@ namespace Roadkill.Core.Services
             try
             {
                 string currentUser = _context.CurrentUsername;
+                var currentUserId = _context.CurrentUserId;
 
                 Relationship rel = new Relationship();
                 rel.id = model.id;
                 rel.username = currentUser;
-                rel.orgID = Repository.GetOrgByUser(currentUser).Id;
+                rel.userid = currentUserId;
+                rel.orgID = Repository.GetOrgByUser(currentUserId).Id;
                 rel.pageId = model.pageID;
                 rel.relTypeId = model.relTypeID;
                 rel.relText = model.reltext;

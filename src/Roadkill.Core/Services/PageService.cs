@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -10,6 +11,7 @@ using Roadkill.Core.Cache;
 using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Configuration;
 using System.Web;
+using Roadkill.Core.Email;
 using Roadkill.Core.Hackney.Parameters;
 using Roadkill.Core.Logging;
 using Roadkill.Core.Models;
@@ -63,6 +65,7 @@ namespace Roadkill.Core.Services
             try
             {
                 string currentUser = _context.CurrentUsername;
+                var currentUserId = _context.CurrentUserId;
 
                 Page page = new Page();
                 page.Title = model.Title;
@@ -102,7 +105,7 @@ namespace Roadkill.Core.Services
                     // TODO: log
                 }
 
-                Repository.SetContributeAutoApprovedInProject(savedModel.Id, currentUser, savedModel.orgID);
+                Repository.SetContributeAutoApprovedInProject(savedModel.Id, currentUserId, savedModel.orgID);
                 return savedModel;
             }
             catch (DatabaseException e)
@@ -464,23 +467,17 @@ namespace Roadkill.Core.Services
         /// <param name="id">The pageid to search for.</param>
         /// <returns>A <see cref="IEnumerable{PageViewModel}"/> of pages tagged with the provided tag.</returns>
         /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
-        public IEnumerable<RelViewModel> GetRelByPage(int pageid)
+        public IEnumerable<RelViewModel> GetRelationsByPageId(int pageid)
         {
             try
             {
-
                 IEnumerable<Relationship> relsList = Repository.GetRelByPage(pageid).ToList();
                 List<RelViewModel> rels = new List<RelViewModel>();
 
                 foreach (Relationship rel in relsList)
                 {
-
-
                     RelViewModel relModel = new RelViewModel(rel);
-                    int index = rels.IndexOf(relModel);
-
                     rels.Add(relModel);
-
                 }
 
                 return rels;
@@ -490,12 +487,30 @@ namespace Roadkill.Core.Services
                 throw new DatabaseException(ex, "An error occurred finding the tag '{0}' in the database", pageid);
             }
         }
+        public IEnumerable<RelViewModel> GetRelByUserId(Guid userId)
+        {
+
+            IEnumerable<Relationship> relsList = Repository.GetRelByUserId(userId).ToList();
+            List<RelViewModel> rels = new List<RelViewModel>();
+
+            foreach (Relationship rel in relsList)
+            {
+                RelViewModel relModel = new RelViewModel(rel, true);
+                if (!string.IsNullOrEmpty(relModel.projectname))
+                {
+                    rels.Add(relModel);
+                }
+            }
+
+            return rels;
+
+        }
 
 
         public string GetFundingBoundaryText(string id)
         {
 
-            return Repository.FundingBoundaries.FirstOrDefault(x=>x.Id==id).Text;
+            return Repository.FundingBoundaries.FirstOrDefault(x => x.Id == id).Text;
         }
         /// <summary>
         /// Finds all relationships related to the page.
@@ -503,12 +518,12 @@ namespace Roadkill.Core.Services
         /// <param name="id">The pageid to search for.</param>
         /// <returns>A <see cref="IEnumerable{PageViewModel}"/> of pages tagged with the provided tag.</returns>
         /// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
-        public bool IsApprovedContributer(int pageid, string username)
+        public bool IsApprovedContributer(int pageid, Guid userId)
         {
             try
             {
 
-                IEnumerable<Relationship> relsList = Repository.GetRelByPageAndUsername(pageid, username);
+                IEnumerable<Relationship> relsList = Repository.GetRelByPageAndUserId(pageid, userId);
 
 
                 var isApproved = relsList.Any(x => x.relTypeId == 4 && x.approved);
@@ -617,6 +632,7 @@ namespace Roadkill.Core.Services
                 // Update the lucene index
                 PageViewModel updatedModel = new PageViewModel(Repository.GetLatestPageContent(page.Id), _markupConverter);
                 _searchService.Update(updatedModel);
+
             }
             catch (DatabaseException ex)
             {
@@ -808,6 +824,42 @@ namespace Roadkill.Core.Services
             }
         }
 
+        public void SendUpdate(int pageId, int projectId, string projectTitle, ProjectUpdateEmail _projectUpdateEmail)
+        {
+
+            var relationList = GetRelationsByPageId(pageId).ToList();
+         //   var emailModels = new List<EmailProjectUpdateViewModel>();
+
+            var environmentPrefix = string.Empty;
+            if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
+            {
+                environmentPrefix = ConfigurationManager.AppSettings["environment"];
+                environmentPrefix = $"[{environmentPrefix}] ";
+            }
+
+            foreach (var relViewModel in relationList)
+            {
+                var mod = new EmailProjectUpdateViewModel
+                {
+                    ProjectName = projectTitle,
+                    ProjectId = projectId.ToString(),
+                    Subject = $"{environmentPrefix}A project you are following has been updated. [{projectTitle}]"
+                };
+
+                var user = Repository.GetUserById(relViewModel.userId);
+
+                if (user != null && !string.IsNullOrEmpty(user.Email))
+                {
+                    mod.Name = $"{user.Firstname} {user.Lastname}";
+                    mod.ToAddress = user.Email;
+
+                   // emailModels.Add(mod);
+                    _projectUpdateEmail.Send(mod);
+                }
+
+            }
+        }
+
 
         public IList<string> GetOrganisationNames()
         {
@@ -846,7 +898,7 @@ namespace Roadkill.Core.Services
                     if (!string.IsNullOrEmpty(sp.Title)) query = query.Where(x => x.Title.ToLower().Contains(sp.Title.ToLower()));
                     if (!string.IsNullOrEmpty(sp.Phase)) query = query.Where(x => x.ProjectStatus == sp.Phase);
                     if (!string.IsNullOrEmpty(sp.Department)) query = query.Where(x => x.Department.ToLower().Contains(sp.Department.ToLower()));
-                    if (!string.IsNullOrEmpty(sp.AgileLifecycle )) query = query.Where(x => x.ProjectAgileLifeCyclePhase == sp.AgileLifecycle);
+                    if (!string.IsNullOrEmpty(sp.AgileLifecycle)) query = query.Where(x => x.ProjectAgileLifeCyclePhase == sp.AgileLifecycle);
                     if (!string.IsNullOrEmpty(sp.CollaborationLevel)) query = query.Where(x => x.CollaborationLevel == sp.CollaborationLevel);
                     if (!string.IsNullOrEmpty(sp.FundingBoundary)) query = query.Where(x => x.FundingBoundary == sp.FundingBoundary);
 

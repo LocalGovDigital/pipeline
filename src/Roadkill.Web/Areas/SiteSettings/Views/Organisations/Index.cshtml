@@ -1,0 +1,30 @@
+﻿@model IList<string>
+@{ 
+    ViewBag.Title = "Organisations";
+    ViewData["OrganisationsActive"] = true;
+}
+
+@Html.SiteSettingsNavigation()
+
+<p>
+    <a href="@Url.Action("Add", "Organisations")" class="btn btn-primary btn-success">
+        Add Organisation
+    </a>
+</p>
+
+<table class="table plugins">
+    <thead>
+    <tr>
+        <th>Organisation Name (@Model.Count)</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var orgName in Model)
+    {
+        <tr>
+            <td>@orgName</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<br style="clear:both;" />

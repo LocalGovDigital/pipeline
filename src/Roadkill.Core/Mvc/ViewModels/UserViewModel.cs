@@ -32,7 +32,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 	[CustomValidation(typeof(UserViewModel), "VerifyNewUsername")]
 	[CustomValidation(typeof(UserViewModel), "VerifyNewUsernameIsNotInUse")]
 	[CustomValidation(typeof(UserViewModel), "VerifyNewEmail")]
-	[CustomValidation(typeof(UserViewModel), "VerifyNewEmailIsNotInUse")]
 	[CustomValidation(typeof(UserViewModel), "VerifyPassword")]
 	[CustomValidation(typeof(UserViewModel), "VerifyPasswordsMatch")]
 	public class UserViewModel : IEquatable<UserViewModel>
@@ -78,7 +77,7 @@ namespace Roadkill.Core.Mvc.ViewModels
 		/// The username to change to. For no change this should be the same as <see cref="ExistingUsername"/>.
 		/// For new signups this field contains the username.
 		/// </summary>
-		[Required(ErrorMessageResourceType = typeof(SiteStrings), ErrorMessageResourceName = "User_Validation_Username")]
+		//[Required(ErrorMessageResourceType = typeof(SiteStrings), ErrorMessageResourceName = "User_Validation_Username")]
 		public string NewUsername { get; set; }
 
 		/// <summary>
@@ -248,25 +247,6 @@ namespace Roadkill.Core.Mvc.ViewModels
 			}
 		}
 
-		/// <summary>
-		/// Checks if the <see cref="NewEmail"/> provided is already a user in the system.
-		/// </summary>
-		/// <param name="user"></param>
-		/// <returns><see cref="ValidationResult.Success"/> if the email hasn't changed, 
-		/// or if it has and the new email doesn't  already exist.</returns>
-		public static ValidationResult VerifyNewEmailIsNotInUse(UserViewModel user, ValidationContext context)
-		{
-			// Only check if it's a new user, OR the email has changed
-			if (user.ExistingEmail != user.NewEmail)
-			{
-				if (user.UserService == null || user.UserService.UserExists(user.NewEmail))
-				{
-					return new ValidationResult(string.Format(SiteStrings.User_Validation_EmailExists, user.NewEmail));
-				}
-			}
-
-			return ValidationResult.Success;
-		}
 
 		/// <summary>
 		/// Ensures the two passwords match.

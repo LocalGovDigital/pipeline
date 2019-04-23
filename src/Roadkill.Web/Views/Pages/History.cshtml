@@ -17,6 +17,7 @@
                         <tr>
                             <th class="version">@SiteStrings.History_Version</th>
                             <th class="editedon">@SiteStrings.History_EditedOn</th>
+
                             <th class="editedby stretch">@SiteStrings.History_EditedBy</th>
                             <th class="revert"></th>
                         </tr>
@@ -27,7 +28,10 @@
                             <tr>
                                 <td class="version" style="width:10%;">@Html.ActionLink(Model[i].VersionNumber.ToString(), "Version", new { id = Model[i].Id })</td>
                                 <td class="editedon" title="@Model[i].EditedOnWithOffset">@Model[i].EditedOn.ToLongDateString()</td>
-                                <td class="editedby stretch">@Html.ActionLink(Model[i].EditedBy, "ByUser", "Pages", new { id = Model[i].EditedBy.ToBase64(), encoded = true }, null)</td>
+                                <td class="editedby stretch">
+                                 
+                                    <a href="/user/userprofile?email=@Model[i].EditedBy">@Model[i].EditedBy</a>
+                                 </td>
                                 <td class="revert">
                                     @if (i > 0 && RoadkillContext.IsLoggedIn && (!Model[i].IsPageAdminOnly || RoadkillContext.IsAdmin))
                                     {

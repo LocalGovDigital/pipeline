@@ -14,6 +14,9 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("username")]
         private string _username;
 
+        [Column("userid")]
+        private Guid _userid;
+        
         [Column("orgID")]
         private int _orgID;
 
@@ -77,6 +80,17 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<string>(ref _username, value);
+            }
+        }
+        public Guid UserId
+        {
+            get
+            {
+                return _userid;
+            }
+            set
+            {
+                Set<Guid>(ref _userid, value);
             }
         }
 

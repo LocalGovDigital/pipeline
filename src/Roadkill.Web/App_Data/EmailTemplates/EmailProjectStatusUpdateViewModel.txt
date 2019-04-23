@@ -1,0 +1,13 @@
+﻿Dear {Name},
+
+The Project {ProjectName} has had a status update:
+
+
+{UpdateDate}
+{Author}
+{StatusUpdate}
+
+{SITEURL}/wiki/{ProjectId}/">{ProjectName}
+
+Thanks,
+The Pipeline team
