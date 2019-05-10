@@ -46,22 +46,22 @@ namespace Roadkill.Core.Security
                     Repository.SaveOrUpdateUser(user);
 
                     #region MailChimp
-                    var SiteSettings = StructureMap.ObjectFactory.GetInstance<SiteSettings>();
+                    //var SiteSettings = StructureMap.ObjectFactory.GetInstance<SiteSettings>();
 
-                    if (SiteSettings.EnableMailChimp)
-                    {
-                        var mc = new MailChimp.MailChimpManager(SiteSettings.MailChimpApiKey);
+                    //if (SiteSettings.EnableMailChimp)
+                    //{
+                    //    var mc = new MailChimp.MailChimpManager(SiteSettings.MailChimpApiKey);
 
-                        if (user.EmailSubscriber)
-                        {
-                            // Subscribe user
-                            var MergeVars = new MailChimp.Lists.MergeVar();
-                            MergeVars.Add(new KeyValuePair<string, object>("FNAME", user.Firstname));
-                            MergeVars.Add(new KeyValuePair<string, object>("LNAME", user.Lastname));
+                    //    if (user.EmailSubscriber)
+                    //    {
+                    //        // Subscribe user
+                    //        var MergeVars = new MailChimp.Lists.MergeVar();
+                    //        MergeVars.Add(new KeyValuePair<string, object>("FNAME", user.Firstname));
+                    //        MergeVars.Add(new KeyValuePair<string, object>("LNAME", user.Lastname));
 
-                            mc.Subscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, MergeVars, doubleOptIn: false, updateExisting: true);
-                        }
-                    }
+                    //        mc.Subscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, MergeVars, doubleOptIn: false, updateExisting: true);
+                    //    }
+                    //}
                     #endregion
 
                     return true;
@@ -563,32 +563,32 @@ namespace Roadkill.Core.Security
                 user.orgID = model.orgID;
 
                 #region MailChimp
-                if (user.EmailSubscriber != model.EmailSubscriber)
-                {
-                    var SiteSettings = StructureMap.ObjectFactory.GetInstance<SiteSettings>();
+                //if (user.EmailSubscriber != model.EmailSubscriber)
+                //{
+                //    var SiteSettings = StructureMap.ObjectFactory.GetInstance<SiteSettings>();
 
-                    if (SiteSettings.EnableMailChimp)
-                    {
-                        var mc = new MailChimp.MailChimpManager(SiteSettings.MailChimpApiKey);
+                //    if (SiteSettings.EnableMailChimp)
+                //    {
+                //        var mc = new MailChimp.MailChimpManager(SiteSettings.MailChimpApiKey);
 
-                        if (model.EmailSubscriber)
-                        {
-                            // Subscribe user
-                            var MergeVars = new MailChimp.Lists.MergeVar();
-                            MergeVars.Add(new KeyValuePair<string, object>("FNAME", user.Firstname));
-                            MergeVars.Add(new KeyValuePair<string, object>("LNAME", user.Lastname));
+                //        if (model.EmailSubscriber)
+                //        {
+                //            // Subscribe user
+                //            var MergeVars = new MailChimp.Lists.MergeVar();
+                //            MergeVars.Add(new KeyValuePair<string, object>("FNAME", user.Firstname));
+                //            MergeVars.Add(new KeyValuePair<string, object>("LNAME", user.Lastname));
 
-                            mc.Subscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, MergeVars, doubleOptIn: false, updateExisting: true);
-                        }
-                        else
-                        {
-                            // Unsubscribe user
-                            mc.Unsubscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, sendGoodbye: false, sendNotify: false);
-                        }
-                    }
+                //            mc.Subscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, MergeVars, doubleOptIn: false, updateExisting: true);
+                //        }
+                //        else
+                //        {
+                //            // Unsubscribe user
+                //            mc.Unsubscribe(SiteSettings.MailChimpListId, new MailChimp.Helper.EmailParameter { Email = user.Email }, sendGoodbye: false, sendNotify: false);
+                //        }
+                //    }
 
-                    user.EmailSubscriber = model.EmailSubscriber;
-                }
+                //    user.EmailSubscriber = model.EmailSubscriber;
+                //}
                 #endregion
 
                 Repository.SaveOrUpdateUser(user);
