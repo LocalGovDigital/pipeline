@@ -57,14 +57,14 @@
 
 @media screen {
     /*p {
-        font-family: "nta", Arial, sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 19px;
         line-height: 1.31579;
         font-weight: 400;
         text-transform: none;
     }*/
     h2 {
-        font-family: "nta", Arial, sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 24px;
         line-height: 1.25;
         font-weight: 400;
@@ -81,7 +81,7 @@
     }
 
     h3 {
-        font-family: "nta", Arial, sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 19px;
         line-height: 1.31579;
         font-weight: 400;
@@ -112,7 +112,7 @@
     }
 
         .main-content ul li {
-            font-family: "nta", Arial, sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 19px;
             line-height: 1.31579;
             font-weight: 400;
@@ -128,7 +128,7 @@
     }
 
     .lrg-number {
-        font-family: "nta", Arial, sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 70px;
         line-height: 1;
         font-weight: 700;
@@ -175,7 +175,7 @@
     }
 
     ul.phases h3 {
-        font-family: "nta", Arial, sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 24px;
         line-height: 1.25;
         font-weight: 700;
