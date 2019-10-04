@@ -406,6 +406,9 @@
     <Content Include="Smtp.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Home\Rss.cshtml" />
+    <Content Include="Views\Home\RssSlack.cshtml" />
+    <Content Include="Views\Home\RssTwitter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
