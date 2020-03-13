@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ActivityViewModel>
+@{
+    Response.ContentType = "application/rss+xml";
+}<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>LocalGov Digital Pipeline</title>
+    <link>https://pipeline.localgov.digital</link>
+    <atom:link href="https://pipeline.localgov.digital/home/activity?view=rsstwitter" rel="self" type="application/rss+xml" />
+    <description>The latest updates from LocalGov Digital Pipeline</description>
+    <lastBuildDate>@Model.First().activityDateTime.ToUniversalTime().ToString("r")</lastBuildDate>
+    <image>
+        <url>https://localgov.digital/wp-content/uploads/2017/01/lgd_logo-1-e1485652490381.png</url>
+        <title>LocalGov Digital Pipeline</title>
+        <link>https://pipeline.localgov.digital</link>
+    </image>
+@foreach (ActivityViewModel activityModel in Model.Where(a => a.activityName == "added" || a.activityName == "edited").OrderByDescending(a => a.activityDateTime))
+{
+    <item>
+        <title>@(activityModel.projectName) @(activityModel.activityName)</title>
+        @Html.Raw("<link>https://pipeline.localgov.digital/wiki/" + activityModel.projectId + "?utm_source=rss&amp;utm_medium=twitter&amp;utm_campaign=notify_test&amp;utm_term=" + activityModel.projectId + "&amp;utm_content=" + activityModel.activityName + "</link>")
+        <guid isPermaLink="false">@(activityModel.projectId)-@(activityModel.activityDateTime.Ticks)</guid>
+        <pubDate>@activityModel.activityDateTime.ToUniversalTime().ToString("r")</pubDate>
+        <description>@(activityModel.projectName) owned by @(activityModel.orgName) was @(activityModel.activityName)</description>
+    </item>
+}
+</channel>
+</rss>
