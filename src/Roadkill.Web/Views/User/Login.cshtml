@@ -8,28 +8,31 @@
 <p><a href="@Url.Content("Signup")">Sign up for Pipeline here</a></p>
 
 @Html.BootstrapValidationSummary(SiteStrings.Login_Unsuccessful_Title)
+<div class="row">
+    <div class="col-md-6">
+        <form role="form" method="post">
+            @Html.Hidden("fromUrl", Request.QueryString["ReturnUrl"])
 
-<form role="form" method="post" class="col-md-6">
-    @Html.Hidden("fromUrl", Request.QueryString["ReturnUrl"])
+            <div class="form-group">
+                <label for="email" class="control-label">@SiteStrings.Shared_Email_Label</label>
+                <div>
+                    @Html.TextBox("email", null, new { @class = "form-control", type = "email" })
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label for="email" class="control-label">@SiteStrings.Shared_Email_Label</label>
-        <div>
-            @Html.TextBox("email", null, new { @class = "form-control", type = "email" })
-        </div>
+            <div class="form-group">
+                <label for="password" class="control-label">@SiteStrings.Shared_Password_Label</label>
+                <div>
+                    @Html.Password("password", null, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="">
+                    <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Login</button>
+                    @Html.ActionLink(@SiteStrings.Login_ForgottenPassword, "ResetPassword", null, new { @class = "btn btn-link btn-lg" })
+                </div>
+            </div>
+        </form>
     </div>
-
-    <div class="form-group">
-        <label for="password" class="control-label">@SiteStrings.Shared_Password_Label</label>
-        <div>
-            @Html.Password("password", null, new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="">
-            <button type="submit" class="btn btn-primary btn-lg">@SiteStrings.Button_Login</button>
-            @Html.ActionLink(@SiteStrings.Login_ForgottenPassword, "ResetPassword", null, new { @class = "btn btn-link btn-lg" })
-        </div>
-    </div>
-</form>
+</div>

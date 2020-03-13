@@ -17,7 +17,7 @@
 
 
     <div class="row">
-        <div id="global__body_content" class="medium-6 columns body_content">
+        <div id="global__body_content" class="col-md-6 columns body_content">
             <script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
             <script>
                 jQuery(function ($) {
@@ -130,7 +130,7 @@
                     <!-- Modal -->
                     <div class="modal fade" id="updateSuccessModal" role="dialog">
                         <div class="modal-dialog">
-    
+
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -144,7 +144,7 @@
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
-      
+
                         </div>
                     </div>
 
@@ -156,25 +156,32 @@
 
                         </div><div class="col-sm-12">
                             <button id="UpdateStatusBtn" type="button" class="btn btn-primary pull-right">Update Status</button>
-
                         </div>
-                              <div id="statuses">
-                                  @foreach (var statusUpdate in Model.StatusUpdates)
-                                  {<div class="col-lg-12"  id="statuscontents-@statusUpdate.Id">
-                                      <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
-                                      <ul class="list-group">
-                                          <li class="list-group-item">
+                        <div id="statuses">
+                            @foreach (var statusUpdate in Model.StatusUpdates)
+                            {
+                                <div class="col-lg-12" id="statuscontents-@statusUpdate.Id">
+                                    <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div>
+                                                <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author
+                                            </div>
+                                            <textarea id="EditUpdateStatusTxt" class="form-control" cols="20" name="Content" rows="2">@statusUpdate.Text</textarea>
+                                        </li>
+                                    </ul>
 
-                                              <div> <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
-                                              <div>@Html.Raw(statusUpdate.Text)</div>
-                                          </li>
-                                      </ul>
-                                       <div class="col-lg-offset-10">
-                                           <button id="statusdelete-@statusUpdate.Id" type="button" class="btn-danger delete-status-button btn pull-right">Delete Status Update</button>
-                                       </div>
-                                   </div>
-                                  }
-                              </div>
+                                    <div class="row">
+                                        <div class="col-lg-8">
+                                            <button id="statusedit-@statusUpdate.Id" type="button" class="btn-success edit-status-button btn pull-right">Edit Status Update</button>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <button id="statusdelete-@statusUpdate.Id" type="button" class="btn-danger delete-status-button btn pull-right">Delete Status Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
                 }
 
@@ -225,76 +232,79 @@
             </form>
         </div>
 
-        <h2>Project Admin</h2>
+        <div class="col-md-12">
+
+            <h2>Project Admin</h2>
 
 
-        @if (Model.Relationships != null && Model.Relationships.Any(x => x.relTypeId == 3 || x.relTypeId == 4))
-        {<p>The following users are watching contributing to this project</p>
+            @if (Model.Relationships != null && Model.Relationships.Any(x => x.relTypeId == 3 || x.relTypeId == 4))
+            {<p>The following users are watching contributing to this project</p>
 
-            <table class="table">
-                <tr>
-                    <td>Watching/Contributing</td>
-                    <td>User</td>
-                    <td>Organisation</td>
-                    <td></td>
-                </tr>
-                @foreach (var rel in Model.Relationships.Where(x => x.relTypeId == 3 || x.relTypeId == 4))
-                {
+                <table class="table">
                     <tr>
-                        <td>
-                            @if (rel.relTypeId == 3)
-                            {
-                                <span class="glyphicon glyphicon-eye-open"></span>
-
-                            }
-                            else if (rel.relTypeId == 4)
-                            {
-                                <span class="glyphicon glyphicon-heart"></span>
-
-                            }
-                        </td>
-                        <td>@rel.username</td>
-                        <td>
-                            @if (rel.orgID != 0)
-                            {
-                                @Model.OrgsAsNewSelectList.FirstOrDefault(x => x.Value == rel.orgID.ToString()).Text;
-                            }
-                        </td>
-
-                        <td>
-                            @if (rel.relTypeId == 3)
-                            {
-                                <span class="badge">Watching</span>
-                            }
-                            else if (rel.relTypeId == 4)
-                            {
-                                if (rel.pending == true && rel.approved == false)
-                                {
-                                    <span id="badge-@rel.id" class="badge">Pending</span>
-                                    <button id="approve-@rel.id" type="button" class="approve-as-contributer btn btn-primary btn-xs">Approve</button>
-                                    <button id="reject-@rel.id" type="button" class="reject-as-contributer btn btn-default btn-xs">Reject</button>
-                                }
-                                if (rel.pending == false && rel.approved == false)
-                                {
-                                    <span id="@rel.username-badge" class="badge">Rejected</span>
-                                }
-                                else if (rel.approved == true)
-                                {
-                                    <span class="badge">Contributing</span>
-                                }
-                            }
-                        </td>
+                        <td>Watching/Contributing</td>
+                        <td>User</td>
+                        <td>Organisation</td>
+                        <td></td>
                     </tr>
-                }
-            </table>
-        }
-        else
-        {
-            <div class="alert alert-warning">
-                There are no watchers or contributors on this project at the moment.
-            </div>
+                    @foreach (var rel in Model.Relationships.Where(x => x.relTypeId == 3 || x.relTypeId == 4))
+                    {
+                        <tr>
+                            <td>
+                                @if (rel.relTypeId == 3)
+                                {
+                                    <span class="glyphicon glyphicon-eye-open"></span>
 
-        }
+                                }
+                                else if (rel.relTypeId == 4)
+                                {
+                                    <span class="glyphicon glyphicon-heart"></span>
+
+                                }
+                            </td>
+                            <td>@rel.username</td>
+                            <td>
+                                @if (rel.orgID != 0)
+                                {
+                                    @Model.OrgsAsNewSelectList.FirstOrDefault(x => x.Value == rel.orgID.ToString()).Text;
+                                }
+                            </td>
+
+                            <td>
+                                @if (rel.relTypeId == 3)
+                                {
+                                    <span class="badge">Watching</span>
+                                }
+                                else if (rel.relTypeId == 4)
+                                {
+                                    if (rel.pending == true && rel.approved == false)
+                                    {
+                                        <span id="badge-@rel.id" class="badge">Pending</span>
+                                        <button id="approve-@rel.id" type="button" class="approve-as-contributer btn btn-primary btn-xs">Approve</button>
+                                        <button id="reject-@rel.id" type="button" class="reject-as-contributer btn btn-default btn-xs">Reject</button>
+                                    }
+                                    if (rel.pending == false && rel.approved == false)
+                                    {
+                                        <span id="@rel.username-badge" class="badge">Rejected</span>
+                                    }
+                                    else if (rel.approved == true)
+                                    {
+                                        <span class="badge">Contributing</span>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    There are no watchers or contributors on this project at the moment.
+                </div>
+
+            }
+        </div>
     </div>
     <script type="text/javascript">
         $().ready(function () {
@@ -302,6 +312,10 @@
                 height: 100
             });
             $('#Content').summernote({
+                height: 300
+            });
+
+            $('#EditUpdateStatusTxt').summernote({
                 height: 300
             });
 
@@ -337,27 +351,26 @@
     $(".approve-as-contributer").click(function () {
         var relid = $(this).attr('id').split("-")[1];
         $.ajax('/api/user-status/approve-contribute/@Model.Id/' + relid +"/",
-            {
-                type: 'POST',
-                success: function (data) {
-                    $("#badge-" + relid).html("Approved");
-                    $("#reject-" + relid).hide();
-                    $("#approve-" + relid).hide();
-                }
-            });
+        {
+            type: 'POST',
+            success: function (data) {
+                $("#badge-" + relid).html("Approved");
+                $("#reject-" + relid).hide();
+                $("#approve-" + relid).hide();
+            }
+        });
     });
 
     $(".reject-as-contributer").click(function () {
         var relid = $(this).attr('id').split("-")[1];
-        $.ajax('/api/user-status/approve-contribute/@Model.Id/' + relid,
-            {
-                type: 'POST',
-                success: function (data) {
-                    $("#badge-" + relid).html("Rejected");
-                    $("#reject-" + relid).hide();
-                    $("#approve-" + relid).hide();
-                }
-            });
+        $.ajax('/api/user-status/approve-contribute/@Model.Id/' + relid,{
+            type: 'POST',
+            success: function (data) {
+                $("#badge-" + relid).html("Rejected");
+                $("#reject-" + relid).hide();
+                $("#approve-" + relid).hide();
+            }
+        });
     });
 
     $("#UpdateStatusBtn").click(function () {
@@ -365,29 +378,49 @@
         var obj = { Text: $('#UpdateStatusTxt').val(), PageId:@Model.Id}
 
         $.ajax('/api/project-status/update/',{
-                data: JSON.stringify(obj),
-                contentType: 'application/json',
-                type: 'POST',
-                success: function (data) {
-                    $("#statuses").prepend("<div class='col-lg-12'><h4>Just now</h4><ul class='list-group'><li class='list-group-item'><div> <span class='relationship-icon glyphicon glyphicon-bell'></span>" + data.Author + " </div><div>" + data.Text +"</div></li></ul></div>");
-                    $('#updateStatusTxt').val('');
+            data: JSON.stringify(obj),
+            contentType: 'application/json',
+            type: 'POST',
+            success: function (data) {
+                $("#statuses").prepend("<div class='col-lg-12'><h4>Just now</h4><ul class='list-group'><li class='list-group-item'><div> <span class='relationship-icon glyphicon glyphicon-bell'></span>" + data.Author + " </div><div>" + data.Text +"</div></li></ul></div>");
+                $('#updateStatusTxt').val('');
 
-                    $('#status-update-editor .note-editable').empty();
+                $('#status-update-editor .note-editable').empty();
+                $("#updateSuccessModal").modal();
+
+            }
+        });
+    });
+
+
+      
+    $(".delete-status-button").click(function () {
+        var id=   $(this).attr("id").split("-")[1];
+        $.ajax('/api/project-status/delete/' + id, {
+        type:'DELETE',
+            success: function (data) {
+                $("#statuscontents-" + data).fadeOut();
+            }
+        });
+    });
+
+    $(".edit-status-button").click(function () {
+        var obj = { Text: $('#EditUpdateStatusTxt').val(), PageId:@Model.Id }
+        var id = $(this).attr("id").split("-")[1];
+        $.ajax('/api/project-status/edit/' + id, {
+            data: JSON.stringify(obj),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type:'POST',
+                success: function (data) {
+                    console.log("HTML Text " + data);
+
                     $("#updateSuccessModal").modal();
-                   
+
                 }
             });
-     });
-
-            $(".delete-status-button").click(function () {
-             var id=   $(this).attr("id").split("-")[1];
-         $.ajax('/api/project-status/delete/' + id, {
-             type:'DELETE',
-                    success: function (data) {
-                        $("#statuscontents-" + data).fadeOut();
-                    }
-                });
-     });
+        });
+       
     });
 
     </script>

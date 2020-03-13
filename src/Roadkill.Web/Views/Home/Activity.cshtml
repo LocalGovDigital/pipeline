@@ -1,66 +1,71 @@
 ﻿@model IEnumerable<ActivityViewModel>
 
-<section>
-    <div class="row">
-        <h3>Search for projects</h3>
-        <p class="hidden-sm hidden-xs">Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.</p>
-        <form method="get" action="@Url.Action("Search", "Home")">
-            <div class="input-group input-group-lg">
-                <input id="Search" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Enter text to search" name="title">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </span>
+    <section>
+        <div class="row">
+            <div class="col-md-12 spacer-bottom">
+                <h2>Search for projects</h2>
+                <p class="hidden-sm hidden-xs">Search for projects already in Pipeline or <a href="/Pages/New">add your own</a>.</p>
+                <form method="get" action="@Url.Action("Search", "Home")">
+                    <div class="input-group input-group-lg">
+                        <input id="Search" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Enter text to search" name="title">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </span>
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-    <div class="row">
-        @if (Model.Count() > 0)
-        {
+        </div>
+        <div class="row">
+            <div class="col-md-12">
 
-            var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
+                @if (Model.Count() > 0)
+                {
 
-            <h3>Latest Activity</h3>
+                    var Grouped = Model.GroupBy(a => a.activityDateTime.Date);
 
-            foreach (var Date in Grouped)
-            {
-                <h4>@(Date.Key.ToLongDateString())</h4>
-                <ul class="list-group">
-                    @foreach (ActivityViewModel activityModel in Date)
+                    <h3>Latest Activity</h3>
+
+                    foreach (var Date in Grouped)
                     {
-                        <li class="list-group-item">
-                            @switch (activityModel.activityName)
+                        <h4>@(Date.Key.ToLongDateString())</h4>
+                        <ul class="list-group">
+                            @foreach (ActivityViewModel activityModel in Date)
                             {
-                                case "signup":
-                                    @*<text><span class="relationship-icon glyphicon glyphicon-log-in"></span>
+                                <li class="list-group-item">
+                                    @switch (activityModel.activityName)
+                                    {
+                                        case "signup":
+                                            @*<text><span class="relationship-icon glyphicon glyphicon-log-in"></span>
                                         Someone new @(activityModel.orgName) signed-up to Pipeline</text>*@
-                                    break;
-                                case "added":
-                                case "edited":
-                                    <text>@if (activityModel.activityName == "added")
-                                        {<span class="relationship-icon glyphicon glyphicon-pencil"></span> }
-                                        else if (activityModel.activityName == "edited")
-                                        { <span class="relationship-icon glyphicon glyphicon-pencil"></span>}
-                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
-                                    break;
-                                default:
-                                    <text>@if (activityModel.activityName == "liked")
-                                        {<span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
-                                        else if (activityModel.activityName == "joined")
-                                        { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span>}
-                                        else if (activityModel.activityName == "watched")
-                                        {<span class="relationship-icon glyphicon glyphicon-eye-open"></span>}
-                                        else if (activityModel.activityName == "contributed to")
-                                        {<span class="relationship-icon glyphicon glyphicon-heart"></span>}
-                                    @(activityModel.userNames) @(activityModel.activityName)
-                                    <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
-                                    break;
+                                            break;
+                                        case "added":
+                                        case "edited":
+                                            <text>@if (activityModel.activityName == "added")
+                                                {<span class="relationship-icon glyphicon glyphicon-pencil"></span> }
+                                                else if (activityModel.activityName == "edited")
+                                                { <span class="relationship-icon glyphicon glyphicon-pencil"></span>}
+                                            <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName) was @(activityModel.activityName)</text>
+                                            break;
+                                        default:
+                                            <text>@if (activityModel.activityName == "liked")
+                                                {<span class="relationship-icon glyphicon glyphicon-thumbs-up"></span> }
+                                                else if (activityModel.activityName == "joined")
+                                                { <span class="relationship-icon glyphicon glyphicon-plus-sign"></span>}
+                                                else if (activityModel.activityName == "watched")
+                                                {<span class="relationship-icon glyphicon glyphicon-eye-open"></span>}
+                                                else if (activityModel.activityName == "contributed to")
+                                                {<span class="relationship-icon glyphicon glyphicon-heart"></span>}
+                                            @(activityModel.userNames) @(activityModel.activityName)
+                                            <a href="/wiki/@(activityModel.projectId)">@(activityModel.projectName)</a> owned by @(activityModel.orgName)</text>
+                                            break;
+                                    }
+                                </li>
                             }
-                        </li>
+                        </ul>
                     }
-                </ul>
-            }
-        }
-    </div>
+                }
+            </div>
+        </div>
 </section>
 <script type="text/javascript">
     $("#Search").typeahead({
