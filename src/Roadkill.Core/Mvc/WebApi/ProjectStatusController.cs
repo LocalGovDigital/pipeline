@@ -58,7 +58,6 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 
             LightSpeedRepository repository = new LightSpeedRepository(appSettings);
 
-            model.Author = UserContext.CurrentUserFullName;
             var updatedStatus = repository.CreateStatusUpdate(model);
 
 
@@ -76,8 +75,16 @@ namespace Roadkill.Core.Mvc.Controllers.Api
             repository.DeleteStatusUpdate(id);
 
             return id;
+        }
 
-
+        [HttpPost]
+        [Route("edit/{id}")]
+        public StatusUpdateViewModel Post([FromUri] int id, [FromBody] StatusUpdateViewModel model)
+        {
+            var appSettings = AppSettings();
+            LightSpeedRepository repository = new LightSpeedRepository(appSettings);
+            repository.EditStatusUpdate(id, model);
+            return model;
         }
 
 
