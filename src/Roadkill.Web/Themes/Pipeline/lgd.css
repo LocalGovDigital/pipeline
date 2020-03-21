@@ -1,5 +1,5 @@
 ﻿body {
-    font-family: Oxygen, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 19px;
     font-weight: 400;
     color: #454545;
@@ -107,14 +107,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
-@media (min-width: 768px) {
-    .form-group {
-        margin-bottom: 40px;
-    }
-}
-
 .form-group label {
     margin-bottom: 10px;
 }

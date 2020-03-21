@@ -5,10 +5,11 @@
     <title>@ViewBag.Title</title>
     @Html.Partial("HeadContent")
     @RenderSection("PluginHead", false)
-
+    
     <!-- include summernote css/js -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script src="/Assets/Scripts/jquery/summernote-cleaner.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126948959-1"></script>
     <script>
@@ -24,28 +25,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <a class="header-logo" href="https://localgovdigital.info"><img src="https://localgovdigital.info/media/1005/lgd_logo.png" alt="LocalGov Digital Logo" height="25"></a>
-                    <ul class="nav navbar-nav navbar-right hidden-sm hidden-xs" role="tablist">
-                        <li role="presentation"><a href="http://localgovdigital.info/" class="localgovdigital">LocalGov Digital</a></li>
-                        <li role="presentation"><a href="http://localgovdigital.info/localgovcamp/" class="localgovcamp">LocalGovCamp</a></li>
-                        <li role="presentation"><a href="http://localgovdigital.info/local-democracy-bytes/" class="ldbytes">Local Democracy Bytes</a></li>
-                        <li role="presentation" class="active"><a href="http://localgovdigital.info/localgov-digital-makers/" class="makers">LocalGov Makers</a></li>
-                        <li role="presentation"><a href="http://localgovdigital.info/localgov-digital-voice/" class="lgvoice">LocalGov Voice</a></li>
-                    </ul>
-
-                    <div class="mobile-nav">
-                        <button type="button" class="mobile-nav-action" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
+                    <a class="navbar-brand" href="https://localgov.digital"><img src="https://localgov.digital/wp-content/uploads/2017/01/lgd_logo-1-e1485652490381.png" alt="LocalGov Digital Logo" height="25"></a>
                 </div>
             </div>
         </div>
     </nav>
     <nav class="navbar-app navbar-default" role="navigation">
+        <div class="container">
+
+        </div>
         <div class="container">
             <div class="col-md-2 padding-0">
                 <div class="row">
@@ -61,9 +49,15 @@
         </div>
         <div class="container">
             <div class="col-md-12 navbar-header padding-0">
-                <div class="mobile-nav-content" id="bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse padding-0" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="/pages/alltags">Tags</a></li>
+                        <li><a class="padding-0" href="/pages/alltags">Tags</a></li>
                         <li><a href="/pages/allpages">All projects</a></li>
                         @Html.Action("BootstrapNavMenu", "Home")
                     </ul>
@@ -77,7 +71,7 @@
         </div>
         <div class="container">
             <div class="col-md-9 padding-0">
-                <ol class="breadcrumb breadcrumb-arrow ellipsis">
+                <ol class="breadcrumb breadcrumb-arrow no-margin ellipsis">
                     @if (ViewBag.Controller == null)
                     {
                         <li class="breadcrumb-item">@Html.ActionLink("Projects", "AllPages", "Pages")</li>
@@ -96,7 +90,7 @@
                     <div class="input-group">
                         <input id="Search" type="text" class="form-control-nav" data-provide="typeahead" autocomplete="off" placeholder="Enter text to search" name="title">
                         <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary search-cta"> <span class="glyphicon glyphicon-search"></span></button>
+                            <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-search"></span></button>
                         </span>
                     </div>
                 </form>
@@ -105,46 +99,46 @@
     </nav>
     <div class="container">
         <div class="col-md-12 pull-right">
+            <div class="row">
                 @RenderSection("PageToolbar", false)
+            </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="row">
+        <div class="col-md-12">
+            @RenderSection("PluginPreContainer", false)
+            @RenderBody()
+            @RenderSection("Activity", false)
+            @RenderSection("RelatedRelationships", false)
+            @RenderSection("PluginPostContainer", false)
+        </div>
+    </div>
+
+    <footer>
+
+        <div class="container">
             <div class="col-md-12">
-                @RenderSection("PluginPreContainer", false)
-                @RenderBody()
-                @RenderSection("Activity", false)
-                @RenderSection("RelatedRelationships", false)
-                @RenderSection("PluginPostContainer", false)
-            </div>
-        </div>
-        </div>
+                <div class="row">
 
-        <footer>
-
-            <div class="container">
-                <div class="col-md-12">
-                    <div class="row">
-
-                        @RenderSection("PageDetailsFooter", false)
-                        @RenderSection("ViewHistoryLink", false)
+                    @RenderSection("PageDetailsFooter", false)
+                    @RenderSection("ViewHistoryLink", false)
+                </div>
+                <div class="row">
+                    <div class="col-md-11">
+                        <p>Pipeline is a <a href="https://localgov.digital">LocalGov Digital</a> project.</p>
+                        <p>The source is available on <a href="https://github.com/LocalGovDigital/pipeline">GitHub</a>. A list of feature requests can be found on <a href="https://trello.com/b/a80RaQ0s/pipeline">Trello</a>.</p>
                     </div>
-                    <div class="row">
-                        <div class="col-md-11">
-                            <p>Pipeline is a <a href="http://localgovdigital.info/localgov-digital-makers">LocalGov Digital Makers</a> project.</p>
-                            <p>The source is available on <a href="https://github.com/LocalGovDigital/pipeline">GitHub</a>. A list of feature requests can be found on <a href="https://trello.com/b/a80RaQ0s/pipeline">Trello</a>.</p>
+                    <div class="col-md-1">
+                        <div id="top-link" class="col-md-1 text-right">
+                            <p><a href="#">Top</a></p>
                         </div>
-                        <div class="col-md-1">
-                            <div id="top-link" class="col-md-1 text-right">
-                                <p><a href="#">Top</a></p>
-                            </div>
-                        </div>
-
-                        @RenderSection("PluginFooter", false)
                     </div>
+
+                    @RenderSection("PluginFooter", false)
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 </body>
 </html>
