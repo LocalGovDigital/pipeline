@@ -1183,6 +1183,14 @@ namespace Roadkill.Core.Database.LightSpeed
             UnitOfWork.SaveChanges();
 
         }
+
+        public void EditStatusUpdate(int statusUpdateId, StatusUpdateViewModel model)
+        {
+            var result = UnitOfWork.FindById<StatusUpdate>(statusUpdateId);
+            result.Text = model.Text;
+            result.UpdateDate = DateTime.Now;
+            UnitOfWork.SaveChanges();
+        }
         public IList<StatusUpdateViewModel> GetStatusUpdates(int pageId)
         {
 

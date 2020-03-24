@@ -8,6 +8,10 @@
             }
         });
 
+        $('.search-filters .dropdown-menu li').click(function () {
+            submitSearch();
+        })
+
         $("#Organisation").typeahead({
             items: 9999,
             source: function (query, process) {
@@ -139,83 +143,85 @@
 
 </script>
 <h1>Search page </h1>
-<div class="row">
-    <div class="col-sm-5">
+<div class="row spacer-bottom">
+    <div class="col-sm-4">
         <label for="Title">Project Title</label>
         <input type="text" class="form-control" id="Title">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-4">
         <label for="Organisation">Organisation</label>
-        <div class="input-group input-group">
             <input id="Organisation" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Type organisation" name="title">
-        </div>
     </div>
     <div class="col-sm-4">
         <label for="Department">Department</label>
         <input type="text" class="form-control" id="Department">
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-3">
-        <label for="Phase">Phase</label>
-        <div class="dropdown">
-            <button id="Phase" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                All
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#" onclick="setPhase('All');">All</a></li>
 
-                @foreach (var phase in Model.Phases)
-                {
-                    <li><a href="#" onclick="setPhase('@phase');">@phase</a></li>
-                }
-            </ul>
+<div class="row search-filters">
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label for="Phase col-sm-2 col-form-label col-form-label-sm">Phase</label>
+            <div class="dropdown form-field-inline">
+                <button id="Phase" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    All
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="setPhase('All');">All</a></li>
+
+                    @foreach (var phase in Model.Phases)
+                    {
+                        <li><a href="#" onclick="setPhase('@phase');">@phase</a></li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 
 
-    <div class="col-sm-offset-2 col-sm-3">
-        <label for="CollaborationLevel">Collaboration Level</label>
-        <div class="dropdown">
-            <button id="CollaborationLevel" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                All
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#" onclick="setCollaborationLevel('All');">All</a></li>
-                @foreach (var collaborationLevel in Model.CollaborationLevels)
-                {
-                    <li><a href="#" onclick="setCollaborationLevel('@collaborationLevel');">@collaborationLevel</a></li>
-                }
-            </ul>
-        </div>
-
-    </div>
-    <div class="col-sm-3">
-        <label for="btnSortby"> Sort By</label>
-        <div class="dropdown">
-            <button id="btnSortby" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                Title
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="#" onclick="setOrderBy('Title');">Title</a></li>
-                <li><a href="#" onclick="setOrderBy('Organisation');">Organisation</a></li>
-                <li><a href="#" onclick="setOrderBy('Department');">Department</a></li>
-                <li><a href="#" onclick="setOrderBy('Phase');">Phase</a></li>
-            </ul>
+    <div class="col-sm-4">
+        <div class="form-group">
+            <label for="CollaborationLevel col-sm-2 col-form-label col-form-label-sm">Collaboration Level</label>
+            <div class="dropdown form-field-inline">
+                <button id="CollaborationLevel" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    All
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="setCollaborationLevel('All');">All</a></li>
+                    @foreach (var collaborationLevel in Model.CollaborationLevels)
+                    {
+                        <li><a href="#" onclick="setCollaborationLevel('@collaborationLevel');">@collaborationLevel</a></li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
+    <div class="col-sm-4">
+        <div class="form-group">
 
-
+            <label for="btnSortby col-sm-2 col-form-label col-form-label-sm"> Sort By</label>
+            <div class="dropdown form-field-inline">
+                <button id="btnSortby" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    Title
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#" onclick="setOrderBy('Title');">Title</a></li>
+                    <li><a href="#" onclick="setOrderBy('Organisation');">Organisation</a></li>
+                    <li><a href="#" onclick="setOrderBy('Department');">Department</a></li>
+                    <li><a href="#" onclick="setOrderBy('Phase');">Phase</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 <div class="row">
-    <div class="col-lg-offset-10 col-sm-2">
-
-        <button id="btnSearch" type="button" class="btn btn-primary" onclick="submitSearch()">Search</button>
+    <div class="col-sm-12">
+        <button id="btnSearch" type="button" class="btn btn-success" onclick="submitSearch()">Search</button>
         <label for="btnReset">&nbsp; </label>
         <button id="btnReset" type="button" class="btn btn-secondary" onclick="resetSearch()">Reset</button>
     </div>
@@ -228,20 +234,13 @@
 <div class="row">
     <div class="col-sm-12">
         <table class="table table-fit">
-            <colgroup>
-                <col class="col-md-5">
-                <col class="col-md-3">
-                <col class="col-md-2">
-                <col class="col-md-1">
-                <col class="col-md-1">
-            </colgroup>
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Organisation</th>
-                    <th>Department</th>
-                    <th>Phase</th>
-                    <th>Updated</th>
+                    <th class="table-cell-mobile-hide">Department</th>
+                    <th class="table-cell-mobile-hide">Phase</th>
+                    <th class="table-cell-mobile-hide">Updated</th>
                 </tr>
             </thead>
             <tbody>
@@ -254,10 +253,10 @@
                         <td class="table-ellipsis">
                             @res.Organisation
                         </td>
-                        <td>
+                        <td class="table-cell-mobile-hide">
                             @res.Department
                         </td>
-                        <td>
+                        <td class="table-cell-mobile-hide">
 
                             @if (res.ProjectStatus != null)
                             {
@@ -266,7 +265,7 @@
 
                         </td>
 
-                        <td>@res.LastUpdated.ToString("MMM yyyy")</td>
+                        <td class="table-cell-mobile-hide">@res.LastUpdated.ToString("MMM yyyy")</td>
                     </tr>
                 }
             </tbody>

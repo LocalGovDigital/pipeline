@@ -45,7 +45,7 @@ namespace Roadkill.Core.Mvc.Controllers.Api
             appSettings.UseBrowserCache = false;
 
             LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-            return repository.Pages.Where(x => x.Title.StartsWith(query)).Select(x => x.Title).ToList();
+            return repository.Pages.Where(x => x.Title.ToLower().Contains(query.ToLower())).Select(x => x.Title).ToList();
 
         }
 
@@ -67,7 +67,7 @@ namespace Roadkill.Core.Mvc.Controllers.Api
             appSettings.UseBrowserCache = false;
 
             LightSpeedRepository repository = new LightSpeedRepository(appSettings);
-            return repository.Orgs.Where(x => x.OrgName.StartsWith(query)).Select(x => x.OrgName).ToList();
+            return repository.Orgs.Where(x => x.OrgName.ToLower().Contains(query.ToLower())).Select(x => x.OrgName).ToList();
 
         }
     }

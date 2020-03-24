@@ -20,6 +20,10 @@ namespace Roadkill.Core.Models
         public string FundingBoundary { get; set; }
         public int Id { get; set; }
         public string Organisation { get; set; }
+        public DateTime ProjectStart { get; set; }
+        public DateTime ProjectEnd { get; set; }
+        public string Owner { get; set; }
+        public string OwnerEmail { get; set; }
 
         public static ProjectSearchResult FromPageEntity(PageEntity entity)
         {
@@ -32,7 +36,11 @@ namespace Roadkill.Core.Models
                 FundingBoundary = entity.FundingBoundary,
                 OrganisationId = entity.orgID,
                 Department = entity.Department,
-                LastUpdated = entity.ModifiedOn
+                LastUpdated = entity.ModifiedOn,
+                ProjectStart = entity.ProjectStart,
+                ProjectEnd = entity.ProjectEnd,
+                Owner = entity.Owner,
+                OwnerEmail = entity.OwnerEmail
             };
             return sr;
 

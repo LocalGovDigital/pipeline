@@ -1,0 +1,16 @@
+﻿@model IList<string>
+@{
+    ViewBag.Title = "Reporting";
+    ViewData["ReportingActive"] = true;
+}
+<div>
+    @using (Html.BeginForm("Export", "Reporting"))
+
+    {
+        <h2>Reporting</h2>
+        <p>You can download a csv report of current projects here:</p>
+        <fieldset>
+            <input id="BtnExportReports" type="submit" class="btn btn-success" value="Export CSV" />
+        </fieldset>
+    }
+</div>

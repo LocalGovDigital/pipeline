@@ -3,23 +3,25 @@
     ViewBag.Title = Model.Title;
 }
 
-<div class="row">
-    <h1>Welcome to Pipeline</h1>
-    Pipeline is a service from <a href="https://localgov.digital/">LocalGov Digital</a> to aid innovation and collaboration in local government digital.
-</div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Welcome to Pipeline</h1>
+            Pipeline is a service from <a href="https://localgov.digital/">LocalGov Digital</a> to aid innovation and collaboration in local government digital.
+        </div>
+    </div>
 
-<div class="row">
-    @Html.Action("Activity", "Home", new { View = "Summary" })
-</div>
-@Html.Action("Activity", "Home", new { View = "PhaseBreakdown" })
+        <div class="row">
+            @Html.Action("Activity", "Home", new { View = "Summary" })
+        </div>
+        @Html.Action("Activity", "Home", new { View = "PhaseBreakdown" })
 
-@Html.Action("Activity", "Home", new { View = "AgileProgressBreakdown" })
+        @Html.Action("Activity", "Home", new { View = "AgileProgressBreakdown" })
 
 
-@section Activity
+        @section Activity
 {
-    @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
-    @Html.Action("Activity", "Home")
-}
+            @* This is rendered by an action (and not a partial/extension method) for future donut caching *@
+            @Html.Action("Activity", "Home")
+        }
 
 

@@ -80,8 +80,9 @@ namespace Roadkill.Core.Mvc
 
 		private static void IncludeSharedScripts(ScriptBundle jsBundle)
 		{
+			jsBundle.Include("~/Assets/Scripts/shared/mobile-nav.js");
 			jsBundle.Include("~/Assets/Scripts/shared/bootbox.js");
-			jsBundle.Include("~/Assets/Scripts/shared/head.js");
+            jsBundle.Include("~/Assets/Scripts/shared/head.js");
 			jsBundle.Include("~/Assets/Scripts/shared/tagmanager.js");
 			jsBundle.Include("~/Assets/Scripts/shared/toastr.js");
 		}
