@@ -38,12 +38,15 @@
         $("#Phase").val(vars["phase"]);
         $("#AgileLifecycle").val(vars["agileLifecycle"]);
 
+        console.log("vars " + vars);
+
+        var orderByTitle = vars["orderBy"].split(/(?=[A-Z])/).join(' ');
+
         if (vars["orderBy"] == null) {
             setOrderBy("Title");
         } else {
-            setOrderBy(vars["orderBy"]);
+            setOrderBy(decodeURI(orderByTitle));
         }
-
 
         if (vars["collaborationLevel"] == null) {
             setCollaborationLevel("All");
@@ -212,6 +215,7 @@
                     <li><a href="#" onclick="setOrderBy('Organisation');">Organisation</a></li>
                     <li><a href="#" onclick="setOrderBy('Department');">Department</a></li>
                     <li><a href="#" onclick="setOrderBy('Phase');">Phase</a></li>
+                    <li><a href="#" onclick="setOrderBy('LastUpdated');">Last updated</a></li>
                 </ul>
             </div>
         </div>
