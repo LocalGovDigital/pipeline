@@ -537,3 +537,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.spacer-bottom {
+    margin-bottom: 20px;    
+}
