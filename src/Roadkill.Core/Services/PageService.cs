@@ -921,7 +921,7 @@ namespace Roadkill.Core.Services
                     {
                         query = query.OrderBy(x => x.orgID);
                     }
-                    if (sp.OrderBy == nameof(sp.Phase))
+                    if (sp.OrderBy == "Status")
                     {
                         query = query.OrderBy(x => x.ProjectStatus);
                     }
