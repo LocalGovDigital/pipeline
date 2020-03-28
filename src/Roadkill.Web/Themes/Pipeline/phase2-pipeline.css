@@ -239,8 +239,6 @@
     }
 }
 
-
-
 .table-ellipsis {
     overflow: hidden;
     white-space: nowrap;
@@ -258,6 +256,13 @@
     line-height: 1.42857143;
     vertical-align: top;
     border-top: 1px solid #ddd;
+}
+
+@media (min-width: 640px) {
+    .table > thead > tr > th,
+    .table > tbody > tr > td {
+        padding: 10px 10px 10px 0;
+    }
 }
 
 .label-stage-small {
