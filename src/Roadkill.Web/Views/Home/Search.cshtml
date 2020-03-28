@@ -35,7 +35,7 @@
         var vars = getUrlVars();
         $("#Title").val(vars["title"]);
         $("#Department").val(vars["department"]);
-        $("#Phase").val(vars["phase"]);
+        $("#Status").val(vars["status"]);
         $("#AgileLifecycle").val(vars["agileLifecycle"]);
 
         if (vars["orderBy"] == null) {
@@ -43,7 +43,6 @@
         } else {
             setOrderBy(vars["orderBy"]);
         }
-
 
         if (vars["collaborationLevel"] == null) {
             setCollaborationLevel("All");
@@ -93,7 +92,7 @@
 
     function setOrderBy(val) {
         orderBy = val;
-        $("#btnSortby").html(val + " <span class='caret'></span>");
+        $("#btnSortby").html(decodeURI(val.split(/(?=[A-Z])/).join(' ')) + " <span class='caret'></span>");
     }
 
     function setOrganisation(val) {
@@ -101,7 +100,7 @@
     }
 
     function setPhase(val) {
-        $("#Phase").html(val + " <span class='caret'></span>");
+        $("#Status").html(val + " <span class='caret'></span>");
     }
     function setAgileLifecycle(val) {
         $("#AgileLifecycle").html(val + " <span class='caret'></span>");
@@ -128,8 +127,8 @@
         if ($("#Department").val().length > 0) {
             qs += "department=" + $("#Department").val() + "&";
         }
-        if ($("#Phase").text().trim() != "All") {
-            qs += "phase=" + $("#Phase").text().trim() + "&";
+        if ($("#Status").text().trim() != "All") {
+            qs += "phase=" + $("#Status").text().trim() + "&";
         }
         if ($("#CollaborationLevel").text().trim() != "All") {
             qs += "collaborationLevel=" + $("#CollaborationLevel").text().trim() + "&";
@@ -155,15 +154,15 @@
     <div class="col-sm-4">
         <label for="Department">Department</label>
         <input type="text" class="form-control" id="Department">
-    </div>
+    </div> 
 </div>
 
 <div class="row search-filters">
     <div class="col-sm-4">
         <div class="form-group">
-            <label for="Phase col-sm-2 col-form-label col-form-label-sm">Phase</label>
+            <label for="Status" class="col-form-label col-form-label-sm">Status</label>
             <div class="dropdown form-field-inline">
-                <button id="Phase" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                <button id="Status" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                     All
                     <span class="caret"></span>
                 </button>
@@ -182,7 +181,7 @@
 
     <div class="col-sm-4">
         <div class="form-group">
-            <label for="CollaborationLevel col-sm-2 col-form-label col-form-label-sm">Collaboration Level</label>
+            <label for="CollaborationLevel" class="col-form-label col-form-label-sm">Collaboration Level</label>
             <div class="dropdown form-field-inline">
                 <button id="CollaborationLevel" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                     All
@@ -201,7 +200,7 @@
     <div class="col-sm-4">
         <div class="form-group">
 
-            <label for="btnSortby col-sm-2 col-form-label col-form-label-sm"> Sort By</label>
+            <label for="btnSortby" class="col-form-label col-form-label-sm"> Sort By</label>
             <div class="dropdown form-field-inline">
                 <button id="btnSortby" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                     Title
@@ -211,7 +210,8 @@
                     <li><a href="#" onclick="setOrderBy('Title');">Title</a></li>
                     <li><a href="#" onclick="setOrderBy('Organisation');">Organisation</a></li>
                     <li><a href="#" onclick="setOrderBy('Department');">Department</a></li>
-                    <li><a href="#" onclick="setOrderBy('Phase');">Phase</a></li>
+                    <li><a href="#" onclick="setOrderBy('Status');">Status</a></li>
+                    <li><a href="#" onclick="setOrderBy('LastUpdated');">Last Updated</a></li>
                 </ul>
             </div>
         </div>
@@ -239,7 +239,7 @@
                     <th>Title</th>
                     <th>Organisation</th>
                     <th class="table-cell-mobile-hide">Department</th>
-                    <th class="table-cell-mobile-hide">Phase</th>
+                    <th class="table-cell-mobile-hide">Status</th>
                     <th class="table-cell-mobile-hide">Updated</th>
                 </tr>
             </thead>
