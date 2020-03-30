@@ -395,20 +395,6 @@
     <Content Include="Assets\Scripts\shared\tagmanager.js" />
     <Content Include="Areas\SiteSettings\Views\Organisations\Index.cshtml" />
     <Content Include="Areas\SiteSettings\Views\Organisations\Add.cshtml" />
-    <Content Include="connectionStrings.config" />
-    <Content Include="Smtp.config" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Development.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <TypeScriptCompile Include="Assets\Scripts\roadkill\dialogs.ts" />
     <Content Include="Assets\Scripts\jquery\jquery.fileupload.js" />
     <Content Include="Assets\Scripts\jquery\jquery.iframe-transport.js" />
