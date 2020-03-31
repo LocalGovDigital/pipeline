@@ -485,6 +485,26 @@ namespace Roadkill.Core.Database.LightSpeed
             return FromEntity.ToPageList(entities);
         }
 
+        public IEnumerable<Page> FindPagesContainingThreeTags(string tags)
+        {
+            IEnumerable<PageEntity> entities = Pages.ToList().Where(p => HasThree(p.Tags.ToLower(), tags)); // Lightspeed doesn't support ToLowerInvariant
+            return FromEntity.ToPageList(entities);
+        }
+
+        private bool HasThree(string tagList, string tagsCriteria)
+        {
+            var pageTags = tagList.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            var criteriaTags = tagsCriteria.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            if (pageTags.Intersect(criteriaTags).Count() >= 3)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         public IEnumerable<PageContent> FindPageContentsByPageId(int pageId)
         {
             List<PageContentEntity> entities = PageContents.Where(p => p.Page.Id == pageId).ToList();

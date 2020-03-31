@@ -67,11 +67,13 @@ namespace Roadkill.Core.Services
 		/// <exception cref="DatabaseException">An database error occurred while getting the list.</exception>
 		IEnumerable<PageViewModel> FindByTag(string tag);
 
-		/// <summary>
-		/// Finds the first page with the tag 'homepage'. Any pages that are locked by an administrator take precedence.
-		/// </summary>
-		/// <returns>The homepage.</returns>
-		PageViewModel FindHomePage();
+        IEnumerable<PageViewModel> FindByThreeTags(string tags);
+
+        /// <summary>
+        /// Finds the first page with the tag 'homepage'. Any pages that are locked by an administrator take precedence.
+        /// </summary>
+        /// <returns>The homepage.</returns>
+        PageViewModel FindHomePage();
 
 		/// <summary>
 		/// Finds a page by its title

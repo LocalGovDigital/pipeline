@@ -172,6 +172,9 @@ namespace Roadkill.Core.Mvc.Controllers
                 return View("Edit", model);
 
             _pageService.UpdatePage(model);
+
+            
+
             _pageService.SendUpdate(model.Id, model.Id, model.Title, _projectUpdateEmail);
             return RedirectToAction("Index", "Wiki", new { id = model.Id });
         }

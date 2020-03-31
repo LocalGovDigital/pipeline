@@ -379,6 +379,21 @@ namespace Roadkill.Core.Services
             }
         }
 
+        public IEnumerable<PageViewModel> FindByThreeTags(string tags)
+        {
+            try
+            {
+                IEnumerable<Page> pages = Repository.FindPagesContainingThreeTags(tags).OrderBy(p => p.Title);
+                var models = from page in pages select new PageViewModel(Repository.GetLatestPageContent(page.Id), _markupConverter);
+
+                return models;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred finding the tags '{0}' in the database", tags);
+            }
+        }
+
         /// <summary>
         /// Finds a page by its title
         /// </summary>
@@ -633,6 +648,14 @@ namespace Roadkill.Core.Services
                 PageViewModel updatedModel = new PageViewModel(Repository.GetLatestPageContent(page.Id), _markupConverter);
                 _searchService.Update(updatedModel);
 
+
+                //model.Tags
+
+                var pages = this.FindByThreeTags(updatedModel.CommaDelimitedTags());
+                //get the appropriate users
+                //send users the notification
+
+
             }
             catch (DatabaseException ex)
             {
@@ -828,7 +851,7 @@ namespace Roadkill.Core.Services
         {
 
             var relationList = GetRelationsByPageId(pageId).ToList();
-         //   var emailModels = new List<EmailProjectUpdateViewModel>();
+            //   var emailModels = new List<EmailProjectUpdateViewModel>();
 
             var environmentPrefix = string.Empty;
             if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
@@ -853,7 +876,7 @@ namespace Roadkill.Core.Services
                     mod.Name = $"{user.Firstname} {user.Lastname}";
                     mod.ToAddress = user.Email;
 
-                   // emailModels.Add(mod);
+                    // emailModels.Add(mod);
                     _projectUpdateEmail.Send(mod);
                 }
 
