@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
@@ -12,7 +13,8 @@ using Roadkill.Core.Services;
 namespace Roadkill.Core.Mvc.Controllers.Api
 {
 	[WebApiAdminRequired]
-	public class PagesController : ApiControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class PagesController : ApiControllerBase
 	{
 		private IPageService _pageService;
 

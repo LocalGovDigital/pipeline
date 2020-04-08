@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
@@ -14,6 +15,8 @@ using Roadkill.Core.Services;
 namespace Roadkill.Core.Mvc.Controllers.Api
 {
     [RoutePrefix("api/page-search")]
+    [ApiExplorerSettings(IgnoreApi = true)] 
+
     public class PageSearchController : ApiControllerBase
     {
         private readonly SearchService _searchService;

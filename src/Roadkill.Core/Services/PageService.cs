@@ -978,5 +978,84 @@ namespace Roadkill.Core.Services
                 throw new DatabaseException(ex, "An error occurred while retrieving all pages from the database");
             }
         }
+        public List<ProjectDetailSummary> GetProjects(ProjectSearchParameters sp)
+        {
+
+            try
+            {
+
+                var searchResults = new List<ProjectDetailSummary>();
+
+
+                var query = Repository.Query();
+
+
+
+                if (!string.IsNullOrEmpty(sp.Organisation))
+                {
+                    var orgId = Repository.GetOrgIdByName(sp.Organisation);
+                    query = query.Where(x => x.orgID == orgId);
+                }
+
+
+                if (!string.IsNullOrEmpty(sp.Title)) query = query.Where(x => x.Title.ToLower().Contains(sp.Title.ToLower()));
+                if (!string.IsNullOrEmpty(sp.Phase)) query = query.Where(x => x.ProjectStatus == sp.Phase);
+                if (!string.IsNullOrEmpty(sp.Department)) query = query.Where(x => x.Department.ToLower().Contains(sp.Department.ToLower()));
+                if (!string.IsNullOrEmpty(sp.AgileLifecycle)) query = query.Where(x => x.ProjectAgileLifeCyclePhase == sp.AgileLifecycle);
+                if (!string.IsNullOrEmpty(sp.CollaborationLevel)) query = query.Where(x => x.CollaborationLevel == sp.CollaborationLevel);
+                if (!string.IsNullOrEmpty(sp.FundingBoundary)) query = query.Where(x => x.FundingBoundary == sp.FundingBoundary);
+
+                int count = query.Count();
+
+                //paging
+                if (sp.Take.HasValue) query = query.Take(sp.Take.Value);
+                if (sp.Skip.HasValue) query = query.Skip(sp.Skip.Value);
+
+                //sortby
+                if (sp.OrderBy == nameof(sp.Title))
+                {
+                    query = query.OrderBy(x => x.Title);
+                }
+                if (sp.OrderBy == nameof(sp.Department))
+                {
+                    query = query.OrderBy(x => x.Department);
+                }
+                if (sp.OrderBy == nameof(sp.Organisation))
+                {
+                    query = query.OrderBy(x => x.orgID);
+                }
+                if (sp.OrderBy == "Status")
+                {
+                    query = query.OrderBy(x => x.ProjectStatus);
+                }
+                if (sp.OrderBy == nameof(sp.AgileLifecycle))
+                {
+                    query = query.OrderBy(x => x.ProjectAgileLifeCyclePhase);
+                }
+                if (sp.OrderBy == nameof(sp.FundingBoundary))
+                {
+                    query = query.OrderBy(x => x.FundingBoundary);
+                }
+                if (sp.OrderBy == "LastUpdated")
+                {
+                    query = query.OrderByDescending(x => x.ModifiedOn);
+                }
+
+                var searchresults = query.ToList().Select(ProjectDetailSummary.FromPageEntity).ToList();
+
+                foreach (var projectSearchResult in searchresults)
+                {
+                    projectSearchResult.Organisation = Repository.GetOrganisationNameById(projectSearchResult.OrganisationId).OrgName;
+                    projectSearchResult.FundingBoundary = this.GetFundingBoundaryText(projectSearchResult.FundingBoundary);
+                }
+
+
+                return searchResults;
+            }
+            catch (DatabaseException ex)
+            {
+                throw new DatabaseException(ex, "An error occurred while retrieving all pages from the database");
+            }
+        }
     }
 }

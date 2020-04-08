@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.Mvc.Attributes;
@@ -12,7 +13,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 {
 	[WebApiAdminRequired]
 	[RoutePrefix("api/user")]
-	public class UserController : ApiControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class UserController : ApiControllerBase
 	{
 		public UserController(ApplicationSettings appSettings, UserServiceBase userService, IUserContext userContext)
 			: base(appSettings, userService, userContext)

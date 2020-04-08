@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
@@ -13,7 +14,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 {
 	[WebApiAdminRequired]
 	[RoutePrefix("api/search")]
-	public class SearchController : ApiControllerBase
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class SearchController : ApiControllerBase
 	{
 		private readonly SearchService _searchService;
 

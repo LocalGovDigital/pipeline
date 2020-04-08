@@ -369,6 +369,9 @@
       <HintPath>..\..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -462,12 +465,16 @@
     <Reference Include="WebActivator">
       <HintPath>..\..\packages\WebActivator.1.0.0.0\lib\WebActivator.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="Attachments\AttachmentPathUtil.cs" />
     <Compile Include="Attachments\IResponseWrapper.cs" />
     <Compile Include="Attachments\ResponseWrapper.cs" />
@@ -507,6 +514,8 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Hackney\Models\Phase2PageModel.cs" />
     <Compile Include="Hackney\Parameters\Phase2Params.cs" />
+    <Compile Include="Models\ProjectDetails.cs" />
+    <Compile Include="Models\ProjectDetailsSummary.cs" />
     <Compile Include="Models\ProjectSearchParameters.cs" />
     <Compile Include="Models\ProjectSearchResult.cs" />
     <Compile Include="Models\SearchResults.cs" />
@@ -520,11 +529,13 @@
     <Compile Include="Mvc\ViewModels\EmailProjectStatusUpdateViewModel.cs" />
     <Compile Include="Mvc\ViewModels\EmailProjectUpdateViewModel.cs" />
     <Compile Include="Mvc\ViewModels\EmailViewModel.cs" />
+    <Compile Include="Mvc\ViewModels\ProjectViewModel.cs" />
     <Compile Include="Mvc\ViewModels\RelViewModel.cs" />
     <Compile Include="Mvc\ViewModels\OrgViewModel.cs" />
     <Compile Include="Mvc\ViewModels\StatusUpdateViewModel.cs" />
     <Compile Include="Mvc\ViewModels\UserProfileViewModel.cs" />
     <Compile Include="Mvc\WebApi\PageSearchController.cs" />
+    <Compile Include="Mvc\WebApi\ProjectController.cs" />
     <Compile Include="Mvc\WebApi\ProjectStatusController.cs" />
     <Compile Include="Mvc\WebApi\SearchController.cs" />
     <Compile Include="Security\AuthorizationProvider.cs" />

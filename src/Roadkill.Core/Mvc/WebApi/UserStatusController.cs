@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
@@ -15,6 +16,7 @@ using StructureMap;
 namespace Roadkill.Core.Mvc.Controllers.Api
 {
     [RoutePrefix("api/user-status")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class UserStatusController : ApiControllerBase
     {
         private readonly SearchService _searchService;

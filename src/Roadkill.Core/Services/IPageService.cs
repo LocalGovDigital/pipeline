@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Roadkill.Core.Converters;
 using Roadkill.Core.Database;
 using Roadkill.Core.Email;
+using Roadkill.Core.Models;
 using Roadkill.Core.Mvc.ViewModels;
 
 namespace Roadkill.Core.Services
@@ -18,8 +19,11 @@ namespace Roadkill.Core.Services
 		/// <exception cref="SearchException">An error occurred adding the page to the search index.</exception>
 		PageViewModel AddPage(PageViewModel model);
 
-	    bool IsApprovedContributer(int pageid, Guid userId);
+        SearchResults<IList<ProjectSearchResult>> Search(ProjectSearchParameters sp);
+        List<ProjectDetailSummary> GetProjects(ProjectSearchParameters sp);
+        bool IsApprovedContributer(int pageid, Guid userId);
 
+        string GetFundingBoundaryText(string id);
 
         IEnumerable<RelViewModel> GetRelationsByPageId(int pageid);
         /// <summary>

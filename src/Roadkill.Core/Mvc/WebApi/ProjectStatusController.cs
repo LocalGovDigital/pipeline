@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.Database.LightSpeed;
@@ -17,6 +18,7 @@ using Roadkill.Core.Services;
 namespace Roadkill.Core.Mvc.Controllers.Api
 {
     [RoutePrefix("api/project-status")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ProjectStatusController : ApiControllerBase
     {
         private readonly SearchService _searchService;

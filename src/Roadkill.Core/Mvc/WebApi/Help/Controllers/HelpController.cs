@@ -1,5 +1,6 @@
 using System;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 using Roadkill.Core.Areas.HelpPage.Models;
 using Roadkill.Core.Configuration;
@@ -11,6 +12,8 @@ namespace Roadkill.Core.Areas.HelpPage.Controllers
     /// <summary>
     /// The controller that will handle requests for the help page.
     /// </summary>
+    ///
+    [ApiExplorerSettings(IgnoreApi=true)]
 	public class HelpController : Roadkill.Core.Mvc.Controllers.ControllerBase
 	{
 		public HelpController(ApplicationSettings settings, UserServiceBase userManager, IUserContext context,
