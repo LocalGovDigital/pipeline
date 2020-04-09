@@ -1,7 +1,15 @@
 ﻿@model Roadkill.Core.Models.SearchResults<IList<Roadkill.Core.Models.ProjectSearchResult>>
+<script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
 <script>
 
     $(document).ready(function () {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        }).on('changeDate', function (e) {
+            $('#LastUpdateStart').datepicker('hide');
+            $('#LastUpdateEnd').datepicker('hide');
+        });
+ 
         $("#Title").keyup(function (event) {
             if (event.keyCode === 13) {
                 $("#btnSearch").click();
@@ -34,6 +42,9 @@
 
         var vars = getUrlVars();
         $("#Title").val(vars["title"]);
+        $("#LastUpdateStart").val(vars["lastupdatestart"]);
+        $("#LastUpdateEnd").val(vars["lastupdateend"]);
+        $("#Keyword").val(vars["keyword"]);
         $("#Department").val(vars["department"]);
         $("#Status").val(vars["status"]);
         $("#AgileLifecycle").val(vars["agileLifecycle"]);
@@ -121,6 +132,15 @@
         if ($("#Title").val().length > 0) {
             qs += "title=" + $("#Title").val() + "&";
         }
+        if ($("#Keyword").val().length > 0) {
+            qs += "keyword=" + $("#Keyword").val() + "&";
+        }
+        if ($("#LastUpdateStart").val().length > 0) {
+            qs += "lastupdatestart=" + $("#LastUpdateStart").val() + "&";
+        }
+        if ($("#LastUpdateEnd").val().length > 0) {
+            qs += "lastupdateend=" + $("#LastUpdateEnd").val() + "&";
+        }
         if ($("#Organisation").val().length > 0) {
             qs += "organisation=" + $("#Organisation").text().trim() + "&";
         }
@@ -149,14 +169,29 @@
     </div>
     <div class="col-sm-4">
         <label for="Organisation">Organisation</label>
-            <input id="Organisation" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Type organisation" name="title">
+        <input id="Organisation" type="text" class="form-control" data-provide="typeahead" autocomplete="off" placeholder="Type organisation" name="title">
     </div>
     <div class="col-sm-4">
         <label for="Department">Department</label>
         <input type="text" class="form-control" id="Department">
-    </div> 
-</div>
+    </div>
 
+</div>
+<div class="row spacer-bottom">
+
+    <div class="col-sm-4">
+        <label for="Keyword">Keyword</label>
+        <input type="text" class="form-control" id="Keyword">
+    </div>
+    <div class="col-sm-4">
+        <label for="LastUpdateStart">Last Update Start</label>
+        <input class="form-control datepicker" id="LastUpdateStart" name="LastUpdateStart" autocomplete="off" rel="popover" strDataDate="dd-mm-yyyy" tabIndex="0" type="text" value="" />
+    </div>
+    <div class="col-sm-4">
+        <label for="LastUpdateEnd">Last Update End</label>
+        <input class="form-control datepicker"  id="LastUpdateEnd" name="LastUpdateEnd" autocomplete="off" rel="popover" strDataDate="dd-mm-yyyy" tabIndex="0" type="text" value="" />
+    </div>
+</div>
 <div class="row search-filters">
     <div class="col-sm-4">
         <div class="form-group">

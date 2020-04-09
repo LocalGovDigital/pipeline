@@ -919,6 +919,23 @@ namespace Roadkill.Core.Services
 
 
                     if (!string.IsNullOrEmpty(sp.Title)) query = query.Where(x => x.Title.ToLower().Contains(sp.Title.ToLower()));
+                    if (!string.IsNullOrEmpty(sp.Text)) query = query.Where(x => x.PageContents.Any(y=>y.Text.ToLower().Contains(sp.Text.ToLower())));
+
+                    if (sp.LastUpdateStart.HasValue && sp.LastUpdateEnd.HasValue)
+                    {
+                        query = query.Where(x =>x.ModifiedOn >= sp.LastUpdateStart.Value && x.ModifiedOn <= sp.LastUpdateEnd.Value);
+                    }
+                    else if (sp.LastUpdateStart.HasValue && !sp.LastUpdateEnd.HasValue)
+                    {
+                        query = query.Where(x => x.ModifiedOn >= sp.LastUpdateStart.Value);
+
+                    }
+                    else if (!sp.LastUpdateStart.HasValue && sp.LastUpdateEnd.HasValue)
+                    {
+                        query = query.Where(x => x.ModifiedOn <= sp.LastUpdateEnd.Value);
+                    }
+
+
                     if (!string.IsNullOrEmpty(sp.Phase)) query = query.Where(x => x.ProjectStatus == sp.Phase);
                     if (!string.IsNullOrEmpty(sp.Department)) query = query.Where(x => x.Department.ToLower().Contains(sp.Department.ToLower()));
                     if (!string.IsNullOrEmpty(sp.AgileLifecycle)) query = query.Where(x => x.ProjectAgileLifeCyclePhase == sp.AgileLifecycle);

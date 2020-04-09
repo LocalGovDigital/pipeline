@@ -12,7 +12,8 @@ namespace Roadkill.Core.Models
     {
         public string Title { get; set; }
         public string Text { get; set; }
-        public DateTime? LastUpdate { get; set; }
+        public DateTime? LastUpdateStart { get; set; }
+        public DateTime? LastUpdateEnd { get; set; }
         public string Organisation { get; set; }
         public string Department { get; set; }
         public string Phase { get; set; }
@@ -47,8 +48,9 @@ namespace Roadkill.Core.Models
             }
 
             if (nvc.AllKeys.Contains("title")) s.Title = nvc["title"];
-            if (nvc.AllKeys.Contains("text")) s.Text = nvc["text"];
-            if (nvc.AllKeys.Contains("lastupdate")) s.LastUpdate = Convert.ToDateTime(nvc["lastupdate"]);
+            if (nvc.AllKeys.Contains("keyword")) s.Text = nvc["keyword"];
+            if (nvc.AllKeys.Contains("lastupdatestart")) s.LastUpdateStart = Convert.ToDateTime(nvc["lastupdatestart"]);
+            if (nvc.AllKeys.Contains("lastupdateend")) s.LastUpdateEnd = Convert.ToDateTime(nvc["lastupdateend"]);
             if (nvc.AllKeys.Contains("organisation")) s.Organisation = nvc["organisation"];
             if (nvc.AllKeys.Contains("department")) s.Department = nvc["department"];
             if (nvc.AllKeys.Contains("phase")) s.Phase = nvc["phase"];
