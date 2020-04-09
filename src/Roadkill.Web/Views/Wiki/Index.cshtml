@@ -86,18 +86,22 @@
                 @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
             </div>
             <div class="col-sm-12">
-                <h2>Status Updates</h2>
-                @foreach (var statusUpdate in Model.StatusUpdates)
-                {
-                    <h4>@statusUpdate.UpdateDate.ToLongDateString()</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">
+                <div class="row">
 
-                            <div>   <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
-                            <div>@Html.Raw(statusUpdate.Text)</div>
-                        </li>
-                    </ul>
-                }
+
+                    <h2>Status Updates</h2>
+                    @foreach (var statusUpdate in Model.StatusUpdates)
+                    {
+                        <h4>@statusUpdate.UpdateDate.ToLongDateString()</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+
+                                <div>   <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
+                                <div>@Html.Raw(statusUpdate.Text)</div>
+                            </li>
+                        </ul>
+                    }
+                </div>
             </div>
             <div class="col-sm-12">
                 <aside>
@@ -113,8 +117,35 @@
                     }
                 </aside>
             </div>
+
+
+        </div>
+
+        <div class="row">
+            <div>
+                <h2>Comments</h2>
+                <div id="disqus_thread"></div>
+                <script>
+
+                    var disqus_config = function () {
+                        this.page.url = '@Request.Url.AbsoluteUri';
+                        this.page.identifier = 'project-@Model.Id';
+                    };
+
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://pipeline-test.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            </div>
         </div>
     </div><!-- Foundation .row end -->
+
+
 </section>
 
 @*@section R=[0-latedRelationships

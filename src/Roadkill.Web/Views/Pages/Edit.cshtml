@@ -39,197 +39,200 @@
 
             @Html.BootstrapValidationSummary(SiteStrings.EditPage_Error)
 
-            <form class="form-horizontal" role="form" method="post" id="editpage-form">
-                @Html.BootstrapValidationSummary("Validation Issues")
+        <form class="form-horizontal" role="form" method="post" id="editpage-form">
+            @Html.BootstrapValidationSummary("Validation Issues")
 
-                <div id="editpage-button-container" class="form-group">
-                    <div class="col-sm-12">
-                        <button type="button" class="button saveButton" tabindex="50" onclick="$('#btnsave').click();">@SiteStrings.Button_Save</button>
-                        @if (Model.Id > 0)
-                        {
-                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
-                        }
-                    </div>
+            <div id="editpage-button-container" class="form-group">
+                <div class="col-sm-12">
+                    <button type="button" class="button saveButton" tabindex="50" onclick="$('#btnsave').click();">@SiteStrings.Button_Save</button>
+                    @if (Model.Id > 0)
+                    {
+                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
+                    }
+                </div>
+            </div>
+
+
+            @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
+            @(Html.HiddenFor<PageViewModel, string>(p => p.PreviousTitle))
+            @(Html.HiddenFor<PageViewModel, string>(p => p.RawTags))
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label for="title">Title</label>
+                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false))
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="ProjectStart">Phase Start</label>
+                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false))
+                </div>
+                <div class="col-sm-6">
+                    <label for="ProjectEnd">Phase End</label>
+                    @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false))
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="ProjectStatus">Project Status</label>
+                    @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label for="orgID">Organisation</label>
+                    @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="Department">Department</label>
+                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Department, "Department", false))
+
+                </div>
+                <div class="col-sm-6">
+                    <label for="Owner">Key Contact</label>
+                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Owner, "Owner", false))
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="fundingBoundary">Budget</label>
+                    @Html.BootstrapDropDownListFor(p => p.FundingBoundary, Model.FundingBoundariesAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                 </div>
 
-
-                @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
-                @(Html.HiddenFor<PageViewModel, string>(p => p.PreviousTitle))
-                @(Html.HiddenFor<PageViewModel, string>(p => p.RawTags))
-
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <label for="title">Title</label>
-                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Title, "Title", false))
-                    </div>
+                <div class="col-sm-6">
+                    <label for="OwnerEmail">Key Contact Email</label>
+                    @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.OwnerEmail, "OwnerEmail", false))
                 </div>
+            </div>
 
 
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label for="ProjectStart">Phase Start</label>
-                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectStart, SiteStrings.EditPage_Title_Label, false))
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="ProjectEnd">Phase End</label>
-                        @(Html.BootstrapDatePicker<PageViewModel, DateTime>(p => p.ProjectEnd, SiteStrings.EditPage_Title_Label, false))
-                    </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label for="CollaborationLevel">Allow Collaboration</label>
+                    @Html.BootstrapDropDownListFor(p => p.CollaborationLevel, Model.CollaborationLevelAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
+
+
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label for="ProjectStatus">Project Status</label>
-                        @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                    </div>
-                </div>
+            </div>
+            @if (Model.VersionNumber != 0)
+            {
 
-                <div class="form-group">
-                    <div class="col-sm-12">
-                        <label for="orgID">Organisation</label>
-                        @Html.BootstrapDropDownListFor(p => p.orgID, Model.OrgsAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label for="Department">Department</label>
-                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Department, "Department", false))
+                <!-- Modal -->
+                <div class="modal fade" id="updateSuccessModal" role="dialog">
+                    <div class="modal-dialog">
 
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="Owner">Key Contact</label>
-                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.Owner, "Owner", false))
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label for="fundingBoundary">Budget</label>
-                        @Html.BootstrapDropDownListFor(p => p.FundingBoundary, Model.FundingBoundariesAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="OwnerEmail">Key Contact Email</label>
-                        @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.OwnerEmail, "OwnerEmail", false))
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <label for="CollaborationLevel">Allow Collaboration</label>
-                        @Html.BootstrapDropDownListFor(p => p.CollaborationLevel, Model.CollaborationLevelAsNewSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
-
-
-                    </div>
-                </div>
-                @if (Model.VersionNumber != 0)
-                {
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="updateSuccessModal" role="dialog">
-                        <div class="modal-dialog">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Status update posted</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Status update has been posted.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Status update posted</h4>
                             </div>
-
+                            <div class="modal-body">
+                                <p>Status update has been posted.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
+
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <div id="status-update-editor" class="col-sm-12">
-                            <h4>Status Updates</h4>
-                            <textarea id="UpdateStatusTxt" type="text" class="form-control" autocomplete="off" placeholder="Enter an update"></textarea>
+                <div class="form-group">
+                    <div id="status-update-editor" class="col-sm-12">
+                        <h4>Status Updates</h4>
+                        <textarea id="UpdateStatusTxt" type="text" class="form-control" autocomplete="off" placeholder="Enter an update"></textarea>
 
 
-                        </div><div class="col-sm-12">
-                            <button id="UpdateStatusBtn" type="button" class="btn btn-primary pull-right">Update Status</button>
-                        </div>
-                        <div id="statuses">
-                            @foreach (var statusUpdate in Model.StatusUpdates)
-                            {
-                                <div class="col-lg-12" id="statuscontents-@statusUpdate.Id">
-                                    <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
-                                            <div>
-                                                <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author
-                                            </div>
-                                            <textarea id="EditUpdateStatusTxt" class="form-control" cols="20" name="Content" rows="2">@statusUpdate.Text</textarea>
-                                        </li>
-                                    </ul>
-
-                                    <div class="row">
-                                        <div class="col-lg-8">
-                                            <button id="statusedit-@statusUpdate.Id" type="button" class="btn-success edit-status-button btn pull-right">Edit Status Update</button>
+                    </div><div class="col-sm-12">
+                        <button id="UpdateStatusBtn" type="button" class="btn btn-primary pull-right">Update Status</button>
+                    </div>
+                    <div id="statuses">
+                        @foreach (var statusUpdate in Model.StatusUpdates)
+                        {
+                            <div class="col-lg-12" id="statuscontents-@statusUpdate.Id">
+                                <h4>@statusUpdate.UpdateDate.ToLongDateString() @statusUpdate.UpdateDate.ToString("hh:mm", CultureInfo.InvariantCulture)</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div>
+                                            <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author
                                         </div>
-                                        <div class="col-lg-4">
-                                            <button id="statusdelete-@statusUpdate.Id" type="button" class="btn-danger delete-status-button btn pull-right">Delete Status Update</button>
-                                        </div>
+                                        <textarea id="EditUpdateStatusTxt" class="form-control" cols="20" name="Content" rows="2">@statusUpdate.Text</textarea>
+                                    </li>
+                                </ul>
+
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <button id="statusedit-@statusUpdate.Id" type="button" class="btn-success edit-status-button btn pull-right">Edit Status Update</button>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button id="statusdelete-@statusUpdate.Id" type="button" class="btn-danger delete-status-button btn pull-right">Delete Status Update</button>
                                     </div>
                                 </div>
-                            }
-                        </div>
-                    </div>
-                }
-
-                @if (RoadkillContext.IsAdmin)
-                {
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="checkbox">
-                                <label>
-                                    @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly))
-                                    @SiteStrings.EditPage_AdminOnly
-                                </label>
                             </div>
-                        </div>
-                    </div>
-                }
-
-                <label for="Content">Description</label>
-                <textarea class="form-control" cols="20" id="Content" name="Content" rows="2">@Model.ContentAsHtml</textarea>
-
-
-                <div id="editpage-button-container" class="form-group">
-                    <div class="col-sm-12">
-                        <button id="btnsave" type="submit" class="button saveButton btn btn-primary" tabindex="6">@SiteStrings.Button_Save</button>
-                        @if (Model.Id > 0)
-                        {
-                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
-                        }
-                        else
-                        {
-                            @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
                         }
                     </div>
                 </div>
+            }
 
-
+            @if (RoadkillContext.IsAdmin)
+            {
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <label for="ProjectStart">Tags</label>
                         <div class="checkbox">
-                            @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
+                            <label>
+                                @(Html.BootstrapCheckBoxFor<PageViewModel>(p => p.IsLocked, SiteStrings.EditPage_AdminOnly))
+                                @SiteStrings.EditPage_AdminOnly
+                            </label>
                         </div>
                     </div>
                 </div>
-                @Html.DialogPartial("ChooseImage")
-                @Html.DialogPartial("MarkupHelp")
+            }
 
-            </form>
+            <label for="Content">Description</label>
+            <p>Remember to mention which phase your project currently is in. The start and end date of your project and any scheduled service assessments.</p>
+
+
+            <textarea class="form-control" cols="20" id="Content" name="Content" rows="2">@Model.ContentAsHtml</textarea>
+
+
+            <div id="editpage-button-container" class="form-group">
+                <div class="col-sm-12">
+                    <button id="btnsave" type="submit" class="button saveButton btn btn-primary" tabindex="6">@SiteStrings.Button_Save</button>
+                    @if (Model.Id > 0)
+                    {
+                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", new { id = Model.Id, title = Model.EncodedTitle }, new { @class = "btn btn-link" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
+                    }
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label for="ProjectStart">Tags</label>
+                    <div class="checkbox">
+                        @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
+                    </div>
+                </div>
+            </div>
+            @Html.DialogPartial("ChooseImage")
+            @Html.DialogPartial("MarkupHelp")
+
+        </form>
         </div>
 
         <div class="col-md-12">
