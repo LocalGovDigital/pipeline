@@ -58,6 +58,9 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 
             var appSettings = AppSettings();
 
+            model.Author = UserContext.CurrentUserFullName;
+
+
             LightSpeedRepository repository = new LightSpeedRepository(appSettings);
 
             var updatedStatus = repository.CreateStatusUpdate(model);

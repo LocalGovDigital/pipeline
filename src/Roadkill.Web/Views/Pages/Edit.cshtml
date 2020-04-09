@@ -17,7 +17,7 @@
 
 
     <div class="row">
-        <div id="global__body_content" class="col-md-6 columns body_content">
+        <div id="global__body_content" class="col-md-12 columns body_content">
             <script src="~/Assets/Scripts/roadkill/editpage/bootstrap-datepicker.js"></script>
             <script>
                 jQuery(function ($) {
@@ -309,14 +309,44 @@
     <script type="text/javascript">
         $().ready(function () {
             $('#UpdateStatusTxt').summernote({
-                height: 100
-            });
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],  height: 100,
+            disableDragAndDrop: true
+        });
             $('#Content').summernote({
-                height: 300
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],  height: 300,
+                disableDragAndDrop: true
             });
 
             $('#EditUpdateStatusTxt').summernote({
-                height: 300
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],  height: 300,
+                disableDragAndDrop: true
             });
 
             $(window).keydown(function (event) {

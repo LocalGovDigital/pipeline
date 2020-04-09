@@ -47,55 +47,58 @@ namespace Roadkill.Core.Email
         /// </summary>
         public virtual void Send(T model)
         {
-            if (string.IsNullOrEmpty(model.ToAddress))
-                throw new EmailException(null, "No email address", GetType().Name);
-
-            if (string.IsNullOrEmpty(PlainTextView))
-                throw new EmailException(null, "No plain text view can be found for {0}", GetType().Name);
-
-
-            if (string.IsNullOrEmpty(HtmlView))
-                throw new EmailException(null, "No HTML view can be found for {0}", GetType().Name);
-
-            string plainTextContent = ReplaceTokens(model, PlainTextView);
-            string htmlContent = ReplaceTokens(model, HtmlView);
-
-            string emailTo = model.ToAddress;
-            
-            if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
+            if (!string.IsNullOrEmpty(model.ToAddress))
             {
-                var environmentPrefix = ConfigurationManager.AppSettings["environment"];
-                if (environmentPrefix == "DEV")
+                if (string.IsNullOrEmpty(model.ToAddress))
+                    throw new EmailException(null, "No email address", GetType().Name);
+
+                if (string.IsNullOrEmpty(PlainTextView))
+                    throw new EmailException(null, "No plain text view can be found for {0}", GetType().Name);
+
+
+                if (string.IsNullOrEmpty(HtmlView))
+                    throw new EmailException(null, "No HTML view can be found for {0}", GetType().Name);
+
+                string plainTextContent = ReplaceTokens(model, PlainTextView);
+                string htmlContent = ReplaceTokens(model, HtmlView);
+
+                string emailTo = model.ToAddress;
+
+                if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
                 {
-                    var allowedEmails = ConfigurationManager.AppSettings["allowedEmailAddresses"];
-                    var allowedEmailList = allowedEmails.Split(';');
-                    if (!allowedEmailList.Contains(emailTo.ToLower()))
+                    var environmentPrefix = ConfigurationManager.AppSettings["environment"];
+                    if (environmentPrefix == "DEV")
                     {
-                        return;
+                        var allowedEmails = ConfigurationManager.AppSettings["allowedEmailAddresses"];
+                        var allowedEmailList = allowedEmails.Split(';');
+                        if (!allowedEmailList.Contains(emailTo.ToLower()))
+                        {
+                            return;
+                        }
                     }
                 }
+
+                if (string.IsNullOrEmpty(emailTo))
+                    throw new EmailException(null, "The Model has an empty current or new email address");
+
+                MailMessage message = new MailMessage();
+                message.To.Add(emailTo);
+                message.Subject = model.Subject;
+                message.Body = htmlContent;
+                message.IsBodyHtml = true;
+
+                if (EmailClient.GetDeliveryMethod() == SmtpDeliveryMethod.SpecifiedPickupDirectory &&
+                    !string.IsNullOrEmpty(EmailClient.PickupDirectoryLocation) &&
+                    EmailClient.PickupDirectoryLocation.StartsWith("~"))
+                {
+                    string root = AppDomain.CurrentDomain.BaseDirectory;
+                    string pickupRoot = EmailClient.PickupDirectoryLocation.Replace("~/", root);
+                    pickupRoot = pickupRoot.Replace("/", @"\");
+                    EmailClient.PickupDirectoryLocation = pickupRoot;
+                }
+
+                EmailClient.Send(message);
             }
-
-            if (string.IsNullOrEmpty(emailTo))
-                throw new EmailException(null, "The Model has an empty current or new email address");
-
-            MailMessage message = new MailMessage();
-            message.To.Add(emailTo);
-            message.Subject = model.Subject;
-            message.Body = htmlContent;
-            message.IsBodyHtml = true;
-
-            if (EmailClient.GetDeliveryMethod() == SmtpDeliveryMethod.SpecifiedPickupDirectory &&
-                !string.IsNullOrEmpty(EmailClient.PickupDirectoryLocation) &&
-                EmailClient.PickupDirectoryLocation.StartsWith("~"))
-            {
-                string root = AppDomain.CurrentDomain.BaseDirectory;
-                string pickupRoot = EmailClient.PickupDirectoryLocation.Replace("~/", root);
-                pickupRoot = pickupRoot.Replace("/", @"\");
-                EmailClient.PickupDirectoryLocation = pickupRoot;
-            }
-
-            EmailClient.Send(message);
         }
 
         protected internal string ReadTemplateFile(string filename)

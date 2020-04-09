@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Roadkill.Core.Diff;
 using Roadkill.Core.Converters;
@@ -10,6 +12,7 @@ using Roadkill.Core.Security;
 using Roadkill.Core.Mvc.Attributes;
 using Roadkill.Core.Mvc.ViewModels;
 using System.Web;
+using HtmlAgilityPack;
 using Roadkill.Core.Email;
 using Roadkill.Core.Text;
 using Roadkill.Core.Extensions;
@@ -114,6 +117,7 @@ namespace Roadkill.Core.Mvc.Controllers
             return RedirectToAction("AllPages");
         }
 
+
         /// <summary>
         /// Displays the edit View for the page provided in the id.
         /// </summary>
@@ -130,9 +134,11 @@ namespace Roadkill.Core.Mvc.Controllers
             {
 
                 var username = Context.CurrentUsername;
-                var userId= Context.CurrentUserId;
+                var userId = Context.CurrentUserId;
                 if (model.IsLocked || !(Context.IsAdmin || (_pageService.IsApprovedContributer(id, userId))))
                     return RedirectToAction("Forbidden", "Wiki");
+                ;
+
 
                 model.AllTags = _pageService.AllTags().ToList();
 
@@ -153,6 +159,32 @@ namespace Roadkill.Core.Mvc.Controllers
             }
         }
 
+        internal static string RemoveExtraniousElements(string html)
+        {
+            StringCollection sc = new StringCollection();
+            // get rid of unnecessary tag spans (comments and title)
+            sc.Add(@"<!--(\w|\W)+?-->");
+            sc.Add(@"<title>(\w|\W)+?</title>");
+            // Get rid of classes and styles
+            sc.Add(@"\s?class=\w+");
+            sc.Add(@"\s+style='[^']+'");
+            // Get rid of unnecessary tags
+            sc.Add(
+                @"<(meta|img|link|/?o:|/?style|/?div|/?st\d|/?head|/?html|body|/?body|/?span|!\[)[^>]*?>");
+
+            // Get rid of empty paragraph tags
+            sc.Add(@"(<[^>]+>)+&nbsp;(</\w+>)+");
+            // remove bizarre v: element attached to <img> tag
+            sc.Add(@"\s+v:\w+=""[^""]+""");
+            // remove extra lines
+            sc.Add(@"(\n\r){2,}");
+            foreach (string s in sc)
+            {
+                html = Regex.Replace(html, s, "", RegexOptions.IgnoreCase);
+            }
+            return html;
+
+        }
         /// <summary>
         /// Saves all POST'd data for a page edit to the database.
         /// </summary>
@@ -171,9 +203,13 @@ namespace Roadkill.Core.Mvc.Controllers
             if (!ModelState.IsValid)
                 return View("Edit", model);
 
+
+            model.Content = RemoveExtraniousElements(model.Content);
+
+
             _pageService.UpdatePage(model);
 
-            
+
 
             _pageService.SendUpdate(model.Id, model.Id, model.Title, _projectUpdateEmail);
             return RedirectToAction("Index", "Wiki", new { id = model.Id });
