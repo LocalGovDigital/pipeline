@@ -495,6 +495,7 @@
     <Compile Include="Email\EmailClient.cs" />
     <Compile Include="Email\GenericEmailTemplate.cs" />
     <Compile Include="Email\IEmailClient.cs" />
+    <Compile Include="Email\ProjectTagMatchEmail.cs" />
     <Compile Include="Email\ProjectStatusUpdateEmail.cs" />
     <Compile Include="Email\ProjectUpdateEmail.cs" />
     <Compile Include="Exceptions\FileException.cs" />
@@ -525,6 +526,7 @@
     <Compile Include="Mvc\Controllers\SiteSettings\OrganisationsController.cs" />
     <Compile Include="Mvc\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Mvc\ViewModels\AddOrganisationRequestModel.cs" />
+    <Compile Include="Mvc\ViewModels\ProjectTagMatchEmailViewModel.cs" />
     <Compile Include="Mvc\ViewModels\EmailProjectStatusUpdateViewModel.cs" />
     <Compile Include="Mvc\ViewModels\EmailProjectUpdateViewModel.cs" />
     <Compile Include="Mvc\ViewModels\EmailViewModel.cs" />

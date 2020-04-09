@@ -847,6 +847,35 @@ namespace Roadkill.Core.Services
             }
         }
 
+        public void SendProjectTagMatchEmail(int pageId, int projectId, string projectTitle, List<PageViewModel> matchedProjects, string tags, ProjectTagMatchEmail _projectTagMatchEmail)
+        {
+            var environmentPrefix = string.Empty;
+            if (ConfigurationManager.AppSettings.AllKeys.Contains("environment"))
+            {
+                environmentPrefix = ConfigurationManager.AppSettings["environment"];
+                environmentPrefix = $"[{environmentPrefix}] ";
+            }
+            foreach (var matchedProject in matchedProjects)
+            {
+                var mod = new ProjectTagMatchEmailViewModel()
+                {
+                    ProjectName = matchedProject.Title,
+                    ProjectId = matchedProject.Id.ToString(),
+                    NewProjectName = projectTitle,
+                    NewProjectId = projectId.ToString(),
+                    Tags = tags,
+                    Subject = $"{environmentPrefix} A new project has been created that is similar to your project"
+                };
+                mod.Name = matchedProject.Owner;
+                mod.ToAddress = matchedProject.OwnerEmail;
+                _projectTagMatchEmail.Send(mod);
+            }
+        }
+
+
+
+
+
         public void SendUpdate(int pageId, int projectId, string projectTitle, ProjectUpdateEmail _projectUpdateEmail)
         {
 
@@ -919,11 +948,11 @@ namespace Roadkill.Core.Services
 
 
                     if (!string.IsNullOrEmpty(sp.Title)) query = query.Where(x => x.Title.ToLower().Contains(sp.Title.ToLower()));
-                    if (!string.IsNullOrEmpty(sp.Text)) query = query.Where(x => x.PageContents.Any(y=>y.Text.ToLower().Contains(sp.Text.ToLower())));
+                    if (!string.IsNullOrEmpty(sp.Text)) query = query.Where(x => x.PageContents.Any(y => y.Text.ToLower().Contains(sp.Text.ToLower())));
 
                     if (sp.LastUpdateStart.HasValue && sp.LastUpdateEnd.HasValue)
                     {
-                        query = query.Where(x =>x.ModifiedOn >= sp.LastUpdateStart.Value && x.ModifiedOn <= sp.LastUpdateEnd.Value);
+                        query = query.Where(x => x.ModifiedOn >= sp.LastUpdateStart.Value && x.ModifiedOn <= sp.LastUpdateEnd.Value);
                     }
                     else if (sp.LastUpdateStart.HasValue && !sp.LastUpdateEnd.HasValue)
                     {

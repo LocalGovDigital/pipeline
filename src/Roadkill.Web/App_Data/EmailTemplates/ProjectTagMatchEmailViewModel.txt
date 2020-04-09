@@ -1,0 +1,8 @@
+﻿
+Dear {Name},
+A new project has been created [{NewProjectName}] that is similar to your project [{ProjectName}], it matched the following tags: {Tags}.
+
+{SITEURL}/wiki/{NewProjectId}
+
+Thanks,
+The Pipeline team

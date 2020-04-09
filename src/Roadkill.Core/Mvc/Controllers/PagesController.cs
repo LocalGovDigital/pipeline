@@ -32,10 +32,11 @@ namespace Roadkill.Core.Mvc.Controllers
         private PageHistoryService _historyService;
 
         private ProjectUpdateEmail _projectUpdateEmail;
+        private ProjectTagMatchEmail _projectTagMatchEmail;
 
         public PagesController(ApplicationSettings settings, UserServiceBase userManager,
             SettingsService settingsService, IPageService pageService, SearchService searchService,
-            PageHistoryService historyService, IUserContext context, ProjectUpdateEmail projectUpdateEmail)
+            PageHistoryService historyService, IUserContext context, ProjectUpdateEmail projectUpdateEmail, ProjectTagMatchEmail projectTagMatchEmail)
             : base(settings, userManager, context, settingsService)
         {
             _settingsService = settingsService;
@@ -43,6 +44,7 @@ namespace Roadkill.Core.Mvc.Controllers
             _searchService = searchService;
             _historyService = historyService;
             _projectUpdateEmail = projectUpdateEmail;
+            _projectTagMatchEmail = projectTagMatchEmail;
         }
 
         /// <summary>
@@ -289,6 +291,12 @@ namespace Roadkill.Core.Mvc.Controllers
             }
 
             model = _pageService.AddPage(model);
+
+
+            var joinedTags = string.Join(",", model.Tags);
+            var matchingProjects = _pageService.FindByThreeTags(joinedTags);
+            _pageService.SendProjectTagMatchEmail(model.Id, model.Id, model.Title, matchingProjects.ToList(), joinedTags, _projectTagMatchEmail);
+
 
             return RedirectToAction("Index", "Wiki", new { id = model.Id });
         }

@@ -317,6 +317,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Attachments\emptyfile.txt" />
+    <Content Include="App_Data\EmailTemplates\ProjectTagMatchEmailViewModel.html" />
+    <Content Include="App_Data\EmailTemplates\ProjectTagMatchEmailViewModel.txt" />
     <Content Include="App_Data\EmailTemplates\EmailProjectStatusUpdateViewModel.txt" />
     <Content Include="App_Data\EmailTemplates\EmailProjectUpdateViewModel.html" />
     <Content Include="App_Data\EmailTemplates\EmailProjectStatusUpdateViewModel.html" />
