@@ -461,9 +461,6 @@
       <HintPath>..\..\packages\TwitterBootstrapMVC5.3.17.7\lib\net40\TwitterBootstrapMVC5.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="WebActivator">
-      <HintPath>..\..\packages\WebActivator.1.0.0.0\lib\WebActivator.dll</HintPath>
-    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
