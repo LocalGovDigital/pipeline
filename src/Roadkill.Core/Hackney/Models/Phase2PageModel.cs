@@ -17,6 +17,7 @@ namespace Roadkill.Core.Hackney.Models
         public string OwnerEmail { get; set; }
         public string ProjectAgileLifeCyclePhase { get; set; }
         public string CollaborationLevel { get; set; }
+        public DateTime? NextServiceAssessmentDate { get; set; }
         public string FundingBoundary { get; set; }
         public string FundingBoundaryText { get; set; }
         #endregion

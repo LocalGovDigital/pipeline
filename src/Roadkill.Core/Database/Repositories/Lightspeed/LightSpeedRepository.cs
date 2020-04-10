@@ -340,6 +340,7 @@ namespace Roadkill.Core.Database.LightSpeed
                 OwnerEmail = phase2Params.OwnerEmail,
                 Department = phase2Params.Department,
                 CollaborationLevel = phase2Params.CollaborationLevel,
+                NextServiceAssessmentDate = phase2Params.NextServiceAssessmentDate,
                 ProjectAgileLifeCyclePhase = phase2Params.ProjectAgileLifeCyclePhase,
                 FundingBoundary = phase2Params.FundingBoundary
 
@@ -380,6 +381,7 @@ namespace Roadkill.Core.Database.LightSpeed
                     OwnerEmail = phase2Params.OwnerEmail,
                     Department = phase2Params.Department,
                     CollaborationLevel = phase2Params.CollaborationLevel,
+                    NextServiceAssessmentDate = phase2Params.NextServiceAssessmentDate,
                     FundingBoundary = phase2Params.FundingBoundary,
                     ProjectAgileLifeCyclePhase = phase2Params.ProjectAgileLifeCyclePhase,
                 };

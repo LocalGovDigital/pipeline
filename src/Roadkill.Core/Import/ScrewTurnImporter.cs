@@ -278,8 +278,9 @@ namespace Roadkill.Core.Import
                             string fundingBoundary = (string)reader["FundingBoundary"];
                             string ownerEmail = (string)reader["OwnerEmail"];
                             string collaborationLevel = (string)reader["CollaborationLevel"];
+                            DateTime nextServiceAssessmentDate = (DateTime)reader["NextServiceAssessmentDate"];
 
-                            var phase2Params = Phase2Params.Create(projectAgileLifeCyclePhase, department, owner, ownerEmail, collaborationLevel, fundingBoundary);
+                            var phase2Params = Phase2Params.Create(projectAgileLifeCyclePhase, department, owner, ownerEmail, collaborationLevel, nextServiceAssessmentDate, fundingBoundary);
                             Repository.AddNewPageContentVersion(page, text, editedBy, EditedOn, versionNumber, projectStart, projectEnd, projectEstimatedTime, projectStatus, phase2Params, projectLanguage, orgID);
                             hasContent = true;
                         }

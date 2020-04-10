@@ -612,6 +612,7 @@ namespace Roadkill.Core.Services
                 page.OwnerEmail = model.OwnerEmail;
                 page.ProjectAgileLifeCyclePhase = model.ProjectAgileLifeCyclePhase;
                 page.CollaborationLevel = model.CollaborationLevel;
+                page.NextServiceAssessmentDate = model.NextServiceAssessmentDate;
                 page.Department = model.Department;
                 page.FundingBoundary = model.FundingBoundary;
 

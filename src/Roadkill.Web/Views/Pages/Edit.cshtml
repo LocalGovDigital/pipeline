@@ -84,6 +84,10 @@
                     <label for="ProjectStatus">Project Status</label>
                     @Html.BootstrapDropDownListFor(p => p.ProjectStatus, Model.ProjectStatusTypesAsSelectList, SiteStrings.SiteSettings_Configuration_DatabaseType_Help)
                 </div>
+                <div class="col-sm-6">
+                    <label for="NextServiceAssessmentDate">Next Service Assessment Date</label>
+                    @(Html.BootstrapDatePicker<PageViewModel, DateTime?>(p => p.NextServiceAssessmentDate, SiteStrings.EditPage_Title_Label, false))
+                </div>
             </div>
 
             <div class="form-group">
@@ -114,7 +118,6 @@
                     @(Html.BootstrapTextBoxFor<PageViewModel, string>(p => p.OwnerEmail, "OwnerEmail", false))
                 </div>
             </div>
-
 
             <div class="form-group">
                 <div class="col-sm-6">

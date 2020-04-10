@@ -343,6 +343,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             Owner = pageContent.Owner;
             OwnerEmail = pageContent.OwnerEmail;
             CollaborationLevel = pageContent.CollaborationLevel;
+            NextServiceAssessmentDate = pageContent.NextServiceAssessmentDate;
             ProjectAgileLifeCyclePhase = pageContent.ProjectAgileLifeCyclePhase;
             FundingBoundary = pageContent.FundingBoundary;
             Department = pageContent.Department;

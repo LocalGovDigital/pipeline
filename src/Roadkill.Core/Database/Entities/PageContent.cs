@@ -130,6 +130,7 @@ namespace Roadkill.Core.Database
             pageContent.OwnerEmail = entity.OwnerEmail;
             pageContent.ProjectAgileLifeCyclePhase = entity.ProjectAgileLifeCyclePhase;
             pageContent.CollaborationLevel = entity.CollaborationLevel;
+            pageContent.NextServiceAssessmentDate = entity.NextServiceAssessmentDate;
             pageContent.FundingBoundary = entity.FundingBoundary;
             return pageContent;
         }

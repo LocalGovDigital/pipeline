@@ -28,6 +28,7 @@ namespace Roadkill.Core.Mvc.ViewModels
         public DateTime? ModifiedOn { get; set; }
         public DateTime? ProjectStart { get; set; }
         public DateTime? ProjectEnd { get; set; }
+        public DateTime? NextServiceAssessmentDate { get; set; }
         public bool ProjectEstimatedTime { get; set; }
         public string ProjectStatus { get; set; }
         public string Title { get; set; }
@@ -59,6 +60,7 @@ namespace Roadkill.Core.Mvc.ViewModels
             project.Department = model.Department;
             project.OwnerEmail = model.OwnerEmail;
             project.CollaborationLevel = model.CollaborationLevel;
+            project.NextServiceAssessmentDate = model.NextServiceAssessmentDate;
             project.FundingBoundaryText = model.FundingBoundaryText;
             return project;
         }

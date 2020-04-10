@@ -51,6 +51,7 @@ namespace Roadkill.Core.Database.LightSpeed
 		    entity.Department = page.Department;
             entity.ProjectAgileLifeCyclePhase = page.ProjectAgileLifeCyclePhase;
 		    entity.CollaborationLevel = page.CollaborationLevel;
+		    entity.NextServiceAssessmentDate = page.NextServiceAssessmentDate;
 		    entity.FundingBoundary = page.FundingBoundary;
         }
 

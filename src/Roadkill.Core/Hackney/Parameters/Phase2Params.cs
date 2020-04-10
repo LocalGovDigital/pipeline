@@ -18,6 +18,7 @@ namespace Roadkill.Core.Hackney.Parameters
             parameters.Owner = model.Owner;
             parameters.OwnerEmail = model.OwnerEmail;
             parameters.CollaborationLevel = model.CollaborationLevel;
+            parameters.NextServiceAssessmentDate = model.NextServiceAssessmentDate;
             parameters.ProjectAgileLifeCyclePhase = model.ProjectAgileLifeCyclePhase;
             parameters.FundingBoundary = model.FundingBoundary;
 
@@ -31,6 +32,7 @@ namespace Roadkill.Core.Hackney.Parameters
             parameters.Owner = model.Owner;
             parameters.OwnerEmail = model.OwnerEmail;
             parameters.CollaborationLevel = model.CollaborationLevel;
+            parameters.NextServiceAssessmentDate = model.NextServiceAssessmentDate;
             parameters.ProjectAgileLifeCyclePhase = model.ProjectAgileLifeCyclePhase;
             parameters.FundingBoundary = model.FundingBoundary;
             return parameters;
@@ -48,13 +50,14 @@ namespace Roadkill.Core.Hackney.Parameters
             return parameters;
         }
 
-        public static Phase2Params Create(string projectAgileLifeCyclePhase, string department, string owner, string ownerEmail,string collaborationLevel, string fundingBoundary)
+        public static Phase2Params Create(string projectAgileLifeCyclePhase, string department, string owner, string ownerEmail, string collaborationLevel, DateTime nextServiceAssessmentDate, string fundingBoundary)
         {
             var parameters = new Phase2Params();
             parameters.Department = department;
             parameters.Owner = owner;
             parameters.OwnerEmail = ownerEmail;
             parameters.CollaborationLevel = collaborationLevel;
+            parameters.NextServiceAssessmentDate = nextServiceAssessmentDate;
             parameters.ProjectAgileLifeCyclePhase = projectAgileLifeCyclePhase;
             parameters.FundingBoundary = fundingBoundary;
             return parameters;

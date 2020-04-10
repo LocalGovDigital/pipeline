@@ -25,34 +25,43 @@
             <div class="col-sm-12">
                 <table class="table">
                     <tbody>
-                        <tr>
-                            <td>Organisation </td>
-                            <td>@(Model?.OrgContactDetails?.OrgName)</td>
-                        </tr>
-                        <tr>
-                            <td>Department</td>
-                            <td>@Model.Department</td>
-                        </tr>
-                        <tr>
-                            <td>Collaboration Level</td>
-                            <td>@(Model?.CollaborationLevel)</td>
-                        </tr>
-                        <tr>
-                            <td>Budget</td>
-                            <td>@(Model?.FundingBoundaryText)</td>
-                        </tr>
-                        <tr>
-                            <td>Key Contact</td>
-                            <td><a href="mailto:@(Model.OwnerEmail)"> @Model.Owner</a></td>
-                        </tr>
-                        <tr>
-                            <td>Phase start </td>
-                            <td>@Model.ProjectStart.ToLongDateString()</td>
-                        </tr>
-                        <tr>
-                            <td>Phase Estimated end </td>
-                            <td>@Model.ProjectEnd.ToLongDateString()</td>
-                        </tr>
+                    <tr>
+                        <td>Organisation </td>
+                        <td>@(Model?.OrgContactDetails?.OrgName)</td>
+                    </tr>
+                    <tr>
+                        <td>Department</td>
+                        <td>@Model.Department</td>
+                    </tr>
+                    <tr>
+                        <td>Collaboration Level</td>
+                        <td>@(Model?.CollaborationLevel)</td>
+                    </tr>
+                    <tr>
+                        <td>Next Service Assessment Date</td>
+                        <td>
+                            @if (Model.NextServiceAssessmentDate.HasValue)
+                            {
+                                @Model.NextServiceAssessmentDate.Value.ToLongDateString()
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Budget</td>
+                        <td>@(Model?.FundingBoundaryText)</td>
+                    </tr>
+                    <tr>
+                        <td>Key Contact</td>
+                        <td><a href="mailto:@(Model.OwnerEmail)"> @Model.Owner</a></td>
+                    </tr>
+                    <tr>
+                        <td>Phase start </td>
+                        <td>@Model.ProjectStart.ToLongDateString()</td>
+                    </tr>
+                    <tr>
+                        <td>Phase Estimated end </td>
+                        <td>@Model.ProjectEnd.ToLongDateString()</td>
+                    </tr>
 
 
                     </tbody>
@@ -69,11 +78,11 @@
                 else
                 {<div id="tagcloud" class="col-sm-12">
 
-                        @foreach (var tag in Model.TagCloud)
-                        {
-                            <a href="/pages/tag/@tag.Item1" class="@("tagcloud"+tag.Item2)">@tag.Item1</a>
-                        }
-                    </div>
+                     @foreach (var tag in Model.TagCloud)
+                     {
+                         <a href="/pages/tag/@tag.Item1" class="@("tagcloud"+tag.Item2)">@tag.Item1</a>
+                     }
+                 </div>
                 }
 
 
@@ -86,43 +95,28 @@
                 @Html.Action("RelatedRelationships", "Wiki", new { id = Model.Id })
             </div>
             <div class="col-sm-12">
-                <div class="row">
-
-
+                @if (Model.StatusUpdates.Count > 0)
+                {
+                    
+                    <hr/>
                     <h2>Status Updates</h2>
-                    @foreach (var statusUpdate in Model.StatusUpdates)
+                    foreach (var statusUpdate in Model.StatusUpdates)
                     {
                         <h4>@statusUpdate.UpdateDate.ToLongDateString()</h4>
                         <ul class="list-group">
                             <li class="list-group-item">
 
-                                <div>   <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
+                                <div> <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author</div>
                                 <div>@Html.Raw(statusUpdate.Text)</div>
                             </li>
                         </ul>
                     }
-                </div>
+                }
             </div>
-            <div class="col-sm-12">
-                <aside>
-                    <h2>Last modified</h2>
-
-                    @if (RoadkillContext.IsLoggedIn)
-                    {
-                        <p>@Model.ModifiedOn.ToLongDateString() @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
-                    }
-                    else
-                    {
-                        <p>@Model.ModifiedOn.ToLongDateString()  </p>
-                    }
-                </aside>
-            </div>
-
-
         </div>
-
+        <hr/>
         <div class="row">
-            <div>
+            <div class="col-sm-12">
                 <h2>Comments</h2>
                 <div id="disqus_thread"></div>
                 <script>
@@ -142,6 +136,23 @@
                 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
             </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <aside>
+                    <h2>Last modified</h2>
+
+                    @if (RoadkillContext.IsLoggedIn)
+                    {
+                        <p>@Model.ModifiedOn.ToLongDateString() @Model.ModifiedBy @Html.ActionLink(SiteStrings.Navigation_ViewHistory, "History", "Pages", new { id = Model.Id }, new { @class = "btn btn-link" })</p>
+                    }
+                    else
+                    {
+                        <p>@Model.ModifiedOn.ToLongDateString()  </p>
+                    }
+                </aside>
+            </div>
+
         </div>
     </div><!-- Foundation .row end -->
 

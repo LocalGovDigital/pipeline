@@ -25,6 +25,9 @@ namespace Roadkill.Core.Database.Repositories.LightSpeed
         [Column("collaborationLevel")]
         protected string _collaborationLevel;
 
+        [Column("nextserviceassessmentdate")]
+        protected DateTime? _nextserviceassessmentdate;
+
         [Column("fundingboundary")]
         protected string _fundingBoundary;
 
@@ -84,6 +87,17 @@ namespace Roadkill.Core.Database.Repositories.LightSpeed
             set
             {
                 Set<string>(ref _collaborationLevel, value);
+            }
+        }   
+        public DateTime? NextServiceAssessmentDate
+        {
+            get
+            {
+                return _nextserviceassessmentdate;
+            }
+            set
+            {
+                Set<DateTime?>(ref _nextserviceassessmentdate, value);
             }
         }
         public string Department

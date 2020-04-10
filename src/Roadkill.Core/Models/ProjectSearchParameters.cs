@@ -20,6 +20,7 @@ namespace Roadkill.Core.Models
         public string AgileLifecycle { get; set; }
         public string FundingBoundary { get; set; }
         public string CollaborationLevel { get; set; }
+        public DateTime NextServiceAssessmentDate { get; set; }
 
 
         public int? Take { get; set; }
@@ -57,6 +58,7 @@ namespace Roadkill.Core.Models
             if (nvc.AllKeys.Contains("agileLifecycle")) s.AgileLifecycle = nvc["agileLifecycle"];
             if (nvc.AllKeys.Contains("fundingboundary")) s.AgileLifecycle = nvc["fundingboundary"];
             if (nvc.AllKeys.Contains("collaborationLevel")) s.CollaborationLevel = nvc["collaborationLevel"];
+            if (nvc.AllKeys.Contains("nextServiceAssessmentDate")) s.NextServiceAssessmentDate = Convert.ToDateTime( nvc["nextServiceAssessmentDate"]);
 
 
             if (nvc.AllKeys.Contains("orderBy")) s.OrderBy = nvc["orderBy"];
