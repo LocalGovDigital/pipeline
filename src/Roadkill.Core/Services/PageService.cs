@@ -1007,6 +1007,10 @@ namespace Roadkill.Core.Services
                     {
                         query = query.OrderByDescending(x => x.ModifiedOn);
                     }
+                    if (sp.OrderBy == "NextServiceAssessmentDate")
+                    {
+                        query = query.OrderByDescending(x => x.NextServiceAssessmentDate);
+                    }
 
                     var searchresults = query.ToList().Select(ProjectSearchResult.FromPageEntity).ToList();
 

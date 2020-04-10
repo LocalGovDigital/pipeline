@@ -22,6 +22,9 @@ namespace Roadkill.Core.Database.LightSpeed
         [Column("modifiedon")]
         private DateTime _modifiedOn;
 
+        [Column("nextserviceassessmentdate")]
+        private DateTime? _nextserviceassessmentdate;
+
         [Column("projectstart")]
         private DateTime _projectstart;
 
@@ -111,6 +114,19 @@ namespace Roadkill.Core.Database.LightSpeed
             set
             {
                 Set<DateTime>(ref _modifiedOn, value);
+            }
+        }
+
+
+        public DateTime? NextServiceAssessmentDate
+        {
+            get
+            {
+                return _nextserviceassessmentdate;
+            }
+            set
+            {
+                Set<DateTime?>(ref _nextserviceassessmentdate, value);
             }
         }
 
