@@ -95,7 +95,8 @@ namespace Roadkill.Core.Mvc.Controllers.Api
         }
 
 
-        public void SendUpdate(LightSpeedRepository repository, StatusUpdateViewModel updatedStatus, int pageId, int projectId, string projectTitle, ProjectStatusUpdateEmail projectStatusUpdateEmail)
+        public void SendUpdate(LightSpeedRepository repository, StatusUpdateViewModel updatedStatus, int pageId,
+            int projectId, string projectTitle, ProjectStatusUpdateEmail projectStatusUpdateEmail)
         {
 
             var relationList = _pageService.GetRelationsByPageId(pageId).ToList();
@@ -122,14 +123,13 @@ namespace Roadkill.Core.Mvc.Controllers.Api
 
                 var user = repository.GetUserById(relViewModel.userId);
 
-                if (user != null)
+                if (user != null && !string.IsNullOrEmpty(user.Email))
                 {
                     mod.Name = $"{user.Firstname} {user.Lastname}";
                     mod.ToAddress = user.Email;
+                    emailModels.Add(mod);
+                    projectStatusUpdateEmail.Send(mod);
                 }
-
-                emailModels.Add(mod);
-                projectStatusUpdateEmail.Send(mod);
             }
         }
 
