@@ -42,7 +42,7 @@
         <form class="form-horizontal" role="form" method="post" id="editpage-form">
             @Html.BootstrapValidationSummary("Validation Issues")
 
-            <div id="editpage-button-container" class="form-group">
+            @*<div id="editpage-button-container" class="form-group">
                 <div class="col-sm-12">
                     <button type="button" class="button saveButton" tabindex="50" onclick="$('#btnsave').click();">@SiteStrings.Button_Save</button>
                     @if (Model.Id > 0)
@@ -54,7 +54,7 @@
                         @Html.ActionLink(SiteStrings.Button_Cancel, "Index", "Wiki", null, new { @class = "btn btn-link" })
                     }
                 </div>
-            </div>
+            </div>*@
 
 
             @(Html.HiddenFor<PageViewModel, int>(p => p.Id))
@@ -170,7 +170,7 @@
                                         <div>
                                             <span class="relationship-icon glyphicon glyphicon-bell"></span> @statusUpdate.Author
                                         </div>
-                                        <textarea id="EditUpdateStatusTxt" class="form-control" cols="20" name="Content" rows="2">@statusUpdate.Text</textarea>
+                                        <textarea id="EditUpdateStatusTxt-@statusUpdate.Id" class="form-control" cols="20" name="EditUpdateStatusTxt-@statusUpdate.Id" rows="2">@statusUpdate.Text</textarea>
                                     </li>
                                 </ul>
 
@@ -209,6 +209,17 @@
             <textarea class="form-control" cols="20" id="Content" name="Content" rows="2">@Model.ContentAsHtml</textarea>
 
 
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <label for="ProjectStart">Tags</label>
+                    <div class="checkbox">
+                        @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
+                    </div>
+                </div>
+            </div>
+
+
+
             <div id="editpage-button-container" class="form-group">
                 <div class="col-sm-12">
                     <button id="btnsave" type="submit" class="button saveButton btn btn-primary" tabindex="6">@SiteStrings.Button_Save</button>
@@ -223,17 +234,8 @@
                 </div>
             </div>
 
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <label for="ProjectStart">Tags</label>
-                    <div class="checkbox">
-                        @(Html.TextBox("TagsEntry", null, new { @class = "form-control tm-input", autocomplete = "off", placeholder = SiteStrings.EditPage_Tags_Label }))
-                    </div>
-                </div>
-            </div>
-            @Html.DialogPartial("ChooseImage")
-            @Html.DialogPartial("MarkupHelp")
+            @*@Html.DialogPartial("ChooseImage")
+            @Html.DialogPartial("MarkupHelp")*@
 
         </form>
         </div>
@@ -441,8 +443,10 @@
     });
 
     $(".edit-status-button").click(function () {
-        var obj = { Text: $('#EditUpdateStatusTxt').val(), PageId:@Model.Id }
         var id = $(this).attr("id").split("-")[1];
+
+        var obj = { Text: $('#EditUpdateStatusTxt-'+id).val(), PageId:@Model.Id }
+        
         $.ajax('/api/project-status/edit/' + id, {
             data: JSON.stringify(obj),
             contentType: 'application/json; charset=utf-8',
@@ -450,9 +454,7 @@
             type:'POST',
                 success: function (data) {
                     console.log("HTML Text " + data);
-
                     $("#updateSuccessModal").modal();
-
                 }
             });
         });

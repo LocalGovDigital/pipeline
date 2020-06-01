@@ -523,7 +523,7 @@
     position: relative;
     display: inline-table;
     padding: 10px 15px;
-    margin-bottom: -1px;
+    margin-bottom: 4px;
     background-color: #fff;
     border: 1px solid #ddd;
 }

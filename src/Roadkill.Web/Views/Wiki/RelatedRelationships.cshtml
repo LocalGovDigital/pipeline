@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<RelViewModel>
-<hr/>
+<hr />
 @if (Model.Count() > 0)
 {
     <h2>People</h2>
-
     <h4>Watchers</h4>
     <ul class="list-group">
         @foreach (RelViewModel pageModel in Model)
@@ -11,25 +10,33 @@
 
             if (pageModel.relTypeID == 3)
             {
-                <li class="list-group-item-inline">
+                if (!string.IsNullOrEmpty(pageModel.usertext.Replace(" ", "")))
+                {
+                    <li class="list-group-item-inline">
+                        <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.usertext</a>
+                    </li>
+                }
+                else if (!string.IsNullOrEmpty(pageModel.userName))
+                {
+                    <li class="list-group-item-inline">
+                        <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.userName</a>
 
-                    @if (string.IsNullOrEmpty(pageModel.usertext.Replace(" ", "")))
-                    {
-                    <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.userName</a>
-                    }
-                    else
-                    {
-                    <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.usertext</a>
-
-                    }
-                </li>
-
+                    </li>
+                }
+                else if (!string.IsNullOrEmpty(pageModel.orgtext))
+                {
+                    <li class="list-group-item-inline">
+                    <a href="/user/userprofile?email=@pageModel.userEmail"> @pageModel.orgtext member</a>
+                    </li>
+                }
             }
-
         }
-    </ul>
-    <h4>Contributors</h4>
 
+
+
+    </ul>
+
+    <h4>Contributors</h4>
 
     <ul class="list-group">
         @foreach (RelViewModel pageModel in Model)
@@ -37,22 +44,32 @@
 
             if (pageModel.relTypeID == 4)
             {
-                <li class="list-group-item-inline">
 
-                    @if (string.IsNullOrEmpty(pageModel.usertext.Replace(" ", "")))
-                    {
-                    <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.userName</a>
-                    }
-                    else
-                    {
-                    <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.usertext</a>
+                if (!string.IsNullOrEmpty(pageModel.usertext.Replace(" ", "")))
+                {
+                    <li class="list-group-item-inline">
+                        <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.usertext</a>
+                    </li>
+                }
+                else if (!string.IsNullOrEmpty(pageModel.userName))
+                {
+                    <li class="list-group-item-inline">
+                        <a href="/user/userprofile?email=@pageModel.userEmail">@pageModel.userName</a>
 
-                    }
-                </li>
+                    </li>
+                }
+                else if (!string.IsNullOrEmpty(pageModel.orgtext))
+                {
+                    <li class="list-group-item-inline">
+                        <a href="/user/userprofile?email=@pageModel.userEmail"> @pageModel.orgtext member</a>
+                    </li>
+                }
 
             }
-
         }
+
+
+
     </ul>
 }
 
